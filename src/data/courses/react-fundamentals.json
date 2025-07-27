@@ -1,0 +1,88 @@
+
+{
+    "id": "react-fundamentals",
+    "title": "React Fundamentals",
+    "description": "Learn the basics of React to build modern web applications.",
+    "image": "https://placehold.co/600x400.png",
+    "lessons": [
+      {
+        "id": "1",
+        "title": "Introduction to JSX",
+        "duration": 15,
+        "introduction": {
+          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
+          "text": "JSX stands for JavaScript XML. It allows us to write HTML in React. This makes it easier to write and add HTML in React."
+        },
+        "practice": {
+          "questions": [
+            {
+              "question": "What does JSX stand for?",
+              "options": [
+                "JavaScript XML",
+                "Java Syntax Extension",
+                "JSON Scripting eXperience",
+                "JavaScript eXtreme"
+              ],
+              "correctAnswer": "JavaScript XML"
+            }
+          ]
+        },
+        "project": {
+          "title": "Create a Simple JSX Element",
+          "description":
+            "Create a simple React component that renders an `<h1>` tag with \"Hello, World!\" inside."
+        },
+        "assessment": {
+          "questions": [
+            {
+              "question": "Can you use JavaScript expressions inside JSX?",
+              "options": ["Yes", "No"],
+              "correctAnswer": "Yes"
+            },
+            {
+              "question": "What do you use to embed a JavaScript expression in JSX?",
+              "options": ["Parentheses ()", "Curly braces {}", "Square brackets []", "Angle brackets <>"],
+              "correctAnswer": "Curly braces {}"
+            }
+          ]
+        }
+      },
+      {
+        "id": "2",
+        "title": "Components and Props",
+        "duration": 25,
+        "introduction": {
+          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
+          "text": "Components are the building blocks of any React app. Props let you pass data to your components."
+        },
+        "practice": {
+          "questions": [
+            {
+              "question": "What are the two types of components in React?",
+              "options": [
+                "Simple and Complex",
+                "Class and Functional",
+                "Static and Dynamic",
+                "Parent and Child"
+              ],
+              "correctAnswer": "Class and Functional"
+            }
+          ]
+        },
+        "project": {
+          "title": "Build a Reusable Button Component",
+          "description":
+            "Create a `Button` component that accepts a `label` prop to display text."
+        },
+        "assessment": {
+          "questions": [
+            {
+              "question": "Are props mutable?",
+              "options": ["Yes", "No"],
+              "correctAnswer": "No"
+            }
+          ]
+        }
+      }
+    ]
+  }

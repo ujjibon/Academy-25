@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom, #D35400 0%, #FFF 100%);
+  min-height: 100vh;
+}
+
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+@layer base {
+  :root {
+    --background: 36 100% 98%; /* light orange/white */
+    --foreground: 24 80% 20%; /* dark orange text */
+    --card: 36 100% 98%;
+    --card-foreground: 24 80% 20%;
+    --popover: 36 100% 98%;
+    --popover-foreground: 24 80% 20%;
+    --primary: 36 100% 60%; /* orange */
+    --primary-foreground: 36 100% 98%;
+    --secondary: 36 100% 92%; /* pale orange */
+    --secondary-foreground: 24 80% 20%;
+    --muted: 36 100% 96%;
+    --muted-foreground: 24 80% 40%;
+    --accent: 36 100% 80%;
+    --accent-foreground: 24 80% 20%;
+    --destructive: 14 90% 60%; /* orange-red */
+    --destructive-foreground: 36 100% 98%;
+    --border: 36 100% 90%;
+    --input: 36 100% 90%;
+    --ring: 36 100% 60%;
+    --chart-1: 36 100% 60%;
+    --chart-2: 24 100% 70%;
+    --chart-3: 14 90% 60%;
+    --chart-4: 36 100% 80%;
+    --chart-5: 36 100% 92%;
+    --radius: 0.5rem;
+
+    --sidebar-background: 36 100% 98%;
+    --sidebar-foreground: 24 80% 20%;
+    --sidebar-primary: 36 100% 60%;
+    --sidebar-primary-foreground: 36 100% 98%;
+    --sidebar-accent: 36 100% 92%;
+    --sidebar-accent-foreground: 24 80% 20%;
+    --sidebar-border: 36 100% 90%;
+    --sidebar-ring: 36 100% 60%;
+  }
+  .dark {
+    --background: 36 100% 12%; /* deep orange-brown */
+    --foreground: 36 100% 98%;
+    --card: 36 100% 16%;
+    --card-foreground: 36 100% 98%;
+    --popover: 36 100% 16%;
+    --popover-foreground: 36 100% 98%;
+    --primary: 36 100% 60%;
+    --primary-foreground: 36 100% 98%;
+    --secondary: 36 100% 20%;
+    --secondary-foreground: 36 100% 98%;
+    --muted: 36 100% 20%;
+    --muted-foreground: 36 100% 80%;
+    --accent: 36 100% 40%;
+    --accent-foreground: 36 100% 98%;
+    --destructive: 14 90% 40%;
+    --destructive-foreground: 36 100% 98%;
+    --border: 36 100% 20%;
+    --input: 36 100% 20%;
+    --ring: 36 100% 60%;
+    --chart-1: 36 100% 60%;
+    --chart-2: 24 100% 70%;
+    --chart-3: 14 90% 60%;
+    --chart-4: 36 100% 80%;
+    --chart-5: 36 100% 92%;
+
+    --sidebar-background: 36 100% 12%;
+    --sidebar-foreground: 36 100% 98%;
+    --sidebar-primary: 36 100% 60%;
+    --sidebar-primary-foreground: 36 100% 98%;
+    --sidebar-accent: 36 100% 20%;
+    --sidebar-accent-foreground: 36 100% 98%;
+    --sidebar-border: 36 100% 20%;
+    --sidebar-ring: 36 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.button-primary {
+  background: linear-gradient(90deg, #F76B1C 0%, #FFB347 100%);
+  color: #fff;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
+.button-primary:hover {
+  filter: brightness(1.1);
+}
+
+.card, .section {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px 0 rgba(247, 107, 28, 0.08);
+  border: 1px solid #FFE0B2;
+}

@@ -1,0 +1,46 @@
+
+{
+    "id": "advanced-css",
+    "title": "Advanced CSS and Sass",
+    "description": "Level up your styling skills with Flexbox, Grid, and Sass.",
+    "image": "https://placehold.co/600x400.png",
+    "lessons": [
+       {
+        "id": "1",
+        "title": "Flexbox Essentials",
+        "duration": 30,
+        "introduction": {
+          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
+          "text": "Flexbox is a one-dimensional layout method for arranging items in rows or columns."
+        },
+        "practice": {
+          "questions": [
+            {
+              "question": "What property do you use to create a flex container?",
+              "options": [
+                "display: flex;",
+                "display: flexbox;",
+                "flex: true;",
+                "layout: flex;"
+              ],
+              "correctAnswer": "display: flex;"
+            }
+          ]
+        },
+        "project": {
+          "title": "Build a Navigation Bar",
+          "description":
+            "Use Flexbox to create a responsive navigation bar with links that space out evenly."
+        },
+        "assessment": {
+          "questions": [
+            {
+              "question": "What is the default direction of items in a flex container?",
+              "options": ["row", "column", "row-reverse", "column-reverse"],
+              "correctAnswer": "row"
+            }
+          ]
+        }
+      }
+    ]
+  }
