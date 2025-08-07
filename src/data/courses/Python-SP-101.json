@@ -1,0 +1,148 @@
+{
+    "id": "Python-SP-101",
+    "title": "Python Fundamentals for Beginners",
+    "description": "This course provides a comprehensive introduction to Python programming, designed specifically for absolute beginners with no prior coding experience. Throughout this course, you will build a strong foundation in the core concepts of Python. You will start with the essentials, learning about variables, different data types, and how to use operators to perform calculations. You'll discover how to make your programs interactive by accepting user input. As you progress, you will dive into fundamental programming structures like conditional statements (if, else) to make decisions in your code, and loops (for, while) to automate repetitive tasks. You'll get hands-on experience with Python's powerful built-in data structures, including strings, lists, dictionaries, and tuples, learning how to store and manipulate collections of data effectively. The course will also guide you through creating your own functions, a crucial skill for writing clean, reusable, and organized code. Finally, you will explore sorting techniques to manage and order your data. By the end of this course, you will have the confidence and skills to write your own Python scripts and be well-prepared to explore more advanced programming topics.",
+    "image": "/images/1754598826269-python.jpg",
+    "lessons": [
+      {
+        "id": "1",
+        "title": "Your First Steps in Python",
+        "duration": 20,
+        "introduction": {
+          "videoUrl": "",
+          "text": "Learn the building blocks of Python: variables to store data, different data types, operators for calculations, and how to get input from users."
+        },
+        "practice": {
+          "questions": []
+        },
+        "project": {
+          "title": "Simple Calculator",
+          "description": "Create a program that takes two numbers from the user and prints their sum, difference, product, and quotient."
+        },
+        "assessment": {
+          "questions": []
+        }
+      },
+      {
+        "id": "2",
+        "title": "Making Decisions with Conditionals",
+        "duration": 25,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Learn how to control the flow of your program using `if`, `elif`, and `else` statements to make decisions based on different conditions."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Age Group Classifier",
+            "description": "Write a program that asks for a user's age and tells them if they are a child, teenager, or adult."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "3",
+        "title": "Automating Tasks with Loops",
+        "duration": 30,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Discover `for` and `while` loops to repeat actions and automate repetitive tasks, making your code more efficient."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Number Guessing Game",
+            "description": "Create a game where the computer thinks of a number and the user has to guess it."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "4",
+        "title": "Working with Text: Strings",
+        "duration": 20,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Explore how to work with text data in Python. Learn about string manipulation, formatting, and common methods."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Word Counter",
+            "description": "Write a program that counts the number of words in a sentence provided by the user."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "5",
+        "title": "Organizing Data with Lists",
+        "duration": 25,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Learn about lists, a versatile data structure in Python to store collections of items. Cover indexing, slicing, and list methods."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "To-Do List Application",
+            "description": "Build a simple command-line to-do list application where users can add, view, and remove tasks."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "6",
+        "title": "Key-Value Pairs: Dictionaries",
+        "duration": 25,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Understand dictionaries, which allow you to store data in key-value pairs for fast lookups and organized data."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Simple Contact Book",
+            "description": "Create a program that stores contact names and their phone numbers and allows you to look up a number by name."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "7",
+        "title": "Immutable Collections: Tuples",
+        "duration": 15,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Learn about tuples, an immutable sequence type in Python, and understand when to use them instead of lists."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Coordinate System",
+            "description": "Write a function that takes a tuple representing (x, y) coordinates and returns the quadrant it belongs to."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "8",
+        "title": "Creating Reusable Code with Functions",
+        "duration": 35,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Learn how to define and call your own functions to create modular, reusable, and organized code."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Refactor the Calculator",
+            "description": "Take the simple calculator project and refactor it to use functions for each arithmetic operation (add, subtract, etc.)."
+        },
+        "assessment": { "questions": [] }
+      },
+      {
+        "id": "9",
+        "title": "Sorting Data",
+        "duration": 20,
+        "introduction": {
+            "videoUrl": "",
+            "text": "Explore different ways to sort data in Python, including using the `sorted()` function and the `.sort()` method for lists."
+        },
+        "practice": { "questions": [] },
+        "project": {
+            "title": "Sort a List of Names",
+            "description": "Write a program that takes a list of names and sorts them alphabetically."
+        },
+        "assessment": { "questions": [] }
+      }
+    ]
+  }
+  

@@ -3,7 +3,7 @@
     "id": "advanced-css",
     "title": "Advanced CSS and Sass",
     "description": "Level up your styling skills with Flexbox, Grid, and Sass.",
-    "image": "https://placehold.co/600x400.png",
+    "image": "/images/advanced-css.jpg",
     "lessons": [
        {
         "id": "1",

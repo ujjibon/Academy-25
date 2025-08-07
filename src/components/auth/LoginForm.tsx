@@ -60,11 +60,11 @@ export function LoginForm() {
         description: 'Successfully signed in with Google.',
       });
       router.push('/dashboard');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google Sign-In Error:', error);
       toast({
         title: 'Login Failed',
-        description: 'Could not sign in with Google. Please try again.',
+        description: error.message || 'Could not sign in with Google. Please try again.',
         variant: 'destructive',
       });
     }

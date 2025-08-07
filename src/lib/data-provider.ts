@@ -3,6 +3,7 @@ import { courses as courseList } from './courses';
 import advancedCss from '@/data/courses/advanced-css.json';
 import digitalProductivity from '@/data/courses/digital-productivity-mastery.json';
 import reactFundamentals from '@/data/courses/react-fundamentals.json';
+import pythonSP101 from '@/data/courses/Python-SP-101.json';
 
 export type Course = {
   id: string;
@@ -44,6 +45,7 @@ const coursesData: { [key: string]: Course } = {
   'react-fundamentals': reactFundamentals,
   'advanced-css': advancedCss,
   'digital-productivity-mastery': digitalProductivity,
+  'Python-SP-101': pythonSP101,
 };
 
 

@@ -77,8 +77,29 @@ export function EditableCourseForm({ course, setCourse }: EditableCourseFormProp
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="course-image">Course Image URL</Label>
-                <Input id="course-image" value={course.image} onChange={e => handleCourseChange('image', e.target.value)} />
+                <Label htmlFor="course-image">Course Image</Label>
+                <div className="flex items-center gap-4">
+                    <Input id="course-image" value={course.image} onChange={e => handleCourseChange('image', e.target.value)} className="flex-grow" />
+                    <Button variant="outline" onClick={() => document.getElementById('image-upload')?.click()}>Upload</Button>
+                    <Input type="file" id="image-upload" className="hidden" accept="image/*" onChange={async e => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            const response = await fetch('/api/upload', {
+                                method: 'POST',
+                                body: formData,
+                            });
+                            const data = await response.json();
+                            if (data.success) {
+                                handleCourseChange('image', data.path);
+                            } else {
+                                console.error('Image upload failed:', data.error);
+                            }
+                        }
+                    }}/>
+                </div>
+                {course.image && <img src={course.image} alt="Course preview" className="mt-4 w-64 h-auto rounded-md" />}
             </div>
             
             <Accordion type="multiple" className="w-full">

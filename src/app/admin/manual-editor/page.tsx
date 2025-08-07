@@ -10,7 +10,8 @@ import { courses as courseList } from '@/lib/courses';
 import { getCourse } from '@/lib/data-provider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { EditableCourseForm } from '@/components/admin/EditableCourseForm';
-import { Download } from 'lucide-react';
+import { Download, Upload } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const BLANK_COURSE: Course = {
     id: 'new-course',
@@ -24,6 +25,9 @@ export default function ManualEditorPage() {
     const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
     const [activeCourse, setActiveCourse] = useState<Course | null>(null);
 
+    const { toast } = useToast();
+    const [isUploading, setIsUploading] = useState(false);
+
     const handleCourseSelect = (courseId: string) => {
         if (courseId === 'new') {
             setActiveCourse(BLANK_COURSE);
@@ -34,6 +38,38 @@ export default function ManualEditorPage() {
             }
         }
         setSelectedCourseId(courseId);
+    };
+
+    const handleUploadCourse = async () => {
+        if (!activeCourse) return;
+        setIsUploading(true);
+        try {
+            const response = await fetch('/api/course', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(activeCourse),
+            });
+            const data = await response.json();
+            if (data.success) {
+                toast({
+                    title: "Success!",
+                    description: data.message,
+                });
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to save course. Check the console for details.",
+                variant: "destructive",
+            });
+            console.error(error);
+        } finally {
+            setIsUploading(false);
+        }
     };
     
     const handleDownload = () => {
@@ -61,7 +97,7 @@ export default function ManualEditorPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="mb-6">
+                    <div className="flex items-center gap-4 mb-6">
                         <Select onValueChange={handleCourseSelect} value={selectedCourseId || ''}>
                             <SelectTrigger className="w-full md:w-[300px]">
                                 <SelectValue placeholder="Select a course..." />
@@ -75,6 +111,12 @@ export default function ManualEditorPage() {
                                 ))}
                             </SelectContent>
                         </Select>
+                        {selectedCourseId === 'new' && (
+                            <Button onClick={handleUploadCourse} disabled={isUploading} size="sm">
+                                <Upload className="mr-2 h-4 w-4" />
+                                {isUploading ? 'Uploading...' : 'Upload Course'}
+                            </Button>
+                        )}
                     </div>
 
                     {activeCourse && (
@@ -90,9 +132,9 @@ export default function ManualEditorPage() {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-center">
                                         <p className="text-sm text-muted-foreground">Copy or download the course JSON. New courses should be saved as a new file in `src/data/courses/`.</p>
-                                        <Button onClick={handleDownload} variant="outline">
+                                        <Button onClick={handleDownload} variant="outline" size="sm">
                                             <Download className="mr-2 h-4 w-4" />
-                                            Download JSON
+                                            Download
                                         </Button>
                                     </div>
                                    <pre className="bg-muted p-4 rounded-lg text-xs overflow-auto h-[70vh]">

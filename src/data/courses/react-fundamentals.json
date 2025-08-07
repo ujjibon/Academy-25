@@ -3,7 +3,7 @@
     "id": "react-fundamentals",
     "title": "React Fundamentals",
     "description": "Learn the basics of React to build modern web applications.",
-    "image": "https://placehold.co/600x400.png",
+    "image": "/images/react-fundamentals.jpg",
     "lessons": [
       {
         "id": "1",
