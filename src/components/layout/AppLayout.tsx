@@ -36,31 +36,32 @@ import {
   Loader2,
   Shield,
   FilePlus2,
+  Database,
 } from 'lucide-react';
 import { Logo } from '../Logo';
-import { getUser } from '@/lib/data-provider';
 import { useAuth } from '@/hooks/use-auth';
 import { signOut as firebaseSignOut } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Chatbot } from '../chat/Chatbot';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Wifi, WifiOff } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { user, loading } = useAuth();
+  const { user, userProfile, loading, isFirebaseMode, connectionError } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
-  const staticUser = getUser();
 
   useEffect(() => {
+    // If no Firebase user, redirect to login
     if (!loading && !user) {
       router.replace('/login');
     }
   }, [user, loading, router]);
 
-
   const handleLogout = async () => {
     try {
+      // Firebase logout
       await firebaseSignOut();
       toast({ title: 'Logged Out', description: 'You have been successfully logged out.' });
       router.push('/login');
@@ -89,6 +90,13 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       </div>
     );
   }
+
+  // Get display info from Firebase user profile
+  const displayName = userProfile?.displayName || user?.displayName || 'User';
+  const displayEmail = userProfile?.email || user?.email || '';
+  const displayAvatar = userProfile?.photoURL || user?.photoURL || '';
+  const displayLevel = userProfile?.level || 1;
+  const displayXP = userProfile?.xp || 0;
 
   return (
     <SidebarProvider>
@@ -136,18 +144,27 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             <DropdownMenuTrigger asChild>
                <Button variant="ghost" className="w-full justify-start gap-2 px-2 text-left h-auto">
                  <Avatar className="h-8 w-8">
-                  <AvatarImage src={user?.photoURL || staticUser.avatar} alt={user?.displayName || staticUser.name} />
-                  <AvatarFallback>{(user?.displayName || staticUser.name).charAt(0)}</AvatarFallback>
+                  <AvatarImage src={displayAvatar} alt={displayName} />
+                  <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="truncate group-data-[collapsible=icon]:hidden">
-                  <p className="font-semibold truncate">{user?.displayName || staticUser.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{user?.email || staticUser.email}</p>
+                  <p className="font-semibold truncate">{displayName}</p>
+                  <p className="text-xs text-muted-foreground truncate">{displayEmail}</p>
+                  <p className="text-xs text-primary font-medium">
+                    Level {displayLevel} • {displayXP.toLocaleString()} XP
+                  </p>
                 </div>
                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 mb-2" align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/profile">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
@@ -171,7 +188,20 @@ export default function AppLayout({ children }: { children: ReactNode }) {
            <div className="flex-1">
              {/* Can add breadcrumbs or page title here */}
            </div>
-           {/* Add any header actions here */}
+           {/* Connection status indicator */}
+           <div className="flex items-center gap-2">
+             {connectionError ? (
+               <div className="flex items-center gap-2 text-orange-600">
+                 <WifiOff className="h-4 w-4" />
+                 <span className="text-sm font-medium hidden md:inline">Offline</span>
+               </div>
+             ) : (
+               <div className="flex items-center gap-2 text-green-600">
+                 <Wifi className="h-4 w-4" />
+                 <span className="text-sm font-medium hidden md:inline">Online</span>
+               </div>
+             )}
+           </div>
         </header>
         <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
         <Chatbot />

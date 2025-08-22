@@ -5,15 +5,26 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { getUser } from '@/lib/data-provider';
+import { UserProfile } from '@/lib/firebase';
 
-export function StrengthsWeaknessesChart() {
-    const user = getUser();
-    const chartData = [...user.strengths, ...user.weaknesses].map(skill => ({
+interface StrengthsWeaknessesChartProps {
+  userProfile: UserProfile;
+}
+
+export function StrengthsWeaknessesChart({ userProfile }: StrengthsWeaknessesChartProps) {
+    const chartData = [...userProfile.strengths, ...userProfile.weaknesses].map(skill => ({
         name: skill.name,
         value: skill.value,
         fill: skill.value >= 60 ? 'hsl(var(--primary))' : 'hsl(var(--destructive))'
     }));
+
+    if (chartData.length === 0) {
+        return (
+            <div className="h-[300px] w-full flex items-center justify-center text-muted-foreground">
+                <p>No skill data available yet. Complete lessons to build your skills!</p>
+            </div>
+        );
+    }
 
   return (
     <div className="h-[300px] w-full">

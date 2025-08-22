@@ -9,15 +9,46 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getUser, getCourse } from '@/lib/data-provider';
-import { ArrowRight } from 'lucide-react';
+import { getCourse } from '@/lib/data-provider';
+import { UserProfile } from '@/lib/firebase';
+import { ArrowRight, BookOpen } from 'lucide-react';
 
-export function ActiveCourse() {
-  const user = getUser();
-  const activeCourse = getCourse(user.activeCourseId);
-  if (!activeCourse) return null;
+interface ActiveCourseProps {
+  userProfile: UserProfile;
+}
 
-  const nextLesson = activeCourse.lessons.find(l => l.id === user.activeLessonId);
+export function ActiveCourse({ userProfile }: ActiveCourseProps) {
+  const activeCourse = getCourse(userProfile.activeCourseId || '');
+  
+  if (!activeCourse) {
+    return (
+      <Card className="flex flex-col h-full">
+        <CardHeader>
+          <CardTitle>Start Learning</CardTitle>
+          <CardDescription>
+            Choose a course to begin your learning journey.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow flex items-center justify-center">
+          <div className="text-center text-muted-foreground">
+            <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-50" />
+            <p>No active course selected</p>
+            <p className="text-sm">Browse courses to get started</p>
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button asChild className="w-full">
+            <Link href="/courses">
+              Browse Courses <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    );
+  }
+
+  const nextLesson = activeCourse.lessons.find(l => l.id === userProfile.activeLessonId);
+  const progress = userProfile.courseProgress[activeCourse.id] || 0;
 
   return (
     <Card className="flex flex-col h-full">
@@ -40,6 +71,18 @@ export function ActiveCourse() {
           <div className="flex flex-col">
             <p className="text-sm text-muted-foreground">Course</p>
             <h3 className="text-lg font-semibold">{activeCourse.title}</h3>
+            <div className="mt-2">
+              <div className="flex justify-between text-sm text-muted-foreground mb-1">
+                <span>Progress</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-primary h-2 rounded-full transition-all duration-300" 
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
             {nextLesson && (
                 <>
                 <p className="text-sm text-muted-foreground mt-2">Next up</p>
@@ -51,7 +94,7 @@ export function ActiveCourse() {
       </CardContent>
       <CardFooter>
         <Button asChild className="w-full sm:w-auto">
-          <Link href={`/courses/${activeCourse.id}/${user.activeLessonId}`}>
+          <Link href={`/courses/${activeCourse.id}/${userProfile.activeLessonId || '1'}`}>
             Go to Lesson <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>

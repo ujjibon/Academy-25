@@ -16,23 +16,27 @@ import {
 } from 'lucide-react';
 import { generateDashboardSuggestion } from '@/ai/flows/generate-dashboard-suggestion';
 import { useToast } from '@/hooks/use-toast';
-import { getUser, getCourse } from '@/lib/data-provider';
+import { getCourse } from '@/lib/data-provider';
+import { UserProfile } from '@/lib/firebase';
 import ReactMarkdown from 'react-markdown';
 
-export function PersonalTrainer() {
+interface PersonalTrainerProps {
+  userProfile: UserProfile;
+}
+
+export function PersonalTrainer({ userProfile }: PersonalTrainerProps) {
   const [suggestion, setSuggestion] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const user = getUser();
 
   const fetchSuggestion = async () => {
     setIsLoading(true);
     try {
-      const activeCourse = getCourse(user.activeCourseId);
+      const activeCourse = getCourse(userProfile.activeCourseId || '');
       const result = await generateDashboardSuggestion({
         activeCourse: activeCourse?.title || 'None',
-        strengths: user.strengths.map(s => s.name),
-        weaknesses: user.weaknesses.map(w => w.name),
+        strengths: userProfile.strengths.map(s => s.name),
+        weaknesses: userProfile.weaknesses.map(w => w.name),
       });
       setSuggestion(result.suggestion);
     } catch (error) {
@@ -50,7 +54,7 @@ export function PersonalTrainer() {
 
   useEffect(() => {
     fetchSuggestion();
-  }, []);
+  }, [userProfile.activeCourseId, userProfile.strengths, userProfile.weaknesses]);
 
   return (
     <Card className="flex flex-col">
