@@ -114,7 +114,7 @@ export default function Home() {
             Unleash Your Potential with an AI Coach
           </h1>
           <p className="mx-auto mt-4 max-w-[700px] text-lg text-muted-foreground">
-            SkillSprint is your personalized learning companion. Master new
+            Peer Academy is your personalized learning companion. Master new
             skills faster with AI-guided lessons, real-world projects, and smart
             feedback.
           </p>
@@ -131,7 +131,7 @@ export default function Home() {
               Everything You Need to Succeed
             </h2>
             <p className="mt-4 text-muted-foreground">
-              SkillSprint combines cutting-edge AI with proven learning methods
+              Peer Academy combines cutting-edge AI with proven learning methods
               to create the ultimate educational experience.
             </p>
           </div>
@@ -159,7 +159,7 @@ export default function Home() {
               Try a Live Learning Demo
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Experience interactive learning! Try a real lesson preview below—answer a quiz, get instant feedback, and see how SkillSprint makes learning engaging.
+              Experience interactive learning! Try a real lesson preview below—answer a quiz, get instant feedback, and see how Peer Academy makes learning engaging.
             </p>
           </div>
           <div className="max-w-2xl mx-auto">
@@ -206,7 +206,7 @@ export default function Home() {
           <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
             <Logo />
             <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} SkillSprint. All Rights Reserved.
+              © {new Date().getFullYear()} Peer Academy. All Rights Reserved.
             </p>
           </div>
         </div>

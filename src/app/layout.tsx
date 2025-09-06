@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/use-auth';
 
 export const metadata: Metadata = {
-  title: 'SkillSprint',
-  description: 'Your personal AI-powered learning coach.',
+  title: 'Peer Academy',
+  description: 'Your personal AI-powered learning platform.',
 };
 
 export default function RootLayout({

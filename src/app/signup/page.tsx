@@ -36,7 +36,7 @@ export default function SignUpPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">Create an Account</CardTitle>
-          <CardDescription>Start your learning journey with SkillSprint today.</CardDescription>
+          <CardDescription>Start your learning journey with Peer Academy today.</CardDescription>
         </CardHeader>
         <CardContent>
           <SignUpForm />

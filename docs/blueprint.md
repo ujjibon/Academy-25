@@ -1,4 +1,4 @@
-# **App Name**: SkillSprint
+# **App Name**: Peer Academy
 
 ## Core Features:
 

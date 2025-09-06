@@ -1,4 +1,4 @@
-# Academy 2025 - Interactive Learning Platform
+# Peer Academy - Interactive Learning Platform
 
 A modern, AI-powered learning platform built with Next.js, Firebase, and Genkit AI. This application provides personalized learning experiences with real-time progress tracking, AI tutoring, and comprehensive course management.
 
@@ -42,7 +42,7 @@ A modern, AI-powered learning platform built with Next.js, Firebase, and Genkit 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd Academy-25
+   cd Peer-Academy
    ```
 
 2. **Install dependencies**
@@ -191,4 +191,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Built with ❤️ using Next.js, Firebase, and Genkit AI
+Built with ❤️ using Next.js, Firebase, and Genkit AI for Peer Academy

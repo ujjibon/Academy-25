@@ -12,7 +12,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
-          <p className="text-gray-600 mt-2">Sign in to your Academy 2025 account</p>
+          <p className="text-gray-600 mt-2">Sign in to your Peer Academy account</p>
         </div>
 
         {/* Firebase is now configured with skillsprint-3ij35 project */}
@@ -21,7 +21,7 @@ export default function LoginPage() {
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
             <CardDescription>
-              Sign in to your Academy 2025 account
+              Sign in to your Peer Academy account
             </CardDescription>
           </CardHeader>
           <CardContent>

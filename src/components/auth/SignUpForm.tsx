@@ -42,7 +42,7 @@ export function SignUpForm() {
     // This functionality is not fully implemented.
     toast({
       title: 'Account Created',
-      description: "Welcome to SkillSprint! We're glad to have you.",
+      description: "Welcome to Peer Academy! We're glad to have you.",
     });
     router.push('/dashboard');
   }
