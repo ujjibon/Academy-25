@@ -1,3 +1,4 @@
+import { use } from 'react';
 import Link from 'next/link';
 import AppLayout from '@/components/layout/AppLayout';
 import { getCourse } from '@/lib/data-provider';
@@ -15,9 +16,11 @@ import { Clock, PlayCircle } from 'lucide-react';
 export default function CourseDetailPage({
   params,
 }: {
-  params: { courseId: string };
+  params: Promise<{ courseId: string }>;
 }) {
-  const course = getCourse(params.courseId);
+  // Unwrap the params Promise
+  const { courseId } = use(params);
+  const course = getCourse(courseId);
 
   if (!course) {
     notFound();

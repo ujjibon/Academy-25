@@ -96,9 +96,12 @@ const courseCreatorAgentFlow = ai.defineFlow(
     
     // Call the model, providing it with the tool and the user's prompt.
     const llmResponse = await ai.generate({
-      model: 'googleai/gemini-1.5-flash-latest',
-      prompt: instruction,
-      history: history,
+      prompt: [
+        {
+          text: instruction,
+          metadata: history ? { history } : undefined
+        }
+      ],
       tools: [generateLessonContent],
       system: `You are an AI Academic Counsellor, a friendly and brilliant partner helping an administrator build a new course. Your goal is to be helpful, interactive, and make the course creation process easy and collaborative.
 
@@ -122,12 +125,12 @@ Your main job is to make the admin's life easier by generating high-quality less
     const output: CreatorAgentOutput = { response: llmResponse.text };
 
     // Check if the model decided to use the tool.
-    const toolCalls = llmResponse.toolCalls;
+    const toolCalls = llmResponse.toolRequests;
     if (toolCalls && toolCalls.length > 0) {
         for (const call of toolCalls) {
-            if (call.name === 'generateLessonContent') {
-                const toolResult = await call.result();
-                output.generatedLesson = toolResult.output as z.infer<typeof LessonSchema>;
+            if (call.toolRequest.name === 'generateLessonContent') {
+                const toolResult = await generateLessonContent(call.toolRequest.input as { lessonTopic: string });
+                output.generatedLesson = toolResult as z.infer<typeof LessonSchema>;
             }
         }
     }

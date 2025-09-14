@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import type { Course } from '@/lib/data';
+import type { Course } from '@/lib/data-provider';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -99,7 +99,7 @@ export function CourseTutor({ course }: { course: Course }) {
         courseContext: {
             title: course.title,
             description: course.description,
-            lessons: course.lessons.map(l => ({id: l.id, title: l.title, duration: l.duration})),
+            lessons: course.lessons.map((l: any) => ({id: l.id, title: l.title, duration: l.duration})),
         },
         userPreferences: {
             learningStyle: 'practical', // Example preference

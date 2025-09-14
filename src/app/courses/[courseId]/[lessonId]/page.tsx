@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, use } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/components/layout/AppLayout';
 import { getCourse } from '@/lib/data-provider';
@@ -14,15 +14,18 @@ import { useToast } from '@/hooks/use-toast';
 export default function LessonPage({
   params,
 }: {
-  params: { courseId: string; lessonId: string };
+  params: Promise<{ courseId: string; lessonId: string }>;
 }) {
   const { user, userProfile, refreshProfile } = useAuth();
   const { toast } = useToast();
   
-  const course = getCourse(params.courseId);
+  // Unwrap the params Promise
+  const { courseId, lessonId } = use(params);
+  
+  const course = getCourse(courseId);
   if (!course) notFound();
 
-  const lessonIndex = course.lessons.findIndex((l) => l.id === params.lessonId);
+  const lessonIndex = course.lessons.findIndex((l) => l.id === lessonId);
   if (lessonIndex === -1) notFound();
 
   const lesson = course.lessons[lessonIndex];
@@ -33,7 +36,7 @@ export default function LessonPage({
       : null;
 
   // Calculate progress percentage
-  const currentProgress = userProfile?.courseProgress[params.courseId] || 0;
+  const currentProgress = userProfile?.courseProgress[courseId] || 0;
   const lessonProgress = ((lessonIndex + 1) / course.lessons.length) * 100;
   const isLessonCompleted = currentProgress >= lessonProgress;
 
@@ -43,7 +46,7 @@ export default function LessonPage({
 
     try {
       const newProgress = Math.max(currentProgress, lessonProgress);
-      await updateCourseProgress(user.uid, params.courseId, newProgress);
+      await updateCourseProgress(user.uid, courseId, newProgress);
       
       // Add XP for completing lesson
       const xpEarned = 25; // Base XP per lesson
@@ -71,7 +74,7 @@ export default function LessonPage({
     if (user && userProfile && !isLessonCompleted) {
       markLessonCompleted();
     }
-  }, [user, userProfile, params.courseId, params.lessonId]);
+  }, [user, userProfile, courseId, lessonId]);
 
   return (
     <AppLayout>
