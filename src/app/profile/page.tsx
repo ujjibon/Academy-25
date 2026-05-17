@@ -76,7 +76,7 @@ export default function ProfilePage() {
                     <Badge variant="secondary" className="text-base">Level {userProfile.level}</Badge>
                     <Badge variant="secondary" className="text-base">{userProfile.xp.toLocaleString()} XP</Badge>
                     <Badge variant="secondary" className="text-base flex items-center gap-1">
-                        <Flame className="h-4 w-4 text-orange-500" /> {userProfile.dailyStreak} Day Streak
+                        <Flame className="h-4 w-4 text-flare" /> {userProfile.dailyStreak} Day Streak
                     </Badge>
                 </div>
               </div>

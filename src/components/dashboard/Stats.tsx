@@ -21,7 +21,7 @@ export function Stats({ userProfile }: StatsProps) {
             <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
             {stat.icon}
             {stat.title === 'Daily Streak' && userProfile.dailyStreak > 0 && (
-              <div className="text-xs text-orange-500 font-medium">🔥</div>
+              <div className="text-xs text-flare font-medium">🔥</div>
             )}
           </CardHeader>
           <CardContent>

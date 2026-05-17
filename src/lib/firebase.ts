@@ -4,8 +4,9 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, User } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, User } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, Firestore } from 'firebase/firestore';
+import { isAdminEmail, type UserRole } from '@/lib/admin';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -97,12 +98,12 @@ export const checkFirebaseConnection = async () => {
     // Add a timeout to prevent hanging
     const connectionPromise = new Promise(async (resolve, reject) => {
       try {
-        // Try to make a simple read operation to test connection
-        const testDoc = doc(db, '_test', 'connection');
-        console.log('📡 Attempting to read test document...');
-        
-        // Set a short timeout for the request
-        const docSnapshot = await getDoc(testDoc);
+        // Use basic init check — reading _test/connection fails without auth under secure rules
+        const ok = await checkFirebaseBasicConnection();
+        if (!ok) {
+          reject(new Error('Firestore not available'));
+          return;
+        }
         resolve(true);
       } catch (error) {
         reject(error);
@@ -175,38 +176,42 @@ export const checkFirebaseBasicConnection = async () => {
   }
 };
 
+/** Resolves pending Google redirect sign-in after the user returns to the app. */
+export const handleGoogleRedirectResult = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result?.user) {
+      await createOrUpdateUserProfile(result.user);
+    }
+    return result;
+  } catch (error: any) {
+    if (error.code === 'auth/account-exists-with-different-credential') {
+      throw new Error('An account already exists with this email using a different sign-in method.');
+    }
+    throw error;
+  }
+};
+
 export const signInWithGoogle = async () => {
   try {
-    // Check basic Firebase connection first
-    const isBasicConnected = await checkFirebaseBasicConnection();
-    if (!isBasicConnected) {
-      throw new Error('Unable to connect to Firebase. Please check your internet connection and try again.');
-    }
-    
-    // Check if popup is blocked
-    const popup = window.open('', '_blank', 'width=400,height=600');
-    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-      throw new Error('Popup blocked. Please allow popups for this site.');
-    }
-    popup.close();
-    
     const result = await signInWithPopup(auth, googleProvider);
-    
-    // Create or update user profile in Firestore
+
     if (result.user) {
       await createOrUpdateUserProfile(result.user);
     }
-    
+
     return result;
   } catch (error: any) {
     if (error.code === 'auth/popup-closed-by-user') {
-      throw new Error('Sign-in was cancelled by user.');
-    } else if (error.code === 'auth/cancelled-popup-request') {
+      throw new Error('Sign-in was cancelled.');
+    }
+    if (error.code === 'auth/cancelled-popup-request') {
       throw new Error('Please wait a moment and try again.');
-    } else if (error.code === 'auth/popup-blocked') {
-      throw new Error('Popup was blocked. Please allow popups for this site.');
-    } else if (error.message.includes('Unable to connect to Firebase')) {
-      throw new Error('Connection error. Please check your internet connection and try again.');
+    }
+    if (error.code === 'auth/popup-blocked') {
+      // Popups blocked — fall back to full-page redirect (no popup required)
+      await signInWithRedirect(auth, googleProvider);
+      return null;
     }
     throw error;
   }
@@ -218,8 +223,8 @@ export const signOut = () => {
 
 export const signInWithEmail = async (email: string, password: string) => {
   try {
-    // Check Firebase connection first
-    const isConnected = await checkFirebaseConnection();
+    // Basic check only — full connection test reads Firestore before auth
+    const isConnected = await checkFirebaseBasicConnection();
     if (!isConnected) {
       throw new Error('Unable to connect to Firebase. Please check your internet connection and try again.');
     }
@@ -242,8 +247,7 @@ export const signInWithEmail = async (email: string, password: string) => {
 
 export const signUpWithEmail = async (email: string, password: string) => {
   try {
-    // Check Firebase connection first
-    const isConnected = await checkFirebaseConnection();
+    const isConnected = await checkFirebaseBasicConnection();
     if (!isConnected) {
       throw new Error('Unable to connect to Firebase. Please check your internet connection and try again.');
     }
@@ -270,6 +274,7 @@ export interface UserProfile {
   email: string;
   displayName: string;
   photoURL?: string;
+  role?: UserRole;
   createdAt: Date;
   lastLoginAt: Date;
   xp: number;
@@ -285,6 +290,8 @@ export interface UserProfile {
   badges: { name: string; icon: string; earnedAt: Date }[];
 }
 
+export type { UserRole };
+
 export const createOrUpdateUserProfile = async (firebaseUser: User) => {
   try {
     console.log('🔄 Creating/updating user profile for:', firebaseUser.email, 'UID:', firebaseUser.uid);
@@ -295,11 +302,13 @@ export const createOrUpdateUserProfile = async (firebaseUser: User) => {
     if (!userSnap.exists()) {
       console.log('📝 Creating new user profile...');
       // Create new user profile
+      const email = firebaseUser.email || '';
       const newProfile: UserProfile = {
         uid: firebaseUser.uid,
-        email: firebaseUser.email || '',
+        email,
         displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
         photoURL: firebaseUser.photoURL || undefined,
+        role: isAdminEmail(email) ? 'admin' : 'user',
         createdAt: new Date(),
         lastLoginAt: new Date(),
         xp: 0,
@@ -326,12 +335,16 @@ export const createOrUpdateUserProfile = async (firebaseUser: User) => {
       console.log('✅ New user profile created successfully for:', firebaseUser.email);
     } else {
       console.log('🔄 Updating existing user profile...');
-      // Update last login
-      await updateDoc(userRef, {
+      const email = firebaseUser.email || userSnap.data().email || '';
+      const updates: Record<string, unknown> = {
         lastLoginAt: new Date(),
         displayName: firebaseUser.displayName || userSnap.data().displayName,
         photoURL: firebaseUser.photoURL || userSnap.data().photoURL,
-      });
+      };
+      if (isAdminEmail(email) && userSnap.data().role !== 'admin') {
+        updates.role = 'admin';
+      }
+      await updateDoc(userRef, updates);
       console.log('✅ User profile updated successfully for:', firebaseUser.email);
     }
   } catch (error: any) {
@@ -367,6 +380,7 @@ export const getUserProfile = async (uid: string): Promise<UserProfile | null> =
       const data = userSnap.data();
       return {
         ...data,
+        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'user'),
         createdAt: data.createdAt?.toDate() || new Date(),
         lastLoginAt: data.lastLoginAt?.toDate() || new Date(),
         badges: data.badges?.map((badge: any) => ({
@@ -525,6 +539,64 @@ export const addXP = async (uid: string, xpToAdd: number) => {
     // Don't throw error to prevent breaking the flow
     console.log('⚠️ XP update failed, continuing normally');
   }
+};
+
+export const getAllUsers = async (maxUsers = 100): Promise<UserProfile[]> => {
+  if (!shouldAttemptFirestoreOperation()) {
+    return [];
+  }
+
+  try {
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, orderBy('xp', 'desc'), limit(maxUsers));
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((userDoc) => {
+      const data = userDoc.data();
+      return {
+        ...data,
+        uid: userDoc.id,
+        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'user'),
+        createdAt: data.createdAt?.toDate() || new Date(),
+        lastLoginAt: data.lastLoginAt?.toDate() || new Date(),
+        badges:
+          data.badges?.map((badge: { earnedAt?: { toDate: () => Date } }) => ({
+            ...badge,
+            earnedAt: badge.earnedAt?.toDate?.() || new Date(),
+          })) || [],
+      } as UserProfile;
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
+};
+
+export const setUserRole = async (targetUid: string, role: UserRole) => {
+  if (!shouldAttemptFirestoreOperation()) {
+    throw new Error('Database is currently unavailable.');
+  }
+
+  const userRef = doc(db, 'users', targetUid);
+  await updateDoc(userRef, { role });
+};
+
+export const resetUserProgress = async (targetUid: string) => {
+  if (!shouldAttemptFirestoreOperation()) {
+    throw new Error('Database is currently unavailable.');
+  }
+
+  const userRef = doc(db, 'users', targetUid);
+  await updateDoc(userRef, {
+    xp: 0,
+    level: 1,
+    dailyStreak: 0,
+    weeklyProgress: 0,
+    activeCourseId: null,
+    activeLessonId: null,
+    completedCourses: [],
+    courseProgress: {},
+  });
 };
 
 export const getLeaderboard = async () => {

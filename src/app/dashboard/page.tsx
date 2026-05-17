@@ -63,19 +63,19 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                 <p className="text-sm">Check your internet connection</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                 <p className="text-sm">Refresh the page</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                 <p className="text-sm">Check if Firebase services are available</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                 <p className="text-sm">Verify your Firebase configuration</p>
               </div>
             </CardContent>

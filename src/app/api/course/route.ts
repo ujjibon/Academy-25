@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { type Course } from '@/lib/data-provider';
+import { requireAdminFromRequest } from '@/lib/server-admin-auth';
 
 export async function POST(request: NextRequest) {
+  const admin = await requireAdminFromRequest(request);
+  if (!admin) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
   const course: Course = await request.json();
 
   if (!course || !course.id) {

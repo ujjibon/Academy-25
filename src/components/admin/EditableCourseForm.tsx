@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 import { EditableLessonForm } from './EditableLessonForm';
 import { Button } from '../ui/button';
 import { FilePlus2, Trash2 } from 'lucide-react';
+import { adminFetch } from '@/lib/admin-fetch';
 
 interface EditableCourseFormProps {
     course: Course;
@@ -86,7 +87,7 @@ export function EditableCourseForm({ course, setCourse }: EditableCourseFormProp
                         if (file) {
                             const formData = new FormData();
                             formData.append('file', file);
-                            const response = await fetch('/api/upload', {
+                            const response = await adminFetch('/api/upload', {
                                 method: 'POST',
                                 body: formData,
                             });

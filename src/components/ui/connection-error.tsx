@@ -9,30 +9,31 @@ interface ConnectionErrorProps {
 }
 
 export function ConnectionError({ error, onRetry, isLoading = false }: ConnectionErrorProps) {
-  const isConnectionError = error.includes('connection') || error.includes('unavailable') || error.includes('offline');
-  
+  const isConnectionError =
+    error.includes('connection') ||
+    error.includes('unavailable') ||
+    error.includes('offline');
+
   return (
-    <Alert variant="destructive" className="border-orange-200 bg-orange-50 text-orange-800">
+    <Alert variant="destructive" className="border-destructive/30 bg-destructive/10">
       <div className="flex items-start gap-3">
         {isConnectionError ? (
-          <WifiOff className="h-5 w-5 mt-0.5 text-orange-600" />
+          <WifiOff className="h-5 w-5 mt-0.5" />
         ) : (
-          <AlertCircle className="h-5 w-5 mt-0.5 text-orange-600" />
+          <AlertCircle className="h-5 w-5 mt-0.5" />
         )}
         <div className="flex-1">
-          <AlertTitle className="text-orange-800">
+          <AlertTitle>
             {isConnectionError ? 'Connection Error' : 'Error'}
           </AlertTitle>
-          <AlertDescription className="text-orange-700 mt-1">
-            {error}
-          </AlertDescription>
+          <AlertDescription className="mt-1 opacity-90">{error}</AlertDescription>
           <div className="mt-3">
             <Button
               onClick={onRetry}
               disabled={isLoading}
               variant="outline"
               size="sm"
-              className="border-orange-300 text-orange-700"
+              className="border-destructive/40"
             >
               {isLoading ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
@@ -47,3 +48,5 @@ export function ConnectionError({ error, onRetry, isLoading = false }: Connectio
     </Alert>
   );
 }
+
+

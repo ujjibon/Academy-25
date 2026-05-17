@@ -34,12 +34,10 @@ import {
   LogOut,
   Languages,
   Loader2,
-  Shield,
-  FilePlus2,
-  Database,
 } from 'lucide-react';
 import { Logo } from '../Logo';
 import { useAuth } from '@/hooks/use-auth';
+import { Shield } from 'lucide-react';
 import { signOut as firebaseSignOut } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Chatbot } from '../chat/Chatbot';
@@ -48,7 +46,7 @@ import { Wifi, WifiOff } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const { user, userProfile, loading, isFirebaseMode, connectionError } = useAuth();
+  const { user, userProfile, loading, isFirebaseMode, connectionError, isAdmin } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -78,11 +76,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     { href: '/teach', label: 'Teach Mode', icon: PenSquare },
   ];
   
-  const adminNavItems = [
-    { href: '/admin/course-creator', label: 'AI Course Creator', icon: Shield },
-    { href: '/admin/manual-editor', label: 'Manual Editor', icon: FilePlus2 },
-  ]
-
   if (loading || !user) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -107,23 +100,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <SidebarContent>
           <SidebarMenu>
             {navItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith(item.href)}
-                  tooltip={item.label}
-                >
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-          <SidebarMenu>
-             <p className="text-xs text-muted-foreground px-4 py-2 font-medium">Admin</p>
-             {adminNavItems.map((item) => (
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
@@ -165,6 +141,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                   <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
+              {isAdmin && (
+                <DropdownMenuItem asChild>
+                  <Link href="/admin-portal">
+                    <Shield className="mr-2 h-4 w-4 text-amber-500" />
+                    <span>Admin Portal</span>
+                  </Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
@@ -191,7 +175,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
            {/* Connection status indicator */}
            <div className="flex items-center gap-2">
              {connectionError ? (
-               <div className="flex items-center gap-2 text-orange-600">
+               <div className="flex items-center gap-2 text-primary">
                  <WifiOff className="h-4 w-4" />
                  <span className="text-sm font-medium hidden md:inline">Offline</span>
                </div>

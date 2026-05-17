@@ -48,7 +48,7 @@ export function WeeklyGoals({ userProfile }: WeeklyGoalsProps) {
             </p>
           </div>
           {userProfile.dailyStreak > 0 && (
-            <div className="flex items-center gap-2 text-sm text-orange-600">
+            <div className="flex items-center gap-2 text-sm text-primary">
               <TrendingUp className="h-4 w-4" />
               <span>{userProfile.dailyStreak} day streak!</span>
             </div>

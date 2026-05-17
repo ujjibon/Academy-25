@@ -362,9 +362,9 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
         );
       case 'video':
         return (
-          <div className="bg-gradient-to-br from-orange-50 to-red-100 dark:from-orange-950/20 dark:to-red-950/20 p-6 rounded-lg">
-            <Video className="h-16 w-16 mx-auto text-orange-600 mb-4" />
-            <p className="text-center text-orange-800 dark:text-orange-200">Video Content</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <Video className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Video Content</p>
           </div>
         );
       case 'code':
@@ -475,11 +475,11 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
 
                 {/* Interactive Elements */}
                 {currentSlide.interactive && (
-                  <div className="mt-6 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 rounded-lg border">
-                    <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
+                  <div className="mt-6 p-4 bg-secondary/60 rounded-lg border border-border">
+                    <h3 className="font-semibold text-foreground mb-2">
                       Interactive Activity
                     </h3>
-                    <p className="text-yellow-700 dark:text-yellow-300 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       This slide includes interactive elements. Take your time to explore and practice.
                     </p>
                   </div>

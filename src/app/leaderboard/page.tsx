@@ -100,7 +100,7 @@ export default function LeaderboardPage() {
                   <TableRow key={userEntry.uid} className={cn(userEntry.isCurrentUser && 'bg-accent')}>
                     <TableCell className="font-medium text-lg">
                         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted/50">
-                            {index < 3 ? <Trophy className={cn("h-6 w-6", index === 0 && "text-yellow-500", index === 1 && "text-gray-400", index === 2 && "text-orange-400")} /> : userEntry.rank}
+                            {index < 3 ? <Trophy className={cn("h-6 w-6", index === 0 && "text-yellow-500", index === 1 && "text-gray-400", index === 2 && "text-flare-light")} /> : userEntry.rank}
                         </div>
                     </TableCell>
                     <TableCell>

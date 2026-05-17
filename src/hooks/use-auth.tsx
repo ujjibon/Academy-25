@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { auth, getUserProfile, UserProfile, updateDailyStreak, checkFirebaseBasicConnection, isFirebaseInitialized, shouldAttemptFirestoreOperation } from '@/lib/firebase';
+import { auth, getUserProfile, UserProfile, updateDailyStreak, checkFirebaseBasicConnection, shouldAttemptFirestoreOperation, handleGoogleRedirectResult } from '@/lib/firebase';
+import { isAdminProfile } from '@/lib/admin';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
 interface AuthContextType {
@@ -11,6 +12,7 @@ interface AuthContextType {
   refreshProfile: () => Promise<void>;
   retryConnection: () => Promise<void>;
   isFirebaseMode: boolean;
+  isAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
@@ -20,7 +22,8 @@ const AuthContext = createContext<AuthContextType>({
   connectionError: null,
   refreshProfile: async () => {},
   retryConnection: async () => {},
-  isFirebaseMode: false
+  isFirebaseMode: false,
+  isAdmin: false,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -51,8 +54,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error: any) {
       console.error('Error fetching user profile:', error);
-      // For any error, set connection error and clear profile
-      setConnectionError('Failed to load user profile. Please check your connection.');
+      if (error.code === 'permission-denied' || error.message?.includes('Permission denied')) {
+        setConnectionError(
+          'Firestore access denied. Deploy firestore.rules (see FIREBASE_SETUP.md) or update rules in the Firebase Console.'
+        );
+      } else {
+        setConnectionError('Failed to load user profile. Please check your connection.');
+      }
       console.log('❌ Failed to load user profile:', error.message);
       setUserProfile(null);
       setIsFirebaseMode(false);
@@ -81,6 +89,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    handleGoogleRedirectResult().catch((error) => {
+      console.error('Google redirect sign-in failed:', error);
+    });
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       
@@ -157,14 +169,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [user?.uid]);
 
-  const value = { 
-    user, 
-    userProfile, 
-    loading, 
+  const isAdmin = isAdminProfile(userProfile, user?.email);
+
+  const value = {
+    user,
+    userProfile,
+    loading,
     connectionError,
     refreshProfile,
     retryConnection,
-    isFirebaseMode
+    isFirebaseMode,
+    isAdmin,
   };
   
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

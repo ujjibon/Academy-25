@@ -49,7 +49,8 @@ export function SignUpForm() {
   
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+      if (!result) return; // redirecting to Google — page will reload
       toast({
         title: 'Account Created',
         description: 'Successfully signed in with Google.',

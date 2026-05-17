@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -14,7 +15,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Separator } from '../ui/separator';
 import { signInWithGoogle, signInWithEmail } from '@/lib/firebase';
 
@@ -23,9 +24,11 @@ const formSchema = z.object({
   password: z.string().min(1, { message: 'Password is required.' }),
 });
 
-export function LoginForm() {
+function LoginFormInner() {
   const { toast } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirect') || '/dashboard';
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,7 +45,7 @@ export function LoginForm() {
         title: 'Login Successful',
         description: 'You have been successfully logged in.',
       });
-      router.push('/dashboard');
+      router.push(redirectTo);
     } catch (error: any) {
       toast({
         title: 'Login Failed',
@@ -54,12 +57,13 @@ export function LoginForm() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+      if (!result) return; // redirecting to Google — page will reload
       toast({
         title: 'Logged In',
         description: 'Successfully signed in with Google.',
       });
-      router.push('/dashboard');
+      router.push(redirectTo);
     } catch (error: any) {
       console.error('Google Sign-In Error:', error);
       toast({
@@ -120,5 +124,13 @@ export function LoginForm() {
         </form>
       </Form>
     </div>
+  );
+}
+
+export function LoginForm() {
+  return (
+    <Suspense fallback={<div className="h-32 animate-pulse bg-muted rounded-md" />}>
+      <LoginFormInner />
+    </Suspense>
   );
 }

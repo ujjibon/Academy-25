@@ -155,7 +155,7 @@ export default function Home() {
         {/* Live Demo Section */}
         <section className="container py-16 md:py-24 bg-white/80 rounded-xl shadow-lg my-12">
           <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-orange">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-primary">
               Try a Live Learning Demo
             </h2>
             <p className="mt-4 text-muted-foreground">

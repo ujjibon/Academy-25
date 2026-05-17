@@ -1,11 +1,32 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import { useAuth } from '@/hooks/use-auth';
+import { useEffect } from 'react';
+import { Loader2 } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user, loading } = useAuth();
+  const redirectTo = searchParams.get('redirect') || '/dashboard';
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.replace(redirectTo);
+    }
+  }, [user, loading, router, redirectTo]);
+
+  if (loading || user) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -41,5 +62,19 @@ export default function LoginPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+      }
+    >
+      <LoginPageContent />
+    </Suspense>
   );
 }
