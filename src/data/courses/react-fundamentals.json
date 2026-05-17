@@ -10,7 +10,6 @@
         "title": "Introduction to JSX",
         "duration": 15,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "JSX stands for JavaScript XML. It allows us to write HTML in React. This makes it easier to write and add HTML in React."
         },
         "practice": {
@@ -52,7 +51,6 @@
         "title": "Components and Props",
         "duration": 25,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Components are the building blocks of any React app. Props let you pass data to your components."
         },
         "practice": {

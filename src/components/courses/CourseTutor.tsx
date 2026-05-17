@@ -1,13 +1,13 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import type { Course } from '@/lib/data-provider';
+import type { Course, Lesson } from '@/lib/data-provider';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bot, Loader2, Send, User, Paperclip, X, File as FileIcon, Image as ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { courseTutor } from '@/ai/flows/course-tutor-flow';
+// Removed direct imports - using API routes instead
 import ReactMarkdown from 'react-markdown';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
@@ -16,12 +16,13 @@ type Message = {
   text: string;
 };
 
-export function CourseTutor({ course }: { course: Course }) {
+export function CourseTutor({ course, currentLesson }: { course: Course; currentLesson?: Lesson }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [fileDataUri, setFileDataUri] = useState<string | null>(null);
+  const [hasAutoStarted, setHasAutoStarted] = useState(false);
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +41,137 @@ export function CourseTutor({ course }: { course: Course }) {
       localStorage.removeItem(`chatHistory_${course.id}`);
     }
   }, [course.id]);
+
+  // Auto-start teaching when lesson changes
+  useEffect(() => {
+    if (currentLesson && !hasAutoStarted && messages.length === 0) {
+      startAutoTeaching();
+    }
+  }, [currentLesson, hasAutoStarted, messages.length]);
+
+  // Listen for custom events from lesson content buttons
+  useEffect(() => {
+    const handleAITutorMessage = (event: CustomEvent) => {
+      const message = event.detail.message;
+      if (message) {
+        setInput(message);
+        // Automatically send the message
+        setTimeout(() => {
+          sendMessage(message);
+        }, 100);
+      }
+    };
+
+    window.addEventListener('ai-tutor-message', handleAITutorMessage as EventListener);
+    
+    return () => {
+      window.removeEventListener('ai-tutor-message', handleAITutorMessage as EventListener);
+    };
+  }, []);
+
+  const startAutoTeaching = async () => {
+    if (!currentLesson) return;
+    
+    setHasAutoStarted(true);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/ai/auto-lesson-teaching', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lesson: {
+            id: currentLesson.id,
+            title: currentLesson.title,
+            duration: currentLesson.duration,
+            introduction: {
+              text: currentLesson.introduction.text,
+            }
+          },
+          courseContext: {
+            title: course.title,
+            description: course.description,
+            lessons: course.lessons.map((l: any) => ({id: l.id, title: l.title, duration: l.duration})),
+          },
+          studentLevel: 'intermediate', // Could be made dynamic based on user profile
+          teachingMode: 'introduction',
+        })
+      });
+
+      if (!response.ok) {
+        const errBody = await response.json().catch(() => ({}));
+        const detail =
+          typeof errBody?.error === 'string' ? errBody.error : 'Failed to generate auto teaching';
+        throw new Error(detail);
+      }
+
+      const teachingResult = await response.json();
+
+      // Format the automatic teaching response
+      const autoTeachingMessage = `# ${teachingResult.welcomeMessage}
+
+## Learning Objectives:
+${teachingResult.learningObjectives.map((obj: any) => `- ${obj}`).join('\n')}
+
+## What You'll Learn:
+${teachingResult.teachingContent}
+
+## Key Concepts:
+${teachingResult.keyConcepts.map((concept: any) => `- ${concept}`).join('\n')}
+
+## Practical Examples:
+${teachingResult.practicalExamples.map((example: any) => `- ${example}`).join('\n')}
+
+## Interactive Questions:
+${teachingResult.interactiveQuestions.map((question: any) => `- ${question}`).join('\n')}
+
+## Next Steps:
+${teachingResult.nextSteps.map((step: any) => `- ${step}`).join('\n')}
+
+**Estimated Time:** ${teachingResult.estimatedTime}
+
+---
+
+*I'm here to help you learn! Feel free to ask me any questions about this lesson or request more detailed explanations.*`;
+
+      const modelMessage: Message = { role: 'model', text: autoTeachingMessage };
+      setMessages([modelMessage]);
+      
+      // Save to localStorage
+      localStorage.setItem(`chatHistory_${course.id}`, JSON.stringify([modelMessage]));
+      
+      toast({
+        title: 'AI Teacher Started',
+        description: 'Your AI teacher has automatically begun teaching this lesson!',
+      });
+    } catch (error) {
+      console.error('Auto teaching error:', error);
+      // Fallback welcome message
+      const fallbackMessage = `# Welcome to "${currentLesson.title}"!
+
+I'm your AI teacher for this lesson. I'll guide you through learning about ${currentLesson.title} with comprehensive explanations, practical examples, and interactive support.
+
+## What we'll cover:
+${currentLesson.introduction.text}
+
+## Ready to learn?
+Feel free to ask me any questions, request detailed explanations, or ask for practical examples. I'm here to help you master this topic!
+
+**Lesson Duration:** ${currentLesson.duration} minutes`;
+
+      const modelMessage: Message = { role: 'model', text: fallbackMessage };
+      setMessages([modelMessage]);
+      
+      toast({
+        title: 'AI Teacher Ready',
+        description: 'Your AI teacher is ready to help you learn!',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Save chat history to localStorage whenever it changes
   useEffect(() => {
@@ -77,13 +209,30 @@ export function CourseTutor({ course }: { course: Course }) {
     }
   }
 
-  const handleSend = async () => {
-    if (!input.trim() && !file) return;
+  const isComprehensiveTeachingRequest = (question: string): boolean => {
+    const comprehensiveKeywords = [
+      'explain step by step',
+      'teach me',
+      'comprehensive explanation',
+      'complete guide',
+      'everything about',
+      'full explanation',
+      'detailed explanation',
+      'step by step guide'
+    ];
+    return comprehensiveKeywords.some(keyword => 
+      question.toLowerCase().includes(keyword)
+    );
+  };
 
-    const userMessage: Message = { role: 'user', text: input };
+  const sendMessage = async (messageText?: string) => {
+    const textToSend = messageText || input;
+    if (!textToSend.trim() && !file) return;
+
+    const userMessage: Message = { role: 'user', text: textToSend };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
-    setInput('');
+    if (!messageText) setInput('');
     setIsLoading(true);
 
     try {
@@ -92,19 +241,77 @@ export function CourseTutor({ course }: { course: Course }) {
         model: msg.role === 'model' ? msg.text : '',
       }));
       
-      const result = await courseTutor({
-        question: input,
-        fileDataUri: fileDataUri || undefined,
-        history,
-        courseContext: {
-            title: course.title,
-            description: course.description,
-            lessons: course.lessons.map((l: any) => ({id: l.id, title: l.title, duration: l.duration})),
-        },
-        userPreferences: {
-            learningStyle: 'practical', // Example preference
+      let result;
+      
+      // Use quick teaching for most requests (faster)
+      if (currentLesson && (isComprehensiveTeachingRequest(textToSend) || textToSend.length > 20)) {
+        const response = await fetch('/api/ai/quick-teaching', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            topic: currentLesson.title,
+            currentLesson: {
+              id: currentLesson.id,
+              title: currentLesson.title,
+              duration: currentLesson.duration,
+              introduction: {
+                text: currentLesson.introduction.text,
+              }
+            },
+            courseContext: {
+              title: course.title,
+              description: course.description,
+              lessons: course.lessons.map((l: any) => ({id: l.id, title: l.title, duration: l.duration})),
+            },
+            learningLevel: 'intermediate', // Could be made dynamic
+            specificQuestion: textToSend,
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate quick teaching');
         }
-      });
+
+        const teachingResult = await response.json();
+
+        // Format the quick teaching response
+        const formattedResponse = `## ${teachingResult.teachingContent}
+
+**Key Points:**
+${teachingResult.keyPoints.map((point: any) => `• ${point}`).join('\n')}
+
+**Example:**
+${teachingResult.example}
+
+**Next Step:**
+${teachingResult.nextStep}`;
+
+        result = { answer: formattedResponse };
+      } else {
+        // Use fast chat for simple questions
+        const response = await fetch('/api/ai/fast-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            question: textToSend,
+            history: history,
+            context: {
+              course: course.title,
+              lesson: currentLesson?.title,
+            },
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to get fast chat response');
+        }
+
+        result = await response.json();
+      }
       const modelMessage: Message = { role: 'model', text: result.answer };
       setMessages((prev) => [...prev, modelMessage]);
     } catch (error) {
@@ -121,16 +328,48 @@ export function CourseTutor({ course }: { course: Course }) {
     }
   };
 
+  const handleSend = async () => {
+    await sendMessage();
+  };
+
   return (
     <div className="flex flex-col h-[70vh] border rounded-lg">
        <div className="flex-1 p-4 overflow-y-auto">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
              <div className="space-y-4 pr-4">
-              {messages.length === 0 && (
+              {messages.length === 0 && !isLoading && (
                  <div className="text-center text-muted-foreground py-8">
-                    <Bot className="h-12 w-12 mx-auto mb-2 text-primary" />
-                    <h3 className="text-lg font-semibold">AI Teacher for {course.title}</h3>
-                    <p>Ask me anything about this course, or upload a file for review!</p>
+                    <Bot className="h-12 w-12 mx-auto mb-4 text-primary" />
+                    <h3 className="text-lg font-semibold mb-2">AI Teacher for {course.title}</h3>
+                    <p className="mb-4">I'll automatically start teaching you this lesson with comprehensive explanations, practical examples, and interactive learning!</p>
+                    <div className="space-y-3">
+                      <p className="text-sm font-medium">Quick Learning Options:</p>
+                      <div className="flex flex-wrap gap-2 justify-center">
+                        <Button variant="outline" size="sm" onClick={() => setInput("Explain this lesson step by step with comprehensive details")} className="text-xs">
+                          Complete Guide
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => setInput("Teach me everything about this topic with practical examples")} className="text-xs">
+                          Full Teaching
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => setInput("Give me a detailed explanation of all key concepts")} className="text-xs">
+                          Key Concepts
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => setInput("Show me common mistakes and how to avoid them")} className="text-xs">
+                          Common Mistakes
+                        </Button>
+                      </div>
+                    </div>
+                 </div>
+              )}
+              {isLoading && messages.length === 0 && (
+                 <div className="text-center text-muted-foreground py-8">
+                    <Bot className="h-12 w-12 mx-auto mb-4 text-primary" />
+                    <h3 className="text-lg font-semibold mb-2">Starting AI Teaching...</h3>
+                    <p className="mb-4">Your AI teacher is preparing a comprehensive lesson for you!</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="text-sm">Loading lesson content...</span>
+                    </div>
                  </div>
               )}
               {messages.map((message, index) => (
@@ -148,11 +387,15 @@ export function CourseTutor({ course }: { course: Course }) {
                   <div
                     className={`rounded-lg px-4 py-2 max-w-[80%] ${
                       message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
+                        ? 'bg-primary text-white'
                         : 'bg-muted'
                     }`}
                   >
-                     <div className="prose dark:prose-invert prose-sm max-w-none">
+                     <div className={`prose prose-sm max-w-none ${
+                      message.role === 'user' 
+                        ? 'prose-invert text-white [&>*]:text-white [&_strong]:text-white [&_em]:text-white [&_code]:text-white [&_a]:text-white' 
+                        : 'dark:prose-invert'
+                    }`}>
                       <ReactMarkdown>{message.text}</ReactMarkdown>
                     </div>
                   </div>

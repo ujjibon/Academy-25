@@ -19,7 +19,6 @@ const LessonSchema = z.object({
     title: z.string().describe("The title of the lesson."),
     duration: z.number().describe("An estimated duration of the lesson in minutes."),
     introduction: z.object({
-        videoUrl: z.string().describe("A placeholder YouTube video URL, always use 'https://www.youtube.com/embed/9wK4gHo1c1A'."),
         text: z.string().describe("A concise introduction to the lesson's topic.")
     }),
     practice: z.object({
@@ -60,7 +59,6 @@ const generateLessonContent = ai.defineTool(
             output: { schema: LessonSchema },
             prompt: `You are an expert instructional designer. Generate a complete lesson on the topic of "{{lessonTopic}}".
             The lesson must follow the provided output schema precisely.
-            - The video URL should always be 'https://www.youtube.com/embed/9wK4gHo1c1A'.
             - Create at least 5 practice questions and 5 assessment questions.
             - Ensure the 'correctAnswer' for each question exactly matches one of the 'options'.
             - The lesson ID should be a simple number string, like '1'.`

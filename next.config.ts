@@ -18,6 +18,44 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+    // Handle Node.js modules that are not available in the browser
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        async_hooks: false,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        url: false,
+        zlib: false,
+        http: false,
+        https: false,
+        assert: false,
+        os: false,
+        path: false,
+        util: false,
+        buffer: false,
+        events: false,
+        child_process: false,
+        cluster: false,
+        dgram: false,
+        dns: false,
+        domain: false,
+        module: false,
+        readline: false,
+        repl: false,
+        string_decoder: false,
+        timers: false,
+        tty: false,
+        vm: false,
+        worker_threads: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

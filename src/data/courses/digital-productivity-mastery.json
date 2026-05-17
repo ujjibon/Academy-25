@@ -10,7 +10,6 @@
         "title": "Foundations of Digital Productivity",
         "duration": 20,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Understand the crucial role of productivity tools in modern workplaces. Learn best practices for cloud storage, digital etiquette, and organization."
         },
         "practice": {
@@ -71,7 +70,6 @@
         "title": "Google Docs: Professional Document Collaboration",
         "duration": 30,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Learn to draft, format, and collaboratively edit professional documents using Google Docs. Master features like version history, tracked changes, and commenting."
         },
         "practice": {
@@ -132,7 +130,6 @@
         "title": "Google Sheets: Data Management & Reporting",
         "duration": 45,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Use spreadsheets for real-world data handling, analysis, and presentation. Learn formulas, conditional formatting, and how to create insightful charts."
         },
         "practice": {
@@ -193,7 +190,6 @@
         "title": "Google Slides: Pitch & Present Like a Pro",
         "duration": 35,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Learn to create clear, persuasive, and visually appealing presentations that capture your audience's attention."
         },
         "practice": {
@@ -254,7 +250,6 @@
         "title": "Microsoft Word: Resume & Document Design",
         "duration": 40,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Go beyond basic text editing to format and structure professional documents in Microsoft Word. Learn to use tables, styles, and columns for a polished, readable layout."
         },
         "practice": {
@@ -315,7 +310,6 @@
         "title": "Microsoft Excel: Structured Analysis & Business Reporting",
         "duration": 50,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Learn to analyze business data to extract meaningful insights. Master filtering, PivotTables, and advanced graphing to create comprehensive reports."
         },
         "practice": {
@@ -376,7 +370,6 @@
         "title": "Microsoft PowerPoint: Design for Audience Impact",
         "duration": 35,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Build stakeholder-ready visual presentations. Focus on visual hierarchy, data visualization, and effective slide transitions to deliver impactful messages."
         },
         "practice": {
@@ -437,7 +430,6 @@
         "title": "Notion: Smart Work & Project Management",
         "duration": 45,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Use Notion's flexible workspace to organize tasks, notes, and complex projects in one place. Build interconnected pages and databases to create a powerful productivity system."
         },
         "practice": {
@@ -498,7 +490,6 @@
         "title": "Canva: Design with Purpose",
         "duration": 30,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "Learn the fundamentals of graphic design using Canva to create professional marketing and communication materials, even with no prior design experience."
         },
         "practice": {
@@ -559,7 +550,6 @@
         "title": "Integrated Digital Simulation: \"Work Week Challenge\"",
         "duration": 60,
         "introduction": {
-          "videoUrl": "https://www.youtube.com/embed/9wK4gHo1c1A",
           "text": "This capstone module simulates a real-life week of digital tasks, requiring you to use multiple tools together to achieve a goal. This is where all your skills come together."
         },
         "practice": {

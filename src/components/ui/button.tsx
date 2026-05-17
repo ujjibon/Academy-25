@@ -5,18 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-[#D35400] to-[#FFB347] text-white hover:brightness-110 hover:shadow-lg",
+        default: "bg-gradient-to-r from-[#D35400] to-[#FFB347] text-white",
         destructive:
-          "bg-gradient-to-r from-orange-dark to-red-500 text-white hover:brightness-110 hover:shadow-lg",
+          "bg-gradient-to-r from-orange-dark to-red-500 text-white",
         outline:
-          "border border-orange bg-white text-orange-dark hover:bg-orange-light hover:text-orange-dark hover:shadow-md hover:scale-105",
+          "border border-orange bg-white text-orange-dark hover:bg-orange-light hover:text-orange-dark",
         secondary:
-          "bg-white text-orange-dark border border-orange hover:bg-orange-light hover:text-orange-dark hover:shadow-md hover:scale-105",
-        ghost: "hover:bg-orange-light hover:text-orange-dark hover:shadow-md hover:scale-105",
+          "bg-white text-orange-dark border border-orange hover:bg-orange-light hover:text-orange-dark",
+        ghost: "hover:bg-orange-light hover:text-orange-dark",
         link: "text-orange underline-offset-4 hover:underline hover:text-orange-dark",
       },
       size: {

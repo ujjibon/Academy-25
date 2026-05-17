@@ -41,11 +41,20 @@ export function PersonalTrainer({ userProfile }: PersonalTrainerProps) {
       setSuggestion(result.suggestion);
     } catch (error) {
       console.error(error);
-      setSuggestion("I couldn't generate a tip right now. Maybe try again?");
+      // Fallback suggestions when AI is not available
+      const fallbackSuggestions = [
+        "Keep up the great work! Consistency is key to mastering new skills.",
+        "You're making excellent progress! Consider reviewing previous lessons to reinforce your learning.",
+        "Great job on your learning journey! Try to practice what you've learned today.",
+        "You're doing amazing! Remember to take breaks and stay hydrated while learning.",
+        "Excellent work! Consider sharing what you've learned with others to deepen your understanding."
+      ];
+      const randomSuggestion = fallbackSuggestions[Math.floor(Math.random() * fallbackSuggestions.length)];
+      setSuggestion(randomSuggestion);
       toast({
-        title: 'Error',
-        description: 'Could not generate a suggestion. Please try again.',
-        variant: 'destructive',
+        title: 'AI Service Unavailable',
+        description: 'Using fallback suggestions. AI features will work once API keys are configured.',
+        variant: 'default',
       });
     } finally {
       setIsLoading(false);

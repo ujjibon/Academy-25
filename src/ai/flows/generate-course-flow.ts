@@ -30,7 +30,6 @@ const GenerateCourseOutputSchema = z.object({
     title: z.string().describe("The title of the lesson."),
     duration: z.number().describe("An estimated duration of the lesson in minutes."),
     introduction: z.object({
-        videoUrl: z.string().url().describe("A placeholder YouTube video URL."),
         text: z.string().describe("A concise introduction to the lesson's topic.")
     }),
     practice: z.object({

@@ -90,16 +90,12 @@
   background: #6b7280;
 }
 
-/* Smooth transitions */
+/* Professional transitions - only for specific properties */
 * {
-  transition: all 0.2s ease-in-out;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Custom hover effects */
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
+/* Professional hover effects - removed distracting animations */
 
 /* Gradient backgrounds */
 .gradient-bg {
@@ -119,11 +115,8 @@
 
 @layer components {
   .button-primary {
-    @apply bg-primary text-primary-foreground font-bold px-4 py-2 transition-all;
+    @apply bg-primary text-primary-foreground font-bold px-4 py-2 transition-colors;
     border-radius: var(--radius);
-  }
-  .button-primary:hover {
-    filter: brightness(1.1);
   }
 
   .card, .section {
@@ -151,10 +144,7 @@
   overflow: hidden;
   background: #fff;
 }
-.video-demo-container:hover {
-  box-shadow: 0 16px 48px rgba(76, 81, 255, 0.18);
-  transform: scale(1.03);
-}
+/* Removed distracting hover animations */
 
 /* Mobile demo animation */
 @keyframes slideUpFade {
@@ -168,12 +158,9 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 10px;
   display: inline-block;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: none;
 }
-.mobile-demo-container:hover {
-  transform: scale(1.05) rotate(-2deg);
-  box-shadow: 0 16px 48px rgba(76, 81, 255, 0.22);
-}
+/* Removed distracting mobile demo hover animations */
 .mobile-demo-frame {
   border-radius: 1.5rem;
   overflow: hidden;
@@ -250,7 +237,7 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 10px;
   display: inline-block;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: none;
 }
 
 .mobile-demo-frame {

@@ -53,17 +53,36 @@ export function Chatbot() {
         model: msg.role === 'model' ? msg.text : '',
       }));
       
-      const result = await chat({ question: input, history });
+      // Use fast chat for better performance
+      const response = await fetch('/api/ai/fast-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          question: input,
+          history: history,
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get fast chat response');
+      }
+
+      const result = await response.json();
       const modelMessage: Message = { role: 'model', text: result.answer };
       setMessages((prev) => [...prev, modelMessage]);
     } catch (error) {
       console.error('Chatbot error:', error);
+      // Fallback response when AI is not available
+      const fallbackResponse = "I'm currently unavailable, but I'm here to help with your learning questions once my AI services are configured. Feel free to explore the courses and learning materials!";
+      const modelMessage: Message = { role: 'model', text: fallbackResponse };
+      setMessages((prev) => [...prev, modelMessage]);
       toast({
-        title: 'Error',
-        description: 'Could not get a response from the AI. Please try again.',
-        variant: 'destructive',
+        title: 'AI Service Unavailable',
+        description: 'Using fallback responses. AI features will work once API keys are configured.',
+        variant: 'default',
       });
-      setMessages(messages); // Revert to previous state
     } finally {
       setIsLoading(false);
     }
@@ -109,11 +128,15 @@ export function Chatbot() {
                   <div
                     className={`rounded-lg px-4 py-2 max-w-[80%] ${
                       message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
+                        ? 'bg-primary text-white'
                         : 'bg-muted'
                     }`}
                   >
-                    <div className="prose dark:prose-invert prose-sm max-w-none">
+                    <div className={`prose prose-sm max-w-none ${
+                      message.role === 'user' 
+                        ? 'prose-invert text-white [&>*]:text-white [&_strong]:text-white [&_em]:text-white [&_code]:text-white [&_a]:text-white' 
+                        : 'dark:prose-invert'
+                    }`}>
                       <ReactMarkdown>{message.text}</ReactMarkdown>
                     </div>
                   </div>

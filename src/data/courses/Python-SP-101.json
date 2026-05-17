@@ -9,7 +9,6 @@
         "title": "Your First Steps in Python",
         "duration": 20,
         "introduction": {
-          "videoUrl": "",
           "text": "Learn the building blocks of Python: variables to store data, different data types, operators for calculations, and how to get input from users."
         },
         "practice": {
@@ -28,7 +27,6 @@
         "title": "Making Decisions with Conditionals",
         "duration": 25,
         "introduction": {
-            "videoUrl": "",
             "text": "Learn how to control the flow of your program using `if`, `elif`, and `else` statements to make decisions based on different conditions."
         },
         "practice": { "questions": [] },
@@ -43,7 +41,6 @@
         "title": "Automating Tasks with Loops",
         "duration": 30,
         "introduction": {
-            "videoUrl": "",
             "text": "Discover `for` and `while` loops to repeat actions and automate repetitive tasks, making your code more efficient."
         },
         "practice": { "questions": [] },
@@ -58,7 +55,6 @@
         "title": "Working with Text: Strings",
         "duration": 20,
         "introduction": {
-            "videoUrl": "",
             "text": "Explore how to work with text data in Python. Learn about string manipulation, formatting, and common methods."
         },
         "practice": { "questions": [] },
@@ -73,7 +69,6 @@
         "title": "Organizing Data with Lists",
         "duration": 25,
         "introduction": {
-            "videoUrl": "",
             "text": "Learn about lists, a versatile data structure in Python to store collections of items. Cover indexing, slicing, and list methods."
         },
         "practice": { "questions": [] },
@@ -88,7 +83,6 @@
         "title": "Key-Value Pairs: Dictionaries",
         "duration": 25,
         "introduction": {
-            "videoUrl": "",
             "text": "Understand dictionaries, which allow you to store data in key-value pairs for fast lookups and organized data."
         },
         "practice": { "questions": [] },
@@ -103,7 +97,6 @@
         "title": "Immutable Collections: Tuples",
         "duration": 15,
         "introduction": {
-            "videoUrl": "",
             "text": "Learn about tuples, an immutable sequence type in Python, and understand when to use them instead of lists."
         },
         "practice": { "questions": [] },
@@ -118,7 +111,6 @@
         "title": "Creating Reusable Code with Functions",
         "duration": 35,
         "introduction": {
-            "videoUrl": "",
             "text": "Learn how to define and call your own functions to create modular, reusable, and organized code."
         },
         "practice": { "questions": [] },
@@ -133,7 +125,6 @@
         "title": "Sorting Data",
         "duration": 20,
         "introduction": {
-            "videoUrl": "",
             "text": "Explore different ways to sort data in Python, including using the `sorted()` function and the `.sort()` method for lists."
         },
         "practice": { "questions": [] },

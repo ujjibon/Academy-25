@@ -18,7 +18,6 @@ export type Lesson = {
   title: string;
   duration: number; // in minutes
   introduction: {
-    videoUrl: string;
     text: string;
   };
   practice: Quiz;

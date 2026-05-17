@@ -30,7 +30,7 @@ export function EditableLessonForm({ lesson, setLesson, onLessonChange, lessonIn
     setLesson?.(updatedLesson);
   };
   
-  const handleIntroductionChange = (field: 'text' | 'videoUrl', value: string) => {
+  const handleIntroductionChange = (field: 'text', value: string) => {
     const updatedLesson = { ...lesson, introduction: { ...lesson.introduction, [field]: value } };
     onLessonChange(lessonIndex, updatedLesson);
     setLesson?.(updatedLesson);
@@ -138,10 +138,6 @@ export function EditableLessonForm({ lesson, setLesson, onLessonChange, lessonIn
                      <div className="space-y-2">
                         <Label htmlFor={`intro-text-${lessonIndex}`}>Introduction Text</Label>
                         <Textarea id={`intro-text-${lessonIndex}`} value={lesson.introduction.text} onChange={e => handleIntroductionChange('text', e.target.value)} />
-                    </div>
-                     <div className="space-y-2">
-                        <Label htmlFor={`intro-video-${lessonIndex}`}>Video URL</Label>
-                        <Input id={`intro-video-${lessonIndex}`} value={lesson.introduction.videoUrl} onChange={e => handleIntroductionChange('videoUrl', e.target.value)} />
                     </div>
                 </AccordionContent>
             </AccordionItem>

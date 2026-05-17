@@ -32,7 +32,7 @@ export function ConnectionError({ error, onRetry, isLoading = false }: Connectio
               disabled={isLoading}
               variant="outline"
               size="sm"
-              className="border-orange-300 text-orange-700 hover:bg-orange-100"
+              className="border-orange-300 text-orange-700"
             >
               {isLoading ? (
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
