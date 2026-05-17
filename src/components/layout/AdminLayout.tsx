@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isUnauthorizedPage) return;
     if (!loading && !user) {
-      router.replace('/login?redirect=/admin-portal');
+      router.replace('/admin/login');
     } else if (!loading && user && userProfile && !isAdmin) {
       router.replace('/admin-portal/unauthorized');
     }
@@ -62,7 +62,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     try {
       await firebaseSignOut();
       toast({ title: 'Logged Out', description: 'Admin session ended.' });
-      router.push('/login');
+      router.push('/admin/login');
     } catch {
       toast({ title: 'Error', description: 'Failed to log out.', variant: 'destructive' });
     }

@@ -362,6 +362,35 @@
   color: rgb(var(--foreground));
 }
 
+.sidebar-section-label {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--muted-foreground));
+}
+
+.sidebar-nav-item {
+  border-radius: 0.75rem !important;
+  color: rgb(var(--foreground)) !important;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-nav-item:hover {
+  background: rgb(var(--primary) / 0.06) !important;
+  color: rgb(var(--primary)) !important;
+}
+
+.sidebar-nav-item-active,
+.sidebar-nav-item[data-active='true'] {
+  background: rgb(var(--primary) / 0.1) !important;
+  color: rgb(var(--primary)) !important;
+  font-weight: 600;
+}
+
 .badge-royal {
   display: inline-flex;
   align-items: center;

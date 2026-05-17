@@ -16,6 +16,7 @@ import { chat } from '@/ai/flows/chat-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '../Logo';
 import ReactMarkdown from 'react-markdown';
+import { useChatbot } from '@/hooks/use-chatbot';
 
 type Message = {
   role: 'user' | 'model';
@@ -23,7 +24,7 @@ type Message = {
 };
 
 export function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useChatbot();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -93,12 +94,15 @@ export function Chatbot() {
       <Button
         size="icon"
         className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
-        onClick={() => setIsOpen(true)}
+        onClick={open}
       >
         <Bot className="h-7 w-7" />
         <span className="sr-only">Open AI Chat</span>
       </Button>
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet
+        open={isOpen}
+        onOpenChange={(next) => (next ? open() : close())}
+      >
         <SheetContent className="w-full max-w-lg flex flex-col p-0">
           <SheetHeader className="p-4 border-b">
             <SheetTitle className="flex items-center gap-2">

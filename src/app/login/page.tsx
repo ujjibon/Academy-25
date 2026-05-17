@@ -36,6 +36,10 @@ export default function LoginPage() {
           <Link href="/signup" className="font-medium text-primary hover:text-royal-light">
             Sign up
           </Link>
+          <span className="mx-2 text-muted-foreground/50">·</span>
+          <Link href="/admin/login" className="font-medium text-muted-foreground hover:text-foreground">
+            Admin sign in
+          </Link>
         </>
       }
     >

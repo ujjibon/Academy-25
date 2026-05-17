@@ -31,7 +31,7 @@ export default function AdminUnauthorizedPage() {
             <Link href="/dashboard">Go to learner dashboard</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/login?redirect=/admin-portal">Sign in with another account</Link>
+            <Link href="/admin/login">Sign in with an admin account</Link>
           </Button>
         </CardContent>
       </Card>
