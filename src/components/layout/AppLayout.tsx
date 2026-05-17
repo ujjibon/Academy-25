@@ -92,12 +92,19 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   const displayXP = userProfile?.xp || 0;
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="dashboard-shell">
       <Sidebar>
-        <SidebarHeader>
+        <SidebarHeader className="border-b border-sidebar-border/60 pb-4">
           <Logo />
         </SidebarHeader>
         <SidebarContent>
+          <div className="sidebar-signed-in">
+            Signed in as
+            <strong>{displayName}</strong>
+          </div>
+          <p className="px-4 pb-2 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            Main
+          </p>
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.href}>
@@ -105,6 +112,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                   asChild
                   isActive={pathname.startsWith(item.href)}
                   tooltip={item.label}
+                  className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-medium rounded-xl"
                 >
                   <Link href={item.href}>
                     <item.icon />
@@ -167,7 +175,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+        <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b border-border/60 glass px-6">
            <SidebarTrigger className="md:hidden" />
            <div className="flex-1">
              {/* Can add breadcrumbs or page title here */}
@@ -187,7 +195,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
              )}
            </div>
         </header>
-        <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
         <Chatbot />
       </SidebarInset>
     </SidebarProvider>

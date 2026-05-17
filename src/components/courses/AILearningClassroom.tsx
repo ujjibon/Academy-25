@@ -341,23 +341,23 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
     switch (visualData.type) {
       case 'chart':
         return (
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950/20 dark:to-indigo-950/20 p-6 rounded-lg">
-            <BarChart3 className="h-16 w-16 mx-auto text-blue-600 mb-4" />
-            <p className="text-center text-blue-800 dark:text-blue-200">Interactive Chart</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <BarChart3 className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Interactive Chart</p>
           </div>
         );
       case 'diagram':
         return (
-          <div className="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-950/20 dark:to-emerald-950/20 p-6 rounded-lg">
-            <PieChart className="h-16 w-16 mx-auto text-green-600 mb-4" />
-            <p className="text-center text-green-800 dark:text-green-200">Concept Diagram</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <PieChart className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Concept Diagram</p>
           </div>
         );
       case 'image':
         return (
-          <div className="bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-950/20 dark:to-pink-950/20 p-6 rounded-lg">
-            <ImageIcon className="h-16 w-16 mx-auto text-purple-600 mb-4" />
-            <p className="text-center text-purple-800 dark:text-purple-200">Visual Example</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <ImageIcon className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Visual Example</p>
           </div>
         );
       case 'video':
@@ -369,16 +369,16 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
         );
       case 'code':
         return (
-          <div className="bg-gradient-to-br from-gray-50 to-slate-100 dark:from-gray-950/20 dark:to-slate-950/20 p-6 rounded-lg">
-            <FileText className="h-16 w-16 mx-auto text-gray-600 mb-4" />
-            <p className="text-center text-gray-800 dark:text-gray-200">Code Example</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <FileText className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Code Example</p>
           </div>
         );
       case 'infographic':
         return (
-          <div className="bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-indigo-950/20 dark:to-purple-950/20 p-6 rounded-lg">
-            <TrendingUp className="h-16 w-16 mx-auto text-indigo-600 mb-4" />
-            <p className="text-center text-indigo-800 dark:text-indigo-200">Infographic</p>
+          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+            <TrendingUp className="h-16 w-16 mx-auto text-primary mb-4" />
+            <p className="text-center text-foreground">Infographic</p>
           </div>
         );
       default:
@@ -421,7 +421,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
       classroomState.isFullscreen && "fixed inset-0 z-50 h-screen"
     )}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20">
+      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-secondary to-background-elevated">
         <div className="flex items-center gap-4">
           <Presentation className="h-6 w-6 text-primary" />
           <div>
@@ -489,7 +489,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
           </div>
 
           {/* Controls */}
-          <div className="border-t p-4 bg-gray-50 dark:bg-gray-800">
+          <div className="border-t p-4 bg-secondary/50">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Button
@@ -550,7 +550,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
         </div>
 
         {/* Sidebar - Slide Navigation */}
-        <div className="w-80 border-l bg-gray-50 dark:bg-gray-800">
+        <div className="w-80 border-l bg-secondary/50">
           <div className="p-4 border-b">
             <h3 className="font-semibold">Slide Navigation</h3>
           </div>
@@ -585,3 +585,4 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
     </div>
   );
 }
+

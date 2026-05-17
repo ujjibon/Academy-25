@@ -15,7 +15,7 @@ export function StrengthsWeaknessesChart({ userProfile }: StrengthsWeaknessesCha
     const chartData = [...userProfile.strengths, ...userProfile.weaknesses].map(skill => ({
         name: skill.name,
         value: skill.value,
-        fill: skill.value >= 60 ? 'hsl(var(--primary))' : 'hsl(var(--destructive))'
+        fill: skill.value >= 60 ? 'rgb(var(--primary))' : 'rgb(var(--flare))'
     }));
 
     if (chartData.length === 0) {

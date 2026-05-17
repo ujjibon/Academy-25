@@ -1,10 +1,18 @@
-import { Rocket } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-export function Logo() {
+interface LogoProps {
+  className?: string;
+}
+
+export function Logo({ className }: LogoProps) {
   return (
-    <div className="flex items-center gap-2">
-      <Rocket className="h-6 w-6 text-primary" />
-      <span className="text-xl font-bold">Peer Academy</span>
+    <div className={cn('flex items-center gap-2.5', className)}>
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+        P
+      </span>
+      <span className="font-dashboard-title text-lg font-bold tracking-tight text-foreground">
+        Peer <span className="text-primary">Academy</span>
+      </span>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 'use client';
+
 import Link from 'next/link';
-import { Logo } from '@/components/Logo';
 import { SignUpForm } from '@/components/auth/SignUpForm';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AuthShell } from '@/components/marketing/auth-shell';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -17,37 +17,29 @@ export default function SignUpPage() {
       router.replace('/dashboard');
     }
   }, [user, loading, router]);
-  
+
   if (loading || user) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-background">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-muted/40 p-4">
-       <div className="absolute top-8 left-8">
-        <Link href="/">
-          <Logo />
-        </Link>
-      </div>
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight">Create an Account</CardTitle>
-          <CardDescription>Start your learning journey with Peer Academy today.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SignUpForm />
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{' '}
-            <Link href="/login" className="underline text-primary">
-              Log in
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <AuthShell
+      title="Create your account"
+      description="Start your learning journey with Peer Academy today."
+      footer={
+        <>
+          Already have an account?{' '}
+          <Link href="/login" className="font-medium text-primary hover:text-royal-light">
+            Log in
+          </Link>
+        </>
+      }
+    >
+      <SignUpForm />
+    </AuthShell>
   );
 }

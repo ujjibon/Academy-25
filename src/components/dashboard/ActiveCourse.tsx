@@ -1,17 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { ArrowRight, ArrowUpRight, BookOpen } from 'lucide-react';
 import { getCourse } from '@/lib/data-provider';
 import { UserProfile } from '@/lib/firebase';
-import { ArrowRight, BookOpen } from 'lucide-react';
 
 interface ActiveCourseProps {
   userProfile: UserProfile;
@@ -19,86 +10,76 @@ interface ActiveCourseProps {
 
 export function ActiveCourse({ userProfile }: ActiveCourseProps) {
   const activeCourse = getCourse(userProfile.activeCourseId || '');
-  
+
   if (!activeCourse) {
     return (
-      <Card className="flex flex-col h-full">
-        <CardHeader>
-          <CardTitle>Start Learning</CardTitle>
-          <CardDescription>
-            Choose a course to begin your learning journey.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow flex items-center justify-center">
-          <div className="text-center text-muted-foreground">
-            <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-50" />
-            <p>No active course selected</p>
-            <p className="text-sm">Browse courses to get started</p>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button asChild className="w-full">
-            <Link href="/courses">
-              Browse Courses <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </CardFooter>
-      </Card>
+      <section className="dashboard-panel flex h-full min-h-[11rem] flex-col p-6">
+        <span className="dashboard-kicker mb-4">Active course</span>
+        <div className="flex flex-1 flex-col items-center justify-center text-center py-4">
+          <BookOpen className="h-12 w-12 text-muted-foreground/40 mb-3" />
+          <p className="font-heading font-semibold text-foreground">Start learning</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Choose a course to begin your journey
+          </p>
+        </div>
+        <Link href="/courses" className="brand-button w-fit gap-2 mt-4">
+          Browse courses
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </section>
     );
   }
 
-  const nextLesson = activeCourse.lessons.find(l => l.id === userProfile.activeLessonId);
-  const progress = userProfile.courseProgress[activeCourse.id] || 0;
+  const nextLesson = activeCourse.lessons.find((l) => l.id === userProfile.activeLessonId);
+  const progress = Math.round(userProfile.courseProgress[activeCourse.id] || 0);
+  const lessonHref = `/courses/${activeCourse.id}/${userProfile.activeLessonId || activeCourse.lessons[0]?.id || '1'}`;
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader>
-        <CardTitle>Continue Learning</CardTitle>
-        <CardDescription>
-          Pick up where you left off in your learning journey.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Image
-            src={activeCourse.image}
-            alt={activeCourse.title}
-            width={150}
-            height={100}
-            className="rounded-lg object-cover"
-            data-ai-hint="learning course"
-          />
-          <div className="flex flex-col">
-            <p className="text-sm text-muted-foreground">Course</p>
-            <h3 className="text-lg font-semibold">{activeCourse.title}</h3>
-            <div className="mt-2">
-              <div className="flex justify-between text-sm text-muted-foreground mb-1">
-                <span>Progress</span>
-                <span>{Math.round(progress)}%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
-                  className="bg-primary h-2 rounded-full transition-all duration-300" 
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
+    <section className="dashboard-panel flex h-full min-h-[11rem] flex-col p-6">
+      <header className="flex items-start justify-between mb-4">
+        <span className="dashboard-kicker">Continue learning</span>
+        <Link
+          href={lessonHref}
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-foreground/5 text-foreground hover:bg-foreground/10"
+        >
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </Link>
+      </header>
+      <div className="flex flex-1 gap-4">
+        <Image
+          src={activeCourse.image}
+          alt={activeCourse.title}
+          width={120}
+          height={80}
+          className="rounded-xl object-cover h-20 w-28 shrink-0"
+          data-ai-hint="learning course"
+        />
+        <div className="flex flex-col min-w-0 flex-1">
+          <p className="text-xs text-muted-foreground uppercase tracking-wide">Course</p>
+          <h3 className="font-heading font-semibold text-lg truncate">{activeCourse.title}</h3>
+          <div className="mt-3">
+            <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
+              <span>Progress</span>
+              <span className="font-medium text-foreground">{progress}%</span>
             </div>
-            {nextLesson && (
-                <>
-                <p className="text-sm text-muted-foreground mt-2">Next up</p>
-                <h4 className="text-md font-medium">{nextLesson.title}</h4>
-                </>
-            )}
+            <div className="progress-brand">
+              <span
+                className="progress-brand-fill block h-full"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
+          {nextLesson ? (
+            <p className="text-sm text-muted-foreground mt-3 truncate">
+              Next: <span className="text-foreground font-medium">{nextLesson.title}</span>
+            </p>
+          ) : null}
         </div>
-      </CardContent>
-      <CardFooter>
-        <Button asChild className="w-full sm:w-auto">
-          <Link href={`/courses/${activeCourse.id}/${userProfile.activeLessonId || '1'}`}>
-            Go to Lesson <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+      <Link href={lessonHref} className="brand-button w-fit gap-2 mt-5">
+        Go to lesson
+        <ArrowRight className="h-4 w-4" />
+      </Link>
+    </section>
   );
 }

@@ -360,19 +360,19 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                 <p>{lesson.introduction.text}</p>
               </div>
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 p-6 rounded-lg border">
-                  <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center gap-2">
+                <div className="bg-gradient-to-r from-secondary to-background-elevated p-6 rounded-lg border">
+                  <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <Lightbulb className="h-5 w-5" />
                     AI Learning Assistant
                   </h4>
-                  <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                  <p className="text-sm text-muted-foreground mb-4">
                     Need help understanding this concept? Our AI tutor can explain it in different ways, provide examples, or answer your questions.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="border-blue-200 text-blue-700 dark:border-blue-800 dark:text-blue-300"
+                      className="border-border text-primary"
                       onClick={() => {
                         // Scroll to the AI tutor and trigger a message
                         const tutorElement = document.querySelector('[data-ai-tutor]');
@@ -393,7 +393,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="border-blue-200 text-blue-700 dark:border-blue-800 dark:text-blue-300"
+                      className="border-border text-primary"
                       onClick={() => {
                         const tutorElement = document.querySelector('[data-ai-tutor]');
                         if (tutorElement) {
@@ -412,7 +412,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="border-blue-200 text-blue-700 dark:border-blue-800 dark:text-blue-300"
+                      className="border-border text-primary"
                       onClick={() => {
                         const tutorElement = document.querySelector('[data-ai-tutor]');
                         if (tutorElement) {
@@ -431,12 +431,12 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 p-6 rounded-lg border">
-                  <h4 className="font-semibold text-green-900 dark:text-green-100 mb-3 flex items-center gap-2">
+                <div className="bg-gradient-to-r from-secondary to-background-elevated p-6 rounded-lg border">
+                  <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5" />
                     Learning Checkpoint
                   </h4>
-                  <p className="text-sm text-green-800 dark:text-green-200 mb-4">
+                  <p className="text-sm text-muted-foreground mb-4">
                     Test your understanding before moving to practice questions.
                   </p>
                   <div className="space-y-2">
@@ -502,8 +502,8 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 p-4 rounded-lg">
-                <p className="text-sm text-blue-800 dark:text-blue-200 mb-3">
+              <div className="bg-gradient-to-r from-secondary to-background-elevated p-4 rounded-lg">
+                <p className="text-sm text-muted-foreground mb-3">
                   💡 <strong>Practice Tips:</strong> Take your time with each question. If you get stuck, use the AI hints!
                 </p>
                 <div className="flex gap-2">
@@ -642,7 +642,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 p-4 rounded-lg">
+              <div className="bg-gradient-to-r from-secondary to-background-elevated p-4 rounded-lg">
                 <p className="text-sm text-purple-800 dark:text-purple-200 mb-3">
                   🎯 <strong>Assessment Tips:</strong> This is your chance to demonstrate your understanding. Take your time and think through each question carefully.
                 </p>

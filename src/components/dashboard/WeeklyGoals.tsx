@@ -1,60 +1,51 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import Link from 'next/link';
+import { ArrowUpRight, Target } from 'lucide-react';
 import { UserProfile } from '@/lib/firebase';
-import { Target, TrendingUp } from 'lucide-react';
 
 interface WeeklyGoalsProps {
   userProfile: UserProfile;
 }
 
 export function WeeklyGoals({ userProfile }: WeeklyGoalsProps) {
-  const weeklyGoal = 100; // Default weekly goal
+  const weeklyGoal = 100;
   const currentProgress = userProfile.weeklyProgress || 0;
   const progressPercentage = Math.min((currentProgress / weeklyGoal) * 100, 100);
+  const roadmapStages = 6;
+  const completedStages = Math.min(
+    roadmapStages,
+    Math.floor(progressPercentage / (100 / roadmapStages))
+  );
 
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Target className="h-5 w-5" />
-          Weekly Goal
-        </CardTitle>
-        <CardDescription>Your progress for this week.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Progress</span>
-            <span className="text-sm text-muted-foreground">
-              {currentProgress}/{weeklyGoal} XP
-            </span>
-          </div>
-          <Progress value={progressPercentage} className="h-3" />
-          <div className="space-y-2">
-            <p className="text-sm font-medium">
-              {progressPercentage >= 100 ? '🎉 Goal achieved!' : `${Math.round(progressPercentage)}% of your goal`}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {progressPercentage >= 100 
-                ? 'Amazing work! You\'ve hit your weekly target.' 
-                : 'Keep up the great work to build your streak!'
-              }
-            </p>
-          </div>
-          {userProfile.dailyStreak > 0 && (
-            <div className="flex items-center gap-2 text-sm text-primary">
-              <TrendingUp className="h-4 w-4" />
-              <span>{userProfile.dailyStreak} day streak!</span>
-            </div>
-          )}
+    <Link
+      href="/profile"
+      className="dashboard-panel relative flex h-full min-h-[11rem] flex-col p-6 group block hover:border-foreground/20 transition-colors"
+    >
+      <span className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full bg-foreground/5 text-foreground">
+        <ArrowUpRight className="h-3.5 w-3.5" />
+      </span>
+      <div className="flex items-center gap-2 mb-4">
+        <Target className="h-4 w-4 text-primary" />
+        <span className="text-sm font-semibold text-foreground">Next best move</span>
+      </div>
+      <p className="font-dashboard-title text-3xl font-bold tracking-tight text-foreground">
+        {completedStages} of {roadmapStages}
+      </p>
+      <p className="text-sm text-muted-foreground mt-1">roadmap stages complete</p>
+      <div className="mt-auto pt-5 space-y-2">
+        <div className="flex justify-between text-xs text-muted-foreground">
+          <span>Weekly XP goal</span>
+          <span>
+            {currentProgress}/{weeklyGoal}
+          </span>
         </div>
-      </CardContent>
-    </Card>
+        <div className="progress-brand">
+          <div
+            className="progress-brand-fill"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
+      </div>
+    </Link>
   );
 }

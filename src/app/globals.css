@@ -54,7 +54,7 @@
   --chart-4: 255 20 20;
   --chart-5: 29 47 181;
 
-  --sidebar: 230 232 241;
+  --sidebar: 255 255 255;
   --sidebar-foreground: 0 11 88;
   --sidebar-primary: 0 19 158;
   --sidebar-primary-foreground: 255 255 255;
@@ -195,11 +195,171 @@
 }
 
 .brand-card-flare {
-  background: rgb(var(--flare));
+  background: linear-gradient(
+    145deg,
+    rgb(var(--flare-light)) 0%,
+    rgb(var(--flare)) 52%,
+    rgb(210 24 24) 100%
+  );
   color: #fff;
   border: none;
   border-radius: var(--radius);
   box-shadow: none;
+}
+
+/* ── Dashboard cards (Peer Portal layout) ─────────────── */
+
+.stat-card {
+  position: relative;
+  display: flex;
+  min-height: 8.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.35rem;
+}
+.stat-card-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+.stat-card-value {
+  font-family: var(--font-manrope), Manrope, Inter, sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.stat-card-sub {
+  font-size: 0.8rem;
+  opacity: 0.78;
+}
+.stat-card-link {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.14);
+  color: inherit;
+  transition: background 0.2s ease;
+}
+.stat-card-link:hover {
+  background: rgb(255 255 255 / 0.24);
+}
+.stat-card-royal {
+  background: linear-gradient(
+    145deg,
+    rgb(var(--royal-light)) 0%,
+    rgb(var(--royal)) 42%,
+    rgb(var(--midnight)) 100%
+  );
+  color: #fff;
+  box-shadow: 0 10px 28px rgb(var(--midnight) / 0.18);
+}
+.stat-card-muted {
+  background: rgb(var(--background-elevated));
+  border: 1px solid rgb(var(--border));
+  color: rgb(var(--foreground));
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+}
+.stat-card-muted .stat-card-label {
+  color: rgb(var(--muted-foreground));
+  opacity: 1;
+}
+.stat-card-muted .stat-card-sub {
+  color: rgb(var(--muted-foreground));
+  opacity: 1;
+}
+.stat-card-flare {
+  background: linear-gradient(
+    145deg,
+    rgb(var(--flare-light)) 0%,
+    rgb(var(--flare)) 50%,
+    rgb(210 24 24) 100%
+  );
+  color: #fff;
+  box-shadow: 0 10px 28px rgb(var(--flare) / 0.22);
+}
+
+.dashboard-panel {
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  box-shadow:
+    0 2px 8px rgb(var(--midnight) / 0.05),
+    0 8px 24px rgb(var(--midnight) / 0.05);
+}
+.dashboard-hero {
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  box-shadow:
+    0 2px 8px rgb(var(--midnight) / 0.05),
+    0 12px 32px rgb(var(--midnight) / 0.06);
+}
+.dashboard-widget {
+  background: rgb(var(--primary) / 0.06);
+  border: 1px solid rgb(var(--primary) / 0.1);
+  border-radius: calc(var(--radius) - 6px);
+  padding: 1rem 1.1rem;
+}
+.cta-band-royal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    102deg,
+    rgb(var(--midnight)) 0%,
+    rgb(var(--royal)) 48%,
+    rgb(var(--royal-light)) 100%
+  );
+  color: #fff;
+  padding: 1.65rem 1.85rem;
+  box-shadow: 0 12px 36px rgb(var(--midnight) / 0.2);
+}
+.cta-band-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: #fff;
+  color: rgb(var(--midnight));
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.cta-band-button:hover {
+  background: rgb(255 255 255 / 0.92);
+  transform: scale(0.98);
+}
+.sidebar-signed-in {
+  margin: 0 0.75rem 0.5rem;
+  border-radius: calc(var(--radius) - 8px);
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--background-elevated) / 0.7);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.75rem;
+  color: rgb(var(--muted-foreground));
+}
+.sidebar-signed-in strong {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--foreground));
 }
 
 .badge-royal {
@@ -266,7 +426,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   html {
     scroll-behavior: smooth;
@@ -379,15 +539,45 @@
   border-radius: var(--radius);
   box-shadow: 0 2px 16px rgb(var(--midnight) / 0.07);
 }
+.glass-strong {
+  background-color: rgb(255 255 255 / 0.88);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgb(var(--slate) / 0.22);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 24px rgb(var(--midnight) / 0.08);
+}
+
+.hover-lift {
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgb(var(--midnight) / 0.1);
+}
+
+.dashboard-kicker {
+  @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground;
+  border-color: rgb(var(--border) / 0.82);
+  background: rgb(var(--background-elevated) / 0.65);
+}
+
+@keyframes aurora-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25%      { transform: translate3d(72px, -48px, 0) scale(1.1); }
+  55%      { transform: translate3d(-56px, 44px, 0) scale(0.94); }
+  78%      { transform: translate3d(34px, 58px, 0) scale(1.04); }
+}
+@keyframes aurora-sweep {
+  0%, 100% { transform: translate3d(-9%, 0, 0) rotate(-12deg); opacity: 0.28; }
+  45%      { transform: translate3d(12%, 7%, 0) rotate(-8deg); opacity: 0.58; }
+  72%      { transform: translate3d(3%, -5%, 0) rotate(-15deg); opacity: 0.42; }
+}
+.animate-aurora { animation: aurora-drift 12s ease-in-out infinite; will-change: transform; }
+.animate-aurora-sweep { animation: aurora-sweep 14s ease-in-out infinite; will-change: transform, opacity; }
 
 .dashboard-shell {
   background: rgb(var(--background));
-}
-.dashboard-panel {
-  background: rgb(var(--card));
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px rgb(var(--midnight) / 0.05),
-              0 8px 24px rgb(var(--midnight) / 0.05);
 }
 .dashboard-stat {
   border: 1px solid rgb(var(--border));

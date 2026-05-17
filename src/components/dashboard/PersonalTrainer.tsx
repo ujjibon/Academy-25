@@ -1,19 +1,8 @@
 'use client';
+
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card';
-import {
-  BrainCircuit,
-  Loader2,
-  RefreshCw,
-} from 'lucide-react';
+import Link from 'next/link';
+import { BrainCircuit, Loader2, RefreshCw } from 'lucide-react';
 import { generateDashboardSuggestion } from '@/ai/flows/generate-dashboard-suggestion';
 import { useToast } from '@/hooks/use-toast';
 import { getCourse } from '@/lib/data-provider';
@@ -35,26 +24,22 @@ export function PersonalTrainer({ userProfile }: PersonalTrainerProps) {
       const activeCourse = getCourse(userProfile.activeCourseId || '');
       const result = await generateDashboardSuggestion({
         activeCourse: activeCourse?.title || 'None',
-        strengths: userProfile.strengths.map(s => s.name),
-        weaknesses: userProfile.weaknesses.map(w => w.name),
+        strengths: userProfile.strengths.map((s) => s.name),
+        weaknesses: userProfile.weaknesses.map((w) => w.name),
       });
       setSuggestion(result.suggestion);
-    } catch (error) {
-      console.error(error);
-      // Fallback suggestions when AI is not available
+    } catch {
       const fallbackSuggestions = [
-        "Keep up the great work! Consistency is key to mastering new skills.",
-        "You're making excellent progress! Consider reviewing previous lessons to reinforce your learning.",
-        "Great job on your learning journey! Try to practice what you've learned today.",
-        "You're doing amazing! Remember to take breaks and stay hydrated while learning.",
-        "Excellent work! Consider sharing what you've learned with others to deepen your understanding."
+        'Keep up the great work! Consistency is key to mastering new skills.',
+        "You're making excellent progress! Review previous lessons to reinforce learning.",
+        'Great job! Try to practice what you learned today.',
       ];
-      const randomSuggestion = fallbackSuggestions[Math.floor(Math.random() * fallbackSuggestions.length)];
-      setSuggestion(randomSuggestion);
+      setSuggestion(
+        fallbackSuggestions[Math.floor(Math.random() * fallbackSuggestions.length)]
+      );
       toast({
         title: 'AI Service Unavailable',
-        description: 'Using fallback suggestions. AI features will work once API keys are configured.',
-        variant: 'default',
+        description: 'Using fallback suggestions until AI is configured.',
       });
     } finally {
       setIsLoading(false);
@@ -63,35 +48,57 @@ export function PersonalTrainer({ userProfile }: PersonalTrainerProps) {
 
   useEffect(() => {
     fetchSuggestion();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile.activeCourseId, userProfile.strengths, userProfile.weaknesses]);
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader>
-        <CardTitle>AI Personal Coach</CardTitle>
-        <CardDescription>Your daily dose of personalized guidance.</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow flex items-center justify-center text-center">
+    <section className="brand-card-flare p-6 md:p-7">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-white/85 text-sm font-medium">
+            <BrainCircuit className="h-4 w-4" />
+            Career roadmap
+          </div>
+          <h2 className="font-heading text-xl font-semibold text-white sm:text-2xl">
+            Your AI coach insight
+          </h2>
+        </div>
+        <button
+          type="button"
+          onClick={fetchSuggestion}
+          disabled={isLoading}
+          className="cta-band-button shrink-0 self-start"
+        >
+          {isLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCw className="h-4 w-4" />
+          )}
+          Refresh tip
+        </button>
+      </div>
+
+      <div className="mt-4 min-h-[4.5rem] rounded-xl bg-white/10 p-4 text-white/90">
         {isLoading ? (
-          <div className="flex flex-col items-center gap-2 text-muted-foreground">
-             <Loader2 className="h-8 w-8 animate-spin" />
-             <p>Thinking of a suggestion...</p>
+          <div className="flex items-center gap-2 text-white/70 text-sm">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            Thinking of a suggestion…
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-4">
-             <BrainCircuit className="h-10 w-10 text-primary" />
-              <div className="prose prose-lg dark:prose-invert max-w-none">
-                <ReactMarkdown>{suggestion}</ReactMarkdown>
-              </div>
+          <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1">
+            <ReactMarkdown>{suggestion}</ReactMarkdown>
           </div>
         )}
-      </CardContent>
-       <CardFooter>
-        <Button onClick={fetchSuggestion} disabled={isLoading} variant="outline" className="w-full">
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Get another suggestion
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+
+      <Link
+        href={userProfile.activeCourseId ? `/courses/${userProfile.activeCourseId}` : '/courses'}
+        className="mt-4 inline-flex text-sm font-medium text-white underline-offset-4 hover:underline"
+      >
+        View learning path →
+      </Link>
+    </section>
   );
 }
+
+
