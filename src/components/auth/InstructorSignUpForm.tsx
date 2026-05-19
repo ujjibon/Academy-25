@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -15,7 +16,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { signInWithGoogle, signUpWithEmail } from '@/lib/firebase';
+import { signInWithGoogle, signUpWithEmail, setPendingSignupRole } from '@/lib/firebase';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -23,71 +25,83 @@ const formSchema = z.object({
   password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
 });
 
-export function SignUpForm() {
+const INSTRUCTOR_HOME = '/instructor/dashboard';
+
+export function InstructorSignUpForm() {
   const { toast } = useToast();
   const router = useRouter();
+  const [busy, setBusy] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
+    defaultValues: { name: '', email: '', password: '' },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setBusy(true);
     try {
       await signUpWithEmail(values.email, values.password, {
         displayName: values.name,
-        role: 'learner',
+        role: 'instructor',
       });
       toast({
-        title: 'Account Created',
-        description: "Welcome to Peer Academy! We're glad to have you.",
+        title: 'Account created',
+        description: 'Welcome to the instructor portal.',
       });
-      router.push('/dashboard');
+      router.push(INSTRUCTOR_HOME);
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Could not create account.';
       toast({ title: 'Sign-up failed', description: message, variant: 'destructive' });
+    } finally {
+      setBusy(false);
     }
   }
-  
-  const handleGoogleSignIn = async () => {
+
+  const handleGoogleSignUp = async () => {
+    setBusy(true);
     try {
+      setPendingSignupRole('instructor');
       const result = await signInWithGoogle();
-      if (!result) return; // redirecting to Google — page will reload
+      if (!result) return;
       toast({
-        title: 'Account Created',
-        description: 'Successfully signed in with Google.',
+        title: 'Account created',
+        description: 'Signed up with Google as an instructor.',
       });
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Google Sign-In Error:', error);
-      toast({
-        title: 'Sign Up Failed',
-        description: 'Could not sign in with Google. Please try again.',
-        variant: 'destructive',
-      });
+      router.push(INSTRUCTOR_HOME);
+    } catch (error: unknown) {
+      setPendingSignupRole(null);
+      const message = error instanceof Error ? error.message : 'Could not sign up with Google.';
+      toast({ title: 'Sign-up failed', description: message, variant: 'destructive' });
+    } finally {
+      setBusy(false);
     }
   };
 
   return (
     <div className="space-y-4">
-      <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
-        <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-72.2 72.2C297.1 114.5 273.5 104 248 104 177.1 104 118 163 118 234s59.1 130 130 130c58.9 0 101.4-34.4 113.4-78h-113.4v-94.2h216.5c2.9 16.2 4.5 33.3 4.5 50.8z"></path></svg>
+      <Button variant="outline" className="w-full rounded-2xl" onClick={handleGoogleSignUp} disabled={busy}>
+        {busy ? (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <svg className="mr-2 h-4 w-4" aria-hidden viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg">
+            <path
+              fill="currentColor"
+              d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-72.2 72.2C297.1 114.5 273.5 104 248 104 177.1 104 118 163 118 234s59.1 130 130 130c58.9 0 101.4-34.4 113.4-78h-113.4v-94.2h216.5c2.9 16.2 4.5 33.3 4.5 50.8z"
+            />
+          </svg>
+        )}
         Sign up with Google
       </Button>
+
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
+          <span className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with email
-          </span>
+          <span className="bg-card px-2 text-muted-foreground">Or email</span>
         </div>
       </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -95,9 +109,9 @@ export function SignUpForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Full name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Alex Doe" {...field} />
+                  <Input placeholder="Jane Instructor" autoComplete="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,7 +124,7 @@ export function SignUpForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="you@example.com" {...field} />
+                  <Input placeholder="you@school.edu" autoComplete="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,14 +137,14 @@ export function SignUpForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
+                  <Input type="password" placeholder="••••••••" autoComplete="new-password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Create Account
+          <Button type="submit" className="w-full brand-button" disabled={busy}>
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Create instructor account'}
           </Button>
         </form>
       </Form>

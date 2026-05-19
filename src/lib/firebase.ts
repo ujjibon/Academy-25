@@ -4,7 +4,7 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, User } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, Auth, User } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, Firestore } from 'firebase/firestore';
 import { isAdminEmail, type UserRole } from '@/lib/admin';
 
@@ -44,6 +44,23 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
+
+const SIGNUP_ROLE_KEY = 'peer_academy_signup_role';
+
+export type ProfileRoleOption = 'learner' | 'instructor';
+
+export function setPendingSignupRole(role: ProfileRoleOption | null) {
+  if (typeof window === 'undefined') return;
+  if (role) sessionStorage.setItem(SIGNUP_ROLE_KEY, role);
+  else sessionStorage.removeItem(SIGNUP_ROLE_KEY);
+}
+
+function consumePendingSignupRole(): ProfileRoleOption | undefined {
+  if (typeof window === 'undefined') return undefined;
+  const role = sessionStorage.getItem(SIGNUP_ROLE_KEY) as ProfileRoleOption | null;
+  sessionStorage.removeItem(SIGNUP_ROLE_KEY);
+  return role === 'instructor' || role === 'learner' ? role : undefined;
+}
 
 // Enable offline persistence immediately after Firestore initialization
 if (typeof window !== 'undefined') {
@@ -245,7 +262,16 @@ export const signInWithEmail = async (email: string, password: string) => {
   }
 };
 
-export const signUpWithEmail = async (email: string, password: string) => {
+export type CreateProfileOptions = {
+  displayName?: string;
+  role?: ProfileRoleOption;
+};
+
+export const signUpWithEmail = async (
+  email: string,
+  password: string,
+  options?: CreateProfileOptions
+) => {
   try {
     const isConnected = await checkFirebaseBasicConnection();
     if (!isConnected) {
@@ -253,12 +279,17 @@ export const signUpWithEmail = async (email: string, password: string) => {
     }
 
     const result = await createUserWithEmailAndPassword(auth, email, password);
-    
-    // Create user profile in Firestore
+
     if (result.user) {
-      await createOrUpdateUserProfile(result.user);
+      if (options?.displayName) {
+        await updateProfile(result.user, { displayName: options.displayName });
+      }
+      await createOrUpdateUserProfile(result.user, {
+        displayName: options?.displayName,
+        role: options?.role ?? consumePendingSignupRole() ?? 'learner',
+      });
     }
-    
+
     return result;
   } catch (error: any) {
     if (error.message.includes('Unable to connect to Firebase')) {
@@ -292,7 +323,10 @@ export interface UserProfile {
 
 export type { UserRole };
 
-export const createOrUpdateUserProfile = async (firebaseUser: User) => {
+export const createOrUpdateUserProfile = async (
+  firebaseUser: User,
+  options?: CreateProfileOptions
+) => {
   try {
     console.log('🔄 Creating/updating user profile for:', firebaseUser.email, 'UID:', firebaseUser.uid);
     
@@ -303,12 +337,17 @@ export const createOrUpdateUserProfile = async (firebaseUser: User) => {
       console.log('📝 Creating new user profile...');
       // Create new user profile
       const email = firebaseUser.email || '';
+      const pendingRole = options?.role ?? consumePendingSignupRole();
       const newProfile: UserProfile = {
         uid: firebaseUser.uid,
         email,
-        displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+        displayName:
+          options?.displayName ||
+          firebaseUser.displayName ||
+          firebaseUser.email?.split('@')[0] ||
+          'User',
         photoURL: firebaseUser.photoURL || undefined,
-        role: isAdminEmail(email) ? 'admin' : 'user',
+        role: isAdminEmail(email) ? 'admin' : pendingRole ?? 'learner',
         createdAt: new Date(),
         lastLoginAt: new Date(),
         xp: 0,
@@ -572,7 +611,7 @@ export const getAllUsers = async (maxUsers = 100): Promise<UserProfile[]> => {
   }
 };
 
-export const setUserRole = async (targetUid: string, role: UserRole) => {
+export const setUserRole = async (targetUid: string, role: UserRole | 'learner' | 'instructor') => {
   if (!shouldAttemptFirestoreOperation()) {
     throw new Error('Database is currently unavailable.');
   }

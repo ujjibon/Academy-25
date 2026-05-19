@@ -9,6 +9,7 @@ import { WeeklyGoals } from '@/components/dashboard/WeeklyGoals';
 import { ActiveCourse } from '@/components/dashboard/ActiveCourse';
 import { PersonalTrainer } from '@/components/dashboard/PersonalTrainer';
 import { StrengthsWeaknessesChart } from '@/components/dashboard/StrengthsWeaknessesChart';
+import { UpcomingAssignments } from '@/components/dashboard/UpcomingAssignments';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConnectionError } from '@/components/ui/connection-error';
 
@@ -78,6 +79,16 @@ export default function DashboardPage() {
           <WeeklyGoals userProfile={userProfile} />
           <PersonalTrainer userProfile={userProfile} />
         </div>
+
+        <section className="dashboard-panel p-6">
+          <header className="mb-4">
+            <span className="dashboard-kicker">Classwork</span>
+            <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">
+              Upcoming assignments
+            </h2>
+          </header>
+          <UpcomingAssignments userId={userProfile.uid} />
+        </section>
 
         <section className="dashboard-panel p-6">
           <header className="mb-6">

@@ -37,8 +37,12 @@ export default function LoginPage() {
             Sign up
           </Link>
           <span className="mx-2 text-muted-foreground/50">·</span>
+          <Link href="/instructor/login" className="font-medium text-muted-foreground hover:text-foreground">
+            Instructor sign in
+          </Link>
+          <span className="mx-2 text-muted-foreground/50">·</span>
           <Link href="/admin/login" className="font-medium text-muted-foreground hover:text-foreground">
-            Admin sign in
+            Admin
           </Link>
         </>
       }

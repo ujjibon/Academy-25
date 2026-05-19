@@ -27,7 +27,7 @@ import {
 import { getAllUsers, resetUserProgress, setUserRole, type UserProfile } from '@/lib/firebase';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
-import { isAdminProfile } from '@/lib/admin';
+import { isAdminProfile, normalizeRole } from '@/lib/admin';
 import { Loader2, Shield, ShieldOff, RotateCcw } from 'lucide-react';
 
 export default function AdminUsersPage() {
@@ -56,9 +56,10 @@ export default function AdminUsersPage() {
     loadUsers();
   }, []);
 
-  const handleToggleAdmin = async (target: UserProfile) => {
-    const newRole = target.role === 'admin' ? 'user' : 'admin';
-    if (target.uid === currentUser?.uid && newRole === 'user') {
+  const handleCycleRole = async (target: UserProfile) => {
+    const current = target.role === 'admin' ? 'admin' : target.role === 'instructor' ? 'instructor' : 'learner';
+    const next = current === 'learner' ? 'instructor' : current === 'instructor' ? 'admin' : 'learner';
+    if (target.uid === currentUser?.uid && next !== 'admin' && current === 'admin') {
       toast({
         title: 'Not allowed',
         description: 'You cannot remove your own admin access.',
@@ -68,10 +69,10 @@ export default function AdminUsersPage() {
     }
 
     try {
-      await setUserRole(target.uid, newRole);
+      await setUserRole(target.uid, next);
       toast({
         title: 'Role updated',
-        description: `${target.displayName} is now ${newRole === 'admin' ? 'an admin' : 'a learner'}.`,
+        description: `${target.displayName} is now ${next}.`,
       });
       if (target.uid === currentUser?.uid) {
         await refreshProfile();
@@ -142,6 +143,7 @@ export default function AdminUsersPage() {
                 <TableBody>
                   {users.map((u) => {
                     const isAdmin = isAdminProfile(u);
+                    const roleLabel = normalizeRole(u.role);
                     return (
                       <TableRow key={u.uid}>
                         <TableCell>
@@ -157,8 +159,8 @@ export default function AdminUsersPage() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={isAdmin ? 'default' : 'secondary'}>
-                            {isAdmin ? 'Admin' : 'Learner'}
+                          <Badge variant={isAdmin ? 'default' : 'secondary'} className="capitalize">
+                            {roleLabel}
                           </Badge>
                         </TableCell>
                         <TableCell>{u.level}</TableCell>
@@ -169,19 +171,10 @@ export default function AdminUsersPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleToggleAdmin(u)}
+                              onClick={() => handleCycleRole(u)}
                             >
-                              {isAdmin ? (
-                                <>
-                                  <ShieldOff className="mr-1 h-3 w-3" />
-                                  Revoke
-                                </>
-                              ) : (
-                                <>
-                                  <Shield className="mr-1 h-3 w-3" />
-                                  Make admin
-                                </>
-                              )}
+                              <Shield className="mr-1 h-3 w-3" />
+                              Cycle role
                             </Button>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>

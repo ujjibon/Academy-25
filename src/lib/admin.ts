@@ -1,6 +1,14 @@
 import type { UserProfile } from '@/lib/firebase';
 
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'learner' | 'instructor' | 'admin' | 'user';
+
+/** Normalize legacy `user` role to learner */
+export function normalizeRole(role: string | undefined): 'learner' | 'instructor' | 'admin' {
+  if (role === 'admin') return 'admin';
+  if (role === 'instructor') return 'instructor';
+  if (role === 'user') return 'learner';
+  return role === 'learner' ? 'learner' : 'learner';
+}
 
 /** Default admin email when signing in with username `admin`. */
 export const DEFAULT_ADMIN_EMAIL = 'admin@peeracademy.com';
@@ -41,10 +49,18 @@ export function isAdminEmail(email: string | null | undefined): boolean {
 export function resolveUserRole(
   profile: Pick<UserProfile, 'role' | 'email'> | null | undefined,
   email?: string | null
-): UserRole {
-  if (profile?.role === 'admin') return 'admin';
-  if (isAdminEmail(profile?.email || email)) return 'admin';
-  return 'user';
+): 'learner' | 'instructor' | 'admin' {
+  if (profile?.role === 'admin' || isAdminEmail(profile?.email || email)) return 'admin';
+  if (profile?.role === 'instructor') return 'instructor';
+  return normalizeRole(profile?.role);
+}
+
+export function isInstructorOrAdmin(
+  profile: Pick<UserProfile, 'role' | 'email'> | null | undefined,
+  email?: string | null
+): boolean {
+  const role = resolveUserRole(profile, email);
+  return role === 'admin' || role === 'instructor';
 }
 
 export function isAdminProfile(
@@ -62,4 +78,21 @@ export async function verifyAdminAccess(
 ): Promise<boolean> {
   const profile = await getProfile(uid);
   return isAdminProfile(profile, email);
+}
+
+export function isInstructorProfile(
+  profile: Pick<UserProfile, 'role' | 'email'> | null | undefined,
+  email?: string | null
+): boolean {
+  return resolveUserRole(profile, email) === 'instructor';
+}
+
+/** After Firebase sign-in, confirm this account may access the instructor portal. */
+export async function verifyInstructorAccess(
+  getProfile: (uid: string) => Promise<Pick<UserProfile, 'role' | 'email'> | null>,
+  uid: string,
+  email: string | null | undefined
+): Promise<boolean> {
+  const profile = await getProfile(uid);
+  return isInstructorOrAdmin(profile, email);
 }

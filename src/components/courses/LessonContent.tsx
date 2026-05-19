@@ -13,6 +13,7 @@ import { evaluateSubmittedTask, type EvaluateSubmittedTaskOutput } from '@/ai/fl
 import { providePracticeHint } from '@/ai/flows/provide-practice-hint';
 import { CourseTutor } from './CourseTutor';
 import { AILearningClassroom } from './AILearningClassroom';
+import { TranslationBar } from '@/components/classroom/TranslationBar';
 // Removed direct import - using API route instead
 import ReactMarkdown from 'react-markdown';
 import { Input } from '../ui/input';
@@ -42,6 +43,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
   const [completedActivities, setCompletedActivities] = useState<string[]>([]);
   const [learningGuide, setLearningGuide] = useState<any>(null);
   const [isLoadingGuide, setIsLoadingGuide] = useState(false);
+  const [introText, setIntroText] = useState(lesson.introduction.text);
 
   const { toast } = useToast();
 
@@ -356,8 +358,9 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               <CardDescription>Let our AI tutor guide you through this lesson</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              <TranslationBar text={lesson.introduction.text} onTranslated={setIntroText} />
               <div className="prose dark:prose-invert max-w-none">
-                <p>{lesson.introduction.text}</p>
+                <p>{introText}</p>
               </div>
               <div className="space-y-4">
                 <div className="bg-gradient-to-r from-secondary to-background-elevated p-6 rounded-lg border">

@@ -36,6 +36,10 @@ export default function SignUpPage() {
           <Link href="/login" className="font-medium text-primary hover:text-royal-light">
             Log in
           </Link>
+          <span className="mx-2 text-muted-foreground/50">·</span>
+          <Link href="/instructor/signup" className="font-medium text-muted-foreground hover:text-foreground">
+            Instructor sign up
+          </Link>
         </>
       }
     >

@@ -14,6 +14,9 @@ export function SiteHeader({ showAuth = true }: SiteHeaderProps) {
         </Link>
         {showAuth && (
           <nav className="flex items-center gap-2 sm:gap-3">
+            <Link href="/instructor/login" className="brand-button-ghost hidden md:inline-flex text-sm">
+              For instructors
+            </Link>
             <Link href="/login" className="brand-button-ghost hidden sm:inline-flex">
               Log in
             </Link>

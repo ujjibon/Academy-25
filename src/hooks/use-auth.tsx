@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
 import { auth, getUserProfile, UserProfile, updateDailyStreak, checkFirebaseBasicConnection, shouldAttemptFirestoreOperation, handleGoogleRedirectResult } from '@/lib/firebase';
-import { isAdminProfile } from '@/lib/admin';
+import { isAdminProfile, isInstructorOrAdmin } from '@/lib/admin';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
 interface AuthContextType {
@@ -13,6 +13,7 @@ interface AuthContextType {
   retryConnection: () => Promise<void>;
   isFirebaseMode: boolean;
   isAdmin: boolean;
+  isInstructor: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextType>({
   retryConnection: async () => {},
   isFirebaseMode: false,
   isAdmin: false,
+  isInstructor: false,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -170,6 +172,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user?.uid]);
 
   const isAdmin = isAdminProfile(userProfile, user?.email);
+  const isInstructor = isInstructorOrAdmin(userProfile, user?.email);
 
   const value = {
     user,
@@ -180,6 +183,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     retryConnection,
     isFirebaseMode,
     isAdmin,
+    isInstructor,
   };
   
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
