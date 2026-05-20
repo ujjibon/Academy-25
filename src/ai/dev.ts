@@ -1,6 +1,3 @@
-import { config } from 'dotenv';
-config();
-
 import '@/ai/flows/generate-initial-learning-plan.ts';
 import '@/ai/flows/evaluate-submitted-task.ts';
 import '@/ai/flows/provide-smart-feedback.ts';
