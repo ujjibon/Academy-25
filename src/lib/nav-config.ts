@@ -14,6 +14,8 @@ import {
   GraduationCap,
   School,
   Rocket,
+  Dumbbell,
+  Award,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -48,6 +50,13 @@ export const mainNavSections: NavSection[] = [
   {
     label: 'Startup',
     items: [{ href: '/startup', label: 'Startup hub', icon: Rocket, exact: true }],
+  },
+  {
+    label: 'Training',
+    items: [
+      { href: '/training', label: 'Skills Training', icon: Dumbbell, exact: true },
+      { href: '/training/certificates', label: 'Certificates', icon: Award },
+    ],
   },
   {
     label: 'Learning',
@@ -88,6 +97,8 @@ export const pageTitles: Record<string, string> = {
   '/profile': 'Profile',
   '/leaderboard': 'Leaderboard',
   '/teach': 'Teach Mode',
+  '/training': 'Skills Training',
+  '/training/certificates': 'Certificates',
   '/startup': 'Startup hub',
   '/admin-portal': 'Admin Portal',
   '/admin-portal/courses': 'Manage Courses',
@@ -105,5 +116,8 @@ export function getPageTitle(pathname: string): string {
     return 'Lesson';
   }
   if (pathname.startsWith('/courses/')) return 'Course';
+  if (pathname.startsWith('/training/') && pathname !== '/training/certificates') {
+    return 'Training Program';
+  }
   return 'Peer Academy';
 }

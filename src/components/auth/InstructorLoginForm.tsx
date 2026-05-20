@@ -36,12 +36,15 @@ const INSTRUCTOR_HOME = '/instructor/dashboard';
 async function ensureInstructorOrSignOut(): Promise<boolean> {
   const user = auth.currentUser;
   if (!user) return false;
-  const allowed = await verifyInstructorAccess(getUserProfile, user.uid, user.email);
-  if (!allowed) {
-    await firebaseSignOut();
-    return false;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const allowed = await verifyInstructorAccess(getUserProfile, user.uid, user.email);
+    if (allowed) return true;
+    if (attempt < 3) {
+      await new Promise((r) => setTimeout(r, 350));
+    }
   }
-  return true;
+  await firebaseSignOut();
+  return false;
 }
 
 function InstructorLoginFormInner() {

@@ -16,14 +16,14 @@ export const instructorNavSections: NavSection[] = [
     items: [
       { href: '/instructor/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
       { href: '/courses', label: 'Course catalog', icon: BookOpen },
-      { href: '/teach', label: 'Teach Mode', icon: PenSquare },
+      { href: '/instructor/teach', label: 'Teach Mode', icon: PenSquare },
     ],
   },
   {
     label: 'Tools',
     items: [
-      { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },
-      { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: Workflow },
+      { href: '/instructor/course-creator', label: 'AI Course Creator', icon: Sparkles },
+      { href: '/instructor/bootcamp-studio', label: 'Bootcamp Studio', icon: Workflow },
     ],
   },
 ];
@@ -35,10 +35,10 @@ export const instructorFooterNav = [
 
 export const instructorPageTitles: Record<string, string> = {
   '/instructor/dashboard': 'Instructor Dashboard',
-  '/teach': 'Teach Mode',
+  '/instructor/teach': 'Teach Mode',
   '/courses': 'Courses',
-  '/admin-portal/course-creator': 'AI Course Creator',
-  '/admin-portal/bootcamp-studio': 'Bootcamp Studio',
+  '/instructor/course-creator': 'AI Course Creator',
+  '/instructor/bootcamp-studio': 'Bootcamp Studio',
 };
 
 export function getInstructorPageTitle(pathname: string): string {

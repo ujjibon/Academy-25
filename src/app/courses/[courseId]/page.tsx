@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Clock, PlayCircle } from 'lucide-react';
+import { CourseCertificateSection } from '@/components/certificates/CourseCertificateSection';
 
 export default function CourseDetailPage({
   params,
@@ -48,6 +49,8 @@ export default function CourseDetailPage({
                 </Button>
             </div>
         </div>
+
+        <CourseCertificateSection courseId={course.id} courseTitle={course.title} />
 
         <div>
           <h2 className="text-2xl font-bold mb-4">Course Curriculum</h2>

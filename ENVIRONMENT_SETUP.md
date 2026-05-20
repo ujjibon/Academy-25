@@ -23,6 +23,17 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abcdef
 
 # Other environment variables
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Gmail SMTP (bulk admin notifications — use an App Password, not your login password)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-account@gmail.com
+SMTP_PASS=your_16_char_app_password
+SMTP_FROM=Peer Academy <your-account@gmail.com>
+# SMTP_REPLY_TO=support@yourdomain.com
+# BULK_MAIL_MAX_RECIPIENTS=200
+# BULK_MAIL_DELAY_MS=300
 ```
 
 ## 🚀 Quick Setup
@@ -95,6 +106,21 @@ SEED_ADMIN_DISPLAY_NAME=Admin
 ```
 
 **Production:** change the password in [Firebase Console → Authentication](https://console.firebase.google.com/) or delete the default account and use a strong password.
+
+### Gmail SMTP (bulk notifications)
+
+Admin bulk email uses Nodemailer against Gmail SMTP. You need **2-Step Verification** on the Google account and an **App Password** ([Google Account → Security → App passwords](https://myaccount.google.com/apppasswords)).
+
+| Variable | Purpose |
+|----------|---------|
+| `SMTP_USER` | Gmail address |
+| `SMTP_PASS` | 16-character App Password (no spaces) |
+| `SMTP_FROM` | Optional display name, e.g. `Peer Academy <you@gmail.com>` |
+| `SMTP_PORT` | `587` (STARTTLS) or `465` (SSL) |
+| `BULK_MAIL_MAX_RECIPIENTS` | Cap per send (default `200`) |
+| `BULK_MAIL_DELAY_MS` | Pause between sends in ms (default `300`) |
+
+Send mail from **Admin portal → Notifications** (`/admin-portal/notifications`). Only admins (same `ADMIN_EMAILS` allowlist as other admin APIs) can call the API.
 
 ### Firebase Configuration
 

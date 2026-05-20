@@ -5,7 +5,8 @@ import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, Auth, User } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, Firestore } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, arrayUnion, Firestore } from 'firebase/firestore';
+import type { CertificateRecord } from '@/lib/training-types';
 import { isAdminEmail, type UserRole } from '@/lib/admin';
 
 // Your web app's Firebase configuration
@@ -357,6 +358,7 @@ export interface UserProfile {
   strengths: { name: string; value: number }[];
   weaknesses: { name: string; value: number }[];
   badges: { name: string; icon: string; earnedAt: Date }[];
+  certificates?: CertificateRecord[];
 }
 
 export type { UserRole };
@@ -370,12 +372,12 @@ export const createOrUpdateUserProfile = async (
     
     const userRef = doc(db, 'users', firebaseUser.uid);
     const userSnap = await getDoc(userRef);
-    
+    const pendingRole = options?.role ?? consumePendingSignupRole();
+
     if (!userSnap.exists()) {
       console.log('📝 Creating new user profile...');
       // Create new user profile
       const email = firebaseUser.email || '';
-      const pendingRole = options?.role ?? consumePendingSignupRole();
       const newProfile: UserProfile = {
         uid: firebaseUser.uid,
         email,
@@ -429,6 +431,12 @@ export const createOrUpdateUserProfile = async (
       }
       if (isAdminEmail(email) && userSnap.data().role !== 'admin') {
         updates.role = 'admin';
+      } else if (
+        pendingRole === 'instructor' &&
+        userSnap.data().role !== 'admin' &&
+        userSnap.data().role !== 'instructor'
+      ) {
+        updates.role = 'instructor';
       }
       await updateDoc(userRef, updates);
       console.log('✅ User profile updated successfully for:', firebaseUser.email);
@@ -466,7 +474,7 @@ export const getUserProfile = async (uid: string): Promise<UserProfile | null> =
       const data = userSnap.data();
       return {
         ...data,
-        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'user'),
+        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'learner'),
         createdAt: data.createdAt?.toDate() || new Date(),
         lastLoginAt: data.lastLoginAt?.toDate() || new Date(),
         badges: data.badges?.map((badge: any) => ({
@@ -528,11 +536,15 @@ export const updateUserProfile = async (uid: string, updates: Partial<UserProfil
 export const updateCourseProgress = async (uid: string, courseId: string, progress: number) => {
   try {
     const userRef = doc(db, 'users', uid);
-    await updateDoc(userRef, {
+    const updates: Record<string, unknown> = {
       [`courseProgress.${courseId}`]: progress,
       activeCourseId: courseId,
       lastLoginAt: new Date(),
-    });
+    };
+    if (progress >= 100) {
+      updates.completedCourses = arrayUnion(courseId);
+    }
+    await updateDoc(userRef, updates);
   } catch (error: any) {
     if (error.code === 'failed-precondition' || error.code === 'unavailable') {
       console.error('Firestore is offline or not available');
@@ -645,7 +657,7 @@ export const getAllUsers = async (maxUsers = 100): Promise<UserProfile[]> => {
       return {
         ...data,
         uid: userDoc.id,
-        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'user'),
+        role: data.role || (isAdminEmail(data.email) ? 'admin' : 'learner'),
         createdAt: data.createdAt?.toDate() || new Date(),
         lastLoginAt: data.lastLoginAt?.toDate() || new Date(),
         badges:

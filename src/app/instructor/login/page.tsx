@@ -11,7 +11,7 @@ import { isInstructorOrAdmin } from '@/lib/admin';
 
 export default function InstructorLoginPage() {
   const router = useRouter();
-  const { user, userProfile, loading } = useAuth();
+  const { user, userProfile, loading, connectionError } = useAuth();
 
   useEffect(() => {
     if (loading) return;
@@ -53,6 +53,11 @@ export default function InstructorLoginPage() {
         </>
       }
     >
+      {connectionError ? (
+        <p className="mb-4 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+          {connectionError}
+        </p>
+      ) : null}
       <InstructorLoginForm />
     </InstructorAuthShell>
   );

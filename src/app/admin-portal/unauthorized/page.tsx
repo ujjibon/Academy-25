@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { ShieldAlert } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
+import { isInstructorOrAdmin } from '@/lib/admin';
 
 export default function AdminUnauthorizedPage() {
   const { user, userProfile } = useAuth();
+  const isInstructor = isInstructorOrAdmin(userProfile, user?.email);
 
   return (
     <div className="flex min-h-[80vh] items-center justify-center p-4 bg-background">
@@ -27,9 +29,15 @@ export default function AdminUnauthorizedPage() {
             <code className="text-xs bg-muted px-1 rounded">ADMIN_EMAILS</code> in{' '}
             <code className="text-xs bg-muted px-1 rounded">.env.local</code> and sign in again.
           </p>
-          <Button asChild className="brand-button">
-            <Link href="/dashboard">Go to learner dashboard</Link>
-          </Button>
+          {isInstructor ? (
+            <Button asChild className="brand-button">
+              <Link href="/instructor/dashboard">Go to instructor dashboard</Link>
+            </Button>
+          ) : (
+            <Button asChild className="brand-button">
+              <Link href="/dashboard">Go to learner dashboard</Link>
+            </Button>
+          )}
           <Button asChild variant="outline">
             <Link href="/admin/login">Sign in with an admin account</Link>
           </Button>

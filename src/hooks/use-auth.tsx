@@ -1,6 +1,15 @@
 'use client';
 import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { auth, getUserProfile, UserProfile, updateDailyStreak, checkFirebaseBasicConnection, shouldAttemptFirestoreOperation, handleGoogleRedirectResult } from '@/lib/firebase';
+import {
+  auth,
+  createOrUpdateUserProfile,
+  getUserProfile,
+  UserProfile,
+  updateDailyStreak,
+  checkFirebaseBasicConnection,
+  shouldAttemptFirestoreOperation,
+  handleGoogleRedirectResult,
+} from '@/lib/firebase';
 import { isAdminProfile, isInstructorOrAdmin } from '@/lib/admin';
 import { onAuthStateChanged, User } from 'firebase/auth';
 
@@ -110,8 +119,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
           // Update daily streak on login (handles offline gracefully)
           await updateDailyStreak(firebaseUser.uid);
-          
-          await fetchUserProfile(firebaseUser.uid);
+
+          let profile = await getUserProfile(firebaseUser.uid);
+          if (!profile) {
+            await createOrUpdateUserProfile(firebaseUser);
+            profile = await getUserProfile(firebaseUser.uid);
+          }
+          setUserProfile(profile);
+          if (profile && profile.uid !== 'sample-user') {
+            setIsFirebaseMode(true);
+          }
+          setConnectionError(null);
         } catch (error: any) {
           console.error('Error during authentication:', error);
           if (error.message.includes('Database is currently unavailable') || 

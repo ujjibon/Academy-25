@@ -3,7 +3,9 @@ import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/components/layout/AppLayout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Award, Flame, GitMerge, MessageSquare, Star, Users, Loader2 } from 'lucide-react';
+import { Award, Flame, GitMerge, MessageSquare, Star, Users, Loader2, GraduationCap } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -82,6 +84,26 @@ export default function ProfilePage() {
               </div>
             </div>
           </CardContent>
+        </Card>
+
+        <Card className="brand-card">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5" />
+                  Certificates
+                </CardTitle>
+                <CardDescription>
+                  Download PDF certificates for completed courses and skills training.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Button asChild>
+                  <Link href="/training/certificates">
+                    <Award className="mr-2 h-4 w-4" />
+                    View & download certificates
+                  </Link>
+                </Button>
+            </CardContent>
         </Card>
 
         <Card>

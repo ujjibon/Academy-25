@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CreateCourseDialog } from '@/components/classroom/CreateCourseDialog';
 import { getInstructorCourses } from '@/lib/classroom-service';
@@ -9,23 +9,36 @@ import { useAuth } from '@/hooks/use-auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BookOpen, Users, ClipboardList, Sparkles } from 'lucide-react';
 
 export default function InstructorDashboardPage() {
   const { user } = useAuth();
   const [courses, setCourses] = useState<ClassroomCourse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const load = async () => {
-    if (!user) return;
-    const list = await getInstructorCourses(user.uid);
-    setCourses(list);
-    setLoading(false);
-  };
+  const load = useCallback(async () => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const list = await getInstructorCourses(user.uid);
+      setCourses(list);
+    } catch {
+      setError('Could not load your courses. Check your connection and try again.');
+      setCourses([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     load();
-  }, [user]);
+  }, [load]);
 
   if (loading) {
     return <Skeleton className="h-48 w-full" />;
@@ -49,13 +62,25 @@ export default function InstructorDashboardPage() {
         <div className="mt-5 flex flex-wrap gap-3">
           <CreateCourseDialog onCreated={load} />
           <Button variant="outline" asChild className="brand-button-ghost">
-            <Link href="/admin-portal/course-creator">
+            <Link href="/instructor/course-creator">
               <Sparkles className="mr-2 h-4 w-4" />
               AI course creator
             </Link>
           </Button>
         </div>
       </section>
+
+      {error ? (
+        <Alert variant="destructive">
+          <AlertTitle>Failed to load courses</AlertTitle>
+          <AlertDescription className="flex flex-wrap items-center gap-3">
+            <span>{error}</span>
+            <Button variant="outline" size="sm" onClick={load}>
+              Retry
+            </Button>
+          </AlertDescription>
+        </Alert>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard icon={BookOpen} label="Courses" value={String(courses.length)} />
