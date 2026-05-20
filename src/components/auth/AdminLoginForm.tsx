@@ -52,7 +52,7 @@ function AdminLoginFormInner() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { username: 'admin', password: '' },
+    defaultValues: { username: '', password: '' },
   });
 
   async function rejectNonAdmin() {
@@ -122,11 +122,6 @@ function AdminLoginFormInner() {
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-muted-foreground text-center rounded-lg bg-secondary/60 px-3 py-2">
-        Only accounts listed in <code className="text-[0.65rem]">ADMIN_EMAILS</code> or promoted
-        to admin in Firestore can sign in here.
-      </p>
-
       <Button
         variant="outline"
         className="w-full rounded-2xl"
@@ -169,7 +164,7 @@ function AdminLoginFormInner() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="admin" autoComplete="username" {...field} />
+                  <Input placeholder="Email or username" autoComplete="username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

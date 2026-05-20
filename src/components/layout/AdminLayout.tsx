@@ -3,17 +3,20 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import {
   SidebarProvider,
   Sidebar,
   SidebarHeader,
   SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter,
   SidebarInset,
-  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -29,18 +32,23 @@ import {
   LayoutDashboard,
   BookOpen,
   Users,
-  Shield,
   FilePlus2,
   LogOut,
   Loader2,
   ExternalLink,
   Sparkles,
   GraduationCap,
+  ChevronRight,
+  Rocket,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { signOut as firebaseSignOut } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
+import { Logo } from '@/components/Logo';
+import { DashboardHeader } from '@/components/layout/DashboardHeader';
+import { ChatbotProvider } from '@/hooks/use-chatbot';
+import { Chatbot } from '@/components/chat/Chatbot';
+import { cn } from '@/lib/utils';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -73,6 +81,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     { href: '/admin-portal', label: 'Overview', icon: LayoutDashboard, exact: true },
     { href: '/admin-portal/courses', label: 'Courses', icon: BookOpen },
     { href: '/admin-portal/users', label: 'Users', icon: Users },
+    { href: '/admin-portal/startup', label: 'Startup program', icon: Rocket },
     { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },
     { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: GraduationCap },
     { href: '/admin-portal/manual-editor', label: 'Manual Editor', icon: FilePlus2 },
@@ -84,16 +93,16 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   if (loading || !user || !userProfile) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-amber-500" />
+      <div className="flex h-screen items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-amber-500" />
+      <div className="flex h-screen items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
   }
@@ -102,78 +111,97 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const displayEmail = userProfile.email || user.email || '';
 
   return (
-    <SidebarProvider>
-      <Sidebar className="border-r border-amber-500/10">
-        <SidebarHeader className="border-b border-amber-500/10">
-          <div className="flex items-center gap-2 px-2 py-1">
-            <Shield className="h-6 w-6 text-amber-500 shrink-0" />
-            <div>
-              <span className="text-lg font-bold leading-tight">Admin Portal</span>
-              <p className="text-[10px] text-muted-foreground">Peer Academy</p>
-            </div>
-          </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarMenu>
-            {navItems.map((item) => {
-              const isActive = item.exact
-                ? pathname === item.href
-                : pathname.startsWith(item.href);
-              return (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton asChild isActive={isActive} tooltip={item.label}>
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              );
-            })}
-          </SidebarMenu>
-        </SidebarContent>
-        <SidebarFooter>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-2 px-2 text-left h-auto">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={userProfile.photoURL} alt={displayName} />
-                  <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="truncate group-data-[collapsible=icon]:hidden">
-                  <p className="font-semibold truncate">{displayName}</p>
-                  <p className="text-xs text-amber-600 font-medium">Administrator</p>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mb-2" align="end">
-              <DropdownMenuLabel>{displayEmail}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  <span>Learner Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarFooter>
-      </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-background/95 px-6 backdrop-blur sticky top-0 z-40">
-          <SidebarTrigger className="md:hidden" />
-          <div className="flex-1 flex items-center gap-2">
-            <Shield className="h-4 w-4 text-amber-500" />
-            <span className="text-sm font-medium text-muted-foreground">Administration</span>
-          </div>
-        </header>
-        <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+    <ChatbotProvider>
+      <SidebarProvider className="dashboard-shell min-h-svh">
+        <Sidebar className="border-r border-sidebar-border bg-sidebar">
+          <SidebarHeader className="border-b border-sidebar-border/70 px-4 py-5">
+            <Link href="/admin-portal" className="outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg block">
+              <Logo />
+              <p className="text-xs text-muted-foreground mt-2 font-medium tracking-wide uppercase">
+                Admin portal
+              </p>
+            </Link>
+          </SidebarHeader>
+
+          <SidebarContent className="gap-1 py-3">
+            <SidebarGroup className="px-2 py-0">
+              <SidebarGroupLabel className="sidebar-section-label">Administration</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {navItems.map((item) => {
+                    const isActive = item.exact
+                      ? pathname === item.href
+                      : pathname.startsWith(item.href);
+                    return (
+                      <SidebarMenuItem key={item.href}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={isActive}
+                          className={cn(
+                            'sidebar-nav-item h-10',
+                            isActive && 'sidebar-nav-item-active'
+                          )}
+                        >
+                          <Link href={item.href}>
+                            <item.icon className="h-[1.05rem] w-[1.05rem]" />
+                            <span className="flex-1">{item.label}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+
+          <SidebarFooter className="border-t border-sidebar-border/70 p-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="w-full h-auto justify-between gap-2 rounded-xl px-2 py-2.5 hover:bg-primary/5"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <Avatar className="h-9 w-9 border border-border">
+                      <AvatarImage src={userProfile.photoURL} alt={displayName} />
+                      <AvatarFallback className="bg-primary text-primary-foreground text-sm font-semibold">
+                        {displayName.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="truncate text-left group-data-[collapsible=icon]:hidden">
+                      <p className="text-sm font-semibold truncate text-foreground">{displayName}</p>
+                      <p className="text-[0.7rem] text-muted-foreground truncate">Administrator</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground group-data-[collapsible=icon]:hidden" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 mb-2" align="start" side="top">
+                <DropdownMenuLabel>{displayEmail}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    <span>Learner dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarFooter>
+        </Sidebar>
+
+        <SidebarInset className="flex flex-col min-h-svh">
+          <DashboardHeader />
+          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
+          <Chatbot />
+        </SidebarInset>
+      </SidebarProvider>
+    </ChatbotProvider>
   );
 }

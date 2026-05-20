@@ -16,7 +16,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { signInWithGoogle, signUpWithEmail, setPendingSignupRole } from '@/lib/firebase';
+import {
+  signInWithGoogle,
+  signUpWithEmail,
+  setPendingSignupPath,
+  consumePendingSignupRedirect,
+} from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
@@ -24,8 +29,6 @@ const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }),
   password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
 });
-
-const INSTRUCTOR_HOME = '/instructor/dashboard';
 
 export function InstructorSignUpForm() {
   const { toast } = useToast();
@@ -40,6 +43,7 @@ export function InstructorSignUpForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setBusy(true);
     try {
+      setPendingSignupPath('instructor');
       await signUpWithEmail(values.email, values.password, {
         displayName: values.name,
         role: 'instructor',
@@ -48,7 +52,7 @@ export function InstructorSignUpForm() {
         title: 'Account created',
         description: 'Welcome to the instructor portal.',
       });
-      router.push(INSTRUCTOR_HOME);
+      router.push(consumePendingSignupRedirect());
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Could not create account.';
       toast({ title: 'Sign-up failed', description: message, variant: 'destructive' });
@@ -60,16 +64,16 @@ export function InstructorSignUpForm() {
   const handleGoogleSignUp = async () => {
     setBusy(true);
     try {
-      setPendingSignupRole('instructor');
+      setPendingSignupPath('instructor');
       const result = await signInWithGoogle();
       if (!result) return;
       toast({
         title: 'Account created',
         description: 'Signed up with Google as an instructor.',
       });
-      router.push(INSTRUCTOR_HOME);
+      router.push(consumePendingSignupRedirect());
     } catch (error: unknown) {
-      setPendingSignupRole(null);
+      setPendingSignupPath(null);
       const message = error instanceof Error ? error.message : 'Could not sign up with Google.';
       toast({ title: 'Sign-up failed', description: message, variant: 'destructive' });
     } finally {
@@ -79,7 +83,7 @@ export function InstructorSignUpForm() {
 
   return (
     <div className="space-y-4">
-      <Button variant="outline" className="w-full rounded-2xl" onClick={handleGoogleSignUp} disabled={busy}>
+      <Button variant="outline" className="w-full rounded-2xl h-11" onClick={handleGoogleSignUp} disabled={busy}>
         {busy ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
         ) : (
@@ -143,7 +147,7 @@ export function InstructorSignUpForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full brand-button" disabled={busy}>
+          <Button type="submit" className="w-full brand-button rounded-2xl h-11" disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Create instructor account'}
           </Button>
         </form>

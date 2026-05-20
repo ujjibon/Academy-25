@@ -15,6 +15,7 @@ export type ClassroomCourse = {
   isBuiltIn?: boolean;
   contentCourseId?: string;
   modules?: CourseModule[];
+  bootcamp?: import('@/lib/bootcamp-types').BootcampMetadata;
   enrolledStudentIds: string[];
   createdAt: Date;
   updatedAt: Date;

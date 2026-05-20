@@ -46,8 +46,23 @@ googleProvider.setCustomParameters({
 });
 
 const SIGNUP_ROLE_KEY = 'peer_academy_signup_role';
+const SIGNUP_REDIRECT_KEY = 'peer_academy_signup_redirect';
 
 export type ProfileRoleOption = 'learner' | 'instructor';
+
+/** Account type chosen at sign-up (founder uses learner role + startup redirect). */
+export type SignupPath = 'learner' | 'founder' | 'instructor';
+
+export function getSignupRedirectForPath(path: SignupPath): string {
+  switch (path) {
+    case 'instructor':
+      return '/instructor/dashboard';
+    case 'founder':
+      return '/startup';
+    default:
+      return '/dashboard';
+  }
+}
 
 export function setPendingSignupRole(role: ProfileRoleOption | null) {
   if (typeof window === 'undefined') return;
@@ -55,11 +70,34 @@ export function setPendingSignupRole(role: ProfileRoleOption | null) {
   else sessionStorage.removeItem(SIGNUP_ROLE_KEY);
 }
 
+export function setPendingSignupPath(path: SignupPath | null) {
+  if (typeof window === 'undefined') return;
+  if (!path) {
+    sessionStorage.removeItem(SIGNUP_ROLE_KEY);
+    sessionStorage.removeItem(SIGNUP_REDIRECT_KEY);
+    return;
+  }
+  if (path === 'instructor') {
+    setPendingSignupRole('instructor');
+  } else {
+    setPendingSignupRole('learner');
+  }
+  sessionStorage.setItem(SIGNUP_REDIRECT_KEY, getSignupRedirectForPath(path));
+}
+
 function consumePendingSignupRole(): ProfileRoleOption | undefined {
   if (typeof window === 'undefined') return undefined;
   const role = sessionStorage.getItem(SIGNUP_ROLE_KEY) as ProfileRoleOption | null;
   sessionStorage.removeItem(SIGNUP_ROLE_KEY);
   return role === 'instructor' || role === 'learner' ? role : undefined;
+}
+
+export function consumePendingSignupRedirect(): string {
+  if (typeof window === 'undefined') return '/dashboard';
+  const redirect = sessionStorage.getItem(SIGNUP_REDIRECT_KEY);
+  sessionStorage.removeItem(SIGNUP_REDIRECT_KEY);
+  if (redirect?.startsWith('/')) return redirect;
+  return '/dashboard';
 }
 
 // Enable offline persistence immediately after Firestore initialization
@@ -346,7 +384,8 @@ export const createOrUpdateUserProfile = async (
           firebaseUser.displayName ||
           firebaseUser.email?.split('@')[0] ||
           'User',
-        photoURL: firebaseUser.photoURL || undefined,
+        // Firestore rejects explicit `undefined` — omit optional fields when absent
+        ...(firebaseUser.photoURL ? { photoURL: firebaseUser.photoURL } : {}),
         role: isAdminEmail(email) ? 'admin' : pendingRole ?? 'learner',
         createdAt: new Date(),
         lastLoginAt: new Date(),
@@ -375,11 +414,19 @@ export const createOrUpdateUserProfile = async (
     } else {
       console.log('🔄 Updating existing user profile...');
       const email = firebaseUser.email || userSnap.data().email || '';
+      const displayName =
+        firebaseUser.displayName ||
+        userSnap.data().displayName ||
+        email.split('@')[0] ||
+        'User';
       const updates: Record<string, unknown> = {
         lastLoginAt: new Date(),
-        displayName: firebaseUser.displayName || userSnap.data().displayName,
-        photoURL: firebaseUser.photoURL || userSnap.data().photoURL,
+        displayName,
       };
+      const nextPhoto = firebaseUser.photoURL ?? userSnap.data().photoURL;
+      if (typeof nextPhoto === 'string' && nextPhoto.length > 0) {
+        updates.photoURL = nextPhoto;
+      }
       if (isAdminEmail(email) && userSnap.data().role !== 'admin') {
         updates.role = 'admin';
       }
@@ -458,9 +505,12 @@ export const updateUserProfile = async (uid: string, updates: Partial<UserProfil
   }
 
   try {
-
     const userRef = doc(db, 'users', uid);
-    await updateDoc(userRef, updates);
+    const cleaned = Object.fromEntries(
+      Object.entries(updates).filter(([, v]) => v !== undefined)
+    ) as Partial<UserProfile>;
+    if (Object.keys(cleaned).length === 0) return;
+    await updateDoc(userRef, cleaned);
   } catch (error: any) {
     if (error.code === 'failed-precondition' || 
         error.code === 'unavailable' || 

@@ -38,7 +38,6 @@ export default function AdminLoginPage() {
   return (
     <AdminAuthShell
       title="Admin sign in"
-      description="Administrator access only. Use credentials for an account in ADMIN_EMAILS or with admin role in Firestore."
       footer={
         <>
           Learner account?{' '}

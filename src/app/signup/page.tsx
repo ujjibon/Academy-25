@@ -1,22 +1,55 @@
 'use client';
 
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { SignUpForm } from '@/components/auth/SignUpForm';
+import { InstructorSignUpForm } from '@/components/auth/InstructorSignUpForm';
+import { SignupPathPicker } from '@/components/auth/SignupPathPicker';
+import { SignupAuthFooter } from '@/components/auth/SignupAuthFooter';
 import { AuthShell } from '@/components/marketing/auth-shell';
 import { useAuth } from '@/hooks/use-auth';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { isInstructorOrAdmin } from '@/lib/admin';
+import { setPendingSignupPath, type SignupPath } from '@/lib/firebase';
 import { Loader2 } from 'lucide-react';
 
-export default function SignUpPage() {
-  const { user, loading } = useAuth();
+function parseSignupPath(value: string | null): SignupPath {
+  if (value === 'founder' || value === 'instructor' || value === 'learner') return value;
+  return 'learner';
+}
+
+function SignUpPageInner() {
+  const { user, userProfile, loading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialPath = parseSignupPath(searchParams.get('path'));
+  const [signupPath, setSignupPath] = useState<SignupPath>(initialPath);
 
   useEffect(() => {
-    if (!loading && user) {
-      router.replace('/dashboard');
+    setSignupPath(parseSignupPath(searchParams.get('path')));
+  }, [searchParams]);
+
+  useEffect(() => {
+    setPendingSignupPath(signupPath);
+  }, [signupPath]);
+
+  const handlePathChange = (path: SignupPath) => {
+    setSignupPath(path);
+    router.replace(`/signup?path=${path}`, { scroll: false });
+  };
+
+  useEffect(() => {
+    if (loading || !user) return;
+    if (userProfile && isInstructorOrAdmin(userProfile, user.email)) {
+      router.replace('/instructor/dashboard');
+      return;
     }
-  }, [user, loading, router]);
+    if (signupPath === 'founder') {
+      router.replace('/startup');
+      return;
+    }
+    router.replace('/dashboard');
+  }, [user, userProfile, loading, router, signupPath]);
 
   if (loading || user) {
     return (
@@ -26,46 +59,61 @@ export default function SignUpPage() {
     );
   }
 
+  const descriptions: Record<SignupPath, string> = {
+    learner: 'Join as a learner — courses, classroom, leaderboard, and AI tutoring.',
+    founder: 'Join as a founder — startup ideas, pitch reviews, mentorship, and Founder AI.',
+    instructor: 'Join as an instructor — build classrooms and guide learners.',
+  };
+
   return (
     <AuthShell
+      wide
       title="Create your account"
-      description="Start your learning journey with Peer Academy today."
-      footer={
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="text-muted-foreground">Already have an account?</span>
-            <Link
-              href="/login"
-              className="rounded-full border border-primary/30 px-3 py-1 font-medium text-primary transition-colors hover:bg-primary/10"
-            >
-              Log in
-            </Link>
-          </div>
+      description={descriptions[signupPath]}
+      footer={<SignupAuthFooter />}
+    >
+      <div className="space-y-8">
+        <SignupPathPicker value={signupPath} onChange={handlePathChange} />
 
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <Link
-              href="/instructor/signup"
-              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
-            >
-              Instructor sign up
-            </Link>
-            <Link
-              href="/instructor/login"
-              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
-            >
-              Instructor sign in
-            </Link>
-            <Link
-              href="/admin/login"
-              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
-            >
-              Admin login
-            </Link>
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-border" />
           </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-3 text-muted-foreground font-medium">
+              {signupPath === 'instructor' ? 'Instructor details' : 'Your details'}
+            </span>
+          </div>
+        </div>
+
+        {signupPath === 'instructor' ? (
+          <InstructorSignUpForm />
+        ) : (
+          <SignUpForm signupPath={signupPath} />
+        )}
+
+        <p className="text-center text-xs text-muted-foreground">
+          By creating an account you agree to our{' '}
+          <Link href="/" className="text-primary hover:underline">
+            terms of use
+          </Link>
+          .
+        </p>
+      </div>
+    </AuthShell>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center bg-background">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
       }
     >
-      <SignUpForm />
-    </AuthShell>
+      <SignUpPageInner />
+    </Suspense>
   );
 }

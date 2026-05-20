@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 interface AdminAuthShellProps {
   title: string;
-  description: string;
+  description?: string;
   children: ReactNode;
   footer?: ReactNode;
 }
@@ -46,9 +46,11 @@ export function AdminAuthShell({
               <h1 className="font-dashboard-title text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 {title}
               </h1>
-              <p className="text-muted-foreground text-balance text-sm leading-relaxed">
-                {description}
-              </p>
+              {description ? (
+                <p className="text-muted-foreground text-balance text-sm leading-relaxed">
+                  {description}
+                </p>
+              ) : null}
             </div>
 
             <div className="dashboard-panel p-6 sm:p-8 border-midnight/10">{children}</div>

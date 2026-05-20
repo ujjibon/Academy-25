@@ -123,7 +123,7 @@ export default function AdminUsersPage() {
         <CardContent>
           {loading ? (
             <div className="flex justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : users.length === 0 ? (
             <p className="text-center text-muted-foreground py-8">No users found.</p>

@@ -61,6 +61,16 @@ const DashboardConfigSchema = z.object({
 const BootcampStudioOutputSchema = z.object({
   title: z.string(),
   summary: z.string(),
+  description: z.string().optional(),
+  coverImage: z.string().optional(),
+  sections: z.array(
+    z.object({
+      id: z.string().optional(),
+      title: z.string(),
+      description: z.string().optional(),
+      order: z.number().optional(),
+    })
+  ).min(2),
   timeline: z.array(
     z.object({
       week: z.string(),
@@ -73,12 +83,30 @@ const BootcampStudioOutputSchema = z.object({
       title: z.string(),
       type: z.enum(['lesson', 'worksheet', 'assignment', 'quiz', 'project', 'reading']),
       purpose: z.string(),
+      sectionId: z.string().optional(),
     })
   ),
+  projects: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      reportRequirements: z.array(z.string()).min(2),
+      points: z.number().optional(),
+      weekLabel: z.string().optional(),
+    })
+  ).min(2),
   taskSubmissionFlow: z.object({
     workflow: z.array(z.string()).min(3),
     evaluationCriteria: z.array(z.string()).min(3),
     aiSupport: z.array(z.string()).min(2),
+  }),
+  mentorship: z.object({
+    enabled: z.boolean(),
+    title: z.string(),
+    description: z.string(),
+    sessionFrequency: z.string(),
+    mentorFocusAreas: z.array(z.string()).min(2),
+    bookingNotes: z.string(),
   }),
   dashboardConfig: DashboardConfigSchema,
   course: z.object({
@@ -104,13 +132,16 @@ Requirements content:
 {{{requirements}}}
 
 Rules:
-1) Produce a full timeline with clear weekly outcomes.
-2) Include practical materials (lessons, assignments, projects, quizzes, readings).
-3) Include a task submission flow with AI support features (auto feedback, rubric suggestions, retry guidance).
-4) Generate separate dashboard configuration for learner, instructor, and admin roles, each customizable.
-5) Return a production-ready course object with at least 4 lessons.
-6) Ensure every lesson has practice and assessment questions where each correctAnswer exactly matches one option.
-7) Keep the output concise but specific and strictly valid for the provided schema.`,
+1) Produce at least 2 curriculum sections (modules) with clear titles.
+2) Produce a full timeline with clear weekly outcomes.
+3) Include practical materials (lessons, assignments, projects, quizzes, readings).
+4) Include at least 2 project report submissions with reportRequirements.
+5) Include a one-to-one mentorship section (enabled, focus areas, booking notes).
+6) Include a task submission flow with AI support features (auto feedback, rubric suggestions, retry guidance).
+7) Generate separate dashboard configuration for learner, instructor, and admin roles, each customizable.
+8) Return a production-ready course object with at least 4 lessons.
+9) Ensure every lesson has practice and assessment questions where each correctAnswer exactly matches one option.
+10) Keep the output concise but specific and strictly valid for the provided schema.`,
 });
 
 const bootcampStudioFlow = ai.defineFlow(

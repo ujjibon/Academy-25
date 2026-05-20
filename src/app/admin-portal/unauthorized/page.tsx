@@ -10,11 +10,11 @@ export default function AdminUnauthorizedPage() {
   const { user, userProfile } = useAuth();
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center p-4">
-      <Card className="max-w-lg w-full">
+    <div className="flex min-h-[80vh] items-center justify-center p-4 bg-background">
+      <Card className="max-w-lg w-full dashboard-panel border-midnight/10 shadow-sm">
         <CardHeader className="text-center">
-          <ShieldAlert className="h-12 w-12 text-amber-500 mx-auto mb-2" />
-          <CardTitle>Admin access required</CardTitle>
+          <ShieldAlert className="h-12 w-12 text-primary mx-auto mb-2" />
+          <CardTitle className="font-dashboard-title text-2xl">Admin access required</CardTitle>
           <CardDescription>
             {user
               ? `Signed in as ${userProfile?.email || user.email}, but this account does not have administrator privileges.`
@@ -27,7 +27,7 @@ export default function AdminUnauthorizedPage() {
             <code className="text-xs bg-muted px-1 rounded">ADMIN_EMAILS</code> in{' '}
             <code className="text-xs bg-muted px-1 rounded">.env.local</code> and sign in again.
           </p>
-          <Button asChild variant="default">
+          <Button asChild className="brand-button">
             <Link href="/dashboard">Go to learner dashboard</Link>
           </Button>
           <Button asChild variant="outline">

@@ -65,6 +65,37 @@ To get your Hugging Face token:
 - **Purpose**: High-quality AI responses using DeepSeek-R1 model
 - **Fallback**: System works without this service
 
+### Admin (default dev account)
+
+After Firebase is configured, create the built-in admin user once:
+
+```bash
+npm run seed:admin
+```
+
+Then add to `.env.local` (the seed uses `admin@peeracademy.com` by default; it is auto-included in the server allowlist via `getAdminLoginEmail()` when `ADMIN_EMAILS` is empty, but you can set it explicitly):
+
+```env
+ADMIN_EMAILS=admin@peeracademy.com
+```
+
+Sign in at **`/admin/login`**:
+
+| Field | Value |
+|--------|--------|
+| **Username** | `admin` (maps to `admin@peeracademy.com`) |
+| **Password** | `Peer@2026` |
+
+Override seed values (optional):
+
+```env
+SEED_ADMIN_EMAIL=you@example.com
+SEED_ADMIN_PASSWORD=YourSecurePassword
+SEED_ADMIN_DISPLAY_NAME=Admin
+```
+
+**Production:** change the password in [Firebase Console → Authentication](https://console.firebase.google.com/) or delete the default account and use a strong password.
+
 ### Firebase Configuration
 
 Replace the placeholder values with your actual Firebase project configuration:

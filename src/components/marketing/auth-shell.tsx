@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
+import { cn } from '@/lib/utils';
 import type { ReactNode } from 'react';
 
 interface AuthShellProps {
@@ -7,9 +8,11 @@ interface AuthShellProps {
   description: string;
   children: ReactNode;
   footer?: ReactNode;
+  /** Wider card for sign-up path picker + forms */
+  wide?: boolean;
 }
 
-export function AuthShell({ title, description, children, footer }: AuthShellProps) {
+export function AuthShell({ title, description, children, footer, wide }: AuthShellProps) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
       <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden>
@@ -25,7 +28,12 @@ export function AuthShell({ title, description, children, footer }: AuthShellPro
         </div>
 
         <div className="flex flex-1 items-center justify-center px-4 py-12">
-          <div className="w-full max-w-md space-y-6 animate-fade-in-up">
+          <div
+            className={cn(
+              'w-full space-y-6 animate-fade-in-up',
+              wide ? 'max-w-3xl' : 'max-w-md'
+            )}
+          >
             <div className="text-center space-y-2">
               <span className="badge-royal mx-auto">
                 <span className="dot-flare" aria-hidden />

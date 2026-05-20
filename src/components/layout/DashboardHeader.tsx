@@ -27,9 +27,11 @@ export function DashboardHeader() {
   const breadcrumbParent =
     pathname.startsWith('/courses/') && pathname !== '/courses'
       ? { label: 'Courses', href: '/courses' }
-      : pathname.startsWith('/admin-portal/') && pathname !== '/admin-portal'
+      : pathname.startsWith('/admin-portal/startup')
         ? { label: 'Admin', href: '/admin-portal' }
-        : null;
+        : pathname.startsWith('/admin-portal/') && pathname !== '/admin-portal'
+          ? { label: 'Admin', href: '/admin-portal' }
+          : null;
 
   return (
     <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 glass px-4 md:px-6">

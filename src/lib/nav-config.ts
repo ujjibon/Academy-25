@@ -13,6 +13,7 @@ import {
   Sparkles,
   GraduationCap,
   School,
+  Rocket,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -45,6 +46,10 @@ export const mainNavSections: NavSection[] = [
     ],
   },
   {
+    label: 'Startup',
+    items: [{ href: '/startup', label: 'Startup hub', icon: Rocket, exact: true }],
+  },
+  {
     label: 'Learning',
     items: [
       { href: '/teach', label: 'Teach Mode', icon: PenSquare },
@@ -68,6 +73,7 @@ export const adminNavSection: NavSection = {
     { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: GraduationCap },
     { href: '/admin-portal/manual-editor', label: 'Manual Editor', icon: FileEdit },
     { href: '/admin-portal/users', label: 'Users', icon: Users },
+    { href: '/admin-portal/startup', label: 'Startup program', icon: Rocket },
   ],
 };
 
@@ -82,12 +88,15 @@ export const pageTitles: Record<string, string> = {
   '/profile': 'Profile',
   '/leaderboard': 'Leaderboard',
   '/teach': 'Teach Mode',
+  '/startup': 'Startup hub',
   '/admin-portal': 'Admin Portal',
   '/admin-portal/courses': 'Manage Courses',
   '/admin-portal/course-creator': 'AI Course Creator',
   '/admin-portal/bootcamp-studio': 'Bootcamp Studio',
   '/admin-portal/manual-editor': 'Manual Editor',
   '/admin-portal/users': 'Users',
+  '/admin-portal/startup': 'Startup program',
+  '/admin-portal/unauthorized': 'Access restricted',
 };
 
 export function getPageTitle(pathname: string): string {

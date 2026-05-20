@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { getAllUsers } from '@/lib/firebase';
 import { courses } from '@/lib/courses';
-import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy, GraduationCap } from 'lucide-react';
+import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy, GraduationCap, Rocket } from 'lucide-react';
 
 export default function AdminPortalPage() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -37,6 +37,12 @@ export default function AdminPortalPage() {
       icon: Users,
     },
     {
+      href: '/admin-portal/startup',
+      title: 'Startup program',
+      description: 'Ideas, pitch reviews, mentorship',
+      icon: Rocket,
+    },
+    {
       href: '/admin-portal/course-creator',
       title: 'AI Course Creator',
       description: 'Generate lessons with AI',
@@ -45,7 +51,7 @@ export default function AdminPortalPage() {
     {
       href: '/admin-portal/bootcamp-studio',
       title: 'Bootcamp Studio',
-      description: 'Generate dynamic camps from prompt/PDF',
+      description: 'AI agent or manual builder for full bootcamp execution',
       icon: GraduationCap,
     },
     {
@@ -57,16 +63,16 @@ export default function AdminPortalPage() {
   ];
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Admin Overview</h1>
+    <div className="space-y-8 max-w-6xl">
+      <div className="dashboard-panel p-6 sm:p-8 border-midnight/10">
+        <h1 className="font-dashboard-title text-3xl font-bold tracking-tight">Admin overview</h1>
         <p className="text-muted-foreground mt-1">
           Manage courses, users, and content for Peer Academy.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="dashboard-panel border-midnight/10 shadow-sm">
           <CardHeader className="pb-2">
             <CardDescription>Courses</CardDescription>
             <CardTitle className="text-3xl">{courses.length}</CardTitle>
@@ -75,7 +81,7 @@ export default function AdminPortalPage() {
             <p className="text-xs text-muted-foreground">Published in catalog</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dashboard-panel border-midnight/10 shadow-sm">
           <CardHeader className="pb-2">
             <CardDescription>Learners</CardDescription>
             <CardTitle className="text-3xl">{userCount ?? '—'}</CardTitle>
@@ -84,11 +90,11 @@ export default function AdminPortalPage() {
             <p className="text-xs text-muted-foreground">Registered users</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dashboard-panel border-midnight/10 shadow-sm">
           <CardHeader className="pb-2">
             <CardDescription>Total XP</CardDescription>
             <CardTitle className="text-3xl flex items-center gap-2">
-              <Trophy className="h-6 w-6 text-amber-500" />
+              <Trophy className="h-6 w-6 text-primary" />
               {totalXp.toLocaleString()}
             </CardTitle>
           </CardHeader>
@@ -96,13 +102,13 @@ export default function AdminPortalPage() {
             <p className="text-xs text-muted-foreground">Across all learners</p>
           </CardContent>
         </Card>
-        <Card className="border-amber-500/20 bg-amber-500/5">
+        <Card className="dashboard-panel border-primary/20 bg-primary/5 shadow-sm">
           <CardHeader className="pb-2">
             <CardDescription>Portal</CardDescription>
-            <CardTitle className="text-lg">Administration</CardTitle>
+            <CardTitle className="text-lg">Learner app</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button asChild size="sm" variant="outline" className="w-full">
+            <Button asChild size="sm" className="w-full brand-button">
               <Link href="/dashboard">
                 Open learner app
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -114,11 +120,14 @@ export default function AdminPortalPage() {
 
       <div className="grid gap-4 md:grid-cols-2">
         {quickLinks.map((link) => (
-          <Card key={link.href} className="hover:border-amber-500/30 transition-colors">
+          <Card
+            key={link.href}
+            className="dashboard-panel border-midnight/10 shadow-sm hover:border-primary/25 transition-colors"
+          >
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-amber-500/10">
-                  <link.icon className="h-5 w-5 text-amber-600" />
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <link.icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <CardTitle className="text-lg">{link.title}</CardTitle>
