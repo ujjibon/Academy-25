@@ -45,7 +45,9 @@ import {
   Shield,
   Flame,
   ChevronRight,
+  Presentation,
 } from 'lucide-react';
+import { INSTRUCTOR_DASHBOARD } from '@/lib/role-routes';
 import { cn } from '@/lib/utils';
 
 function isItemActive(pathname: string, item: NavItem): boolean {
@@ -123,7 +125,7 @@ export function AppSidebar() {
   const router = useRouter();
   const { toast } = useToast();
   const { open: openChat } = useChatbot();
-  const { user, userProfile, isAdmin } = useAuth();
+  const { user, userProfile, isAdmin, isInstructor } = useAuth();
 
   const displayName = userProfile?.displayName || user?.displayName || 'User';
   const displayEmail = userProfile?.email || user?.email || '';
@@ -230,11 +232,25 @@ export function AppSidebar() {
             <DropdownMenuLabel>My account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
+              <Link href="/account">
+                <Settings className="mr-2 h-4 w-4" />
+                Account & billing
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href="/profile">
                 <User className="mr-2 h-4 w-4" />
                 Profile
               </Link>
             </DropdownMenuItem>
+            {isInstructor ? (
+              <DropdownMenuItem asChild>
+                <Link href={INSTRUCTOR_DASHBOARD}>
+                  <Presentation className="mr-2 h-4 w-4 text-primary" />
+                  Instructor portal
+                </Link>
+              </DropdownMenuItem>
+            ) : null}
             {isAdmin ? (
               <DropdownMenuItem asChild>
                 <Link href="/admin-portal">
@@ -243,10 +259,6 @@ export function AppSidebar() {
                 </Link>
               </DropdownMenuItem>
             ) : null}
-            <DropdownMenuItem disabled>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </DropdownMenuItem>
             <DropdownMenuItem disabled>
               <Languages className="mr-2 h-4 w-4" />
               Language

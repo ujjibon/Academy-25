@@ -6,6 +6,7 @@ import { Download, Loader2, Award } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { CertificateRequest } from '@/lib/training-types';
 import { recordCertificate } from '@/lib/training-service';
+import { getStoredCertificateTemplateId } from '@/lib/certificate-template-storage';
 
 type Props = {
   payload: CertificateRequest;
@@ -14,6 +15,7 @@ type Props = {
   size?: 'default' | 'sm' | 'lg';
   className?: string;
   label?: string;
+  disabled?: boolean;
 };
 
 export function CertificateDownloadButton({
@@ -23,17 +25,22 @@ export function CertificateDownloadButton({
   size = 'default',
   className,
   label = 'Download Certificate (PDF)',
+  disabled = false,
 }: Props) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const handleDownload = async () => {
+    if (disabled) return;
     setLoading(true);
     try {
       const res = await fetch('/api/certificates/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          templateId: payload.templateId ?? getStoredCertificateTemplateId(),
+        }),
       });
 
       if (!res.ok) {
@@ -84,7 +91,7 @@ export function CertificateDownloadButton({
       size={size}
       className={className}
       onClick={handleDownload}
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {loading ? (
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

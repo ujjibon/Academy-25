@@ -27,6 +27,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/Logo';
 import { useAuth } from '@/hooks/use-auth';
+import { useChatbot } from '@/hooks/use-chatbot';
 import {
   instructorFooterNav,
   instructorNavSections,
@@ -45,6 +46,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { learnerDashboardHref } from '@/lib/role-routes';
 
 function isItemActive(pathname: string, item: NavItem): boolean {
   if (!item.href) return false;
@@ -120,6 +122,7 @@ export function InstructorSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
+  const { open: openChat } = useChatbot();
   const { user, userProfile, isAdmin } = useAuth();
 
   const displayName = userProfile?.displayName || user?.displayName || 'User';
@@ -177,7 +180,7 @@ export function InstructorSidebar() {
           )}
         </div>
 
-        <NavSections sections={sections} pathname={pathname} onChatOpen={() => {}} />
+        <NavSections sections={sections} pathname={pathname} onChatOpen={openChat} />
 
         <SidebarSeparator className="mx-3 my-2" />
 
@@ -225,9 +228,9 @@ export function InstructorSidebar() {
             <DropdownMenuLabel>My account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/dashboard">
+              <Link href={learnerDashboardHref(true)}>
                 <User className="mr-2 h-4 w-4" />
-                Learner dashboard
+                Learner preview
               </Link>
             </DropdownMenuItem>
             {isAdmin ? (
@@ -238,9 +241,11 @@ export function InstructorSidebar() {
                 </Link>
               </DropdownMenuItem>
             ) : null}
-            <DropdownMenuItem disabled>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
+            <DropdownMenuItem asChild>
+              <Link href="/account">
+                <Settings className="mr-2 h-4 w-4" />
+                Account & billing
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem disabled>
               <Languages className="mr-2 h-4 w-4" />

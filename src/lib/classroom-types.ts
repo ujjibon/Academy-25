@@ -1,8 +1,13 @@
-import type { Course, Lesson } from '@/lib/data-provider';
+import type { Course, Lesson, CodeLanguage } from '@/lib/data-provider';
 
 export type UserRoleExtended = 'learner' | 'instructor' | 'admin';
 
 export type AssignmentStatus = 'assigned' | 'submitted' | 'graded' | 'late';
+
+export type DripModuleRelease = {
+  moduleId: string;
+  releaseAt: string;
+};
 
 export type ClassroomCourse = {
   id: string;
@@ -17,6 +22,25 @@ export type ClassroomCourse = {
   modules?: CourseModule[];
   bootcamp?: import('@/lib/bootcamp-types').BootcampMetadata;
   enrolledStudentIds: string[];
+  /** ISO dates per module — content unlocks on schedule */
+  dripSchedule?: DripModuleRelease[];
+  /** Classroom course IDs learners should complete first */
+  prerequisiteCourseIds?: string[];
+  /** One-time purchase price in cents (0 = free) */
+  priceCents?: number;
+  /** Listed for sale in catalog */
+  isForSale?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type CourseBundle = {
+  id: string;
+  title: string;
+  description: string;
+  courseIds: string[];
+  instructorId: string;
+  priceCents?: number;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -52,6 +76,8 @@ export type PostComment = {
   createdAt: Date;
 };
 
+export type AssignmentSubmissionType = 'standard' | 'code';
+
 export type ClassroomAssignment = {
   id: string;
   courseId: string;
@@ -60,6 +86,10 @@ export type ClassroomAssignment = {
   deadline: Date;
   points: number;
   attachmentUrls?: string[];
+  /** Use `code` for programming classrooms — shows the online code editor. */
+  submissionType?: AssignmentSubmissionType;
+  codeLanguage?: CodeLanguage;
+  starterCode?: string;
   createdBy: string;
   createdAt: Date;
 };
@@ -71,6 +101,7 @@ export type AssignmentSubmission = {
   studentId: string;
   studentName: string;
   textResponse?: string;
+  codeSubmission?: string;
   fileUrls?: string[];
   githubUrl?: string;
   liveUrl?: string;
@@ -116,6 +147,32 @@ export function groupLessonsIntoModules(lessons: Lesson[]): CourseModule[] {
   }
   return modules;
 }
+
+export type InstructorStudentRosterEntry = {
+  studentId: string;
+  displayName: string;
+  email?: string;
+  photoURL?: string;
+  progressPercent: number;
+  assignmentsSubmitted: number;
+  assignmentsGraded: number;
+  assignmentsTotal: number;
+  projectSubmissions: number;
+};
+
+export type CourseSubmissionWithAssignment = {
+  submission: AssignmentSubmission;
+  assignment: ClassroomAssignment;
+};
+
+export type InstructorCourseInsightsSummary = {
+  studentCount: number;
+  assignmentCount: number;
+  submissionCount: number;
+  pendingGrading: number;
+  projectReportCount: number;
+  averageProgress: number;
+};
 
 export function generateClassCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

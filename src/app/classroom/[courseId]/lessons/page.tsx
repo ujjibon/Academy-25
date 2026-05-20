@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Clock, PlayCircle } from 'lucide-react';
-import { getClassroomCourse, getCourseContent } from '@/lib/classroom-service';
+import { getClassroomCourse, getCourseContent, isModuleReleased } from '@/lib/classroom-service';
+import type { ClassroomCourse } from '@/lib/classroom-types';
 import { groupLessonsIntoModules } from '@/lib/classroom-types';
 import type { Course } from '@/lib/data-provider';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -18,13 +19,15 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function LessonsPage({ params }: { params: Promise<{ courseId: string }> }) {
   const { courseId } = use(params);
   const [content, setContent] = useState<Course | null>(null);
+  const [classroom, setClassroom] = useState<ClassroomCourse | null>(null);
   const [contentId, setContentId] = useState(courseId);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
-      const classroom = await getClassroomCourse(courseId);
-      const id = classroom?.contentCourseId || courseId;
+      const classroomCourse = await getClassroomCourse(courseId);
+      setClassroom(classroomCourse);
+      const id = classroomCourse?.contentCourseId || courseId;
       setContentId(id);
       const c = await getCourseContent(id);
       setContent(c);
@@ -42,20 +45,36 @@ export default function LessonsPage({ params }: { params: Promise<{ courseId: st
     );
   }
 
-  const modules = groupLessonsIntoModules(content.lessons);
+  const modules =
+    classroom?.modules?.length
+      ? classroom.modules
+      : groupLessonsIntoModules(content.lessons);
 
   return (
     <div className="space-y-4">
       <h2 className="font-heading text-xl font-semibold">Course curriculum</h2>
       <Accordion type="single" collapsible className="w-full">
-        {modules.map((mod, modIndex) => (
-          <AccordionItem key={mod.id} value={mod.id}>
+        {modules.map((mod) => {
+          const released = classroom ? isModuleReleased(classroom, mod.id) : true;
+          const releaseEntry = classroom?.dripSchedule?.find((s) => s.moduleId === mod.id);
+          return (
+          <AccordionItem key={mod.id} value={mod.id} disabled={!released}>
             <AccordionTrigger>
               <span className="font-medium">
                 {mod.title}: {mod.lessonIds.length} lessons
+                {!released && releaseEntry ? (
+                  <span className="ml-2 text-xs text-muted-foreground font-normal">
+                    Unlocks {new Date(releaseEntry.releaseAt).toLocaleDateString()}
+                  </span>
+                ) : null}
               </span>
             </AccordionTrigger>
             <AccordionContent>
+              {!released ? (
+                <p className="text-sm text-muted-foreground py-2">
+                  This module is scheduled for a later release.
+                </p>
+              ) : (
               <ul className="space-y-2 pl-2">
                 {mod.lessonIds.map((lessonId) => {
                   const lesson = content.lessons.find((l) => l.id === lessonId);
@@ -77,9 +96,11 @@ export default function LessonsPage({ params }: { params: Promise<{ courseId: st
                   );
                 })}
               </ul>
+              )}
             </AccordionContent>
           </AccordionItem>
-        ))}
+          );
+        })}
       </Accordion>
     </div>
   );

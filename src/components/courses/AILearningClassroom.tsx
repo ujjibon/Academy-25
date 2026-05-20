@@ -36,7 +36,11 @@ import {
   Minimize2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-// Removed direct import - using API route instead
+import {
+  getLessonSlidesFromFirestore,
+  saveLessonSlidesToFirestore,
+} from '@/lib/lesson-slides-cache';
+import type { ClassroomSlideGeneratorOutput } from '@/ai/flows/classroom-slide-generator-flow';
 import ReactMarkdown from 'react-markdown';
 import { cn } from '@/lib/utils';
 
@@ -86,31 +90,66 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
   const slideIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
-  // Generate slides from lesson content
-  const generateSlides = async () => {
+  const mapApiSlidesToUi = (result: ClassroomSlideGeneratorOutput): Slide[] =>
+    result.slides.map((slide) => ({
+      id: slide.id,
+      title: slide.title,
+      content: slide.content,
+      type: slide.type,
+      visualData: {
+        type: slide.visualType || 'diagram',
+        data: { description: slide.visualDescription },
+      },
+      duration: slide.duration,
+      interactive: slide.interactive,
+      notes: slide.keyPoints?.join('\n') ?? '',
+    }));
+
+  const applySlideDeck = (result: ClassroomSlideGeneratorOutput, fromCache: boolean) => {
+    const mapped = mapApiSlidesToUi(result);
+    setSlides(mapped);
+    setClassroomState((prev) => ({ ...prev, totalDuration: result.totalDuration }));
+    toast({
+      title: fromCache ? 'Classroom loaded' : 'AI Classroom ready',
+      description: fromCache
+        ? `${mapped.length} saved slides loaded.`
+        : `Generated and saved ${mapped.length} slides for this lesson.`,
+    });
+  };
+
+  const loadSlides = async () => {
     setIsGeneratingSlides(true);
     try {
+      const cached = await getLessonSlidesFromFirestore(course.id, lesson.id);
+      if (cached?.slides?.length) {
+        applySlideDeck(cached, true);
+        return;
+      }
+
       const response = await fetch('/api/ai/classroom-slides', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          courseId: course.id,
           lesson: {
             id: lesson.id,
             title: lesson.title,
             duration: lesson.duration,
-            introduction: { text: lesson.introduction.text }
+            introduction: { text: lesson.introduction.text },
           },
           courseContext: {
             title: course.title,
             description: course.description,
-            lessons: course.lessons.map(l => ({ id: l.id, title: l.title, duration: l.duration }))
+            lessons: course.lessons.map((l) => ({
+              id: l.id,
+              title: l.title,
+              duration: l.duration,
+            })),
           },
           learningLevel: 'intermediate',
           visualStyle: 'interactive',
-          slideCount: 8
-        })
+          slideCount: 8,
+        }),
       });
 
       if (!response.ok) {
@@ -118,43 +157,23 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
         console.error('Slide generation failed:', {
           status: response.status,
           statusText: response.statusText,
-          error: errorData
+          error: errorData,
         });
         throw new Error(`Failed to generate slides: ${response.status} ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as ClassroomSlideGeneratorOutput & {
+        cached?: boolean;
+      };
 
-      // Convert the generated slides to our Slide interface
-      const generatedSlides: Slide[] = result.slides.map((slide: any) => ({
-        id: slide.id,
-        title: slide.title,
-        content: slide.content,
-        type: slide.type,
-        visualData: {
-          type: slide.visualType || slide.visualData?.type || 'diagram',
-          data: slide.visualData?.data || { description: slide.visualDescription }
-        },
-        duration: slide.duration,
-        interactive: slide.interactive,
-        notes: slide.keyPoints.join('\n')
-      }));
-
-      setSlides(generatedSlides);
-      setClassroomState(prev => ({ ...prev, totalDuration: result.totalDuration }));
-      
-      toast({
-        title: 'AI Classroom Ready!',
-        description: `Generated ${generatedSlides.length} interactive slides with visual elements.`,
-      });
+      await saveLessonSlidesToFirestore(course.id, lesson.id, result);
+      applySlideDeck(result, Boolean(result.cached));
     } catch (error) {
-      console.error('Error generating slides:', error);
-      // Fallback slides
-      const fallbackSlides = createFallbackSlides();
-      setSlides(fallbackSlides);
+      console.error('Error loading slides:', error);
+      setSlides(createFallbackSlides());
       toast({
-        title: 'Using Fallback Slides',
-        description: 'AI generation failed, using basic lesson slides.',
+        title: 'Using fallback slides',
+        description: 'Could not load or generate slides. Showing basic lesson content.',
         variant: 'destructive',
       });
     } finally {
@@ -283,10 +302,10 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
     };
   }, [classroomState.isPlaying, classroomState.currentSlide, slides]);
 
-  // Initialize slides on component mount
   useEffect(() => {
-    generateSlides();
-  }, [lesson.id]);
+    setIsLoading(true);
+    loadSlides();
+  }, [course.id, lesson.id]);
 
   const currentSlide = slides[classroomState.currentSlide];
 
@@ -341,42 +360,42 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
     switch (visualData.type) {
       case 'chart':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <BarChart3 className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Interactive Chart</p>
           </div>
         );
       case 'diagram':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <PieChart className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Concept Diagram</p>
           </div>
         );
       case 'image':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <ImageIcon className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Visual Example</p>
           </div>
         );
       case 'video':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <Video className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Video Content</p>
           </div>
         );
       case 'code':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <FileText className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Code Example</p>
           </div>
         );
       case 'infographic':
         return (
-          <div className="bg-gradient-to-br from-secondary to-background-elevated p-6 rounded-lg">
+          <div className="lesson-accent-panel p-6 rounded-lg">
             <TrendingUp className="h-16 w-16 mx-auto text-primary mb-4" />
             <p className="text-center text-foreground">Infographic</p>
           </div>
@@ -406,7 +425,9 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
             <Brain className="h-12 w-12 mx-auto mb-4 text-primary animate-pulse" />
             <h3 className="text-lg font-semibold mb-2">Preparing Your Classroom</h3>
             <p className="text-muted-foreground mb-4">
-              {isGeneratingSlides ? 'Generating interactive slides...' : 'Loading classroom...'}
+              {isGeneratingSlides
+                ? 'Loading slides (first visit may generate once)...'
+                : 'Loading classroom...'}
             </p>
             <Progress value={isGeneratingSlides ? 75 : 25} className="w-64" />
           </div>
@@ -421,7 +442,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
       classroomState.isFullscreen && "fixed inset-0 z-50 h-screen"
     )}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-secondary to-background-elevated">
+      <div className="flex items-center justify-between border-b border-border bg-background-elevated/80 p-4">
         <div className="flex items-center gap-4">
           <Presentation className="h-6 w-6 text-primary" />
           <div>
@@ -475,7 +496,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
 
                 {/* Interactive Elements */}
                 {currentSlide.interactive && (
-                  <div className="mt-6 p-4 bg-secondary/60 rounded-lg border border-border">
+                  <div className="lesson-accent-panel mt-6">
                     <h3 className="font-semibold text-foreground mb-2">
                       Interactive Activity
                     </h3>
@@ -489,7 +510,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
           </div>
 
           {/* Controls */}
-          <div className="border-t p-4 bg-secondary/50">
+          <div className="border-t bg-background-elevated/80 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Button
@@ -550,7 +571,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
         </div>
 
         {/* Sidebar - Slide Navigation */}
-        <div className="w-80 border-l bg-secondary/50">
+        <div className="w-80 border-l bg-background-elevated/60">
           <div className="p-4 border-b">
             <h3 className="font-semibold">Slide Navigation</h3>
           </div>

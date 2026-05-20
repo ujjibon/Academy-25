@@ -2,7 +2,14 @@
 import { useState } from 'react';
 import type { Lesson, Course, Quiz } from '@/lib/data-provider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  LessonPanel,
+  LessonPanelContent,
+  LessonPanelDescription,
+  LessonPanelFooter,
+  LessonPanelHeader,
+  LessonPanelTitle,
+} from '@/components/courses/LessonPanel';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,7 +25,12 @@ import { TranslationBar } from '@/components/classroom/TranslationBar';
 import ReactMarkdown from 'react-markdown';
 import { Input } from '../ui/input';
 import { cn } from '@/lib/utils';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { CodeWorkspace } from '@/components/courses/CodeWorkspace';
+import {
+  getProjectCodeConfig,
+  isProgrammingCourse,
+} from '@/lib/programming-course';
 
 type PracticeResult = {
   isCorrect: boolean;
@@ -26,11 +38,21 @@ type PracticeResult = {
   isChecking: boolean;
 };
 
-export function LessonContent({ course, lesson }: { course: Course; lesson: Lesson }) {
+export function LessonContent({
+  course,
+  lesson,
+  autoStartAi = true,
+}: {
+  course: Course;
+  lesson: Lesson;
+  /** When false, skips automatic AI guide + tutor calls on mount (e.g. homepage demo). */
+  autoStartAi?: boolean;
+}) {
   const [practiceAnswers, setPracticeAnswers] = useState<Record<number, string>>({});
   const [practiceResults, setPracticeResults] = useState<Record<number, PracticeResult>>({});
   
   const [submissionText, setSubmissionText] = useState('');
+  const [codeSubmission, setCodeSubmission] = useState('');
   const [submissionFile, setSubmissionFile] = useState<File | null>(null);
   const [submissionFileDataUri, setSubmissionFileDataUri] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,10 +69,17 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
 
   const { toast } = useToast();
 
-  // Initialize learning guide on component mount
+  const isProgramming = isProgrammingCourse(course);
+  const codeProjectConfig = useMemo(
+    () => (isProgramming ? getProjectCodeConfig(course, lesson.project) : null),
+    [course, lesson.project, isProgramming]
+  );
+
   useEffect(() => {
-    generateLearningGuide('introduction');
-  }, []);
+    if (autoStartAi) {
+      generateLearningGuide('introduction');
+    }
+  }, [autoStartAi]);
 
   // Sequential learning functions
   const updateLearningProgress = async (newPhase?: 'introduction' | 'practice' | 'assessment') => {
@@ -174,18 +203,42 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
   };
 
   const handleProjectSubmit = async () => {
-    if (!submissionText && !submissionFile) {
+    const codeBody = codeProjectConfig ? codeSubmission.trim() : '';
+    const textBody = submissionText.trim();
+    if (codeProjectConfig && !codeBody && !textBody && !submissionFile) {
+      toast({
+        title: 'Submission is empty',
+        description: 'Write your code in the editor or add notes before submitting.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (!codeProjectConfig && !textBody && !submissionFile) {
         toast({ title: 'Submission is empty', description: 'Please provide your work before submitting.', variant: 'destructive' });
         return;
     }
     setIsSubmitting(true);
     setFeedback(null);
     try {
+        const submissionPayload = codeProjectConfig
+          ? [
+              `Language: ${codeProjectConfig.language}`,
+              '',
+              '```',
+              codeBody || '(no code in editor)',
+              '```',
+              textBody ? `\nNotes:\n${textBody}` : '',
+            ].join('\n')
+          : textBody;
+
         const result = await evaluateSubmittedTask({
             taskDescription: lesson.project.description,
-            submissionText: submissionText,
+            submissionText: submissionPayload,
             submissionFile: submissionFileDataUri || undefined,
             studentLevel: 'beginner',
+            feedbackRequest: codeProjectConfig
+              ? 'Evaluate this as source code. Comment on correctness, style, and whether it meets the project requirements.'
+              : undefined,
         });
         setFeedback(result);
         toast({ title: 'Feedback Received', description: 'Your project has been evaluated by our AI coach.' });
@@ -233,7 +286,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               {practiceResults[i]?.isChecking && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Check Answer
             </Button>
-            {practiceResults[i]?.isCorrect === true && <Alert variant="default" className="border-green-500 text-green-700 dark:border-green-500 dark:text-green-400"><CheckCircle2 className="h-4 w-4 !text-green-700 dark:!text-green-400" /><AlertTitle>Correct</AlertTitle><AlertDescription>Excellent work!</AlertDescription></Alert>}
+            {practiceResults[i]?.isCorrect === true && <Alert variant="default" className="lesson-alert-success"><CheckCircle2 className="h-4 w-4" /><AlertTitle>Correct</AlertTitle><AlertDescription>Excellent work!</AlertDescription></Alert>}
             {practiceResults[i]?.isCorrect === false && (
               <Alert variant="destructive">
                 <XCircle className="h-4 w-4" />
@@ -254,46 +307,50 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
   );
 
   return (
+    <div className="lesson-page w-full">
     <Tabs defaultValue="introduction" className="w-full">
       <div className="mb-4 overflow-x-auto pb-2 sm:mb-0 sm:overflow-visible sm:pb-0">
-      <TabsList className="inline-flex min-w-max sm:grid sm:w-full sm:grid-cols-5">
-        <TabsTrigger value="introduction" className={cn(
-          "relative min-w-[122px] px-3 sm:min-w-0",
-          currentPhase === 'introduction' && "bg-primary text-primary-foreground"
-        )}>
+      <TabsList className="inline-flex h-auto min-h-[2.85rem] min-w-max gap-1 rounded-[var(--radius)] border border-border bg-surface-muted-deep p-1.5 shadow-[0_2px_12px_rgb(0_11_88/0.04)] sm:grid sm:w-full sm:grid-cols-5">
+        <TabsTrigger
+          value="introduction"
+          className="relative min-w-[122px] rounded-[calc(var(--radius)-12px)] px-3 py-2 text-sm font-medium text-muted-foreground transition-colors data-[state=active]:!bg-white data-[state=active]:!text-foreground data-[state=active]:shadow-[0_1px_6px_rgb(0_11_88/0.08)] sm:min-w-0"
+        >
           <div className="flex items-center gap-2">
             <span>AI Guide</span>
-            {currentPhase === 'introduction' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+            {currentPhase === 'introduction' && <div className="lesson-phase-dot" />}
           </div>
         </TabsTrigger>
-        <TabsTrigger value="practice" className={cn(
-          "relative min-w-[108px] px-3 sm:min-w-0",
-          currentPhase === 'practice' && "bg-primary text-primary-foreground"
-        )}>
+        <TabsTrigger
+          value="practice"
+          className="relative min-w-[108px] rounded-[calc(var(--radius)-12px)] px-3 py-2 text-sm font-medium text-muted-foreground transition-colors data-[state=active]:!bg-white data-[state=active]:!text-foreground data-[state=active]:shadow-[0_1px_6px_rgb(0_11_88/0.08)] sm:min-w-0"
+        >
           <div className="flex items-center gap-2">
             <span>Practice</span>
-            {currentPhase === 'practice' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+            {currentPhase === 'practice' && <div className="lesson-phase-dot" />}
           </div>
         </TabsTrigger>
-        <TabsTrigger value="project" className={cn(
-          "relative min-w-[104px] px-3 sm:min-w-0",
-          currentPhase === 'practice' && "bg-primary text-primary-foreground"
-        )}>
+        <TabsTrigger
+          value="project"
+          className="relative min-w-[104px] rounded-[calc(var(--radius)-12px)] px-3 py-2 text-sm font-medium text-muted-foreground transition-colors data-[state=active]:!bg-white data-[state=active]:!text-foreground data-[state=active]:shadow-[0_1px_6px_rgb(0_11_88/0.08)] sm:min-w-0"
+        >
           <div className="flex items-center gap-2">
             <span>Project</span>
-            {currentPhase === 'practice' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+            {currentPhase === 'practice' && <div className="lesson-phase-dot" />}
           </div>
         </TabsTrigger>
-        <TabsTrigger value="assessment" className={cn(
-          "relative min-w-[126px] px-3 sm:min-w-0",
-          currentPhase === 'assessment' && "bg-primary text-primary-foreground"
-        )}>
+        <TabsTrigger
+          value="assessment"
+          className="relative min-w-[126px] rounded-[calc(var(--radius)-12px)] px-3 py-2 text-sm font-medium text-muted-foreground transition-colors data-[state=active]:!bg-white data-[state=active]:!text-foreground data-[state=active]:shadow-[0_1px_6px_rgb(0_11_88/0.08)] sm:min-w-0"
+        >
           <div className="flex items-center gap-2">
             <span>Assessment</span>
-            {currentPhase === 'assessment' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+            {currentPhase === 'assessment' && <div className="lesson-phase-dot" />}
           </div>
         </TabsTrigger>
-        <TabsTrigger value="classroom" className="min-w-[132px] px-3 sm:min-w-0">
+        <TabsTrigger
+          value="classroom"
+          className="min-w-[132px] rounded-[calc(var(--radius)-12px)] px-3 py-2 text-sm font-medium text-muted-foreground transition-colors data-[state=active]:!bg-white data-[state=active]:!text-foreground data-[state=active]:shadow-[0_1px_6px_rgb(0_11_88/0.08)] sm:min-w-0"
+        >
           <div className="flex items-center gap-2">
             <span>AI Classroom</span>
           </div>
@@ -302,42 +359,52 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
       </div>
       <TabsContent value="introduction" className="mt-6">
         {/* Learning Progress Indicator */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex flex-wrap items-center gap-2">
-              <span>Learning Progress</span>
-              <div className="flex-1 bg-muted rounded-full h-2">
-                <div 
-                  className="bg-primary h-2 rounded-full"
-                  style={{ width: `${overallProgress}%` }}
-                />
-              </div>
-              <span className="text-sm text-muted-foreground">{overallProgress}%</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <LessonPanel className="mb-6">
+          <LessonPanelHeader className="pb-3">
+            <span className="stat-card-label">Learning progress</span>
+            <p className="stat-card-value mt-1">{overallProgress}%</p>
+            <div className="lesson-progress-track mt-3 w-full">
+              <div
+                className="lesson-progress-fill"
+                style={{ width: `${overallProgress}%` }}
+              />
+            </div>
+          </LessonPanelHeader>
+          <LessonPanelContent>
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap gap-2 sm:gap-3">
-                <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
-                  currentPhase === 'introduction' ? "bg-primary text-primary-foreground" : "bg-muted"
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold sm:text-sm',
+                    currentPhase === 'introduction'
+                      ? 'bg-midnight text-white shadow-[0_2px_8px_rgb(0_11_88/0.15)]'
+                      : 'bg-surface-muted-deep text-muted-foreground'
+                  )}
+                >
                   <span>1. Introduction</span>
-                  {currentPhase === 'introduction' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+                  {currentPhase === 'introduction' && <div className="lesson-phase-dot" />}
                 </div>
-                <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
-                  currentPhase === 'practice' ? "bg-primary text-primary-foreground" : "bg-muted"
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold sm:text-sm',
+                    currentPhase === 'practice'
+                      ? 'bg-midnight text-white shadow-[0_2px_8px_rgb(0_11_88/0.15)]'
+                      : 'bg-surface-muted-deep text-muted-foreground'
+                  )}
+                >
                   <span>2. Practice</span>
-                  {currentPhase === 'practice' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+                  {currentPhase === 'practice' && <div className="lesson-phase-dot" />}
                 </div>
-                <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
-                  currentPhase === 'assessment' ? "bg-primary text-primary-foreground" : "bg-muted"
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold sm:text-sm',
+                    currentPhase === 'assessment'
+                      ? 'bg-midnight text-white shadow-[0_2px_8px_rgb(0_11_88/0.15)]'
+                      : 'bg-surface-muted-deep text-muted-foreground'
+                  )}
+                >
                   <span>3. Assessment</span>
-                  {currentPhase === 'assessment' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
+                  {currentPhase === 'assessment' && <div className="lesson-phase-dot" />}
                 </div>
             </div>
               {currentPhase !== 'introduction' && (
@@ -351,24 +418,24 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                 </Button>
               )}
             </div>
-          </CardContent>
-        </Card>
+          </LessonPanelContent>
+        </LessonPanel>
 
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>AI-Guided Introduction</CardTitle>
-              <CardDescription>Let our AI tutor guide you through this lesson</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <LessonPanel className="">
+            <LessonPanelHeader>
+              <LessonPanelTitle>AI-Guided Introduction</LessonPanelTitle>
+              <LessonPanelDescription>Let our AI tutor guide you through this lesson</LessonPanelDescription>
+            </LessonPanelHeader>
+            <LessonPanelContent className="space-y-6">
               <TranslationBar text={lesson.introduction.text} onTranslated={setIntroText} />
               <div className="prose dark:prose-invert max-w-none">
                 <p>{introText}</p>
               </div>
               <div className="space-y-4">
-                <div className="rounded-lg border bg-gradient-to-r from-secondary to-background-elevated p-4 sm:p-6">
+                <div className="rounded-[calc(var(--radius)-8px)] border border-border bg-surface-muted-deep p-4 sm:p-6">
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5" />
+                    <Lightbulb className="h-5 w-5 text-primary" />
                     AI Learning Assistant
                   </h4>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -437,19 +504,19 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                   </div>
                 </div>
                 
-                <div className="rounded-lg border bg-gradient-to-r from-secondary to-background-elevated p-4 sm:p-6">
+                <div className="rounded-[calc(var(--radius)-8px)] border border-border bg-surface-muted-deep p-4 sm:p-6">
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5" />
+                    <CheckCircle2 className="h-5 w-5 text-flare" />
                     Learning Checkpoint
                   </h4>
                   <p className="text-sm text-muted-foreground mb-4">
                     Test your understanding before moving to practice questions.
                   </p>
                   <div className="space-y-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="border-green-200 text-green-700 dark:border-green-800 dark:text-green-300 w-full"
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary/25 text-primary hover:bg-primary/5"
                       onClick={() => {
                         completeActivity('understanding-check');
                         // Also trigger AI interaction for understanding check
@@ -468,9 +535,9 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                       Quick Check
                     </Button>
                     {currentPhase === 'introduction' && phaseProgress >= 60 && (
-                      <Button 
-                        size="sm" 
-                        className="w-full bg-green-600"
+                      <Button
+                        size="sm"
+                        className="w-full brand-button-flare"
                         onClick={() => updateLearningProgress('practice')}
                       >
                         Ready for Practice? →
@@ -479,38 +546,42 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </LessonPanelContent>
+          </LessonPanel>
           
-          <Card>
-            <CardHeader>
-              <CardTitle>Interactive Learning</CardTitle>
-              <CardDescription>Engage with AI-powered learning tools</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <LessonPanel className="">
+            <LessonPanelHeader>
+              <LessonPanelTitle>Interactive Learning</LessonPanelTitle>
+              <LessonPanelDescription>Engage with AI-powered learning tools</LessonPanelDescription>
+            </LessonPanelHeader>
+            <LessonPanelContent>
               <div data-ai-tutor>
-                <CourseTutor course={course} currentLesson={lesson} />
+                <CourseTutor
+                  course={course}
+                  currentLesson={lesson}
+                  autoStartTeaching={autoStartAi}
+                />
               </div>
-            </CardContent>
-          </Card>
+            </LessonPanelContent>
+          </LessonPanel>
         </div>
       </TabsContent>
       <TabsContent value="practice" className="mt-6">
         {currentPhase === 'practice' && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <LessonPanel className=" mb-6">
+            <LessonPanelHeader>
+              <LessonPanelTitle className="flex items-center gap-2">
                 <span>🎯 Practice Phase</span>
-                <div className="w-2 h-2 bg-green-500 rounded-full " />
-              </CardTitle>
-              <CardDescription>
+                <div className="lesson-phase-dot" />
+              </LessonPanelTitle>
+              <LessonPanelDescription>
                 Great job! Now let's apply what you've learned with hands-on practice.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="rounded-lg bg-gradient-to-r from-secondary to-background-elevated p-4">
+              </LessonPanelDescription>
+            </LessonPanelHeader>
+            <LessonPanelContent>
+              <div className="rounded-[calc(var(--radius)-8px)] border border-border bg-surface-muted-deep p-4">
                 <p className="text-sm text-muted-foreground mb-3">
-                  💡 <strong>Practice Tips:</strong> Take your time with each question. If you get stuck, use the AI hints!
+                  💡 <strong className="text-foreground">Practice Tips:</strong> Take your time with each question. If you get stuck, use the AI hints!
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <Button 
@@ -530,70 +601,92 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                   )}
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </LessonPanelContent>
+          </LessonPanel>
         )}
         
-        <Card>
-          <CardHeader>
-            <CardTitle>Practice Questions</CardTitle>
-            <CardDescription>Test your knowledge with these practice questions.</CardDescription>
-          </CardHeader>
-          <CardContent>
+        <LessonPanel className="">
+          <LessonPanelHeader>
+            <LessonPanelTitle>Practice Questions</LessonPanelTitle>
+            <LessonPanelDescription>Test your knowledge with these practice questions.</LessonPanelDescription>
+          </LessonPanelHeader>
+          <LessonPanelContent>
             {renderQuiz(lesson.practice)}
-          </CardContent>
-        </Card>
+          </LessonPanelContent>
+        </LessonPanel>
       </TabsContent>
       <TabsContent value="project" className="mt-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
             <div>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>{lesson.project.title}</CardTitle>
-                        <CardDescription>{lesson.project.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
+                <LessonPanel className="">
+                    <LessonPanelHeader>
+                        <LessonPanelTitle>{lesson.project.title}</LessonPanelTitle>
+                        <LessonPanelDescription>{lesson.project.description}</LessonPanelDescription>
+                        {isProgramming && (
+                          <p className="text-xs text-primary font-medium mt-1">
+                            Programming course — use the code editor below to submit your solution.
+                          </p>
+                        )}
+                    </LessonPanelHeader>
+                    <LessonPanelContent className="space-y-4">
+                        {codeProjectConfig && (
+                          <div className="space-y-2">
+                            <Label>Your code</Label>
+                            <CodeWorkspace
+                              value={codeSubmission}
+                              onChange={setCodeSubmission}
+                              language={codeProjectConfig.language}
+                              starterCode={codeProjectConfig.starterCode}
+                              enablePreview={codeProjectConfig.enablePreview}
+                              enableConsole={codeProjectConfig.enableConsole}
+                            />
+                          </div>
+                        )}
                         <div className="space-y-2">
-                           <Label htmlFor="file-upload">Upload File</Label>
+                           <Label htmlFor="file-upload">
+                             {isProgramming ? 'Attach file (optional)' : 'Upload File'}
+                           </Label>
                            <Input 
                              id="file-upload" 
                              type="file" 
                              onChange={handleFileChange}
-                             accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                             accept={isProgramming ? '.pdf,.doc,.docx,.png,.jpg,.jpeg,.zip,.txt,.js,.jsx,.ts,.tsx,.py,.html,.css' : '.pdf,.doc,.docx,.png,.jpg,.jpeg'}
                            />
                            {submissionFile && (
                              <div className="text-sm text-muted-foreground flex items-center gap-2">
-                                <FileCheck className="h-4 w-4 text-green-500" />
+                                <FileCheck className="h-4 w-4 text-primary" />
                                 <span>{submissionFile.name}</span>
                              </div>
                            )}
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="submission-text">Or add text / comments</Label>
+                          <Label htmlFor="submission-text">
+                            {isProgramming ? 'Notes for reviewer (optional)' : 'Or add text / comments'}
+                          </Label>
                           <Textarea 
                               id="submission-text"
-                              placeholder="Paste code, write notes, or add comments here..." 
-                              className="min-h-[130px] sm:min-h-[150px]"
+                              placeholder={isProgramming ? 'Explain your approach, link a repo, or ask specific questions...' : 'Paste code, write notes, or add comments here...'} 
+                              className="min-h-[100px] sm:min-h-[120px]"
                               value={submissionText}
                               onChange={(e) => setSubmissionText(e.target.value)}
                           />
                         </div>
-                    </CardContent>
-                    <CardFooter>
+                    </LessonPanelContent>
+                    <LessonPanelFooter>
                         <Button onClick={handleProjectSubmit} disabled={isSubmitting}>
                             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                              Submit for AI Feedback
                         </Button>
-                    </CardFooter>
-                </Card>
+                    </LessonPanelFooter>
+                </LessonPanel>
             </div>
             <div>
-                <Card className="min-h-[340px] sm:min-h-[400px]">
-                    <CardHeader>
-                        <CardTitle>AI Feedback</CardTitle>
-                        <CardDescription>Your evaluation will appear here.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
+                <LessonPanel className=" min-h-[340px] sm:min-h-[400px]">
+                    <LessonPanelHeader>
+                        <LessonPanelTitle>AI Feedback</LessonPanelTitle>
+                        <LessonPanelDescription>Your evaluation will appear here.</LessonPanelDescription>
+                    </LessonPanelHeader>
+                    <LessonPanelContent>
                         {isSubmitting && <div className="flex items-center justify-center gap-2 text-muted-foreground"><Loader2 className="h-6 w-6 animate-spin" /><span>Evaluating...</span></div>}
                         {!isSubmitting && !feedback && (
                           <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground">
@@ -630,27 +723,27 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                                </Alert>
                             </div>
                         )}
-                    </CardContent>
-                </Card>
+                    </LessonPanelContent>
+                </LessonPanel>
             </div>
         </div>
       </TabsContent>
       <TabsContent value="assessment" className="mt-6">
         {currentPhase === 'assessment' && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <LessonPanel className=" mb-6">
+            <LessonPanelHeader>
+              <LessonPanelTitle className="flex items-center gap-2">
                 <span>🏆 Final Assessment</span>
-                <div className="w-2 h-2 bg-green-500 rounded-full " />
-              </CardTitle>
-              <CardDescription>
+                <div className="lesson-phase-dot" />
+              </LessonPanelTitle>
+              <LessonPanelDescription>
                 Excellent work! Now let's test your mastery of the concepts.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="rounded-lg bg-gradient-to-r from-secondary to-background-elevated p-4">
-                <p className="text-sm text-purple-800 dark:text-purple-200 mb-3">
-                  🎯 <strong>Assessment Tips:</strong> This is your chance to demonstrate your understanding. Take your time and think through each question carefully.
+              </LessonPanelDescription>
+            </LessonPanelHeader>
+            <LessonPanelContent>
+              <div className="rounded-[calc(var(--radius)-8px)] border border-border bg-surface-muted-deep p-4">
+                <p className="text-sm text-muted-foreground mb-3">
+                  🎯 <strong className="text-foreground">Assessment Tips:</strong> This is your chance to demonstrate your understanding. Take your time and think through each question carefully.
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <Button 
@@ -661,32 +754,33 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                     Start Assessment
                   </Button>
                   {phaseProgress >= 80 && (
-                    <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                    <div className="flex items-center gap-2 text-flare">
                       <CheckCircle2 className="h-4 w-4" />
                       <span className="text-sm font-medium">Lesson Complete! 🎉</span>
                     </div>
                   )}
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </LessonPanelContent>
+          </LessonPanel>
         )}
         
-         <Card>
-          <CardHeader>
-            <CardTitle>Module Assessment</CardTitle>
-            <CardDescription>Show what you've learned in this final assessment.</CardDescription>
-          </CardHeader>
-          <CardContent>
+         <LessonPanel className="">
+          <LessonPanelHeader>
+            <LessonPanelTitle>Module Assessment</LessonPanelTitle>
+            <LessonPanelDescription>Show what you've learned in this final assessment.</LessonPanelDescription>
+          </LessonPanelHeader>
+          <LessonPanelContent>
             {renderQuiz(lesson.assessment)}
-            </CardContent>
-        </Card>
+            </LessonPanelContent>
+        </LessonPanel>
       </TabsContent>
       
       <TabsContent value="classroom" className="mt-6">
         <AILearningClassroom course={course} lesson={lesson} />
       </TabsContent>
     </Tabs>
+    </div>
   );
 }
 

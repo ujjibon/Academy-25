@@ -46,24 +46,15 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 ## 6. Firestore Security Rules
 
-Update your Firestore security rules to allow authenticated users to read/write their data:
+This repo’s rules live in `firestore.rules` (classrooms, bundles, startup, mentorship, etc.). Deploy them after any change:
 
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Users can read/write their own profile
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-    
-    // Allow reading course data
-    match /courses/{courseId} {
-      allow read: if request.auth != null;
-    }
-  }
-}
+```bash
+firebase deploy --only firestore:rules
 ```
+
+Or paste the contents of `firestore.rules` into **Firestore → Rules** in the Firebase Console and publish.
+
+Without deployed rules, signed-in users see **Missing or insufficient permissions** on `/learn/bundles`, leaderboard, and admin pages.
 
 ## 7. Test the Application
 

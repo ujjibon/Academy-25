@@ -4,11 +4,14 @@ import { usePathname } from 'next/navigation';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { getInstructorPageTitle } from '@/lib/instructor-nav-config';
 import { useAuth } from '@/hooks/use-auth';
-import { GraduationCap } from 'lucide-react';
+import { Bot, GraduationCap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useChatbot } from '@/hooks/use-chatbot';
 
 export function InstructorHeader() {
   const pathname = usePathname();
   const { userProfile } = useAuth();
+  const { open: openChat } = useChatbot();
   const title = getInstructorPageTitle(pathname);
 
   return (
@@ -22,12 +25,23 @@ export function InstructorHeader() {
           {title}
         </h1>
       </div>
-      {userProfile && (
-        <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-          <GraduationCap className="h-4 w-4 text-primary" />
-          {userProfile.displayName}
-        </div>
-      )}
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hidden lg:inline-flex gap-2 rounded-full"
+          onClick={openChat}
+        >
+          <Bot className="h-4 w-4" />
+          AI Assistant
+        </Button>
+        {userProfile ? (
+          <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
+            <GraduationCap className="h-4 w-4 text-primary" />
+            {userProfile.displayName}
+          </div>
+        ) : null}
+      </div>
     </header>
   );
 }

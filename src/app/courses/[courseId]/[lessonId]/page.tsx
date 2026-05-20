@@ -78,33 +78,30 @@ export default function LessonPage({
 
   return (
     <AppLayout>
-      <div className="space-y-6">
+      <div className="lesson-page space-y-6">
         <Link
           href={`/courses/${course.id}`}
-          className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+          className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
           Back to {course.title}
         </Link>
-        
-        {/* Course Progress */}
-        <div className="bg-muted/50 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium">Course Progress</span>
-            <span className="text-sm text-muted-foreground">
-              {Math.round(currentProgress)}%
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-primary h-2 rounded-full transition-all duration-300" 
+
+        <div className="stat-card stat-card-muted !min-h-0">
+          <span className="stat-card-label">Course progress</span>
+          <p className="stat-card-value">{Math.round(currentProgress)}%</p>
+          <div className="lesson-progress-track my-3 w-full">
+            <div
+              className="lesson-progress-fill"
               style={{ width: `${currentProgress}%` }}
             />
           </div>
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>Lesson {lessonIndex + 1} of {course.lessons.length}</span>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="stat-card-sub">
+              Lesson {lessonIndex + 1} of {course.lessons.length}
+            </p>
             {isLessonCompleted && (
-              <span className="text-green-600 flex items-center gap-1">
+              <span className="text-flare flex items-center gap-1 text-sm font-medium">
                 <CheckCircle className="h-3 w-3" />
                 Completed
               </span>
@@ -113,9 +110,7 @@ export default function LessonPage({
         </div>
 
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            {lesson.title}
-          </h1>
+          <h1 className="lesson-page-title">{lesson.title}</h1>
         </div>
         
         <LessonContent course={course} lesson={lesson} />
@@ -138,9 +133,9 @@ export default function LessonPage({
               </Link>
             </Button>
           ) : (
-            <Button 
+            <Button
               onClick={markLessonCompleted}
-              className="bg-green-600 hover:bg-green-700"
+              className="brand-button-flare"
             >
               <CheckCircle className="h-4 w-4 mr-2" />
               Complete Course

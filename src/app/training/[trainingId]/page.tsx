@@ -26,7 +26,7 @@ import {
   getTrainingById,
   markTrainingComplete,
 } from '@/lib/training-service';
-import { CertificateDownloadButton } from '@/components/certificates/CertificateDownloadButton';
+import { CertificateDownloadPanel } from '@/components/certificates/CertificateDownloadPanel';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -246,17 +246,16 @@ export default function TrainingDetailPage({
                 Mark training complete
               </Button>
             ) : (
-              <CertificateDownloadButton
-                uid={user?.uid}
-                payload={{
-                  type: 'training',
-                  title: program.title,
-                  skillOrCourseId: program.id,
-                  recipientName,
-                  completionSummary: program.completionSummary,
-                }}
-                label="Download training certificate (PDF)"
-              />
+              <div className="w-full">
+                <CertificateDownloadPanel
+                  uid={user?.uid}
+                  base={{ type: 'training', skillOrCourseId: program.id }}
+                  recipientName={recipientName}
+                  programTitle={program.title}
+                  completionSummary={program.completionSummary}
+                  downloadLabel="Download training certificate (PDF)"
+                />
+              </div>
             )}
           </CardContent>
           {isCompleted && program.completionSummary && (

@@ -205,9 +205,11 @@ export function StartupSidebar() {
                 </Link>
               </DropdownMenuItem>
             ) : null}
-            <DropdownMenuItem disabled>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
+            <DropdownMenuItem asChild>
+              <Link href="/account">
+                <Settings className="mr-2 h-4 w-4" />
+                Account & billing
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem disabled>
               <Languages className="mr-2 h-4 w-4" />

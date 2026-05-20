@@ -1,1 +1,7 @@
-export { default } from '@/app/admin-portal/course-creator/page';
+'use client';
+
+import { CourseCreatorContent } from '@/components/instructor/CourseCreatorContent';
+
+export default function InstructorCourseCreatorPage() {
+  return <CourseCreatorContent />;
+}

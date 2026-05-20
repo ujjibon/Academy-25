@@ -4,6 +4,7 @@
     "title": "Advanced CSS and Sass",
     "description": "Level up your styling skills with Flexbox, Grid, and Sass.",
     "image": "/images/advanced-css.jpg",
+    "category": "programming",
     "lessons": [
        {
         "id": "1",

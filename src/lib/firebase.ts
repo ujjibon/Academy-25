@@ -7,6 +7,7 @@ import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, Auth, User } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, arrayUnion, Firestore } from 'firebase/firestore';
 import type { CertificateRecord } from '@/lib/training-types';
+import type { UserSubscription } from '@/lib/subscription-types';
 import { isAdminEmail, type UserRole } from '@/lib/admin';
 
 // Your web app's Firebase configuration
@@ -344,6 +345,10 @@ export interface UserProfile {
   email: string;
   displayName: string;
   photoURL?: string;
+  bio?: string;
+  phone?: string;
+  location?: string;
+  website?: string;
   role?: UserRole;
   createdAt: Date;
   lastLoginAt: Date;
@@ -359,6 +364,7 @@ export interface UserProfile {
   weaknesses: { name: string; value: number }[];
   badges: { name: string; icon: string; earnedAt: Date }[];
   certificates?: CertificateRecord[];
+  subscription?: UserSubscription;
 }
 
 export type { UserRole };
@@ -481,6 +487,14 @@ export const getUserProfile = async (uid: string): Promise<UserProfile | null> =
           ...badge,
           earnedAt: badge.earnedAt?.toDate() || new Date(),
         })) || [],
+        subscription: data.subscription
+          ? {
+              ...data.subscription,
+              currentPeriodEnd: data.subscription.currentPeriodEnd?.toDate?.() ?? undefined,
+              startedAt: data.subscription.startedAt?.toDate?.() ?? undefined,
+              updatedAt: data.subscription.updatedAt?.toDate?.() ?? undefined,
+            }
+          : undefined,
       } as UserProfile;
     } else {
       console.warn('⚠️ User profile document does not exist for UID:', uid);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildCertificatePdf, certificateFilename } from '@/lib/certificate-pdf';
+import { isCertificateTemplateId } from '@/lib/certificate-templates';
 import type { CertificateRequest } from '@/lib/training-types';
 
 export async function POST(request: NextRequest) {
@@ -22,6 +23,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'type must be course or training.' }, { status: 400 });
     }
 
+    const templateId = isCertificateTemplateId(body.templateId) ? body.templateId : undefined;
+
     const payload: CertificateRequest = {
       type,
       title,
@@ -30,6 +33,8 @@ export async function POST(request: NextRequest) {
       recipientEmail: body.recipientEmail,
       completionSummary: body.completionSummary,
       issuedAt: body.issuedAt || new Date().toISOString(),
+      templateId,
+      customization: body.customization,
     };
 
     const pdfBytes = buildCertificatePdf(payload);

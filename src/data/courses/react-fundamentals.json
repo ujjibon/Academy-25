@@ -4,6 +4,7 @@
     "title": "React Fundamentals",
     "description": "Learn the basics of React to build modern web applications.",
     "image": "/images/react-fundamentals.jpg",
+    "category": "programming",
     "lessons": [
       {
         "id": "1",
@@ -29,7 +30,13 @@
         "project": {
           "title": "Create a Simple JSX Element",
           "description":
-            "Create a simple React component that renders an `<h1>` tag with \"Hello, World!\" inside."
+            "Create a simple React component that renders an `<h1>` tag with \"Hello, World!\" inside.",
+          "code": {
+            "language": "jsx",
+            "starterCode": "// Create your JSX element below\nconst element = (\n  \n);\n",
+            "enablePreview": true,
+            "enableConsole": true
+          }
         },
         "assessment": {
           "questions": [

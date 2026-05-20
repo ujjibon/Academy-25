@@ -7,6 +7,8 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { isInstructorOrAdmin } from '@/lib/admin';
+import { ChatbotProvider } from '@/hooks/use-chatbot';
+import { Chatbot } from '@/components/chat/Chatbot';
 import { InstructorSidebar } from '@/components/layout/InstructorSidebar';
 import { InstructorHeader } from '@/components/layout/InstructorHeader';
 import { Button } from '@/components/ui/button';
@@ -73,12 +75,15 @@ export default function InstructorLayout({ children }: { children: ReactNode }) 
   }
 
   return (
-    <SidebarProvider className="dashboard-shell min-h-svh">
-      <InstructorSidebar />
-      <SidebarInset className="flex flex-col min-h-svh">
-        <InstructorHeader />
-        <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+    <ChatbotProvider>
+      <SidebarProvider className="dashboard-shell min-h-svh">
+        <InstructorSidebar />
+        <SidebarInset className="flex flex-col min-h-svh">
+          <InstructorHeader />
+          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
+          <Chatbot mode="instructor" />
+        </SidebarInset>
+      </SidebarProvider>
+    </ChatbotProvider>
   );
 }

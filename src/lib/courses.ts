@@ -1,9 +1,12 @@
 
+import type { CourseCategory } from '@/lib/programming-course';
+
 export type CourseInfo = {
   id: string;
   title: string;
   description: string;
   image: string;
+  category?: CourseCategory;
 };
 
 export const courses: CourseInfo[] = [
@@ -12,12 +15,14 @@ export const courses: CourseInfo[] = [
     title: 'React Development',
     description: 'Learn React from fundamentals to building modern web applications.',
     image: '/images/react-fundamentals.jpg',
+    category: 'programming',
   },
   {
     id: 'advanced-css',
     title: 'Advanced CSS',
     description: 'Level up your styling skills with Flexbox, Grid, and Sass.',
     image: '/images/advanced-css.jpg',
+    category: 'programming',
   },
   {
     id: 'digital-productivity-mastery',
@@ -30,5 +35,6 @@ export const courses: CourseInfo[] = [
     title: 'Python Programming',
     description: 'Build a strong foundation in Python with this beginner-friendly course.',
     image: '/images/1754598826269-python.jpg',
+    category: 'programming',
   },
 ];

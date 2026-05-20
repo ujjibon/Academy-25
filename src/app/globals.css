@@ -10,8 +10,11 @@
   /* Brand Colors */
   --chalk: 255 255 255;
   --chalk-soft: 230 232 241;
+  --surface-muted: 233 236 243;
+  --surface-muted-deep: 221 226 237;
+  --canvas: 240 243 250;
   --slate: 162 181 203;
-  --slate-dark: 108 130 157;
+  --slate-dark: 114 132 157;
   --midnight: 0 11 88;
   --midnight-light: 26 34 88;
   --royal: 0 19 158;
@@ -21,7 +24,7 @@
 
   /* Minimalist Apple-like Palette - Light */
   --background: 255 255 255;
-  --background-elevated: 230 232 241;
+  --background-elevated: 233 236 243;
   --foreground: 0 11 88;
   --card: 255 255 255;
   --card-foreground: 0 11 88;
@@ -31,19 +34,19 @@
   --primary: 0 19 158;
   --primary-foreground: 255 255 255;
 
-  --secondary: 230 232 241;
+  --secondary: 233 236 243;
   --secondary-foreground: 0 11 88;
 
   --accent: 255 20 20;
   --accent-foreground: 255 255 255;
 
-  --muted: 230 232 241;
-  --muted-foreground: 108 130 157;
+  --muted: 233 236 243;
+  --muted-foreground: 114 132 157;
   --destructive: 255 20 20;
   --destructive-foreground: 255 255 255;
 
-  --border: 230 232 241;
-  --input: 230 232 241;
+  --border: 221 226 237;
+  --input: 221 226 237;
   --ring: 0 19 158;
 
   --radius: 1.5rem;
@@ -173,6 +176,15 @@
   border-color: rgb(var(--foreground));
 }
 
+.brand-section .brand-button-ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.brand-section .brand-button-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
 .brand-card {
   background: rgb(var(--card));
   color: rgb(var(--card-foreground));
@@ -205,6 +217,14 @@
   border: none;
   border-radius: var(--radius);
   box-shadow: none;
+}
+.coach-insight-markdown,
+.coach-insight-markdown p,
+.coach-insight-markdown strong,
+.coach-insight-markdown em,
+.coach-insight-markdown li,
+.coach-insight-markdown a {
+  color: #fff;
 }
 
 /* ── Dashboard cards (Peer Portal layout) ─────────────── */
@@ -251,6 +271,13 @@
   color: inherit;
   transition: background 0.2s ease;
 }
+.stat-card-muted .stat-card-link {
+  background: rgb(var(--surface-muted-deep));
+  color: rgb(var(--foreground));
+}
+.stat-card-muted .stat-card-link:hover {
+  background: rgb(var(--border));
+}
 .stat-card-link:hover {
   background: rgb(255 255 255 / 0.24);
 }
@@ -265,7 +292,7 @@
   box-shadow: 0 10px 28px rgb(var(--midnight) / 0.18);
 }
 .stat-card-muted {
-  background: rgb(var(--background-elevated));
+  background: rgb(var(--surface-muted));
   border: 1px solid rgb(var(--border));
   color: rgb(var(--foreground));
   box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
@@ -311,6 +338,168 @@
   border-radius: calc(var(--radius) - 6px);
   padding: 1rem 1.1rem;
 }
+
+/* Lesson / course — matches dashboard stat-card-muted theme */
+.dashboard-shell main:has(.lesson-page) {
+  background: rgb(var(--canvas));
+}
+.lesson-page {
+  color: rgb(var(--foreground));
+}
+.lesson-page .lesson-page-title {
+  font-family: var(--font-manrope), Manrope, Inter, sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: rgb(var(--foreground));
+}
+.lesson-panel {
+  background: rgb(var(--surface-muted)) !important;
+  border: 1px solid rgb(var(--border)) !important;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+  color: rgb(var(--foreground));
+}
+.lesson-page .lesson-panel h3 {
+  font-family: var(--font-manrope), Manrope, Inter, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: rgb(var(--foreground));
+}
+.lesson-page .lesson-panel [class*='text-muted-foreground'] {
+  color: rgb(var(--muted-foreground));
+}
+.lesson-stat-card {
+  background: rgb(var(--surface-muted));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+}
+.lesson-tabs-list {
+  background: rgb(var(--surface-muted-deep));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  height: auto;
+  min-height: 2.85rem;
+  color: rgb(var(--foreground));
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+}
+.lesson-tabs-trigger {
+  border-radius: calc(var(--radius) - 12px);
+  color: rgb(var(--muted-foreground));
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+.lesson-tabs-trigger[data-state='active'] {
+  background: rgb(var(--card));
+  color: rgb(var(--foreground));
+  box-shadow: 0 1px 6px rgb(var(--midnight) / 0.08);
+}
+.lesson-phase-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--flare));
+  flex-shrink: 0;
+}
+.lesson-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.lesson-step-pill--active {
+  background: rgb(var(--midnight));
+  color: #fff;
+  box-shadow: 0 2px 8px rgb(var(--midnight) / 0.15);
+}
+.lesson-step-pill--inactive {
+  background: rgb(var(--surface-muted-deep));
+  color: rgb(var(--muted-foreground));
+  border: none;
+}
+.lesson-accent-panel {
+  border-radius: calc(var(--radius) - 8px);
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--surface-muted-deep));
+  padding: 1rem 1.25rem;
+}
+.lesson-progress-track {
+  flex: 1;
+  min-width: 4rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--surface-muted-deep));
+}
+.lesson-progress-fill {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--midnight));
+  transition: width 0.3s ease;
+}
+.lesson-progress-value {
+  font-family: var(--font-manrope), Manrope, Inter, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: rgb(var(--foreground));
+}
+.lesson-progress-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--muted-foreground));
+}
+.lesson-course-progress {
+  border-radius: var(--radius);
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--surface-muted));
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+}
+.lesson-page [data-ai-tutor] .rounded-lg {
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  box-shadow: 0 1px 4px rgb(var(--midnight) / 0.05);
+}
+.lesson-page [data-ai-tutor] .border-t {
+  background: rgb(var(--surface-muted-deep));
+  border-color: rgb(var(--border)) !important;
+}
+.lesson-alert-success {
+  border-color: rgb(var(--royal) / 0.35);
+  background: rgb(var(--primary) / 0.06);
+  color: rgb(var(--foreground));
+}
+.lesson-alert-success svg {
+  color: rgb(var(--royal));
+}
+
+/* Home page live demo — lesson UI on marketing page */
+.home-demo-section {
+  background: rgb(var(--background));
+  border-color: rgb(var(--border));
+}
+.home-lesson-demo {
+  border-radius: var(--radius);
+  background: rgb(var(--surface-muted));
+  border: 1px solid rgb(var(--border));
+  box-shadow: 0 2px 12px rgb(var(--midnight) / 0.04);
+}
+.home-lesson-demo.lesson-page .lesson-panel,
+.lesson-page.home-lesson-demo .lesson-panel {
+  box-shadow: none;
+}
+
 .cta-band-royal {
   display: flex;
   flex-wrap: wrap;
@@ -533,10 +722,12 @@
 .animate-slide-up   { animation: slide-up 0.7s cubic-bezier(0.21, 0.6, 0.35, 1) both; }
 
 .gradient-text {
-  background: linear-gradient(120deg,
-    rgb(var(--primary)) 0%,
-    rgb(var(--accent)) 48%,
-    rgb(var(--secondary)) 100%
+  background: linear-gradient(
+    120deg,
+    rgb(var(--royal)) 0%,
+    rgb(var(--royal-light)) 38%,
+    rgb(var(--flare)) 72%,
+    rgb(var(--midnight)) 100%
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -626,7 +817,17 @@
 .prose strong { @apply font-semibold text-foreground; }
 .prose ul, .prose ol { @apply my-2 pl-6; }
 .prose li { @apply my-1; }
-.prose code { @apply bg-muted px-1.5 py-0.5 rounded text-sm; }
+/* Inline code only — avoid light pills inside dark <pre> blocks */
+.prose :not(pre) > code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground;
+}
+.prose pre {
+  @apply my-4 overflow-x-auto rounded-lg border border-midnight/20 bg-midnight p-4 text-sm leading-relaxed;
+  color: rgb(var(--chalk-soft));
+}
+.prose pre code {
+  @apply rounded-none bg-transparent p-0 font-mono whitespace-pre text-inherit;
+}
 .prose h1, .prose h2, .prose h3 { @apply font-semibold mt-4 mb-2; }
 
 /* Custom scrollbar */
@@ -705,13 +906,95 @@
   display: block;
 }
 
+/* ── Marketing: laptop mockup & feature cards ───────── */
+
+@keyframes laptop-float {
+  0%, 100% { transform: translateY(0) rotateX(2deg); }
+  50%      { transform: translateY(-10px) rotateX(0deg); }
+}
+
+.laptop-mockup-float {
+  perspective: 1200px;
+  animation: laptop-float 6s ease-in-out infinite;
+}
+
+.laptop-screen-gradient {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--royal)) 0%,
+    rgb(var(--midnight)) 55%,
+    rgb(var(--royal-light)) 100%
+  );
+  box-shadow:
+    0 24px 48px rgb(var(--midnight) / 0.18),
+    0 8px 16px rgb(var(--midnight) / 0.08);
+}
+
+.laptop-base {
+  height: 14px;
+  margin: 0 auto;
+  width: 92%;
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(
+    180deg,
+    rgb(40 48 100) 0%,
+    rgb(var(--midnight)) 40%,
+    rgb(20 28 72) 100%
+  );
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+.laptop-base::after {
+  content: '';
+  display: block;
+  margin: 4px auto 0;
+  width: 18%;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.15);
+}
+
+.laptop-shadow {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  z-index: -1;
+  height: 24px;
+  width: 75%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgb(var(--midnight) / 0.12);
+  filter: blur(12px);
+}
+
+.feature-card-interactive {
+  background: rgb(var(--card));
+  color: rgb(var(--card-foreground));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.feature-card-interactive:hover,
+.feature-card-active {
+  border-color: rgb(var(--royal) / 0.35);
+  background: rgb(var(--primary) / 0.04);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgb(var(--midnight) / 0.1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .animate-fade-in,
   .animate-scale-in,
   .animate-slide-up,
   .animate-shimmer,
-  .gradient-text {
+  .gradient-text,
+  .laptop-mockup-float {
     animation: none !important;
   }
 }

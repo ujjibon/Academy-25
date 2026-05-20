@@ -104,21 +104,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error('Google redirect sign-in failed:', error);
     });
 
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
-      
-      if (firebaseUser) {
+      setLoading(false);
+
+      if (!firebaseUser) {
+        setUserProfile(null);
+        setConnectionError(null);
+        setIsFirebaseMode(false);
+        return;
+      }
+
+      void (async () => {
         try {
-          // Check if we should attempt Firestore operations
           if (!shouldAttemptFirestoreOperation()) {
             setConnectionError('Firebase is offline or not available. Please check your connection.');
             console.log('⚠️ Firebase unavailable - user needs to be online for authentication');
-            setLoading(false);
             return;
           }
 
-          // Update daily streak on login (handles offline gracefully)
-          await updateDailyStreak(firebaseUser.uid);
+          updateDailyStreak(firebaseUser.uid).catch((err) =>
+            console.warn('Daily streak update failed:', err)
+          );
 
           let profile = await getUserProfile(firebaseUser.uid);
           if (!profile) {
@@ -132,10 +139,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setConnectionError(null);
         } catch (error: any) {
           console.error('Error during authentication:', error);
-          if (error.message.includes('Database is currently unavailable') || 
-              error.message.includes('client is offline') ||
-              error.message.includes('Failed to get document')) {
-            setConnectionError('Unable to connect to database. Please check your connection and try again.');
+          if (
+            error.message.includes('Database is currently unavailable') ||
+            error.message.includes('client is offline') ||
+            error.message.includes('Failed to get document')
+          ) {
+            setConnectionError(
+              'Unable to connect to database. Please check your connection and try again.'
+            );
           } else if (error.message.includes('Firebase not configured')) {
             setConnectionError('Firebase is not properly configured. Please contact support.');
           } else {
@@ -144,13 +155,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUserProfile(null);
           setIsFirebaseMode(false);
         }
-      } else {
-        setUserProfile(null);
-        setConnectionError(null);
-        setIsFirebaseMode(false);
-      }
-      
-      setLoading(false);
+      })();
     });
     
     return () => unsubscribe();

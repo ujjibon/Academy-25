@@ -1,7 +1,15 @@
 
 'use client';
 
-import { type Lesson, type Quiz } from '@/lib/data-provider';
+import { type Lesson, type Quiz, type CodeLanguage } from '@/lib/data-provider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { CODE_LANGUAGE_LABELS } from '@/lib/programming-course';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -38,6 +46,20 @@ export function EditableLessonForm({ lesson, setLesson, onLessonChange, lessonIn
 
   const handleProjectChange = (field: 'title' | 'description', value: string) => {
     const updatedLesson = { ...lesson, project: { ...lesson.project, [field]: value } };
+    onLessonChange(lessonIndex, updatedLesson);
+    setLesson?.(updatedLesson);
+  };
+
+  const handleProjectCodeChange = (
+    field: 'language' | 'starterCode' | 'enablePreview' | 'enableConsole',
+    value: string | boolean
+  ) => {
+    const code = {
+      language: 'javascript' as CodeLanguage,
+      ...lesson.project.code,
+      [field]: value,
+    };
+    const updatedLesson = { ...lesson, project: { ...lesson.project, code } };
     onLessonChange(lessonIndex, updatedLesson);
     setLesson?.(updatedLesson);
   };
@@ -159,6 +181,39 @@ export function EditableLessonForm({ lesson, setLesson, onLessonChange, lessonIn
                      <div className="space-y-2">
                         <Label htmlFor={`project-desc-${lessonIndex}`}>Project Description</Label>
                         <Textarea id={`project-desc-${lessonIndex}`} value={lesson.project.description} onChange={e => handleProjectChange('description', e.target.value)} />
+                    </div>
+                    <div className="rounded-lg border border-dashed border-border p-4 space-y-3">
+                      <p className="text-sm font-medium">Code editor (programming courses)</p>
+                      <div className="space-y-2">
+                        <Label>Language</Label>
+                        <Select
+                          value={lesson.project.code?.language ?? ''}
+                          onValueChange={(v) => handleProjectCodeChange('language', v)}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="None — use text submission" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {(Object.keys(CODE_LANGUAGE_LABELS) as CodeLanguage[]).map((lang) => (
+                              <SelectItem key={lang} value={lang}>
+                                {CODE_LANGUAGE_LABELS[lang]}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      {lesson.project.code?.language && (
+                        <div className="space-y-2">
+                          <Label htmlFor={`project-starter-${lessonIndex}`}>Starter code</Label>
+                          <Textarea
+                            id={`project-starter-${lessonIndex}`}
+                            value={lesson.project.code?.starterCode ?? ''}
+                            onChange={(e) => handleProjectCodeChange('starterCode', e.target.value)}
+                            rows={6}
+                            className="font-mono text-sm"
+                          />
+                        </div>
+                      )}
                     </div>
                 </AccordionContent>
             </AccordionItem>

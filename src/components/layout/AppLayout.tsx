@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
@@ -10,10 +10,13 @@ import { ChatbotProvider } from '@/hooks/use-chatbot';
 import { Chatbot } from '@/components/chat/Chatbot';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
+import { cn } from '@/lib/utils';
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const isLessonCanvas = /^\/courses\/[^/]+\/[^/]+$/.test(pathname ?? '');
 
   useEffect(() => {
     if (!loading && !user) {
@@ -35,7 +38,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <AppSidebar />
         <SidebarInset className="flex flex-col min-h-svh">
           <DashboardHeader />
-          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
+          <main
+            className={cn(
+              'flex-1 overflow-auto p-4 md:p-6 lg:p-8',
+              isLessonCanvas && 'bg-canvas'
+            )}
+          >
+            {children}
+          </main>
           <Chatbot />
         </SidebarInset>
       </SidebarProvider>

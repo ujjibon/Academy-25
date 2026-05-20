@@ -27,11 +27,11 @@ export function AuthShell({ title, description, children, footer, wide }: AuthSh
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-center px-4 py-12">
+        <div className="flex flex-1 items-center justify-center px-4 py-10 sm:py-12">
           <div
             className={cn(
-              'w-full space-y-6 animate-fade-in-up',
-              wide ? 'max-w-3xl' : 'max-w-md'
+              'w-full space-y-5 animate-fade-in-up',
+              wide ? 'max-w-2xl' : 'max-w-[26rem]'
             )}
           >
             <div className="text-center space-y-2">
@@ -39,17 +39,18 @@ export function AuthShell({ title, description, children, footer, wide }: AuthSh
                 <span className="dot-flare" aria-hidden />
                 Peer Academy
               </span>
-              <h1 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              <h1 className="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                 {title}
               </h1>
-              <p className="text-muted-foreground text-balance">{description}</p>
+              <p className="text-sm text-muted-foreground text-balance">{description}</p>
             </div>
 
-            <div className="brand-card p-6 sm:p-8">{children}</div>
-
-            {footer ? (
-              <div className="text-center text-sm text-muted-foreground">{footer}</div>
-            ) : null}
+            <div className="brand-card p-5 sm:p-7">
+              {children}
+              {footer ? (
+                <div className="mt-5 border-t border-border/60 pt-5">{footer}</div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

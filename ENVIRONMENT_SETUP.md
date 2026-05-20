@@ -122,6 +122,37 @@ Admin bulk email uses Nodemailer against Gmail SMTP. You need **2-Step Verificat
 
 Send mail from **Admin portal → Notifications** (`/admin-portal/notifications`). Only admins (same `ADMIN_EMAILS` allowlist as other admin APIs) can call the API.
 
+### PayPal subscriptions (Account & billing)
+
+Learners manage plans at **`/account`** (Profile tab + Subscription tab). Paid tiers use [PayPal Subscriptions](https://developer.paypal.com/docs/subscriptions/).
+
+1. Create a [PayPal Developer](https://developer.paypal.com/) app (Sandbox for testing).
+2. In PayPal Dashboard → **Subscriptions** → create a **Product**, then **Billing plans** for Pro ($9.99/mo) and Premium ($19.99/mo). Copy each plan ID.
+3. Add to `.env.local`:
+
+```env
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Sandbox (default) or live
+PAYPAL_MODE=sandbox
+PAYPAL_CLIENT_ID=your_sandbox_client_id
+PAYPAL_CLIENT_SECRET=your_sandbox_secret
+
+# Billing plan IDs from PayPal Dashboard
+PAYPAL_PLAN_ID_PRO=P-xxxxxxxx
+PAYPAL_PLAN_ID_PREMIUM=P-xxxxxxxx
+```
+
+| Variable | Purpose |
+|----------|---------|
+| `PAYPAL_MODE` | `sandbox` (default) or `live` |
+| `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET` | REST API credentials |
+| `PAYPAL_PLAN_ID_PRO` | PayPal billing plan ID for Pro |
+| `PAYPAL_PLAN_ID_PREMIUM` | PayPal billing plan ID for Premium |
+| `NEXT_PUBLIC_APP_URL` | Return URL after PayPal approval (e.g. `http://localhost:3000`) |
+
+Profile photos upload to `public/avatars/` via `/api/account/avatar` (max 5 MB).
+
 ### Firebase Configuration
 
 Replace the placeholder values with your actual Firebase project configuration:

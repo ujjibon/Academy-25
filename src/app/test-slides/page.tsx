@@ -20,6 +20,7 @@ export default function TestSlidesPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          courseId: 'react-fundamentals',
           lesson: {
             id: 'test-lesson',
             title: 'Introduction to React Components',

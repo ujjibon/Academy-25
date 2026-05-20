@@ -5,11 +5,26 @@ import digitalProductivity from '@/data/courses/digital-productivity-mastery.jso
 import reactFundamentals from '@/data/courses/react-fundamentals.json';
 import pythonSP101 from '@/data/courses/Python-SP-101.json';
 
+export type CourseCategory = 'general' | 'programming';
+
+export type CodeLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'jsx'
+  | 'tsx'
+  | 'python'
+  | 'html'
+  | 'css'
+  | 'java'
+  | 'cpp';
+
 export type Course = {
   id: string;
   title: string;
   description: string;
   image: string;
+  /** When `programming`, lessons use the code editor for project submissions. */
+  category?: CourseCategory;
   lessons: Lesson[];
 };
 
@@ -36,15 +51,22 @@ export type Quiz = {
 export type Project = {
   title: string;
   description: string;
+  /** Code editor settings for programming courses. */
+  code?: {
+    language: CodeLanguage;
+    starterCode?: string;
+    enablePreview?: boolean;
+    enableConsole?: boolean;
+  };
 };
 
 // This is a map of the course IDs to the imported JSON data.
 // In a real application, you would fetch this from a database.
 const coursesData: { [key: string]: Course } = {
-  'react-fundamentals': reactFundamentals,
-  'advanced-css': advancedCss,
-  'digital-productivity-mastery': digitalProductivity,
-  'Python-SP-101': pythonSP101,
+  'react-fundamentals': reactFundamentals as Course,
+  'advanced-css': advancedCss as Course,
+  'digital-productivity-mastery': digitalProductivity as Course,
+  'Python-SP-101': pythonSP101 as Course,
 };
 
 

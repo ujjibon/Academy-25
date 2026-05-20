@@ -9,8 +9,8 @@ import { SignupPathPicker } from '@/components/auth/SignupPathPicker';
 import { SignupAuthFooter } from '@/components/auth/SignupAuthFooter';
 import { AuthShell } from '@/components/marketing/auth-shell';
 import { useAuth } from '@/hooks/use-auth';
-import { isInstructorOrAdmin } from '@/lib/admin';
 import { setPendingSignupPath, type SignupPath } from '@/lib/firebase';
+import { getPostAuthRedirect } from '@/lib/role-routes';
 import { Loader2 } from 'lucide-react';
 
 function parseSignupPath(value: string | null): SignupPath {
@@ -39,16 +39,12 @@ function SignUpPageInner() {
   };
 
   useEffect(() => {
-    if (loading || !user) return;
-    if (userProfile && isInstructorOrAdmin(userProfile, user.email)) {
-      router.replace('/instructor/dashboard');
-      return;
-    }
+    if (loading || !user || !userProfile) return;
     if (signupPath === 'founder') {
       router.replace('/startup');
       return;
     }
-    router.replace('/dashboard');
+    router.replace(getPostAuthRedirect(userProfile, user.email));
   }, [user, userProfile, loading, router, signupPath]);
 
   if (loading || user) {

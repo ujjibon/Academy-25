@@ -5,35 +5,28 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { ClipboardList, Loader2, Plus } from 'lucide-react';
-import { getCourseAssignments, createAssignment } from '@/lib/classroom-service';
-import type { ClassroomAssignment } from '@/lib/classroom-types';
+import { ClipboardList } from 'lucide-react';
+import { getCourseAssignments, getClassroomCourse } from '@/lib/classroom-service';
+import type { ClassroomAssignment, ClassroomCourse } from '@/lib/classroom-types';
 import { useAuth } from '@/hooks/use-auth';
-import { isInstructorOrAdmin } from '@/lib/admin';
-import { useToast } from '@/hooks/use-toast';
+import { isOwnerOfClassroom } from '@/lib/instructor-course-access';
 import { Skeleton } from '@/components/ui/skeleton';
+import { CreateAssignmentDialog } from '@/components/classroom/CreateAssignmentDialog';
 
 export default function ClassworkPage({ params }: { params: Promise<{ courseId: string }> }) {
   const { courseId } = use(params);
   const { user, userProfile } = useAuth();
-  const { toast } = useToast();
   const [assignments, setAssignments] = useState<ClassroomAssignment[]>([]);
+  const [course, setCourse] = useState<ClassroomCourse | null>(null);
   const [loading, setLoading] = useState(true);
-  const canManage = isInstructorOrAdmin(userProfile, user?.email);
+  const canManage = isOwnerOfClassroom(course, user?.uid, user?.email);
 
   const load = () => {
-    getCourseAssignments(courseId)
-      .then(setAssignments)
+    Promise.all([getCourseAssignments(courseId), getClassroomCourse(courseId)])
+      .then(([list, c]) => {
+        setAssignments(list);
+        setCourse(c);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -45,11 +38,24 @@ export default function ClassworkPage({ params }: { params: Promise<{ courseId: 
 
   return (
     <div className="space-y-4">
-      <ClassworkHeader canManage={canManage} courseId={courseId} onCreated={load} />
+      <div className="flex flex-wrap justify-between items-center gap-3">
+        <h2 className="font-heading text-xl font-semibold">Classwork</h2>
+        {canManage ? (
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" variant="outline" asChild>
+              <Link href={`/instructor/courses/${courseId}`}>Students & submissions</Link>
+            </Button>
+            <CreateAssignmentDialog courseId={courseId} onCreated={load} />
+          </div>
+        ) : null}
+      </div>
       {assignments.length === 0 ? (
         <Card className="brand-card p-8 text-center text-muted-foreground">
           <ClipboardList className="h-10 w-10 mx-auto mb-2 opacity-50" />
           No assignments yet.
+          {canManage ? (
+            <p className="text-sm mt-2">Use Add assignment above to create the first one.</p>
+          ) : null}
         </Card>
       ) : (
         assignments.map((a) => (
@@ -62,108 +68,22 @@ export default function ClassworkPage({ params }: { params: Promise<{ courseId: 
             </CardHeader>
             <CardContent>
               <p className="text-sm line-clamp-2 mb-4">{a.description}</p>
-              <Button asChild variant="outline" size="sm">
-                <Link href={`/classroom/${courseId}/assignments/${a.id}`}>View assignment</Link>
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button asChild variant="outline" size="sm">
+                  <Link href={`/classroom/${courseId}/assignments/${a.id}`}>
+                    {canManage ? 'Review' : 'Open assignment'}
+                  </Link>
+                </Button>
+                {canManage ? (
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={`/instructor/gradebook?course=${courseId}`}>Gradebook</Link>
+                  </Button>
+                ) : null}
+              </div>
             </CardContent>
           </Card>
         ))
       )}
     </div>
-  );
-}
-
-function ClassworkHeader({
-  canManage,
-  courseId,
-  onCreated,
-}: {
-  canManage: boolean;
-  courseId: string;
-  onCreated: () => void;
-}) {
-  return (
-    <div className="flex justify-between items-center">
-      <h2 className="font-heading text-xl font-semibold">Classwork</h2>
-      {canManage && <CreateAssignmentDialog courseId={courseId} onCreated={onCreated} />}
-    </div>
-  );
-}
-
-function CreateAssignmentDialog({
-  courseId,
-  onCreated,
-}: {
-  courseId: string;
-  onCreated: () => void;
-}) {
-  const { user } = useAuth();
-  const { toast } = useToast();
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [points, setPoints] = useState('100');
-  const [loading, setLoading] = useState(false);
-
-  const handleCreate = async () => {
-    if (!user || !title.trim() || !deadline) return;
-    setLoading(true);
-    try {
-      await createAssignment({
-        courseId,
-        title: title.trim(),
-        description: description.trim(),
-        deadline: new Date(deadline),
-        points: parseInt(points, 10) || 100,
-        createdBy: user.uid,
-      });
-      toast({ title: 'Assignment created' });
-      setOpen(false);
-      onCreated();
-    } catch {
-      toast({ title: 'Failed to create', variant: 'destructive' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" className="brand-button">
-          <Plus className="mr-2 h-4 w-4" /> Add assignment
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>New assignment</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 pt-2">
-          <div className="space-y-2">
-            <Label>Title</Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label>Description</Label>
-            <Textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Due date</Label>
-              <Input type="datetime-local" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label>Points</Label>
-              <Input type="number" value={points} onChange={(e) => setPoints(e.target.value)} />
-            </div>
-          </div>
-          <Button onClick={handleCreate} disabled={loading} className="w-full brand-button">
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-            Create
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 }

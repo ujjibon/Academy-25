@@ -1,8 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { CreateCourseDialog } from '@/components/classroom/CreateCourseDialog';
+import { useSearchParams } from 'next/navigation';
+import { InstructorDashboardHero } from '@/components/dashboard/InstructorDashboardHero';
+import { InstructorTeachingTools } from '@/components/instructor/InstructorTeachingTools';
+import { InstructorAiAssistantBanner } from '@/components/instructor/InstructorAiAssistantBanner';
+import { PlatformFeaturesGrid } from '@/components/platform/PlatformFeaturesGrid';
 import { getInstructorCourses } from '@/lib/classroom-service';
 import type { ClassroomCourse } from '@/lib/classroom-types';
 import { useAuth } from '@/hooks/use-auth';
@@ -10,10 +14,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { BookOpen, Users, ClipboardList, Sparkles } from 'lucide-react';
+import { BookOpen, Users, ClipboardList, Pencil } from 'lucide-react';
 
-export default function InstructorDashboardPage() {
-  const { user } = useAuth();
+function InstructorDashboardContent() {
+  const searchParams = useSearchParams();
+  const editCourseId = searchParams.get('edit');
+  const { user, userProfile } = useAuth();
   const [courses, setCourses] = useState<ClassroomCourse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,24 +57,32 @@ export default function InstructorDashboardPage() {
 
   return (
     <div className="space-y-8 max-w-6xl">
-      <section className="dashboard-hero p-6 md:p-8">
-        <span className="dashboard-kicker">Instructor</span>
-        <h1 className="font-dashboard-title mt-3 text-2xl font-bold sm:text-3xl">
-          Teaching dashboard
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Manage classrooms, assignments, and AI-generated course content.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <CreateCourseDialog onCreated={load} />
-          <Button variant="outline" asChild className="brand-button-ghost">
-            <Link href="/instructor/course-creator">
-              <Sparkles className="mr-2 h-4 w-4" />
-              AI course creator
-            </Link>
-          </Button>
-        </div>
+      <InstructorDashboardHero
+        displayName={userProfile?.displayName || user?.displayName || 'Instructor'}
+        courseCount={courses.length}
+        studentCount={totalStudents}
+      />
+
+      <InstructorAiAssistantBanner />
+
+      <section className="dashboard-panel p-6 space-y-4">
+        <header>
+          <span className="dashboard-kicker">Platform</span>
+          <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">
+            All instructor tools
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Course builder, assignments, drip, commerce, analytics, and more.
+          </p>
+        </header>
+        <PlatformFeaturesGrid role="instructor" />
       </section>
+
+      <InstructorTeachingTools
+        courses={courses}
+        onCoursesChange={load}
+        initialEditCourseId={editCourseId}
+      />
 
       {error ? (
         <Alert variant="destructive">
@@ -103,8 +117,20 @@ export default function InstructorDashboardPage() {
                   <p className="text-sm text-muted-foreground">Code: {course.classCode}</p>
                 </CardHeader>
                 <CardContent className="flex gap-2 flex-wrap">
-                  <Button size="sm" asChild>
-                    <Link href={`/classroom/${course.id}/stream`}>Open classroom</Link>
+                  <Button size="sm" asChild className="brand-button">
+                    <Link href={`/instructor/course-builder?edit=${course.id}`}>
+                      <Pencil className="mr-2 h-3.5 w-3.5" />
+                      Edit course
+                    </Link>
+                  </Button>
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href={`/instructor/courses/${course.id}`}>Analytics</Link>
+                  </Button>
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href={`/instructor/gradebook?course=${course.id}`}>Gradebook</Link>
+                  </Button>
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href={`/classroom/${course.id}/stream`}>Live class</Link>
                   </Button>
                   <Button size="sm" variant="outline" asChild>
                     <Link href={`/classroom/${course.id}/classwork`}>Assignments</Link>
@@ -136,5 +162,13 @@ function StatCard({
         <p className="text-sm text-muted-foreground">{label}</p>
       </CardContent>
     </Card>
+  );
+}
+
+export default function InstructorDashboardPage() {
+  return (
+    <Suspense fallback={<Skeleton className="h-48 w-full" />}>
+      <InstructorDashboardContent />
+    </Suspense>
   );
 }

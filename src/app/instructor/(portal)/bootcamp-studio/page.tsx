@@ -1,1 +1,7 @@
-export { default } from '@/app/admin-portal/bootcamp-studio/page';
+'use client';
+
+import { BootcampStudioContent } from '@/components/instructor/BootcampStudioContent';
+
+export default function InstructorBootcampStudioPage() {
+  return <BootcampStudioContent />;
+}

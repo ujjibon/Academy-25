@@ -23,8 +23,32 @@ type Message = {
   text: string;
 };
 
-export function Chatbot() {
+export type ChatbotMode = 'learner' | 'instructor';
+
+const CHATBOT_COPY: Record<
+  ChatbotMode,
+  { title: string; welcome: string; placeholder: string; fallback: string }
+> = {
+  learner: {
+    title: 'AI Assistant',
+    welcome: 'Welcome! How can I help you learn today?',
+    placeholder: 'Ask anything...',
+    fallback:
+      "I'm currently unavailable, but I'm here to help with your learning questions once my AI services are configured.",
+  },
+  instructor: {
+    title: 'AI Teaching Assistant',
+    welcome:
+      'Ask about lesson plans, assignments, grading feedback, course design, or managing your classroom.',
+    placeholder: 'Ask about teaching, courses, or students...',
+    fallback:
+      "I'm currently unavailable. Once AI is configured, I can help with teaching, course design, and classroom management.",
+  },
+};
+
+export function Chatbot({ mode = 'learner' }: { mode?: ChatbotMode }) {
   const { isOpen, open, close } = useChatbot();
+  const copy = CHATBOT_COPY[mode];
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -63,6 +87,7 @@ export function Chatbot() {
         body: JSON.stringify({
           question: input,
           history: history,
+          context: { role: mode },
         })
       });
 
@@ -76,7 +101,7 @@ export function Chatbot() {
     } catch (error) {
       console.error('Chatbot error:', error);
       // Fallback response when AI is not available
-      const fallbackResponse = "I'm currently unavailable, but I'm here to help with your learning questions once my AI services are configured. Feel free to explore the courses and learning materials!";
+      const fallbackResponse = copy.fallback;
       const modelMessage: Message = { role: 'model', text: fallbackResponse };
       setMessages((prev) => [...prev, modelMessage]);
       toast({
@@ -106,7 +131,7 @@ export function Chatbot() {
         <SheetContent className="w-full max-w-lg flex flex-col p-0">
           <SheetHeader className="p-4 border-b">
             <SheetTitle className="flex items-center gap-2">
-              <Logo /> AI Assistant
+              <Logo /> {copy.title}
             </SheetTitle>
           </SheetHeader>
           <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
@@ -114,7 +139,7 @@ export function Chatbot() {
               {messages.length === 0 && (
                  <div className="text-center text-muted-foreground py-8">
                     <Bot className="h-12 w-12 mx-auto mb-2" />
-                    <p>Welcome! How can I help you learn today?</p>
+                    <p>{copy.welcome}</p>
                  </div>
               )}
               {messages.map((message, index) => (
@@ -174,7 +199,7 @@ export function Chatbot() {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask anything..."
+                placeholder={copy.placeholder}
                 autoComplete="off"
                 disabled={isLoading}
               />

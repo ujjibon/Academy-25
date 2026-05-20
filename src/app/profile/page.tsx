@@ -3,7 +3,7 @@ import { useAuth } from '@/hooks/use-auth';
 import AppLayout from '@/components/layout/AppLayout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Award, Flame, GitMerge, MessageSquare, Star, Users, Loader2, GraduationCap } from 'lucide-react';
+import { Award, Flame, GitMerge, MessageSquare, Star, Users, GraduationCap, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -71,9 +71,20 @@ export default function ProfilePage() {
                 <AvatarImage src={userProfile.photoURL || ''} alt={userProfile.displayName} />
                 <AvatarFallback>{userProfile.displayName.charAt(0)}</AvatarFallback>
               </Avatar>
-              <div className="text-center sm:text-left">
-                <h1 className="text-3xl font-bold">{userProfile.displayName}</h1>
+              <div className="text-center sm:text-left flex-1">
+                <div className="flex flex-wrap items-center justify-center sm:justify-between gap-3">
+                  <h1 className="text-3xl font-bold">{userProfile.displayName}</h1>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/account">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Edit account
+                    </Link>
+                  </Button>
+                </div>
                 <p className="text-muted-foreground">{userProfile.email}</p>
+                {userProfile.bio ? (
+                  <p className="text-sm mt-3 max-w-xl">{userProfile.bio}</p>
+                ) : null}
                 <div className="mt-4 flex flex-wrap gap-4 justify-center sm:justify-start">
                     <Badge variant="secondary" className="text-base">Level {userProfile.level}</Badge>
                     <Badge variant="secondary" className="text-base">{userProfile.xp.toLocaleString()} XP</Badge>

@@ -9,7 +9,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ArrowLeft, Code2 } from 'lucide-react';
+import { CodeWorkspace } from '@/components/courses/CodeWorkspace';
+import {
+  CODE_LANGUAGE_LABELS,
+  defaultStarterForLanguage,
+} from '@/lib/programming-course';
+import type { CodeLanguage } from '@/lib/data-provider';
 import {
   getAssignment,
   getStudentSubmission,
@@ -33,6 +39,7 @@ export default function AssignmentPage({
   const [assignment, setAssignment] = useState<ClassroomAssignment | null>(null);
   const [submission, setSubmission] = useState<AssignmentSubmission | null>(null);
   const [textResponse, setTextResponse] = useState('');
+  const [codeSubmission, setCodeSubmission] = useState('');
   const [githubUrl, setGithubUrl] = useState('');
   const [liveUrl, setLiveUrl] = useState('');
   const [loading, setLoading] = useState(true);
@@ -46,6 +53,7 @@ export default function AssignmentPage({
         const s = await getStudentSubmission(courseId, assignmentId, user.uid);
         setSubmission(s);
         if (s?.textResponse) setTextResponse(s.textResponse);
+        if (s?.codeSubmission) setCodeSubmission(s.codeSubmission);
         if (s?.githubUrl) setGithubUrl(s.githubUrl);
         if (s?.liveUrl) setLiveUrl(s.liveUrl);
       }
@@ -56,6 +64,15 @@ export default function AssignmentPage({
 
   const handleSubmit = async () => {
     if (!user || !assignment) return;
+    const isCode = assignment.submissionType === 'code';
+    if (isCode && !codeSubmission.trim() && !textResponse.trim() && !githubUrl.trim()) {
+      toast({
+        title: 'Add your code',
+        description: 'Write code in the editor or add a GitHub link before turning in.',
+        variant: 'destructive',
+      });
+      return;
+    }
     const now = new Date();
     const isLate = now > assignment.deadline;
     setSubmitting(true);
@@ -66,6 +83,7 @@ export default function AssignmentPage({
         studentId: user.uid,
         studentName: userProfile?.displayName || 'Student',
         textResponse: textResponse.trim() || undefined,
+        codeSubmission: isCode ? codeSubmission.trim() || undefined : undefined,
         githubUrl: githubUrl.trim() || undefined,
         liveUrl: liveUrl.trim() || undefined,
         status: isLate ? 'late' : 'submitted',
@@ -85,6 +103,11 @@ export default function AssignmentPage({
   if (!assignment) return <p>Assignment not found.</p>;
 
   const status = submission?.status || 'assigned';
+  const isCodeAssignment = assignment.submissionType === 'code';
+  const codeLanguage: CodeLanguage =
+    assignment.codeLanguage ?? 'javascript';
+  const starterCode =
+    assignment.starterCode ?? defaultStarterForLanguage(codeLanguage);
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -115,13 +138,36 @@ export default function AssignmentPage({
           <CardTitle className="text-base">Your work</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {isCodeAssignment && (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Code2 className="h-4 w-4 text-primary" />
+                <Label>
+                  Code editor · {CODE_LANGUAGE_LABELS[codeLanguage]}
+                </Label>
+              </div>
+              <CodeWorkspace
+                value={codeSubmission}
+                onChange={setCodeSubmission}
+                language={codeLanguage}
+                starterCode={starterCode}
+                enablePreview={['html', 'css', 'javascript', 'jsx'].includes(codeLanguage)}
+                enableConsole
+                readOnly={status === 'graded'}
+              />
+            </div>
+          )}
           <div className="space-y-2">
-            <Label>Written response</Label>
+            <Label>{isCodeAssignment ? 'Notes (optional)' : 'Written response'}</Label>
             <Textarea
               value={textResponse}
               onChange={(e) => setTextResponse(e.target.value)}
-              rows={5}
-              placeholder="Type your answer..."
+              rows={isCodeAssignment ? 3 : 5}
+              placeholder={
+                isCodeAssignment
+                  ? 'Explain your solution or paste extra context...'
+                  : 'Type your answer...'
+              }
               disabled={status === 'graded'}
             />
           </div>

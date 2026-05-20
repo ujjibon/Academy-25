@@ -1,31 +1,33 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import AppLayout from '@/components/layout/AppLayout';
 import { CourseCard } from '@/components/courses/CourseCard';
 import { JoinCourseDialog } from '@/components/classroom/JoinCourseDialog';
-import { CreateCourseDialog } from '@/components/classroom/CreateCourseDialog';
 import { courses as catalog } from '@/lib/courses';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
-import { isInstructorOrAdmin } from '@/lib/admin';
-import {
-  getUserEnrolledCourses,
-  seedBuiltInClassroomCourses,
-} from '@/lib/classroom-service';
+import { INSTRUCTOR_DASHBOARD } from '@/lib/role-routes';
+import { getUserEnrolledCourses } from '@/lib/classroom-service';
 import type { ClassroomCourse } from '@/lib/classroom-types';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookOpen, GraduationCap, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function CoursesPage() {
-  const { user, userProfile } = useAuth();
+  const router = useRouter();
+  const { user, userProfile, loading: authLoading, isInstructor } = useAuth();
   const [enrolled, setEnrolled] = useState<ClassroomCourse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [seeding, setSeeding] = useState(false);
-  const canInstruct = isInstructorOrAdmin(userProfile, user?.email);
+
+  useEffect(() => {
+    if (authLoading || !user || !userProfile) return;
+    if (isInstructor) {
+      router.replace(INSTRUCTOR_DASHBOARD);
+    }
+  }, [authLoading, user, userProfile, isInstructor, router]);
 
   const loadEnrolled = useCallback(async () => {
     if (!user) return;
@@ -38,16 +40,15 @@ export default function CoursesPage() {
     loadEnrolled();
   }, [loadEnrolled]);
 
-  const handleSeed = async () => {
-    if (!user || !userProfile) return;
-    setSeeding(true);
-    try {
-      await seedBuiltInClassroomCourses(user.uid, userProfile.displayName);
-      await loadEnrolled();
-    } finally {
-      setSeeding(false);
-    }
-  };
+  if (authLoading || (user && isInstructor)) {
+    return (
+      <AppLayout>
+        <div className="flex h-48 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
@@ -58,16 +59,12 @@ export default function CoursesPage() {
             My courses
           </h2>
           <p className="mt-2 max-w-xl text-muted-foreground">
-            Join classrooms with a code, explore built-in paths, or create your own as an instructor.
+            Join classrooms with a class code and explore courses to continue learning.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <JoinCourseDialog onJoined={loadEnrolled} />
-            {canInstruct && <CreateCourseDialog onCreated={loadEnrolled} />}
             <Link href="/dashboard" className="brand-button-ghost text-sm inline-flex items-center px-4 py-2">
               Dashboard
-            </Link>
-            <Link href="/teach" className="brand-button text-sm inline-flex items-center px-4 py-2">
-              Teach Mode
             </Link>
           </div>
         </section>
@@ -88,12 +85,6 @@ export default function CoursesPage() {
               <p className="text-muted-foreground mb-4">
                 You haven&apos;t joined any classrooms yet. Use a class code or browse the catalog below.
               </p>
-              {canInstruct && (
-                <Button variant="outline" onClick={handleSeed} disabled={seeding}>
-                  {seeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                  Initialize built-in courses
-                </Button>
-              )}
             </Card>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -110,7 +101,7 @@ export default function CoursesPage() {
             Course catalog
           </h3>
           <p className="text-sm text-muted-foreground">
-            Open a course to preview content, or join its classroom from your instructor&apos;s class code.
+            Open a course to preview content, or join its classroom with your instructor&apos;s class code.
           </p>
           <CourseCatalog />
         </section>

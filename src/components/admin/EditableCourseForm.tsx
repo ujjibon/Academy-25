@@ -13,6 +13,9 @@ import { adminFetch } from '@/lib/admin-fetch';
 interface EditableCourseFormProps {
     course: Course;
     setCourse: React.Dispatch<React.SetStateAction<Course | null>>;
+    /** When false, cover image is URL-only (no admin upload). */
+    allowImageUpload?: boolean;
+    lockCourseId?: boolean;
 }
 
 const BLANK_LESSON: Lesson = {
@@ -28,7 +31,12 @@ const BLANK_LESSON: Lesson = {
     assessment: { questions: [] },
 };
 
-export function EditableCourseForm({ course, setCourse }: EditableCourseFormProps) {
+export function EditableCourseForm({
+    course,
+    setCourse,
+    allowImageUpload = true,
+    lockCourseId = false,
+}: EditableCourseFormProps) {
 
     const handleCourseChange = (field: keyof Course, value: any) => {
         setCourse(prev => prev ? { ...prev, [field]: value } : null);
@@ -67,10 +75,12 @@ export function EditableCourseForm({ course, setCourse }: EditableCourseFormProp
                 <Input id="course-title" value={course.title} onChange={e => handleCourseChange('title', e.target.value)} />
             </div>
 
+            {!lockCourseId ? (
             <div className="space-y-2">
                 <Label htmlFor="course-id">Course ID (slug)</Label>
                 <Input id="course-id" value={course.id} onChange={e => handleCourseChange('id', e.target.value)} />
             </div>
+            ) : null}
 
             <div className="space-y-2">
                 <Label htmlFor="course-desc">Course Description</Label>
@@ -81,7 +91,9 @@ export function EditableCourseForm({ course, setCourse }: EditableCourseFormProp
                 <Label htmlFor="course-image">Course Image</Label>
                 <div className="flex items-center gap-4">
                     <Input id="course-image" value={course.image} onChange={e => handleCourseChange('image', e.target.value)} className="flex-grow" />
+                    {allowImageUpload ? (
                     <Button variant="outline" onClick={() => document.getElementById('image-upload')?.click()}>Upload</Button>
+                    ) : null}
                     <Input type="file" id="image-upload" className="hidden" accept="image/*" onChange={async e => {
                         const file = e.target.files?.[0];
                         if (file) {
@@ -100,7 +112,9 @@ export function EditableCourseForm({ course, setCourse }: EditableCourseFormProp
                         }
                     }}/>
                 </div>
-                {course.image && <img src={course.image} alt="Course preview" className="mt-4 w-64 h-auto rounded-md" />}
+                {course.image ? (
+                  <img src={course.image} alt="Course preview" className="mt-4 w-64 h-auto rounded-md" />
+                ) : null}
             </div>
             
             <Accordion type="multiple" className="w-full">

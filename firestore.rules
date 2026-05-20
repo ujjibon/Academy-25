@@ -42,9 +42,17 @@ service cloud.firestore {
       allow read: if signedIn();
     }
 
+    // AI classroom slides — generated once per lesson, then read from cache
+    match /lessonClassroomSlides/{slideId} {
+      allow read: if signedIn();
+      allow create, update: if signedIn();
+      allow delete: if isAdmin();
+    }
+
     match /courseContent/{courseId} {
       allow read: if signedIn();
-      allow write: if isAdmin() || isInstructor();
+      allow write: if isAdmin()
+        || (isInstructor() && isCourseInstructor(courseId));
     }
 
     match /classroomCourses/{courseId} {
@@ -72,9 +80,13 @@ service cloud.firestore {
         match /submissions/{submissionId} {
           allow read: if isCourseInstructor(courseId) || isAdmin()
             || (signedIn() && resource.data.studentId == request.auth.uid);
-          allow create, update: if signedIn()
+          allow create: if signedIn()
             && request.resource.data.studentId == request.auth.uid
             && isEnrolled(courseId);
+          allow update: if isCourseInstructor(courseId) || isAdmin()
+            || (signedIn()
+              && resource.data.studentId == request.auth.uid
+              && isEnrolled(courseId));
         }
       }
     }
@@ -82,6 +94,14 @@ service cloud.firestore {
     match /quizAttempts/{attemptId} {
       allow read: if signedIn() && (resource.data.userId == request.auth.uid || isAdmin());
       allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+    }
+
+    match /courseBundles/{bundleId} {
+      allow read: if signedIn();
+      allow create: if isInstructor()
+        && request.resource.data.instructorId == request.auth.uid;
+      allow update, delete: if signedIn()
+        && resource.data.instructorId == request.auth.uid;
     }
 
     function isStartupIdeaOwner() {

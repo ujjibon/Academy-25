@@ -30,6 +30,11 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
     const fetchLeaderboard = async () => {
       try {
         const data = await getLeaderboard();

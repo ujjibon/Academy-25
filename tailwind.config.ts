@@ -70,6 +70,9 @@ export default {
       colors: {
         background: 'rgb(var(--background) / <alpha-value>)',
         'background-elevated': 'rgb(var(--background-elevated) / <alpha-value>)',
+        canvas: 'rgb(var(--canvas) / <alpha-value>)',
+        'surface-muted': 'rgb(var(--surface-muted) / <alpha-value>)',
+        'surface-muted-deep': 'rgb(var(--surface-muted-deep) / <alpha-value>)',
         foreground: 'rgb(var(--foreground) / <alpha-value>)',
         card: {
           DEFAULT: 'rgb(var(--card) / <alpha-value>)',

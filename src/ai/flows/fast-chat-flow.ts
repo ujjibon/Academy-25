@@ -16,7 +16,8 @@ const FastChatInputSchema = z.object({
   context: z.object({
     course: z.string().optional(),
     lesson: z.string().optional(),
-  }).optional().describe('Learning context.'),
+    role: z.enum(['learner', 'instructor']).optional(),
+  }).optional().describe('Learning or teaching context.'),
 });
 
 export type FastChatInput = z.infer<typeof FastChatInputSchema>;
@@ -52,7 +53,12 @@ const fastChatPrompt = fastAI.definePrompt({
   name: 'fastChatPrompt',
   input: { schema: FastChatInputSchema },
   output: { schema: FastChatOutputSchema },
-  prompt: `You are a fast, helpful AI learning assistant. Give concise, clear answers.
+  prompt: `You are a fast, helpful AI assistant for Peer Academy.
+{{#if context.role}}
+The user role is "{{context.role}}". If instructor: focus on teaching — lesson plans, assignments, rubrics, grading feedback, course and bootcamp design, classroom management, and student engagement. If learner: focus on learning support, explanations, and study guidance.
+{{else}}
+Focus on learning support unless the question is clearly about teaching.
+{{/if}}
 
 Context: {{#if context.course}}Course: {{context.course}}{{/if}}{{#if context.lesson}} | Lesson: {{context.lesson}}{{/if}}
 

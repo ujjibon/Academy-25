@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/use-auth';
-import { CertificateDownloadButton } from '@/components/certificates/CertificateDownloadButton';
+import { CertificateDownloadPanel } from '@/components/certificates/CertificateDownloadPanel';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award } from 'lucide-react';
 import Link from 'next/link';
@@ -46,19 +46,18 @@ export function CourseCertificateSection({ courseId, courseTitle }: Props) {
           Course completed — get your certificate
         </CardTitle>
         <CardDescription>
-          Download your official Peer Academy certificate of completion.
+          Customize your name, signatures, and design — then download your official Peer Portal
+          PDF.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-wrap gap-2">
-        <CertificateDownloadButton
+      <CardContent className="space-y-4">
+        <CertificateDownloadPanel
+          compact
           uid={user?.uid}
-          payload={{
-            type: 'course',
-            title: courseTitle,
-            skillOrCourseId: courseId,
-            recipientName: userProfile.displayName,
-            completionSummary: `Successfully completed all lessons and assessments in ${courseTitle}.`,
-          }}
+          base={{ type: 'course', skillOrCourseId: courseId }}
+          recipientName={userProfile.displayName || 'Learner'}
+          programTitle={courseTitle}
+          completionSummary={`Successfully completed all lessons and assessments in ${courseTitle}.`}
         />
         <Button variant="outline" asChild>
           <Link href="/training/certificates">All certificates</Link>

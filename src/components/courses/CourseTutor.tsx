@@ -16,7 +16,15 @@ type Message = {
   text: string;
 };
 
-export function CourseTutor({ course, currentLesson }: { course: Course; currentLesson?: Lesson }) {
+export function CourseTutor({
+  course,
+  currentLesson,
+  autoStartTeaching = true,
+}: {
+  course: Course;
+  currentLesson?: Lesson;
+  autoStartTeaching?: boolean;
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -42,12 +50,16 @@ export function CourseTutor({ course, currentLesson }: { course: Course; current
     }
   }, [course.id]);
 
-  // Auto-start teaching when lesson changes
   useEffect(() => {
-    if (currentLesson && !hasAutoStarted && messages.length === 0) {
+    if (
+      autoStartTeaching &&
+      currentLesson &&
+      !hasAutoStarted &&
+      messages.length === 0
+    ) {
       startAutoTeaching();
     }
-  }, [currentLesson, hasAutoStarted, messages.length]);
+  }, [autoStartTeaching, currentLesson, hasAutoStarted, messages.length]);
 
   // Listen for custom events from lesson content buttons
   useEffect(() => {
@@ -333,7 +345,7 @@ ${teachingResult.nextStep}`;
   };
 
   return (
-    <div className="flex h-[60vh] min-h-[460px] flex-col rounded-lg border sm:h-[70vh]">
+    <div className="flex h-[60vh] min-h-[460px] flex-col rounded-lg border border-border bg-card sm:h-[70vh]">
        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
              <div className="space-y-4 pr-2 sm:pr-4">
@@ -385,10 +397,10 @@ ${teachingResult.nextStep}`;
                     </Avatar>
                   )}
                   <div
-                    className={`max-w-[90%] rounded-lg px-3 py-2 sm:max-w-[80%] sm:px-4 ${
+                    className={`max-w-[90%] rounded-2xl px-3 py-2 sm:max-w-[80%] sm:px-4 ${
                       message.role === 'user'
-                        ? 'bg-primary text-white'
-                        : 'bg-muted'
+                        ? 'bg-midnight text-white'
+                        : 'border border-border bg-white shadow-[0_1px_4px_rgb(0_11_88/0.05)]'
                     }`}
                   >
                      <div className={`prose prose-sm max-w-none ${
@@ -411,7 +423,7 @@ ${teachingResult.nextStep}`;
                     <Avatar className="h-8 w-8 border">
                       <AvatarFallback><Bot className="h-5 w-5 text-primary"/></AvatarFallback>
                     </Avatar>
-                    <div className="rounded-lg px-4 py-2 bg-muted flex items-center">
+                    <div className="flex items-center rounded-2xl border border-border bg-white px-4 py-2 shadow-[0_1px_4px_rgb(0_11_88/0.05)]">
                         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
                     </div>
                 </div>
@@ -419,7 +431,7 @@ ${teachingResult.nextStep}`;
             </div>
         </ScrollArea>
        </div>
-       <div className="border-t bg-muted/50 p-3 sm:p-4">
+       <div className="border-t border-border bg-surface-muted-deep p-3 sm:p-4">
          {file && (
            <div className="mb-2 flex items-center gap-3 p-2 rounded-lg border bg-background">
              {file.type.startsWith('image/') ? <ImageIcon className="h-5 w-5 text-muted-foreground" /> : <FileIcon className="h-5 w-5 text-muted-foreground" />}

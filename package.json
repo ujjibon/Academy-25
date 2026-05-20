@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "seed:admin": "node scripts/seed-default-admin.mjs"
+    "seed:admin": "node scripts/seed-default-admin.mjs",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@genkit-ai/compat-oai": "^1.17.0",

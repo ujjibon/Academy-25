@@ -15,7 +15,9 @@ import { Course } from '@/lib/data-provider';
 const GenerateCourseInputSchema = z.object({
   topic: z
     .string()
-    .describe('The high-level topic for the course. e.g., "Introduction to Python for Data Science".'),
+    .describe(
+      'A short topic or a detailed pasted brief (syllabus, week-by-week outline, audience, goals).'
+    ),
 });
 export type GenerateCourseInput = z.infer<typeof GenerateCourseInputSchema>;
 
@@ -66,9 +68,9 @@ const prompt = ai.definePrompt({
   name: 'generateCoursePrompt',
   input: {schema: GenerateCourseInputSchema},
   output: {schema: GenerateCourseOutputSchema},
-  prompt: `You are an expert AI Instructional Designer. Your task is to architect and generate a complete, production-ready, multi-lesson course based on a given topic. The course must be comprehensive, engaging, and structured for an online learning platform.
+  prompt: `You are an expert AI Instructional Designer. Your task is to architect and generate a complete, production-ready, multi-lesson course based on the instructor's brief. The brief may be a short topic or a full pasted outline. The course must be comprehensive, engaging, and structured for an online learning platform.
 
-  **Topic:** {{{topic}}}
+  **Course brief:** {{{topic}}}
 
   **Your Task:**
   Generate a complete course object that follows the provided output schema precisely.

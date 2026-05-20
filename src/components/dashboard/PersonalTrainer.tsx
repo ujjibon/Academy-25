@@ -78,14 +78,14 @@ export function PersonalTrainer({ userProfile }: PersonalTrainerProps) {
         </button>
       </div>
 
-      <div className="mt-4 min-h-[4.5rem] rounded-xl bg-white/10 p-4 text-white/90">
+      <div className="mt-4 min-h-[4.5rem] rounded-xl border border-white/15 bg-white/10 p-4 text-sm leading-relaxed text-white">
         {isLoading ? (
-          <div className="flex items-center gap-2 text-white/70 text-sm">
+          <div className="flex items-center gap-2 text-white/80">
             <Loader2 className="h-5 w-5 animate-spin" />
             Thinking of a suggestion…
           </div>
         ) : (
-          <div className="prose prose-sm prose-invert max-w-none [&_p]:my-1">
+          <div className="coach-insight-markdown max-w-none [&_p]:my-1 [&_p]:text-white [&_strong]:font-semibold [&_strong]:text-white [&_em]:text-white/95 [&_a]:text-white [&_a]:underline">
             <ReactMarkdown>{suggestion}</ReactMarkdown>
           </div>
         )}

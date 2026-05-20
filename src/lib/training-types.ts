@@ -18,6 +18,9 @@ export type CertificateRecord = {
   completionSummary?: string;
 };
 
+import type { CertificateTemplateId } from '@/lib/certificate-templates';
+import type { CertificateCustomization } from '@/lib/certificate-customization';
+
 export type CertificateRequest = {
   type: CertificateType;
   title: string;
@@ -26,4 +29,6 @@ export type CertificateRequest = {
   recipientEmail?: string;
   completionSummary?: string;
   issuedAt?: string;
+  templateId?: CertificateTemplateId;
+  customization?: CertificateCustomization;
 };

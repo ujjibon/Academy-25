@@ -3,6 +3,7 @@
     "title": "Python Fundamentals for Beginners",
     "description": "This course provides a comprehensive introduction to Python programming, designed specifically for absolute beginners with no prior coding experience. Throughout this course, you will build a strong foundation in the core concepts of Python. You will start with the essentials, learning about variables, different data types, and how to use operators to perform calculations. You'll discover how to make your programs interactive by accepting user input. As you progress, you will dive into fundamental programming structures like conditional statements (if, else) to make decisions in your code, and loops (for, while) to automate repetitive tasks. You'll get hands-on experience with Python's powerful built-in data structures, including strings, lists, dictionaries, and tuples, learning how to store and manipulate collections of data effectively. The course will also guide you through creating your own functions, a crucial skill for writing clean, reusable, and organized code. Finally, you will explore sorting techniques to manage and order your data. By the end of this course, you will have the confidence and skills to write your own Python scripts and be well-prepared to explore more advanced programming topics.",
     "image": "/images/1754598826269-python.jpg",
+    "category": "programming",
     "lessons": [
       {
         "id": "1",

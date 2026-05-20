@@ -20,6 +20,11 @@ import {
   getStoredTrainings,
 } from '@/lib/training-service';
 import { CertificateDownloadButton } from '@/components/certificates/CertificateDownloadButton';
+import { CertificateDownloadPanel } from '@/components/certificates/CertificateDownloadPanel';
+import { buildCertificateRequestForProgram } from '@/components/certificates/CertificateDownloadPanel';
+import { CertificateCustomizer } from '@/components/certificates/CertificateCustomizer';
+import { CertificateTemplatePicker } from '@/components/certificates/CertificateTemplatePicker';
+import { useCertificateForm } from '@/hooks/use-certificate-form';
 import type { CertificateRecord } from '@/lib/training-types';
 import { Award, ArrowLeft, BookOpen, GraduationCap, Loader2 } from 'lucide-react';
 
@@ -93,6 +98,15 @@ export default function CertificatesPage() {
     if (user?.uid) setStoredCerts(getStoredCertificates(user.uid));
   };
 
+  const recipientName = userProfile?.displayName || 'Learner';
+  const firstEligible = eligible[0];
+  const { form, setForm, ready, buildRequest, isValid } = useCertificateForm({
+    recipientName,
+    programTitle: firstEligible?.title ?? 'Your completed program',
+    completionSummary: firstEligible?.completionSummary,
+    type: firstEligible?.type ?? 'course',
+  });
+
   if (loading) {
     return (
       <AppLayout>
@@ -102,8 +116,6 @@ export default function CertificatesPage() {
       </AppLayout>
     );
   }
-
-  const recipientName = userProfile?.displayName || 'Learner';
 
   return (
     <AppLayout>
@@ -154,54 +166,82 @@ export default function CertificatesPage() {
           </Card>
         ) : (
           <div className="space-y-4">
-            {eligible.map((item) => (
-              <Card key={item.key} className="brand-card">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <CardTitle className="text-lg">{item.title}</CardTitle>
-                      <CardDescription className="flex items-center gap-2 mt-1">
-                        {item.type === 'course' ? (
-                          <BookOpen className="h-3.5 w-3.5" />
-                        ) : (
-                          <GraduationCap className="h-3.5 w-3.5" />
-                        )}
-                        {item.type === 'course' ? 'Course' : 'Skills training'}
-                        {item.progress !== undefined && item.progress >= 100 && (
-                          <span>· {item.progress}% complete</span>
-                        )}
-                      </CardDescription>
-                    </div>
-                    <Badge variant={item.status === 'issued' ? 'secondary' : 'default'}>
-                      {item.status === 'issued' ? 'Downloaded' : 'Ready'}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CertificateDownloadButton
+            {eligible.length === 1 ? (
+              <Card className="brand-card">
+                <CardContent className="pt-6">
+                  <CertificateDownloadPanel
                     uid={user?.uid}
-                    variant="outline"
-                    payload={{
-                      type: item.type,
-                      title: item.title,
-                      skillOrCourseId: item.skillOrCourseId,
-                      recipientName,
-                      completionSummary: item.completionSummary,
-                      issuedAt: item.issuedAt,
+                    base={{
+                      type: eligible[0].type,
+                      skillOrCourseId: eligible[0].skillOrCourseId,
                     }}
-                    label="Download PDF certificate"
+                    recipientName={recipientName}
+                    programTitle={eligible[0].title}
+                    completionSummary={eligible[0].completionSummary}
+                    issuedAt={eligible[0].issuedAt}
                   />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="ml-2"
-                    onClick={refreshCerts}
-                  >
-                    Refresh list
-                  </Button>
                 </CardContent>
               </Card>
-            ))}
+            ) : (
+              <Card className="brand-card">
+                <CardContent className="pt-6 space-y-6">
+                  {ready && form ? (
+                    <>
+                      <CertificateCustomizer value={form} onChange={setForm} />
+                      <CertificateTemplatePicker />
+                    </>
+                  ) : null}
+                </CardContent>
+              </Card>
+            )}
+            {eligible.length > 1 &&
+              eligible.map((item) => {
+                const payload = buildCertificateRequestForProgram(
+                  buildRequest,
+                  { type: item.type, skillOrCourseId: item.skillOrCourseId },
+                  item.title,
+                  item.completionSummary
+                );
+                return (
+                  <Card key={item.key} className="brand-card">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <CardTitle className="text-lg">{item.title}</CardTitle>
+                          <CardDescription className="flex items-center gap-2 mt-1">
+                            {item.type === 'course' ? (
+                              <BookOpen className="h-3.5 w-3.5" />
+                            ) : (
+                              <GraduationCap className="h-3.5 w-3.5" />
+                            )}
+                            {item.type === 'course' ? 'Course' : 'Skills training'}
+                            {item.progress !== undefined && item.progress >= 100 && (
+                              <span>· {item.progress}% complete</span>
+                            )}
+                          </CardDescription>
+                        </div>
+                        <Badge variant={item.status === 'issued' ? 'secondary' : 'default'}>
+                          {item.status === 'issued' ? 'Downloaded' : 'Ready'}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="flex flex-wrap gap-2">
+                      {payload ? (
+                        <CertificateDownloadButton
+                          uid={user?.uid}
+                          variant="outline"
+                          payload={payload}
+                          label="Download PDF certificate"
+                          disabled={!isValid}
+                        />
+                      ) : null}
+                      <Button variant="ghost" size="sm" onClick={refreshCerts}>
+                        Refresh list
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
           </div>
         )}
 
