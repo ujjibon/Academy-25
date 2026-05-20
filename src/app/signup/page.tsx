@@ -31,16 +31,38 @@ export default function SignUpPage() {
       title="Create your account"
       description="Start your learning journey with Peer Academy today."
       footer={
-        <>
-          Already have an account?{' '}
-          <Link href="/login" className="font-medium text-primary hover:text-royal-light">
-            Log in
-          </Link>
-          <span className="mx-2 text-muted-foreground/50">·</span>
-          <Link href="/instructor/signup" className="font-medium text-muted-foreground hover:text-foreground">
-            Instructor sign up
-          </Link>
-        </>
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="text-muted-foreground">Already have an account?</span>
+            <Link
+              href="/login"
+              className="rounded-full border border-primary/30 px-3 py-1 font-medium text-primary transition-colors hover:bg-primary/10"
+            >
+              Log in
+            </Link>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Link
+              href="/instructor/signup"
+              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+            >
+              Instructor sign up
+            </Link>
+            <Link
+              href="/instructor/login"
+              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+            >
+              Instructor sign in
+            </Link>
+            <Link
+              href="/admin/login"
+              className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+            >
+              Admin login
+            </Link>
+          </div>
+        </div>
       }
     >
       <SignUpForm />

@@ -333,10 +333,10 @@ ${teachingResult.nextStep}`;
   };
 
   return (
-    <div className="flex flex-col h-[70vh] border rounded-lg">
-       <div className="flex-1 p-4 overflow-y-auto">
+    <div className="flex h-[60vh] min-h-[460px] flex-col rounded-lg border sm:h-[70vh]">
+       <div className="flex-1 overflow-y-auto p-3 sm:p-4">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
-             <div className="space-y-4 pr-4">
+             <div className="space-y-4 pr-2 sm:pr-4">
               {messages.length === 0 && !isLoading && (
                  <div className="text-center text-muted-foreground py-8">
                     <Bot className="h-12 w-12 mx-auto mb-4 text-primary" />
@@ -385,7 +385,7 @@ ${teachingResult.nextStep}`;
                     </Avatar>
                   )}
                   <div
-                    className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                    className={`max-w-[90%] rounded-lg px-3 py-2 sm:max-w-[80%] sm:px-4 ${
                       message.role === 'user'
                         ? 'bg-primary text-white'
                         : 'bg-muted'
@@ -419,7 +419,7 @@ ${teachingResult.nextStep}`;
             </div>
         </ScrollArea>
        </div>
-       <div className="p-4 border-t bg-muted/50">
+       <div className="border-t bg-muted/50 p-3 sm:p-4">
          {file && (
            <div className="mb-2 flex items-center gap-3 p-2 rounded-lg border bg-background">
              {file.type.startsWith('image/') ? <ImageIcon className="h-5 w-5 text-muted-foreground" /> : <FileIcon className="h-5 w-5 text-muted-foreground" />}
@@ -434,7 +434,7 @@ ${teachingResult.nextStep}`;
                 e.preventDefault();
                 handleSend();
             }}
-            className="flex w-full items-center gap-2"
+            className="flex w-full items-center gap-1.5 sm:gap-2"
             >
             <TooltipProvider>
                 <Tooltip>

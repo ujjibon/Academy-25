@@ -12,3 +12,4 @@ import '@/ai/flows/course-tutor-flow.ts';
 import '@/ai/flows/generate-micro-course.ts';
 import '@/ai/flows/generate-course-flow.ts';
 import '@/ai/flows/course-creator-agent-flow.ts';
+import '@/ai/flows/bootcamp-studio-flow.ts';

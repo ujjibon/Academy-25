@@ -6,6 +6,7 @@ import {
   Sparkles,
   Home,
   GraduationCap,
+  Workflow,
 } from 'lucide-react';
 import type { NavSection } from '@/lib/nav-config';
 
@@ -22,6 +23,7 @@ export const instructorNavSections: NavSection[] = [
     label: 'Tools',
     items: [
       { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },
+      { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: Workflow },
     ],
   },
 ];
@@ -36,6 +38,7 @@ export const instructorPageTitles: Record<string, string> = {
   '/teach': 'Teach Mode',
   '/courses': 'Courses',
   '/admin-portal/course-creator': 'AI Course Creator',
+  '/admin-portal/bootcamp-studio': 'Bootcamp Studio',
 };
 
 export function getInstructorPageTitle(pathname: string): string {

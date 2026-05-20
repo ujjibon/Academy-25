@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { getAllUsers } from '@/lib/firebase';
 import { courses } from '@/lib/courses';
-import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy } from 'lucide-react';
+import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy, GraduationCap } from 'lucide-react';
 
 export default function AdminPortalPage() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -41,6 +41,12 @@ export default function AdminPortalPage() {
       title: 'AI Course Creator',
       description: 'Generate lessons with AI',
       icon: Sparkles,
+    },
+    {
+      href: '/admin-portal/bootcamp-studio',
+      title: 'Bootcamp Studio',
+      description: 'Generate dynamic camps from prompt/PDF',
+      icon: GraduationCap,
     },
     {
       href: '/admin-portal/manual-editor',

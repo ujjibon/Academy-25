@@ -147,9 +147,9 @@ export default function Home() {
         </section>
 
         {/* Live demo */}
-        <section className="border-y border-border/60 bg-background-elevated/40 py-20 md:py-28">
+        <section className="border-y border-border/60 bg-background-elevated/40 py-16 md:py-24 lg:py-28">
           <div className="container">
-            <div className="mx-auto mb-10 max-w-2xl text-center">
+            <div className="mx-auto mb-8 max-w-2xl text-center md:mb-10">
               <span className="dashboard-kicker mb-4 mx-auto flex">Live demo</span>
               <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
                 Try a <span className="serif-italic gradient-text">learning session</span>.
@@ -159,7 +159,7 @@ export default function Home() {
                 see how Peer Academy makes learning engaging.
               </p>
             </div>
-            <div className="mx-auto max-w-2xl brand-card p-4 sm:p-6">
+            <div className="mx-auto max-w-6xl brand-card p-3 sm:p-5 md:p-6">
               {sampleCourse && sampleLesson ? (
                 <LessonContent course={sampleCourse} lesson={sampleLesson} />
               ) : (

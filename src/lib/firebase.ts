@@ -10,12 +10,12 @@ import { isAdminEmail, type UserRole } from '@/lib/admin';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB47TJPJJShQQrKOJ91baovmWCCU4HSrdo",
+  apiKey: "AIzaSyAGubLjD_cXaiPjYHQ6ooYY0JtZYB73mcQ",
   authDomain: "skillsprint-3ij35.firebaseapp.com",
   projectId: "skillsprint-3ij35",
   storageBucket: "skillsprint-3ij35.firebasestorage.app",
   messagingSenderId: "913415587032",
-  appId: "1:913415587032:web:8673fdf1961403491603ad"
+  appId: "1:913415587032:web:532785015681c4491603ad"
 };
 
 // Alternative: Using environment variables for security (recommended for production)

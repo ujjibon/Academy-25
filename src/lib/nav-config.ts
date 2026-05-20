@@ -11,6 +11,8 @@ import {
   Users,
   Home,
   Sparkles,
+  GraduationCap,
+  School,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -32,8 +34,14 @@ export const mainNavSections: NavSection[] = [
     label: 'Main',
     items: [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-      { href: '/courses', label: 'Courses', icon: BookOpen },
       { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+    ],
+  },
+  {
+    label: 'Classroom',
+    items: [
+      { href: '/classroom', label: 'Classroom Hub', icon: School, exact: true },
+      { href: '/courses', label: 'Courses & Catalog', icon: BookOpen },
     ],
   },
   {
@@ -57,6 +65,7 @@ export const adminNavSection: NavSection = {
     { href: '/admin-portal', label: 'Admin Portal', icon: Shield, exact: true },
     { href: '/admin-portal/courses', label: 'Manage Courses', icon: BookOpen },
     { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },
+    { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: GraduationCap },
     { href: '/admin-portal/manual-editor', label: 'Manual Editor', icon: FileEdit },
     { href: '/admin-portal/users', label: 'Users', icon: Users },
   ],
@@ -68,6 +77,7 @@ export const footerNavItems: NavItem[] = [
 
 export const pageTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
+  '/classroom': 'Classroom Hub',
   '/courses': 'Courses',
   '/profile': 'Profile',
   '/leaderboard': 'Leaderboard',
@@ -75,6 +85,7 @@ export const pageTitles: Record<string, string> = {
   '/admin-portal': 'Admin Portal',
   '/admin-portal/courses': 'Manage Courses',
   '/admin-portal/course-creator': 'AI Course Creator',
+  '/admin-portal/bootcamp-studio': 'Bootcamp Studio',
   '/admin-portal/manual-editor': 'Manual Editor',
   '/admin-portal/users': 'Users',
 };

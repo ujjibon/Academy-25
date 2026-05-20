@@ -255,9 +255,10 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
 
   return (
     <Tabs defaultValue="introduction" className="w-full">
-      <TabsList className="grid w-full grid-cols-5">
+      <div className="mb-4 overflow-x-auto pb-2 sm:mb-0 sm:overflow-visible sm:pb-0">
+      <TabsList className="inline-flex min-w-max sm:grid sm:w-full sm:grid-cols-5">
         <TabsTrigger value="introduction" className={cn(
-          "relative",
+          "relative min-w-[122px] px-3 sm:min-w-0",
           currentPhase === 'introduction' && "bg-primary text-primary-foreground"
         )}>
           <div className="flex items-center gap-2">
@@ -266,7 +267,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
           </div>
         </TabsTrigger>
         <TabsTrigger value="practice" className={cn(
-          "relative",
+          "relative min-w-[108px] px-3 sm:min-w-0",
           currentPhase === 'practice' && "bg-primary text-primary-foreground"
         )}>
           <div className="flex items-center gap-2">
@@ -275,7 +276,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
           </div>
         </TabsTrigger>
         <TabsTrigger value="project" className={cn(
-          "relative",
+          "relative min-w-[104px] px-3 sm:min-w-0",
           currentPhase === 'practice' && "bg-primary text-primary-foreground"
         )}>
           <div className="flex items-center gap-2">
@@ -284,7 +285,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
           </div>
         </TabsTrigger>
         <TabsTrigger value="assessment" className={cn(
-          "relative",
+          "relative min-w-[126px] px-3 sm:min-w-0",
           currentPhase === 'assessment' && "bg-primary text-primary-foreground"
         )}>
           <div className="flex items-center gap-2">
@@ -292,17 +293,18 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
             {currentPhase === 'assessment' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
           </div>
         </TabsTrigger>
-        <TabsTrigger value="classroom">
+        <TabsTrigger value="classroom" className="min-w-[132px] px-3 sm:min-w-0">
           <div className="flex items-center gap-2">
             <span>AI Classroom</span>
           </div>
         </TabsTrigger>
       </TabsList>
+      </div>
       <TabsContent value="introduction" className="mt-6">
         {/* Learning Progress Indicator */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex flex-wrap items-center gap-2">
               <span>Learning Progress</span>
               <div className="flex-1 bg-muted rounded-full h-2">
                 <div 
@@ -314,24 +316,24 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex justify-between items-center">
-              <div className="flex gap-4">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-sm",
+                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
                   currentPhase === 'introduction' ? "bg-primary text-primary-foreground" : "bg-muted"
                 )}>
                   <span>1. Introduction</span>
                   {currentPhase === 'introduction' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
                 </div>
                 <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-sm",
+                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
                   currentPhase === 'practice' ? "bg-primary text-primary-foreground" : "bg-muted"
                 )}>
                   <span>2. Practice</span>
                   {currentPhase === 'practice' && <div className="w-2 h-2 bg-green-500 rounded-full " />}
                 </div>
                 <div className={cn(
-                  "flex items-center gap-2 px-3 py-1 rounded-full text-sm",
+                  "flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm",
                   currentPhase === 'assessment' ? "bg-primary text-primary-foreground" : "bg-muted"
                 )}>
                   <span>3. Assessment</span>
@@ -342,6 +344,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                 <Button 
                   variant="outline" 
                   size="sm" 
+                  className="w-full sm:w-auto"
                   onClick={() => updateLearningProgress('introduction')}
                 >
                   Back to Introduction
@@ -351,7 +354,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
           </CardContent>
         </Card>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
           <Card>
             <CardHeader>
               <CardTitle>AI-Guided Introduction</CardTitle>
@@ -363,7 +366,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                 <p>{introText}</p>
               </div>
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-secondary to-background-elevated p-6 rounded-lg border">
+                <div className="rounded-lg border bg-gradient-to-r from-secondary to-background-elevated p-4 sm:p-6">
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <Lightbulb className="h-5 w-5" />
                     AI Learning Assistant
@@ -434,7 +437,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-secondary to-background-elevated p-6 rounded-lg border">
+                <div className="rounded-lg border bg-gradient-to-r from-secondary to-background-elevated p-4 sm:p-6">
                   <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5" />
                     Learning Checkpoint
@@ -505,11 +508,11 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-gradient-to-r from-secondary to-background-elevated p-4 rounded-lg">
+              <div className="rounded-lg bg-gradient-to-r from-secondary to-background-elevated p-4">
                 <p className="text-sm text-muted-foreground mb-3">
                   💡 <strong>Practice Tips:</strong> Take your time with each question. If you get stuck, use the AI hints!
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -542,7 +545,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
         </Card>
       </TabsContent>
       <TabsContent value="project" className="mt-6">
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
             <div>
                 <Card>
                     <CardHeader>
@@ -570,7 +573,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                           <Textarea 
                               id="submission-text"
                               placeholder="Paste code, write notes, or add comments here..." 
-                              className="min-h-[150px]"
+                              className="min-h-[130px] sm:min-h-[150px]"
                               value={submissionText}
                               onChange={(e) => setSubmissionText(e.target.value)}
                           />
@@ -585,7 +588,7 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
                 </Card>
             </div>
             <div>
-                <Card className="min-h-[400px]">
+                <Card className="min-h-[340px] sm:min-h-[400px]">
                     <CardHeader>
                         <CardTitle>AI Feedback</CardTitle>
                         <CardDescription>Your evaluation will appear here.</CardDescription>
@@ -645,11 +648,11 @@ export function LessonContent({ course, lesson }: { course: Course; lesson: Less
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-gradient-to-r from-secondary to-background-elevated p-4 rounded-lg">
+              <div className="rounded-lg bg-gradient-to-r from-secondary to-background-elevated p-4">
                 <p className="text-sm text-purple-800 dark:text-purple-200 mb-3">
                   🎯 <strong>Assessment Tips:</strong> This is your chance to demonstrate your understanding. Take your time and think through each question carefully.
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <Button 
                     variant="outline" 
                     size="sm"

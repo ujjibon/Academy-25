@@ -35,6 +35,7 @@ import {
   Loader2,
   ExternalLink,
   Sparkles,
+  GraduationCap,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { signOut as firebaseSignOut } from '@/lib/firebase';
@@ -73,6 +74,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     { href: '/admin-portal/courses', label: 'Courses', icon: BookOpen },
     { href: '/admin-portal/users', label: 'Users', icon: Users },
     { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },
+    { href: '/admin-portal/bootcamp-studio', label: 'Bootcamp Studio', icon: GraduationCap },
     { href: '/admin-portal/manual-editor', label: 'Manual Editor', icon: FilePlus2 },
   ];
 
