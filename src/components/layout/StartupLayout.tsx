@@ -35,7 +35,7 @@ export default function StartupLayout({ children }: { children: ReactNode }) {
         <StartupSidebar />
         <SidebarInset className="flex flex-col min-h-svh">
           <StartupHeader />
-          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
+          <main className="flex-1 overflow-auto p-3 main-safe-pad sm:p-4 md:p-6 lg:p-8">{children}</main>
           <Chatbot />
         </SidebarInset>
       </SidebarProvider>

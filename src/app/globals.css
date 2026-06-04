@@ -514,8 +514,25 @@
     rgb(var(--royal-light)) 100%
   );
   color: #fff;
-  padding: 1.65rem 1.85rem;
+  padding: 1.25rem 1.25rem;
   box-shadow: 0 12px 36px rgb(var(--midnight) / 0.2);
+}
+@media (min-width: 640px) {
+  .cta-band-royal {
+    padding: 1.65rem 1.85rem;
+  }
+}
+@media (max-width: 639px) {
+  .cta-band-royal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta-band-button {
+    justify-content: center;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
 }
 .cta-band-button {
   display: inline-flex;
@@ -658,6 +675,7 @@
     @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden;
     letter-spacing: -0.011em;
+    -webkit-tap-highlight-color: transparent;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-inter), "Inter", "SF Pro Display", system-ui, sans-serif;
@@ -985,6 +1003,173 @@
   background: rgb(var(--primary) / 0.04);
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgb(var(--midnight) / 0.1);
+}
+
+/* Safe areas for notched phones + fixed UI */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.fab-safe {
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+}
+.main-safe-pad {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+.touch-target {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+}
+.mobile-scroll-x {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.mobile-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile layout & type scale */
+.page-stack {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .page-stack {
+    gap: 1.5rem;
+  }
+}
+.hero-padding {
+  padding: 1rem 1.125rem;
+}
+@media (min-width: 640px) {
+  .hero-padding {
+    padding: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .hero-padding {
+    padding: 2rem;
+  }
+}
+.panel-padding {
+  padding: 1rem 1.125rem;
+}
+@media (min-width: 640px) {
+  .panel-padding {
+    padding: 1.5rem;
+  }
+}
+.page-title {
+  font-family: var(--font-manrope), Manrope, Inter, sans-serif;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: rgb(var(--foreground));
+}
+.page-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgb(var(--muted-foreground));
+}
+@media (min-width: 640px) {
+  .page-subtitle {
+    font-size: 1rem;
+  }
+}
+.section-head {
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.section-lead {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgb(var(--muted-foreground));
+  text-wrap: balance;
+}
+@media (min-width: 640px) {
+  .section-lead {
+    font-size: 1rem;
+  }
+}
+.mobile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .mobile-actions {
+    flex-flow: row wrap;
+    width: auto;
+  }
+}
+.mobile-actions > .brand-button,
+.mobile-actions > .brand-button-ghost,
+.mobile-actions > a.brand-button,
+.mobile-actions > a.brand-button-ghost {
+  width: 100%;
+  justify-content: center;
+}
+@media (min-width: 640px) {
+  .mobile-actions > .brand-button,
+  .mobile-actions > .brand-button-ghost,
+  .mobile-actions > a.brand-button,
+  .mobile-actions > a.brand-button-ghost {
+    width: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  html {
+    font-size: 16px;
+  }
+  .dashboard-kicker {
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.65rem;
+  }
+  .dashboard-widget {
+    padding: 0.875rem 1rem;
+  }
+  .stat-card {
+    min-height: 7.25rem;
+    padding: 1rem 1.05rem;
+  }
+  .stat-card-value {
+    font-size: 1.375rem;
+  }
+  .stat-card-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+  }
+  .stat-card-sub {
+    font-size: 0.75rem;
+  }
+  .brand-button,
+  .brand-button-ghost,
+  .brand-button-flare {
+    font-size: 0.875rem;
+    padding: 0.6rem 1.2rem;
+  }
+  .feature-card-interactive {
+    padding: 1.125rem;
+  }
+  .home-lesson-demo {
+    padding: 0.75rem !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

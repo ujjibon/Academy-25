@@ -27,7 +27,7 @@ export function ClassroomHeader({ course }: { course: ClassroomCourse }) {
         height={280}
         className="h-36 w-full object-cover md:h-44"
       />
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <ClassroomHeaderBody course={course} copied={copied} onCopy={copyCode} />
       </div>
     </div>

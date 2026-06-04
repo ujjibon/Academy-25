@@ -37,7 +37,7 @@ export function DashboardPageContent() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="page-stack">
         <Skeleton className="h-40 w-full rounded-[var(--radius)]" />
         <div className="grid gap-4 sm:grid-cols-3">
           <Skeleton className="h-36 rounded-[var(--radius)]" />
@@ -51,9 +51,9 @@ export function DashboardPageContent() {
 
   if (connectionError) {
     return (
-      <div className="space-y-6 max-w-6xl">
-        <div className="dashboard-panel p-6">
-          <h1 className="font-dashboard-title text-3xl font-bold tracking-tight">Dashboard</h1>
+      <div className="page-stack max-w-6xl">
+        <div className="dashboard-panel panel-padding">
+          <h1 className="page-title">Dashboard</h1>
           <p className="text-muted-foreground mt-1">
             We&apos;re having trouble connecting to your data.
           </p>
@@ -79,13 +79,13 @@ export function DashboardPageContent() {
   }
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="page-stack max-w-6xl">
       {isInstructor && learnerPreview ? <LearnerViewBanner /> : null}
       <DashboardWelcome userProfile={userProfile} />
       <DashboardStatCards userProfile={userProfile} />
       <DashboardAiCoachBanner userProfile={userProfile} />
 
-      <section className="dashboard-panel p-6 space-y-4">
+      <section className="dashboard-panel panel-padding space-y-4">
         <header>
           <span className="dashboard-kicker">Platform</span>
           <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">
@@ -108,7 +108,7 @@ export function DashboardPageContent() {
         <PersonalTrainer userProfile={userProfile} />
       </div>
 
-      <section className="dashboard-panel p-6">
+      <section className="dashboard-panel panel-padding">
         <header className="mb-4">
           <span className="dashboard-kicker">Classwork</span>
           <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">
@@ -124,7 +124,7 @@ export function DashboardPageContent() {
         <UpcomingAssignments userId={userProfile.uid} />
       </section>
 
-      <section className="dashboard-panel p-6">
+      <section className="dashboard-panel panel-padding">
         <header className="mb-6">
           <span className="dashboard-kicker">Skills</span>
           <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">

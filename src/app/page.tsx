@@ -30,10 +30,10 @@ export default function Home() {
           <div className="container">
             <div className="mx-auto mb-8 max-w-2xl text-center md:mb-10">
               <span className="dashboard-kicker mb-4 mx-auto flex">Live demo</span>
-              <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h2 className="section-head mt-4">
                 Try a <span className="serif-italic gradient-text">learning session</span>.
               </h2>
-              <p className="mt-4 text-muted-foreground">
+              <p className="section-lead">
                 Experience interactive learning — answer a quiz, get instant feedback, and
                 see how Peer Academy makes learning engaging.
               </p>
@@ -56,11 +56,11 @@ export default function Home() {
               <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
                 Your journey
               </span>
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl text-balance">
+              <h2 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl md:text-3xl text-balance">
                 Your unique <span className="serif-italic opacity-90">skill journey</span>{' '}
                 starts here.
               </h2>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-[0.9375rem] text-white/80 leading-relaxed sm:text-sm">
                 Start with a plan tailored to your goals. Our AI adapts to your pace so
                 you&apos;re always challenged but never overwhelmed.
               </p>
@@ -72,16 +72,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="brand-section mx-4 mb-12 rounded-[var(--radius)] md:mx-auto md:max-w-5xl">
-          <div className="container py-16 text-center md:py-20">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl text-balance">
+        <section className="brand-section mx-3 mb-10 rounded-[calc(var(--radius)-8px)] sm:mx-4 sm:mb-12 md:mx-auto md:max-w-5xl md:rounded-[var(--radius)]">
+          <div className="px-5 py-12 text-center sm:container sm:py-16 md:py-20">
+            <h2 className="section-head text-white">
               Ready to transform your learning?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-white/80">
+            <p className="mx-auto mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-white/80 sm:text-base">
               Join learners using Peer Academy to master skills with AI-guided lessons and
               real-world projects.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <div className="mobile-actions mx-auto mt-8 max-w-sm justify-center sm:max-w-none">
               <Link
                 href="/signup"
                 className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm font-medium text-midnight transition hover:bg-white/90"
@@ -96,10 +96,10 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-border">
-        <div className="container flex flex-col items-center justify-between gap-4 py-10 md:flex-row md:py-8">
-          <Logo />
-          <nav className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+      <footer className="border-t border-border safe-bottom">
+        <div className="container flex flex-col items-center justify-between gap-6 py-10 text-center md:flex-row md:gap-4 md:py-8 md:text-left">
+          <Logo className="mx-auto max-h-8 w-auto md:mx-0 md:max-h-10" />
+          <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-[0.875rem] text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">
               Features
             </a>

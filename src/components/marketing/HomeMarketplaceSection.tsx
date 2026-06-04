@@ -15,25 +15,25 @@ export function HomeMarketplaceSection() {
             <ShoppingBag className="h-3.5 w-3.5" />
             Course marketplace
           </span>
-          <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="section-head mt-4">
             Buy and sell <span className="serif-italic gradient-text">courses</span>
           </h2>
-          <p className="mt-4 text-muted-foreground">
+          <p className="section-lead">
             Browse instructor listings, compare pricing, and join classrooms with a class code —
             all on a dedicated marketplace separate from your learning dashboard.
           </p>
         </div>
 
-        <div className="mx-auto mb-10 grid max-w-3xl gap-6 sm:grid-cols-3">
+        <div className="mx-auto mb-10 grid max-w-3xl grid-cols-3 gap-2 sm:gap-4">
           {MARKETPLACE_STATS.map((stat) => (
             <div
               key={stat.label}
-              className="dashboard-panel rounded-[var(--radius)] p-5 text-center"
+              className="dashboard-panel panel-padding text-center"
             >
-              <p className="font-dashboard-title text-2xl font-bold tracking-tight">
+              <p className="font-dashboard-title text-xl font-bold tracking-tight sm:text-2xl">
                 {stat.value}
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
+              <p className="mt-1 text-xs leading-snug text-muted-foreground">{stat.label}</p>
             </div>
           ))}
         </div>

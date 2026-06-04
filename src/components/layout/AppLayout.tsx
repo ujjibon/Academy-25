@@ -40,7 +40,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           <DashboardHeader />
           <main
             className={cn(
-              'flex-1 overflow-auto p-4 md:p-6 lg:p-8',
+              'flex-1 overflow-auto p-3 main-safe-pad sm:p-4 md:p-6 lg:p-8',
               isLessonCanvas && 'bg-canvas'
             )}
           >

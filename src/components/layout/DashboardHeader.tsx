@@ -34,8 +34,8 @@ export function DashboardHeader() {
           : null;
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 glass px-4 md:px-6">
-      <SidebarTrigger className="md:hidden" />
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b border-border/60 glass px-3 safe-top sm:gap-3 sm:px-4 md:px-6">
+      <SidebarTrigger className="touch-target shrink-0 md:hidden" />
 
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         {breadcrumbParent ? (
@@ -51,16 +51,16 @@ export function DashboardHeader() {
             Peer Academy
           </p>
         )}
-        <h1 className="font-dashboard-title truncate text-lg font-semibold tracking-tight text-foreground md:text-xl">
+        <h1 className="font-dashboard-title line-clamp-1 text-base font-semibold tracking-tight text-foreground sm:text-lg md:text-xl">
           {title}
         </h1>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-2">
+      <div className="flex shrink-0 items-center gap-0.5 sm:gap-2">
         <Button
           variant="ghost"
           size="icon"
-          className="hidden sm:inline-flex rounded-full h-9 w-9"
+          className="h-9 w-9 rounded-full"
           asChild
         >
           <Link href="/courses" aria-label="Search courses">
@@ -71,13 +71,22 @@ export function DashboardHeader() {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full h-9 w-9 relative"
+          className="relative hidden h-9 w-9 rounded-full sm:inline-flex"
           aria-label="Notifications"
           disabled
         >
           <Bell className="h-4 w-4" />
         </Button>
 
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full h-9 w-9 lg:hidden"
+          onClick={openChat}
+          aria-label="AI Assistant"
+        >
+          <Bot className="h-4 w-4" />
+        </Button>
         <Button
           variant="ghost"
           size="sm"
@@ -89,17 +98,35 @@ export function DashboardHeader() {
         </Button>
 
         {userProfile?.activeCourseId ? (
-          <Button asChild size="sm" className="hidden md:inline-flex brand-button gap-1.5 !py-2 !px-4 text-sm">
-            <Link href={`/courses/${userProfile.activeCourseId}`}>
-              <Zap className="h-3.5 w-3.5" />
-              Continue
-            </Link>
-          </Button>
+          <>
+            <Button
+              asChild
+              size="icon"
+              className="brand-button h-9 w-9 shrink-0 md:hidden"
+            >
+              <Link
+                href={`/courses/${userProfile.activeCourseId}`}
+                aria-label="Continue learning"
+              >
+                <Zap className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="sm"
+              className="hidden md:inline-flex brand-button gap-1.5 !py-2 !px-4 text-sm"
+            >
+              <Link href={`/courses/${userProfile.activeCourseId}`}>
+                <Zap className="h-3.5 w-3.5" />
+                Continue
+              </Link>
+            </Button>
+          </>
         ) : null}
 
         <div
           className={cn(
-            'flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium',
+            'hidden items-center gap-1 rounded-full border px-2 py-1 text-xs font-medium sm:flex sm:gap-1.5 sm:px-2.5',
             connectionError
               ? 'border-destructive/30 bg-destructive/10 text-destructive'
               : 'border-border bg-background-elevated/80 text-muted-foreground'

@@ -189,25 +189,25 @@ export function FeaturesSection() {
       <div className="container relative">
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
           <span className="dashboard-kicker mb-4 mx-auto flex">Platform</span>
-          <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight sm:text-4xl text-balance">
+          <h2 className="section-head mt-4">
             Everything you need to{' '}
             <span className="serif-italic gradient-text">teach and sell</span>.
           </h2>
-          <p className="mt-4 text-muted-foreground text-balance">
+          <p className="section-lead">
             From course building and live classrooms to AI generation, gradebooks,
             certificates, and subscriptions—Peer Academy is a full learning platform
             for instructors and learners.
           </p>
         </div>
 
-        <div className="mb-10 flex flex-wrap justify-center gap-2">
+        <div className="mobile-scroll-x -mx-4 mb-10 flex gap-2 px-4 pb-1 sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0 sm:pb-0">
           {categories.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
               className={cn(
-                'rounded-full border px-4 py-2 text-sm font-medium transition-all',
+                'shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-all',
                 activeCategory === cat.id
                   ? 'border-primary bg-primary text-primary-foreground shadow-md'
                   : 'border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'

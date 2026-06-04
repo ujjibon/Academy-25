@@ -118,7 +118,7 @@ export function Chatbot({ mode = 'learner' }: { mode?: ChatbotMode }) {
     <>
       <Button
         size="icon"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
+        className="fab-safe fixed h-14 w-14 rounded-full shadow-lg z-50 touch-target"
         onClick={open}
       >
         <Bot className="h-7 w-7" />
@@ -128,7 +128,7 @@ export function Chatbot({ mode = 'learner' }: { mode?: ChatbotMode }) {
         open={isOpen}
         onOpenChange={(next) => (next ? open() : close())}
       >
-        <SheetContent className="w-full max-w-lg flex flex-col p-0">
+        <SheetContent className="flex h-[100dvh] w-full max-w-lg flex-col p-0 sm:h-auto sm:max-h-[100dvh]">
           <SheetHeader className="p-4 border-b">
             <SheetTitle className="flex items-center gap-2">
               <Logo /> {copy.title}

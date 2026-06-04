@@ -29,26 +29,24 @@ export function DashboardWelcome({ userProfile }: DashboardWelcomeProps) {
     : '/courses';
 
   return (
-    <section className="dashboard-hero p-6 md:p-8">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-        <div className="space-y-5 max-w-xl">
+    <section className="dashboard-hero hero-padding">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+        <div className="min-w-0 space-y-4 max-w-xl sm:space-y-5">
           <span className="dashboard-kicker">Learning workspace</span>
-          <h1 className="font-dashboard-title text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Good to see you, {firstName}.
-          </h1>
-          <div className="flex flex-wrap gap-3">
+          <h1 className="page-title">Good to see you, {firstName}.</h1>
+          <div className="mobile-actions">
             <Link href={lessonHref} className="brand-button gap-2">
-              <Zap className="h-4 w-4" />
+              <Zap className="h-4 w-4 shrink-0" />
               Continue learning
             </Link>
             <Link href="/courses" className="brand-button-ghost gap-2">
-              <BookOpen className="h-4 w-4" />
+              <BookOpen className="h-4 w-4 shrink-0" />
               Browse courses
             </Link>
           </div>
         </div>
 
-        <div className="dashboard-widget w-full max-w-sm lg:max-w-xs shrink-0">
+        <div className="dashboard-widget w-full shrink-0 lg:max-w-xs">
           <div className="flex items-center justify-between gap-2 mb-3">
             <p className="text-sm font-semibold text-foreground">AI learning monitor</p>
             <span className="badge-royal py-0.5">

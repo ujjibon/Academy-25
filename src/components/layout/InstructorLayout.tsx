@@ -80,7 +80,7 @@ export default function InstructorLayout({ children }: { children: ReactNode }) 
         <InstructorSidebar />
         <SidebarInset className="flex flex-col min-h-svh">
           <InstructorHeader />
-          <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">{children}</main>
+          <main className="flex-1 overflow-auto p-3 main-safe-pad sm:p-4 md:p-6 lg:p-8">{children}</main>
           <Chatbot mode="instructor" />
         </SidebarInset>
       </SidebarProvider>

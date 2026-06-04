@@ -52,16 +52,14 @@ export default function CoursesPage() {
 
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-6xl">
-        <section className="dashboard-hero p-6 md:p-8">
+      <div className="page-stack max-w-6xl">
+        <section className="dashboard-hero hero-padding">
           <span className="dashboard-kicker">Catalog</span>
-          <h2 className="font-dashboard-title mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-            My courses
-          </h2>
-          <p className="mt-2 max-w-xl text-muted-foreground">
+          <h2 className="page-title mt-3">My courses</h2>
+          <p className="page-subtitle max-w-xl">
             Join classrooms with a class code and explore courses to continue learning.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mobile-actions mt-5">
             <JoinCourseDialog onJoined={loadEnrolled} />
             <Link href="/dashboard" className="brand-button-ghost text-sm inline-flex items-center px-4 py-2">
               Dashboard

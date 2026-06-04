@@ -18,8 +18,8 @@ export function StartupHeader() {
       : null;
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border/60 glass px-4 md:px-6">
-      <SidebarTrigger className="md:hidden" />
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b border-border/60 glass px-3 safe-top sm:gap-3 sm:px-4 md:px-6">
+      <SidebarTrigger className="touch-target shrink-0 md:hidden" />
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         {breadcrumbParent ? (
           <nav className="flex items-center gap-1 text-xs text-muted-foreground">

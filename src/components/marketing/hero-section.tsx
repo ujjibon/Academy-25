@@ -25,40 +25,42 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="container relative py-16 md:py-24 lg:py-28">
+      <div className="container relative py-12 sm:py-16 md:py-24 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left animate-fade-in-up">
             <span className="badge-royal mb-6 inline-flex">
               <span className="dot-flare" aria-hidden />
               AI-powered learning platform
             </span>
-            <h1 className="font-heading text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem] text-balance">
+            <h1 className="section-head text-foreground">
               Unleash your potential with an{' '}
               <span className="serif-italic gradient-text">AI coach</span>.
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground text-balance lg:mx-0">
+            <p className="section-lead mx-auto max-w-xl lg:mx-0">
               Peer Academy is your personalized learning companion. Master skills faster
               with guided lessons, real dashboards, and smart feedback — all in one place.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+            <div className="mobile-actions mx-auto mt-6 w-full max-w-xs lg:mx-0 lg:mt-8 lg:max-w-none">
               <Link href="/signup" className="brand-button gap-2">
                 Start learning free
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
               <a href="#demo" className="brand-button-ghost gap-2">
-                <Play className="h-4 w-4" />
+                <Play className="h-4 w-4 shrink-0" />
                 See it in action
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 lg:justify-start">
+            <div className="mt-8 grid w-full max-w-xs grid-cols-3 gap-4 mx-auto sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-6 lg:mx-0 lg:justify-start">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center lg:text-left">
-                  <p className="font-dashboard-title text-2xl font-bold tracking-tight text-foreground">
+                  <p className="font-dashboard-title text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                     {stat.value}
                   </p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="mt-0.5 text-[0.6875rem] leading-tight text-muted-foreground sm:text-xs">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>

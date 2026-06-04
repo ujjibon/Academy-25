@@ -24,7 +24,7 @@ export function CourseCertificateSection({ courseId, courseTitle }: Props) {
   if (!completed) {
     return (
       <Card className="brand-card border-dashed">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-base flex items-center gap-2">
             <Award className="h-4 w-4" />
             Course certificate
@@ -40,7 +40,7 @@ export function CourseCertificateSection({ courseId, courseTitle }: Props) {
 
   return (
     <Card className="brand-card border-primary/20">
-      <CardHeader>
+      <CardHeader className="p-4 sm:p-6">
         <CardTitle className="text-base flex items-center gap-2">
           <Award className="h-4 w-4 text-primary" />
           Course completed — get your certificate
@@ -50,7 +50,7 @@ export function CourseCertificateSection({ courseId, courseTitle }: Props) {
           PDF.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
         <CertificateDownloadPanel
           compact
           uid={user?.uid}
