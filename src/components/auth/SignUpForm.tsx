@@ -23,7 +23,7 @@ import {
   getSignupRedirectForPath,
   type SignupPath,
 } from '@/lib/firebase';
-import { Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
 const formSchema = z.object({
@@ -35,6 +35,17 @@ const formSchema = z.object({
 type Props = {
   signupPath: SignupPath;
 };
+
+function GoogleIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} aria-hidden viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="currentColor"
+        d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-72.2 72.2C297.1 114.5 273.5 104 248 104 177.1 104 118 163 118 234s59.1 130 130 130c58.9 0 101.4-34.4 113.4-78h-113.4v-94.2h216.5c2.9 16.2 4.5 33.3 4.5 50.8z"
+      />
+    </svg>
+  );
+}
 
 export function SignUpForm({ signupPath }: Props) {
   const { toast } = useToast();
@@ -101,33 +112,30 @@ export function SignUpForm({ signupPath }: Props) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <Button
         variant="outline"
-        className="w-full rounded-2xl h-11"
+        className="h-11 w-full rounded-2xl border-border/80 bg-background text-sm font-medium shadow-sm hover:bg-secondary/60"
         onClick={handleGoogleSignIn}
         disabled={busy}
       >
         {busy ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          <svg className="mr-2 h-4 w-4" aria-hidden viewBox="0 0 488 512" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill="currentColor"
-              d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-72.2 72.2C297.1 114.5 273.5 104 248 104 177.1 104 118 163 118 234s59.1 130 130 130c58.9 0 101.4-34.4 113.4-78h-113.4v-94.2h216.5c2.9 16.2 4.5 33.3 4.5 50.8z"
-            />
-          </svg>
+          <GoogleIcon className="mr-2 h-4 w-4" />
         )}
-        Sign up with Google
+        Continue with Google
       </Button>
+
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
+          <span className="w-full border-t border-border/70" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">Or continue with email</span>
+        <div className="relative flex justify-center text-[0.65rem] font-medium uppercase tracking-[0.12em]">
+          <span className="bg-card px-3 text-muted-foreground">or email</span>
         </div>
       </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -135,7 +143,7 @@ export function SignUpForm({ signupPath }: Props) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">Full name</FormLabel>
                 <FormControl>
                   <Input placeholder="Alex Doe" autoComplete="name" {...field} />
                 </FormControl>
@@ -148,7 +156,7 @@ export function SignUpForm({ signupPath }: Props) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">Email</FormLabel>
                 <FormControl>
                   <Input placeholder="you@example.com" autoComplete="email" {...field} />
                 </FormControl>
@@ -161,29 +169,43 @@ export function SignUpForm({ signupPath }: Props) {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <div className="flex items-center justify-between gap-2">
+                  <FormLabel className="text-xs font-medium text-muted-foreground">Password</FormLabel>
+                  <span className="text-[0.65rem] text-muted-foreground/80">Min. 8 characters</span>
+                </div>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" autoComplete="new-password" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="••••••••"
+                    autoComplete="new-password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full brand-button rounded-2xl h-11" disabled={busy}>
+          <Button
+            type="submit"
+            className="brand-button mt-1 h-11 w-full rounded-2xl text-sm"
+            disabled={busy}
+          >
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />
-            ) : isFounder ? (
-              'Create founder account'
             ) : (
-              'Create learner account'
+              <span className="inline-flex items-center gap-2">
+                {isFounder ? 'Create founder account' : 'Create learner account'}
+                <ArrowRight className="h-4 w-4 opacity-90" />
+              </span>
             )}
           </Button>
         </form>
       </Form>
-      <p className="text-center text-xs text-muted-foreground">
-        After sign-up you&apos;ll go to{' '}
-        <span className="font-medium text-foreground">
-          {redirectAfter === '/startup' ? 'Startup hub' : 'your dashboard'}
+
+      <p className="flex items-center justify-center gap-1.5 text-center text-xs text-muted-foreground">
+        <span>Next up:</span>
+        <span className="inline-flex items-center rounded-full bg-primary/8 px-2.5 py-0.5 font-medium text-primary">
+          {redirectAfter === '/startup' ? 'Startup hub' : 'Your dashboard'}
         </span>
       </p>
     </div>

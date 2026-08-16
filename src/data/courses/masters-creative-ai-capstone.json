@@ -1,0 +1,890 @@
+{
+  "id": "masters-creative-ai-capstone",
+  "title": "Creative AI Capstone Masters",
+  "description": "A full Creative AI Capstone apprenticeship: integrate Claude, Perplexity, Figma/Canva, Higgsfield, and CapCut into one end-to-end campaign—from research brief to shipped multi-asset launch.",
+  "image": "/images/masters-creative-ai-capstone.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Capstone Mission and Success Criteria",
+      "duration": 25,
+      "introduction": {
+        "text": "The capstone is an integrated studio project: pick a real-enough product or course launch and ship a coherent campaign across research, copy, design, motion, and edit. Define success criteria and non-goals up front. Masters work is judged by the system you ran, not a single pretty frame."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Capstone success should be defined by:",
+            "options": [
+              "One filter",
+              "Criteria across research, assets, and coherence",
+              "Only likes",
+              "Tool count alone"
+            ],
+            "correctAnswer": "Criteria across research, assets, and coherence"
+          },
+          {
+            "question": "Non-goals prevent:",
+            "options": [
+              "Scope focus",
+              "Endless expansion",
+              "Clear CTAs",
+              "Handoffs"
+            ],
+            "correctAnswer": "Endless expansion"
+          },
+          {
+            "question": "Coherence means:",
+            "options": [
+              "Random styles per asset",
+              "Unified message and look across pieces",
+              "No captions",
+              "No brief"
+            ],
+            "correctAnswer": "Unified message and look across pieces"
+          },
+          {
+            "question": "Judging the system means valuing:",
+            "options": [
+              "Only final polish luck",
+              "Process artifacts and decisions",
+              "Hidden prompts",
+              "No retros"
+            ],
+            "correctAnswer": "Process artifacts and decisions"
+          },
+          {
+            "question": "Real-enough projects beat toys because:",
+            "options": [
+              "Stakes teach tradeoffs",
+              "Toys teach more governance",
+              "Criteria do not matter",
+              "Tools ban realism"
+            ],
+            "correctAnswer": "Stakes teach tradeoffs"
+          }
+        ]
+      },
+      "project": {
+        "title": "Capstone Charter",
+        "description": "Write a charter: product/offer, audience, success criteria (5), non-goals, channels, and a one-sentence campaign promise. Get a peer (or yourself in critic mode) to stress-test scope."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "A campaign promise should be:",
+            "options": [
+              "Vague inspiration",
+              "A clear audience-facing value line",
+              "A tool list",
+              "A secret"
+            ],
+            "correctAnswer": "A clear audience-facing value line"
+          },
+          {
+            "question": "Five criteria help because:",
+            "options": [
+              "One metric hides tradeoffs",
+              "You can score the integrated outcome",
+              "Rubrics are illegal",
+              "Scope must be infinite"
+            ],
+            "correctAnswer": "You can score the integrated outcome"
+          },
+          {
+            "question": "Channels chosen early constrain:",
+            "options": [
+              "Sizes, length, and CTA patterns",
+              "Nothing",
+              "Only research",
+              "Only code"
+            ],
+            "correctAnswer": "Sizes, length, and CTA patterns"
+          },
+          {
+            "question": "Critic-mode stress tests catch:",
+            "options": [
+              "Comfortable scope lies",
+              "Perfect charters always",
+              "No risks",
+              "Only typos"
+            ],
+            "correctAnswer": "Comfortable scope lies"
+          },
+          {
+            "question": "Capstone mindset is:",
+            "options": [
+              "Tool tourism",
+              "Integrated shipping under constraints",
+              "Single-app drills only",
+              "No criteria"
+            ],
+            "correctAnswer": "Integrated shipping under constraints"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Capstone Mission and Success Criteria\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Capstone Charter"
+      ],
+      "keyTakeaways": [
+        "The capstone is an integrated studio project: pick a real-enough product or course launch and ship a coherent campaign across research, copy, design, motion, and edit.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a charter: product/offer, audience, success criteria (5), non-goals, channels, and a one-sentence campaign promise. Get a peer (or yourself in critic mode) to stress-test scope."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Capstone Mission and Success Criteria"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Research Spine with Perplexity + Claude",
+      "duration": 35,
+      "introduction": {
+        "text": "Start with Perplexity for sourced landscape and Claude for synthesis into a decision brief. Build a claim ledger. Your campaign message must survive contact with evidence. Capstone research is the spine everything else hangs on."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Perplexity’s job in capstone research is:",
+            "options": [
+              "Final copy tone only",
+              "Sourced landscape and candidates",
+              "Auto Layout",
+              "Color grades"
+            ],
+            "correctAnswer": "Sourced landscape and candidates"
+          },
+          {
+            "question": "Claude’s job often is:",
+            "options": [
+              "Raw web crawl only",
+              "Synthesis into a defendable brief",
+              "Export MP4s",
+              "Caption burn-in"
+            ],
+            "correctAnswer": "Synthesis into a defendable brief"
+          },
+          {
+            "question": "Claim ledgers protect campaigns from:",
+            "options": [
+              "Evidence",
+              "Overclaiming",
+              "Good CTAs",
+              "Brand kits"
+            ],
+            "correctAnswer": "Overclaiming"
+          },
+          {
+            "question": "Message vs evidence conflict should trigger:",
+            "options": [
+              "Louder ads",
+              "Message revision",
+              "Ignoring sources",
+              "More effects"
+            ],
+            "correctAnswer": "Message revision"
+          },
+          {
+            "question": "Research spine means:",
+            "options": [
+              "Optional appendix",
+              "Foundational brief driving creative",
+              "Only moodboards",
+              "Only seeds"
+            ],
+            "correctAnswer": "Foundational brief driving creative"
+          }
+        ]
+      },
+      "project": {
+        "title": "Evidence Brief",
+        "description": "Deliver a 1-page evidence brief: audience insight, 5 verified claims with sources, 3 open questions, and a recommended campaign angle with kill criteria if evidence is weak."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Kill criteria on angles prevent:",
+            "options": [
+              "Sunk-cost creative",
+              "Honest pivots",
+              "Source use",
+              "Briefs"
+            ],
+            "correctAnswer": "Sunk-cost creative"
+          },
+          {
+            "question": "Open questions should influence:",
+            "options": [
+              "What you refuse to claim in ads",
+              "Nothing downstream",
+              "Only fonts",
+              "Only transitions"
+            ],
+            "correctAnswer": "What you refuse to claim in ads"
+          },
+          {
+            "question": "Audience insight is stronger when:",
+            "options": [
+              "It is stereotype-only",
+              "Tied to evidence and jobs-to-be-done",
+              "Copied from unrelated niches",
+              "Tool-generated without review"
+            ],
+            "correctAnswer": "Tied to evidence and jobs-to-be-done"
+          },
+          {
+            "question": "Defendable briefs enable:",
+            "options": [
+              "Designers/editors to align",
+              "Random freelancing styles",
+              "Hidden claims",
+              "No CTAs"
+            ],
+            "correctAnswer": "Designers/editors to align"
+          },
+          {
+            "question": "Skipping research in capstone usually yields:",
+            "options": [
+              "Coherent truth-based campaigns",
+              "Pretty but brittle messaging",
+              "Stronger ledgers",
+              "Better governance"
+            ],
+            "correctAnswer": "Pretty but brittle messaging"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Research Spine with Perplexity + Claude\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Evidence Brief"
+      ],
+      "keyTakeaways": [
+        "Start with Perplexity for sourced landscape and Claude for synthesis into a decision brief.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Deliver a 1-page evidence brief: audience insight, 5 verified claims with sources, 3 open questions, and a recommended campaign angle with kill criteria if evidence is weak."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Research Spine with Perplexity + Claude"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Message System and Copy Pipeline",
+      "duration": 30,
+      "introduction": {
+        "text": "Turn the brief into a message system: promise, proof points, objections, CTA. Use Claude for draft/critique passes. Lock voice. Every asset should map to the system—no orphan slogans."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "A message system includes:",
+            "options": [
+              "Only a logo",
+              "Promise, proof, objections, CTA",
+              "Only hex codes",
+              "Only LUTs"
+            ],
+            "correctAnswer": "Promise, proof, objections, CTA"
+          },
+          {
+            "question": "Objection handling in copy:",
+            "options": [
+              "Is optional fluff",
+              "Pre-empts reasons not to act",
+              "Replaces proof",
+              "Bans CTAs"
+            ],
+            "correctAnswer": "Pre-empts reasons not to act"
+          },
+          {
+            "question": "Orphan slogans are:",
+            "options": [
+              "Mapped to proof",
+              "Lines that do not connect to the system",
+              "Always on-brand",
+              "Evidence-based"
+            ],
+            "correctAnswer": "Lines that do not connect to the system"
+          },
+          {
+            "question": "Voice lock means:",
+            "options": [
+              "New persona per asset",
+              "Consistent tone rules across pieces",
+              "No critique",
+              "Only slang"
+            ],
+            "correctAnswer": "Consistent tone rules across pieces"
+          },
+          {
+            "question": "Critique passes should check:",
+            "options": [
+              "Only adjective count",
+              "Claim safety and clarity vs brief",
+              "Only emoji",
+              "Export size"
+            ],
+            "correctAnswer": "Claim safety and clarity vs brief"
+          }
+        ]
+      },
+      "project": {
+        "title": "Message House",
+        "description": "Build a message house one-pager and three derivative copies: feed caption, story text, and 15s VO script—all mapped to the same promise/proof/CTA with voice notes."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Derivative copies should:",
+            "options": [
+              "Contradict the promise",
+              "Adapt length/channel while keeping core truth",
+              "Invent new offers each time",
+              "Drop CTA always"
+            ],
+            "correctAnswer": "Adapt length/channel while keeping core truth"
+          },
+          {
+            "question": "Proof points must be:",
+            "options": [
+              "Vague superlatives only",
+              "Specific and evidence-aligned",
+              "Hidden",
+              "Unrelated jokes"
+            ],
+            "correctAnswer": "Specific and evidence-aligned"
+          },
+          {
+            "question": "VO scripts need:",
+            "options": [
+              "Unreadable density",
+              "Speakable rhythm and caption compatibility",
+              "No beats",
+              "Five promises"
+            ],
+            "correctAnswer": "Speakable rhythm and caption compatibility"
+          },
+          {
+            "question": "Claim safety review asks:",
+            "options": [
+              "Can we defend this publicly?",
+              "Is it louder?",
+              "Is it trendier?",
+              "Is it longer?"
+            ],
+            "correctAnswer": "Can we defend this publicly?"
+          },
+          {
+            "question": "Message systems make teams:",
+            "options": [
+              "Faster and more coherent",
+              "More chaotic",
+              "Tool-dependent only",
+              "Research-averse"
+            ],
+            "correctAnswer": "Faster and more coherent"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Message System and Copy Pipeline\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Message House"
+      ],
+      "keyTakeaways": [
+        "Turn the brief into a message system: promise, proof points, objections, CTA.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a message house one-pager and three derivative copies: feed caption, story text, and 15s VO script—all mapped to the same promise/proof/CTA with voice notes."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Message System and Copy Pipeline"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Static Design System: Figma or Canva",
+      "duration": 35,
+      "introduction": {
+        "text": "Choose Figma for UI-ish systems or Canva for marketing production speed—or use both with clear roles. Build a mini brand/layout system and produce the static set (feed + story at minimum). Design must express the message house, not decorate around it."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Tool choice should follow:",
+            "options": [
+              "Habit only",
+              "Artifact type and team constraints",
+              "Whatever is trendiest",
+              "Avoiding Brand Kits"
+            ],
+            "correctAnswer": "Artifact type and team constraints"
+          },
+          {
+            "question": "Static sets at minimum often need:",
+            "options": [
+              "One mystery size",
+              "Feed and story (or channel equivalents)",
+              "Only print billboards",
+              "No CTA"
+            ],
+            "correctAnswer": "Feed and story (or channel equivalents)"
+          },
+          {
+            "question": "Design expressing message means:",
+            "options": [
+              "Pretty unrelated art",
+              "Hierarchy that sells the promise/CTA",
+              "Max effects",
+              "Tiny logos only"
+            ],
+            "correctAnswer": "Hierarchy that sells the promise/CTA"
+          },
+          {
+            "question": "Clear roles for Figma vs Canva prevent:",
+            "options": [
+              "Duplicated conflicting systems",
+              "Useful specialization",
+              "Handoffs",
+              "Brand kits"
+            ],
+            "correctAnswer": "Duplicated conflicting systems"
+          },
+          {
+            "question": "Mini systems beat one-offs because:",
+            "options": [
+              "Campaigns need consistent resizing",
+              "One-offs scale perfectly",
+              "QA is unnecessary",
+              "Messages change per pixel randomly"
+            ],
+            "correctAnswer": "Campaigns need consistent resizing"
+          }
+        ]
+      },
+      "project": {
+        "title": "Static Campaign Set",
+        "description": "Produce feed + story statics from your message house. Include a tiny foundations note (colors/type) and a 5-item design QA list you run before motion."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Design QA before motion saves:",
+            "options": [
+              "Regenerating mismatched looks later",
+              "Nothing",
+              "Only captions",
+              "Only research"
+            ],
+            "correctAnswer": "Regenerating mismatched looks later"
+          },
+          {
+            "question": "Foundations notes help Higgsfield/CapCut by:",
+            "options": [
+              "Providing look constraints",
+              "Confusing editors",
+              "Banning exports",
+              "Removing CTAs"
+            ],
+            "correctAnswer": "Providing look constraints"
+          },
+          {
+            "question": "CTA visibility is a:",
+            "options": [
+              "Decoration choice",
+              "Conversion-critical design requirement",
+              "Optional flourish",
+              "Research-only concern"
+            ],
+            "correctAnswer": "Conversion-critical design requirement"
+          },
+          {
+            "question": "Conflicting Figma/Canva systems cause:",
+            "options": [
+              "Brand drift",
+              "Cleaner handoffs",
+              "Faster QA",
+              "Stronger promises"
+            ],
+            "correctAnswer": "Brand drift"
+          },
+          {
+            "question": "Masters static work in capstone is:",
+            "options": [
+              "Isolated Dribbble shots",
+              "Message-driven, resizable campaign assets",
+              "No QA",
+              "Tool flexing"
+            ],
+            "correctAnswer": "Message-driven, resizable campaign assets"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Static Design System: Figma or Canva\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Static Campaign Set"
+      ],
+      "keyTakeaways": [
+        "Choose Figma for UI-ish systems or Canva for marketing production speed—or use both with clear roles.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Produce feed + story statics from your message house. Include a tiny foundations note (colors/type) and a 5-item design QA list you run before motion."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Static Design System: Figma or Canva"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Motion with Higgsfield + Edit in CapCut",
+      "duration": 40,
+      "introduction": {
+        "text": "Generate motion under the look bible derived from statics. Select for editability. Assemble in CapCut with captions and mix. The capstone proves you can move from still system to timed story without losing the promise."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Look bible from statics ensures:",
+            "options": [
+              "Motion ignores brand",
+              "Continuity into video",
+              "Random new palettes",
+              "No selection"
+            ],
+            "correctAnswer": "Continuity into video"
+          },
+          {
+            "question": "Editability-focused selection prefers:",
+            "options": [
+              "Unusable morphs",
+              "Clips that cut into narrative beats",
+              "Longest only",
+              "No hooks"
+            ],
+            "correctAnswer": "Clips that cut into narrative beats"
+          },
+          {
+            "question": "Captions in capstone must reflect:",
+            "options": [
+              "Random jokes",
+              "Message house language",
+              "Only trends",
+              "No CTA ever"
+            ],
+            "correctAnswer": "Message house language"
+          },
+          {
+            "question": "Losing the promise in edit means:",
+            "options": [
+              "Success",
+              "Failure of integration",
+              "Good pacing optional",
+              "Strong research"
+            ],
+            "correctAnswer": "Failure of integration"
+          },
+          {
+            "question": "Timed story craft includes:",
+            "options": [
+              "Hook pacing and payoff",
+              "Only filters",
+              "No mix",
+              "No exports"
+            ],
+            "correctAnswer": "Hook pacing and payoff"
+          }
+        ]
+      },
+      "project": {
+        "title": "20–30s Integrated Spot",
+        "description": "Ship a 20–30s captioned spot: Higgsfield selects (or detailed shot plan if simulating), CapCut assembly notes, music energy, and a continuity check against statics. Include before/after if you revised the message after seeing motion."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Continuity checks compare:",
+            "options": [
+              "Video vs static palette/identity/CTA",
+              "Only file sizes",
+              "Only seeds",
+              "Only fonts in docs"
+            ],
+            "correctAnswer": "Video vs static palette/identity/CTA"
+          },
+          {
+            "question": "Revising message after motion can be:",
+            "options": [
+              "Honest iteration when visuals reveal weakness",
+              "Always forbidden",
+              "Proof research was useless",
+              "A caption bug"
+            ],
+            "correctAnswer": "Honest iteration when visuals reveal weakness"
+          },
+          {
+            "question": "Assembly notes help when:",
+            "options": [
+              "You solo forever with perfect memory",
+              "Collaborators or future you rebuild the cut",
+              "No versions exist",
+              "QA is skipped"
+            ],
+            "correctAnswer": "Collaborators or future you rebuild the cut"
+          },
+          {
+            "question": "Music energy should support:",
+            "options": [
+              "The emotional arc of the promise",
+              "Random genre flex",
+              "Clipping VO",
+              "Hiding CTA"
+            ],
+            "correctAnswer": "The emotional arc of the promise"
+          },
+          {
+            "question": "Integrated spot success is:",
+            "options": [
+              "Effects density",
+              "Coherent story from research to export",
+              "Longest runtime",
+              "Most tools opened"
+            ],
+            "correctAnswer": "Coherent story from research to export"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Motion with Higgsfield + Edit in CapCut\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: 20–30s Integrated Spot"
+      ],
+      "keyTakeaways": [
+        "Generate motion under the look bible derived from statics.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Ship a 20–30s captioned spot: Higgsfield selects (or detailed shot plan if simulating), CapCut assembly notes, music energy, and a continuity check against statics. Include before/after if you revised the message after seeing motion."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Motion with Higgsfield + Edit in CapCut"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "QA, Packaging, and Launch Retro",
+      "duration": 40,
+      "introduction": {
+        "text": "Package the campaign: brief, message house, statics, motion, edit master, and claims appendix. Run a cross-asset QA. Launch (or simulated launch) with a retro: what the system learned. Capstone mastery is a repeatable studio loop, not a one-off miracle."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Cross-asset QA looks for:",
+            "options": [
+              "Isolated perfection only",
+              "Coherence breaks across pieces",
+              "Only typos in one file",
+              "Tool logos"
+            ],
+            "correctAnswer": "Coherence breaks across pieces"
+          },
+          {
+            "question": "Claims appendix supports:",
+            "options": [
+              "Legal/trust review of public lines",
+              "Hiding sources",
+              "More slogans",
+              "No CTAs"
+            ],
+            "correctAnswer": "Legal/trust review of public lines"
+          },
+          {
+            "question": "Packaging for stakeholders should be:",
+            "options": [
+              "A dump of raw chats",
+              "A navigable kit with owners",
+              "Secret only",
+              "Untitled exports"
+            ],
+            "correctAnswer": "A navigable kit with owners"
+          },
+          {
+            "question": "Retros convert projects into:",
+            "options": [
+              "Amnesia",
+              "Improved playbooks",
+              "Deleted criteria",
+              "Tool bans"
+            ],
+            "correctAnswer": "Improved playbooks"
+          },
+          {
+            "question": "Repeatable studio loops mean:",
+            "options": [
+              "You can run the system again with less chaos",
+              "Every campaign reinvents process",
+              "No QA",
+              "No charter"
+            ],
+            "correctAnswer": "You can run the system again with less chaos"
+          }
+        ]
+      },
+      "project": {
+        "title": "Launch Kit + Retro",
+        "description": "Submit a launch kit index (links/titles for each artifact), a 10-item cross-asset QA checklist with pass/fail, and a one-page retro: wins, failures by stage, and three playbook updates for next time."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Pass/fail QA forces:",
+            "options": [
+              "Honest readiness calls",
+              "Infinite polish debates only",
+              "Skipping claims",
+              "No owners"
+            ],
+            "correctAnswer": "Honest readiness calls"
+          },
+          {
+            "question": "Failures by stage in retros help:",
+            "options": [
+              "Blame individuals only",
+              "Target process fixes",
+              "Hide tool issues",
+              "Delete research"
+            ],
+            "correctAnswer": "Target process fixes"
+          },
+          {
+            "question": "Playbook updates are the:",
+            "options": [
+              "Real lasting output of capstone",
+              "Optional fluff",
+              "Enemy of craft",
+              "Replacement for shipping"
+            ],
+            "correctAnswer": "Real lasting output of capstone"
+          },
+          {
+            "question": "Navigable kits reduce:",
+            "options": [
+              "Onboarding cost for reviewers",
+              "Clarity",
+              "QA",
+              "Version sense"
+            ],
+            "correctAnswer": "Onboarding cost for reviewers"
+          },
+          {
+            "question": "End-to-end Creative AI mastery is:",
+            "options": [
+              "Touring every app once",
+              "Shipping coherent campaigns with governed process",
+              "One viral edit",
+              "Prompt folklore"
+            ],
+            "correctAnswer": "Shipping coherent campaigns with governed process"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"QA, Packaging, and Launch Retro\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Launch Kit + Retro"
+      ],
+      "keyTakeaways": [
+        "Package the campaign: brief, message house, statics, motion, edit master, and claims appendix.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Submit a launch kit index (links/titles for each artifact), a 10-item cross-asset QA checklist with pass/fail, and a one-page retro: wins, failures by stage, and three playbook updates for next time."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: QA, Packaging, and Launch Retro"
+        }
+      ]
+    }
+  ]
+}

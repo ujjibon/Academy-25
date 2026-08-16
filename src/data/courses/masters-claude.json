@@ -1,0 +1,896 @@
+{
+  "id": "masters-claude",
+  "title": "Claude Masters Class",
+  "description": "A full Claude apprenticeship: long-context reasoning, structured prompting, research synthesis, writing systems, analysis workflows, and shipping reliable knowledge work end to end.",
+  "image": "/images/masters-claude.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Claude Strengths and Working Modes",
+      "duration": 25,
+      "introduction": {
+        "text": "Claude excels at careful reasoning, long documents, rewriting with voice control, and turning messy notes into structured plans. Treat it as a senior analyst who still needs your judgment on facts, taste, and risk. Choose modes deliberately: brainstorm, critique, draft, or extract. This apprenticeship builds end-to-end habits for research, writing, and decision support—not one-off chat tricks."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Claude is especially strong at:",
+            "options": [
+              "Hardware repair",
+              "Reasoning, writing, and long-context analysis",
+              "Baking bread",
+              "Network cabling"
+            ],
+            "correctAnswer": "Reasoning, writing, and long-context analysis"
+          },
+          {
+            "question": "Steering tone means:",
+            "options": [
+              "Changing your keyboard",
+              "Asking for a specific style of response",
+              "Muting speakers",
+              "Closing the tab"
+            ],
+            "correctAnswer": "Asking for a specific style of response"
+          },
+          {
+            "question": "You remain responsible for:",
+            "options": [
+              "Nothing once Claude replies",
+              "Facts, decisions, and final quality",
+              "Only punctuation",
+              "Only file names"
+            ],
+            "correctAnswer": "Facts, decisions, and final quality"
+          },
+          {
+            "question": "A deliberate working mode helps because:",
+            "options": [
+              "Modes confuse models",
+              "It sets expectation for brainstorm vs draft vs critique",
+              "It deletes context",
+              "It bans structure"
+            ],
+            "correctAnswer": "It sets expectation for brainstorm vs draft vs critique"
+          },
+          {
+            "question": "Long context is most useful when:",
+            "options": [
+              "You paste unrelated noise",
+              "Source material must stay coherent in one pass",
+              "You avoid goals",
+              "You skip review"
+            ],
+            "correctAnswer": "Source material must stay coherent in one pass"
+          }
+        ]
+      },
+      "project": {
+        "title": "Mode Menu",
+        "description": "Build a one-page Claude “mode menu” for your work: brainstorm, outline, draft, critique, and extract. For each mode write a 4-line starter prompt plus when you should not use that mode."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Blindly trusting Claude summaries risks:",
+            "options": [
+              "Perfect accuracy always",
+              "Subtle factual or framing errors",
+              "Faster fonts",
+              "Better Wi-Fi"
+            ],
+            "correctAnswer": "Subtle factual or framing errors"
+          },
+          {
+            "question": "Voice control in prompts should specify:",
+            "options": [
+              "Audience, tone, and length",
+              "Only emojis",
+              "Server IPs",
+              "Nothing"
+            ],
+            "correctAnswer": "Audience, tone, and length"
+          },
+          {
+            "question": "Critique mode is best when:",
+            "options": [
+              "You need cheerleading only",
+              "You want stress-tests of an existing draft",
+              "You have no draft",
+              "You ban feedback"
+            ],
+            "correctAnswer": "You want stress-tests of an existing draft"
+          },
+          {
+            "question": "Extract mode should demand:",
+            "options": [
+              "Vague vibes",
+              "Fields, quotes, and source anchors",
+              "Only jokes",
+              "Deleted citations"
+            ],
+            "correctAnswer": "Fields, quotes, and source anchors"
+          },
+          {
+            "question": "Masters-level Claude use means:",
+            "options": [
+              "One lucky prompt",
+              "Repeatable workflows with review gates",
+              "Skipping judgment",
+              "Chat only forever"
+            ],
+            "correctAnswer": "Repeatable workflows with review gates"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Claude Strengths and Working Modes\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Mode Menu"
+      ],
+      "keyTakeaways": [
+        "Claude excels at careful reasoning, long documents, rewriting with voice control, and turning messy notes into structured plans.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a one-page Claude “mode menu” for your work: brainstorm, outline, draft, critique, and extract. For each mode write a 4-line starter prompt plus when you should not use that mode."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Claude Strengths and Working Modes"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Structured Prompting and Output Contracts",
+      "duration": 30,
+      "introduction": {
+        "text": "High-yield Claude prompts declare role, goal, inputs, constraints, and an output contract (sections, bullets, JSON-like fields, or tables). Ask Claude to list assumptions before answering when stakes are high. Prefer checkable formats over free prose when the result feeds another step."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "An output contract tells Claude:",
+            "options": [
+              "To ignore structure",
+              "Exactly how to shape the answer",
+              "To invent secrets",
+              "To skip goals"
+            ],
+            "correctAnswer": "Exactly how to shape the answer"
+          },
+          {
+            "question": "Listing assumptions helps you:",
+            "options": [
+              "Hide uncertainty",
+              "Surface gaps before acting on advice",
+              "Delete sources",
+              "Avoid review"
+            ],
+            "correctAnswer": "Surface gaps before acting on advice"
+          },
+          {
+            "question": "Role framing is useful when:",
+            "options": [
+              "It replaces facts",
+              "It sets expertise and perspective",
+              "It bans constraints",
+              "It removes audience"
+            ],
+            "correctAnswer": "It sets expertise and perspective"
+          },
+          {
+            "question": "Checkable formats beat free prose when:",
+            "options": [
+              "Nothing follows the answer",
+              "Another human or tool must reuse the result",
+              "You hate tables",
+              "Stakes are zero"
+            ],
+            "correctAnswer": "Another human or tool must reuse the result"
+          },
+          {
+            "question": "Constraints might include:",
+            "options": [
+              "Length, must-cite, forbidden claims",
+              "Only “be creative” forever",
+              "Passwords",
+              "Random slang"
+            ],
+            "correctAnswer": "Length, must-cite, forbidden claims"
+          }
+        ]
+      },
+      "project": {
+        "title": "Contract Pack",
+        "description": "Write three Claude prompts with strict output contracts: (1) meeting-notes → action table, (2) article → claim/evidence/gap list, (3) product idea → risks/assumptions/next experiments. Include stop conditions if inputs are incomplete.",
+        "code": {
+          "language": "markdown",
+          "starterCode": "# Claude Output Contracts\n\n## 1) Meeting notes → actions\nGOAL:\nINPUT:\nCONSTRAINTS:\nOUTPUT COLUMNS: Owner | Action | Due | Blocker\n\n## 2) Article → claim/evidence/gap\n...\n\n## 3) Idea → risks/assumptions/experiments\n...\n",
+          "enablePreview": false,
+          "enableConsole": false
+        }
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Missing constraints usually produce:",
+            "options": [
+              "Perfectly scoped answers",
+              "Overlong or off-brief outputs",
+              "Guaranteed citations",
+              "No creativity"
+            ],
+            "correctAnswer": "Overlong or off-brief outputs"
+          },
+          {
+            "question": "“If input is incomplete, ask questions first” is a:",
+            "options": [
+              "Stop condition",
+              "Deploy key",
+              "Theme color",
+              "Font rule"
+            ],
+            "correctAnswer": "Stop condition"
+          },
+          {
+            "question": "JSON-like fields help when:",
+            "options": [
+              "You need parseable structure",
+              "You only want poetry",
+              "You ban lists",
+              "You hide owners"
+            ],
+            "correctAnswer": "You need parseable structure"
+          },
+          {
+            "question": "Role + goal without inputs often yields:",
+            "options": [
+              "Grounded work",
+              "Generic advice",
+              "Perfect quotes",
+              "Verified data"
+            ],
+            "correctAnswer": "Generic advice"
+          },
+          {
+            "question": "Reusable prompt templates should leave placeholders for:",
+            "options": [
+              "GOAL, INPUTS, CONSTRAINTS, FORMAT",
+              "Only emojis",
+              "Secrets",
+              "Nothing"
+            ],
+            "correctAnswer": "GOAL, INPUTS, CONSTRAINTS, FORMAT"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Structured Prompting and Output Contracts\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Contract Pack"
+      ],
+      "keyTakeaways": [
+        "High-yield Claude prompts declare role, goal, inputs, constraints, and an output contract (sections, bullets, JSON-like fields, or tables).",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write three Claude prompts with strict output contracts: (1) meeting-notes → action table, (2) article → claim/evidence/gap list, (3) product idea → risks/assumptions/next experiments. Include stop conditions if inputs are incomplete."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Structured Prompting and Output Contracts"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Long-Context Research and Synthesis",
+      "duration": 35,
+      "introduction": {
+        "text": "Paste or attach source packs with clear labels. Ask Claude to separate facts, inferences, and open questions. Demand quote anchors and contradiction flags. Synthesis is not summary theater—it should produce decisions, options, or a brief you can defend."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Labeling sources helps Claude:",
+            "options": [
+              "Confuse citations",
+              "Attribute claims to the right document",
+              "Delete quotes",
+              "Ignore dates"
+            ],
+            "correctAnswer": "Attribute claims to the right document"
+          },
+          {
+            "question": "Separating facts vs inferences prevents:",
+            "options": [
+              "Clear thinking",
+              "Treating guesses as proven",
+              "Good briefs",
+              "Useful questions"
+            ],
+            "correctAnswer": "Treating guesses as proven"
+          },
+          {
+            "question": "Contradiction flags matter because:",
+            "options": [
+              "Sources never disagree",
+              "Conflicts change what you can claim",
+              "They slow fonts",
+              "They ban research"
+            ],
+            "correctAnswer": "Conflicts change what you can claim"
+          },
+          {
+            "question": "A defendable brief includes:",
+            "options": [
+              "Only vibes",
+              "Claims, evidence, and remaining unknowns",
+              "No sources",
+              "Only slogans"
+            ],
+            "correctAnswer": "Claims, evidence, and remaining unknowns"
+          },
+          {
+            "question": "Open questions should drive:",
+            "options": [
+              "Ignoring gaps",
+              "Follow-up research or experiments",
+              "Deleting the pack",
+              "Skipping review"
+            ],
+            "correctAnswer": "Follow-up research or experiments"
+          }
+        ]
+      },
+      "project": {
+        "title": "Source Pack Brief",
+        "description": "Assemble a fictional 3-source pack (product review, competitor note, user interview excerpt). Prompt Claude for a synthesis brief with facts / inferences / contradictions / recommended next step. Manually mark any invented details."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Quote anchors let you:",
+            "options": [
+              "Skip reading forever",
+              "Verify Claude against the source",
+              "Encrypt PDFs",
+              "Ban research"
+            ],
+            "correctAnswer": "Verify Claude against the source"
+          },
+          {
+            "question": "Summary theater means:",
+            "options": [
+              "Pretty text without decision value",
+              "Actionable options",
+              "Cited risks",
+              "Clear owners"
+            ],
+            "correctAnswer": "Pretty text without decision value"
+          },
+          {
+            "question": "When sources conflict you should:",
+            "options": [
+              "Pick randomly",
+              "Surface the conflict and criteria to resolve it",
+              "Hide it",
+              "Delete dates"
+            ],
+            "correctAnswer": "Surface the conflict and criteria to resolve it"
+          },
+          {
+            "question": "Long-context dumps without a question usually produce:",
+            "options": [
+              "Focused decisions",
+              "Diffuse summaries",
+              "Perfect experiments",
+              "No fluff"
+            ],
+            "correctAnswer": "Diffuse summaries"
+          },
+          {
+            "question": "Your review pass should hunt for:",
+            "options": [
+              "Hallucinated specifics and missing caveats",
+              "Only typos",
+              "Only fonts",
+              "Nothing"
+            ],
+            "correctAnswer": "Hallucinated specifics and missing caveats"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Long-Context Research and Synthesis\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Source Pack Brief"
+      ],
+      "keyTakeaways": [
+        "Paste or attach source packs with clear labels.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Assemble a fictional 3-source pack (product review, competitor note, user interview excerpt). Prompt Claude for a synthesis brief with facts / inferences / contradictions / recommended next step. Manually mark any invented details."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Long-Context Research and Synthesis"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Writing Systems: Draft, Rewrite, Edit",
+      "duration": 35,
+      "introduction": {
+        "text": "Build a writing pipeline: outline → ugly draft → structural edit → line edit → voice pass. Give Claude the audience, CTA, and forbidden phrases. Ask for diffs of changes (“what you tightened and why”) so you learn patterns instead of outsourcing taste forever."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "An ugly draft is valuable because:",
+            "options": [
+              "It must ship as-is",
+              "It unlocks structure before polish",
+              "It bans outlines",
+              "It skips audience"
+            ],
+            "correctAnswer": "It unlocks structure before polish"
+          },
+          {
+            "question": "Structural edits focus on:",
+            "options": [
+              "Comma alone",
+              "Order, argument, and section purpose",
+              "Only synonyms",
+              "Only kerning"
+            ],
+            "correctAnswer": "Order, argument, and section purpose"
+          },
+          {
+            "question": "Forbidden phrases protect:",
+            "options": [
+              "Nothing",
+              "Brand voice and clarity",
+              "Only SEO spam forever",
+              "Secrets in copy"
+            ],
+            "correctAnswer": "Brand voice and clarity"
+          },
+          {
+            "question": "Asking for “what changed and why” builds:",
+            "options": [
+              "Dependency",
+              "Your editorial judgment over time",
+              "Longer fluff",
+              "Weaker CTAs"
+            ],
+            "correctAnswer": "Your editorial judgment over time"
+          },
+          {
+            "question": "Voice passes should happen:",
+            "options": [
+              "Before you know the audience",
+              "After structure is sound",
+              "Instead of facts",
+              "Without a CTA"
+            ],
+            "correctAnswer": "After structure is sound"
+          }
+        ]
+      },
+      "project": {
+        "title": "Five-Pass Editorial",
+        "description": "Take a rough 250-word announcement. Run Claude through outline, draft repair, structural edit, line edit, and voice pass. Keep a changelog of instructions you gave at each pass."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Polishing before structure often causes:",
+            "options": [
+              "Cleaner logic",
+              "Shiny prose on a weak argument",
+              "Better CTAs always",
+              "Fewer revisions"
+            ],
+            "correctAnswer": "Shiny prose on a weak argument"
+          },
+          {
+            "question": "Audience + CTA in the prompt reduce:",
+            "options": [
+              "Relevance",
+              "Generic motivational fluff",
+              "Clarity",
+              "Usefulness"
+            ],
+            "correctAnswer": "Generic motivational fluff"
+          },
+          {
+            "question": "Line edits primarily fix:",
+            "options": [
+              "Macro outline",
+              "Clarity, rhythm, and precision at sentence level",
+              "Product strategy",
+              "Research plans"
+            ],
+            "correctAnswer": "Clarity, rhythm, and precision at sentence level"
+          },
+          {
+            "question": "You should reject Claude rewrites that:",
+            "options": [
+              "Improve clarity",
+              "Change meaning without flagging it",
+              "Shorten fluff",
+              "Match voice"
+            ],
+            "correctAnswer": "Change meaning without flagging it"
+          },
+          {
+            "question": "A writing system is masters-level when:",
+            "options": [
+              "Each chat is unique chaos",
+              "Stages and prompts are reusable",
+              "You never edit",
+              "You skip review"
+            ],
+            "correctAnswer": "Stages and prompts are reusable"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Writing Systems: Draft, Rewrite, Edit\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Five-Pass Editorial"
+      ],
+      "keyTakeaways": [
+        "Build a writing pipeline: outline → ugly draft → structural edit → line edit → voice pass.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take a rough 250-word announcement. Run Claude through outline, draft repair, structural edit, line edit, and voice pass. Keep a changelog of instructions you gave at each pass."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Writing Systems: Draft, Rewrite, Edit"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Analysis Workflows and Decision Memos",
+      "duration": 35,
+      "introduction": {
+        "text": "Use Claude to pressure-test options: criteria, tradeoffs, second-order effects, and kill criteria. Demand a decision memo format stakeholders can skim. Separate recommendation from confidence and from what would change your mind."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Kill criteria tell you:",
+            "options": [
+              "When to celebrate only",
+              "When an option should be abandoned",
+              "Only brand colors",
+              "DNS settings"
+            ],
+            "correctAnswer": "When an option should be abandoned"
+          },
+          {
+            "question": "Second-order effects are:",
+            "options": [
+              "Immediate outputs only",
+              "Knock-on consequences after the first change",
+              "Font metrics",
+              "Quiz scores"
+            ],
+            "correctAnswer": "Knock-on consequences after the first change"
+          },
+          {
+            "question": "Confidence should be:",
+            "options": [
+              "Hidden",
+              "Stated separately from the recommendation",
+              "Always 100%",
+              "Only a vibe"
+            ],
+            "correctAnswer": "Stated separately from the recommendation"
+          },
+          {
+            "question": "“What would change your mind?” improves:",
+            "options": [
+              "Stubbornness",
+              "Falsifiability of the advice",
+              "Slogan length",
+              "Emoji count"
+            ],
+            "correctAnswer": "Falsifiability of the advice"
+          },
+          {
+            "question": "Tradeoff tables beat paragraphs when:",
+            "options": [
+              "Comparing options on shared criteria",
+              "Writing poetry",
+              "Hiding risks",
+              "Skipping owners"
+            ],
+            "correctAnswer": "Comparing options on shared criteria"
+          }
+        ]
+      },
+      "project": {
+        "title": "Decision Memo Drill",
+        "description": "Prompt Claude to compare three launch channel options for a course promo. Require criteria weights, tradeoff table, recommendation, confidence, kill criteria, and a 7-day experiment plan."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Stakeholders skim best when memos lead with:",
+            "options": [
+              "Raw chat logs",
+              "Recommendation and why it matters",
+              "Only appendices",
+              "Secret links"
+            ],
+            "correctAnswer": "Recommendation and why it matters"
+          },
+          {
+            "question": "Unweighted criteria lists often:",
+            "options": [
+              "Clarify priorities",
+              "Hide that not all factors matter equally",
+              "Guarantee consensus",
+              "Replace data"
+            ],
+            "correctAnswer": "Hide that not all factors matter equally"
+          },
+          {
+            "question": "Analysis without next actions is:",
+            "options": [
+              "Complete",
+              "Incomplete for operators",
+              "Ideal forever",
+              "A deploy plan"
+            ],
+            "correctAnswer": "Incomplete for operators"
+          },
+          {
+            "question": "Claude’s role in decisions is to:",
+            "options": [
+              "Own the call alone",
+              "Structure reasoning you still own",
+              "Replace accountability",
+              "Hide uncertainty"
+            ],
+            "correctAnswer": "Structure reasoning you still own"
+          },
+          {
+            "question": "Good kill criteria are:",
+            "options": [
+              "Vague feelings",
+              "Observable thresholds",
+              "Secret forever",
+              "Only aesthetic"
+            ],
+            "correctAnswer": "Observable thresholds"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Analysis Workflows and Decision Memos\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Decision Memo Drill"
+      ],
+      "keyTakeaways": [
+        "Use Claude to pressure-test options: criteria, tradeoffs, second-order effects, and kill criteria.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Prompt Claude to compare three launch channel options for a course promo. Require criteria weights, tradeoff table, recommendation, confidence, kill criteria, and a 7-day experiment plan."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Analysis Workflows and Decision Memos"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Projects, Artifacts, and Team Reuse",
+      "duration": 40,
+      "introduction": {
+        "text": "Turn winning Claude chats into team artifacts: prompt libraries, checklists, memo templates, and review rubrics. Version them. Teach teammates when Claude is leverage vs when human research is required. Masters craft is institutional, not personal folklore."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Prompt libraries help teams:",
+            "options": [
+              "Forget wins",
+              "Reuse patterns that worked",
+              "Ban structure",
+              "Hide templates"
+            ],
+            "correctAnswer": "Reuse patterns that worked"
+          },
+          {
+            "question": "Versioning artifacts matters because:",
+            "options": [
+              "Prompts never improve",
+              "Tools and norms change over time",
+              "Git forbids docs",
+              "Nobody reads"
+            ],
+            "correctAnswer": "Tools and norms change over time"
+          },
+          {
+            "question": "Human research is required when:",
+            "options": [
+              "Stakes and novelty are high or sources are thin",
+              "Always never",
+              "Only for fonts",
+              "Claude feels confident"
+            ],
+            "correctAnswer": "Stakes and novelty are high or sources are thin"
+          },
+          {
+            "question": "Review rubrics catch:",
+            "options": [
+              "Only praise",
+              "Common failure modes before shipping",
+              "Only typos",
+              "Wi-Fi issues"
+            ],
+            "correctAnswer": "Common failure modes before shipping"
+          },
+          {
+            "question": "Institutional craft means:",
+            "options": [
+              "One hero user",
+              "Shared standards others can run",
+              "Secret prompts only",
+              "No retros"
+            ],
+            "correctAnswer": "Shared standards others can run"
+          }
+        ]
+      },
+      "project": {
+        "title": "Claude Team Kit",
+        "description": "Ship a mini kit: 5 annotated prompts, one decision-memo template, one synthesis checklist, and a short “use Claude / don’t use Claude” rubric for your team."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Personal folklore fails teams because:",
+            "options": [
+              "It scales perfectly",
+              "Knowledge dies in private chats",
+              "It is always documented",
+              "It replaces onboarding"
+            ],
+            "correctAnswer": "Knowledge dies in private chats"
+          },
+          {
+            "question": "Annotated prompts should explain:",
+            "options": [
+              "Only the text",
+              "When to use them and failure modes",
+              "Bank PINs",
+              "Nothing"
+            ],
+            "correctAnswer": "When to use them and failure modes"
+          },
+          {
+            "question": "A checklist before sending Claude output should include:",
+            "options": [
+              "Source check and claim intensity",
+              "Only spellcheck",
+              "Force publish",
+              "Skip owners"
+            ],
+            "correctAnswer": "Source check and claim intensity"
+          },
+          {
+            "question": "Retros on AI workflows should capture:",
+            "options": [
+              "Only vibes",
+              "What saved time and what created risk",
+              "Secrets",
+              "Nothing"
+            ],
+            "correctAnswer": "What saved time and what created risk"
+          },
+          {
+            "question": "End-to-end Claude mastery looks like:",
+            "options": [
+              "Random chats",
+              "Reliable pipelines from intake to reviewed artifact",
+              "No templates",
+              "Zero judgment"
+            ],
+            "correctAnswer": "Reliable pipelines from intake to reviewed artifact"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Projects, Artifacts, and Team Reuse\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Claude Team Kit"
+      ],
+      "keyTakeaways": [
+        "Turn winning Claude chats into team artifacts: prompt libraries, checklists, memo templates, and review rubrics.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Ship a mini kit: 5 annotated prompts, one decision-memo template, one synthesis checklist, and a short “use Claude / don’t use Claude” rubric for your team."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Projects, Artifacts, and Team Reuse"
+        }
+      ]
+    }
+  ]
+}

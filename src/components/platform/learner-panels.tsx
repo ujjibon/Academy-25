@@ -32,6 +32,11 @@ import { courses as catalogCourses } from '@/lib/courses';
 import { useChatbot } from '@/hooks/use-chatbot';
 import { Progress } from '@/components/ui/progress';
 import {
+  listUserCertificates,
+  registerVerifiableCertificate,
+  type VerifiableCertificate,
+} from '@/lib/learning-engine';
+import {
   ClipboardList,
   Megaphone,
   Package,
@@ -44,6 +49,7 @@ import {
   Award,
   PlayCircle,
   Loader2,
+  ShieldCheck,
 } from 'lucide-react';
 
 export function LearnerAssignmentsPanel() {
@@ -622,12 +628,19 @@ export function LearnerSubscriptionsPanel() {
 
 export function LearnerCertificatesPanel() {
   const { user, userProfile } = useAuth();
+  const { toast } = useToast();
   const [storedCerts, setStoredCerts] = useState(
     [] as ReturnType<typeof getStoredCertificates>
   );
+  const [verified, setVerified] = useState<VerifiableCertificate[]>([]);
+  const [issuingId, setIssuingId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.uid) setStoredCerts(getStoredCertificates(user.uid));
+    if (!user?.uid) return;
+    setStoredCerts(getStoredCertificates(user.uid));
+    listUserCertificates(user.uid)
+      .then(setVerified)
+      .catch(() => setVerified([]));
   }, [user?.uid]);
 
   const recipientName = userProfile?.displayName || 'Learner';
@@ -651,6 +664,31 @@ export function LearnerCertificatesPanel() {
     type: 'course',
   });
 
+  const issueVerifiable = async (meta: { id: string; title: string }) => {
+    if (!user) return;
+    setIssuingId(meta.id);
+    try {
+      const record = await registerVerifiableCertificate({
+        userId: user.uid,
+        type: 'course',
+        title: meta.title,
+        skillOrCourseId: meta.id,
+        recipientName,
+        completionSummary: `Successfully completed ${meta.title}.`,
+      });
+      setVerified((prev) => [record, ...prev.filter((c) => c.skillOrCourseId !== meta.id)]);
+      toast({
+        title: 'Verifiable certificate issued',
+        description: `Share /verify/${record.code}`,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({ title: 'Could not issue certificate', variant: 'destructive' });
+    } finally {
+      setIssuingId(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Card className="brand-card">
@@ -667,6 +705,30 @@ export function LearnerCertificatesPanel() {
           ) : null}
         </CardContent>
       </Card>
+
+      {verified.length > 0 ? (
+        <div className="space-y-3">
+          <p className="text-sm font-semibold inline-flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-primary" />
+            Verifiable credentials
+          </p>
+          {verified.map((cert) => (
+            <Card key={cert.id} className="brand-card">
+              <CardContent className="flex flex-wrap justify-between items-center gap-3 pt-6">
+                <div>
+                  <p className="font-medium">{cert.title}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Code {cert.code} · Issued {new Date(cert.issuedAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={`/verify/${cert.code}`}>Public verify page</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : null}
 
       {storedCerts.map((cert) => {
         const payload = buildRequest(
@@ -707,6 +769,7 @@ export function LearnerCertificatesPanel() {
           meta.title,
           `Successfully completed ${meta.title}.`
         );
+        const already = verified.some((c) => c.skillOrCourseId === meta.id);
         return (
           <Card key={meta.id} className="brand-card">
             <CardContent className="flex flex-wrap justify-between items-center gap-3 pt-6">
@@ -714,14 +777,31 @@ export function LearnerCertificatesPanel() {
                 <p className="font-medium">{meta.title}</p>
                 <p className="text-sm text-muted-foreground">Course completed</p>
               </div>
-              {payload ? (
-                <CertificateDownloadButton
-                  uid={user?.uid}
-                  payload={payload}
-                  size="sm"
-                  disabled={!isValid}
-                />
-              ) : null}
+              <div className="flex flex-wrap gap-2">
+                {payload ? (
+                  <CertificateDownloadButton
+                    uid={user?.uid}
+                    payload={payload}
+                    size="sm"
+                    disabled={!isValid}
+                  />
+                ) : null}
+                {!already ? (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    disabled={issuingId === meta.id}
+                    onClick={() => void issueVerifiable(meta)}
+                  >
+                    {issuingId === meta.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <ShieldCheck className="h-4 w-4 mr-2" />
+                    )}
+                    Issue verify code
+                  </Button>
+                ) : null}
+              </div>
             </CardContent>
           </Card>
         );

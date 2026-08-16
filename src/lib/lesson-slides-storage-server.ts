@@ -27,7 +27,30 @@ export async function saveCachedLessonSlidesToDisk(
   lessonId: string,
   data: ClassroomSlideGeneratorOutput
 ): Promise<void> {
+  // Strip large base64 images from disk cache to keep JSON manageable;
+  // SVG/Mermaid stay. Images can be re-generated via "Generate visuals".
+  const slim: ClassroomSlideGeneratorOutput = {
+    ...data,
+    slides: data.slides.map((slide) => ({
+      ...slide,
+      imageDataUrl: undefined,
+      visualData: slide.visualData
+        ? {
+            ...slide.visualData,
+            url: slide.visualData.url?.startsWith('data:')
+              ? undefined
+              : slide.visualData.url,
+            data: slide.visualData.data
+              ? {
+                  ...slide.visualData.data,
+                  imageDataUrl: undefined,
+                }
+              : undefined,
+          }
+        : undefined,
+    })),
+  };
   const filePath = getSlideFilePath(courseId, lessonId);
   await mkdir(join(SLIDES_DIR, courseId), { recursive: true });
-  await writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+  await writeFile(filePath, JSON.stringify(slim, null, 2), 'utf-8');
 }

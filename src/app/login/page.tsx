@@ -9,8 +9,6 @@ import { SignupAuthFooter } from '@/components/auth/SignupAuthFooter';
 import { useAuth } from '@/hooks/use-auth';
 import { getPostAuthRedirect } from '@/lib/role-routes';
 import { Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { UserPlus } from 'lucide-react';
 
 function LoginPageInner() {
   const router = useRouter();
@@ -38,15 +36,22 @@ function LoginPageInner() {
     <AuthShell
       title="Welcome back"
       description="Sign in to your Peer Academy account."
+      headerAction={
+        <Link
+          href="/signup"
+          className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        >
+          Sign up
+        </Link>
+      }
       footer={
-        <div className="space-y-3">
-          <p className="text-center text-sm text-muted-foreground">New here?</p>
-          <Button className="w-full h-10 rounded-xl brand-button text-sm" asChild>
-            <Link href="/signup">
-              <UserPlus className="mr-2 h-4 w-4" />
+        <div className="space-y-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            New here?{' '}
+            <Link href="/signup" className="font-semibold text-primary hover:underline">
               Create an account
             </Link>
-          </Button>
+          </p>
           <SignupAuthFooter mode="login" />
         </div>
       }

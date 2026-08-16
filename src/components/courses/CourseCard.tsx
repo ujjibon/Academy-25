@@ -2,9 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import type { CourseInfo } from '@/lib/courses';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { getCourseDetails, formatEnrollment } from '@/lib/course-details';
+import { StarRating } from '@/components/courses/StarRating';
+import { ArrowRight, BookOpen, Users } from 'lucide-react';
 
 export function CourseCard({ course }: { course: CourseInfo }) {
+  const details = getCourseDetails(course.id);
+
   return (
     <article className="brand-card hover-lift flex flex-col overflow-hidden p-0">
       <div className="aspect-video overflow-hidden">
@@ -19,7 +23,7 @@ export function CourseCard({ course }: { course: CourseInfo }) {
       </div>
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-          <BookOpen className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <BookOpen className="h-3.5 w-3.5 shrink-0 text-royal" />
           <span>Interactive course</span>
         </div>
         <h3 className="font-heading text-base font-semibold leading-snug text-foreground sm:text-lg">
@@ -28,6 +32,17 @@ export function CourseCard({ course }: { course: CourseInfo }) {
         <p className="mt-2 text-sm text-muted-foreground line-clamp-2 flex-1">
           {course.description}
         </p>
+
+        {details ? (
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <StarRating rating={details.rating} size="sm" />
+            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+              <Users className="h-3.5 w-3.5 shrink-0" />
+              {formatEnrollment(details.enrolledCount)} enrolled
+            </span>
+          </div>
+        ) : null}
+
         <Button asChild className="w-full mt-5 brand-button">
           <Link href={`/courses/${course.id}`}>
             View course

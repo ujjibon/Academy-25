@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { getAllUsers } from '@/lib/firebase';
 import { courses } from '@/lib/courses';
-import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy, GraduationCap, Rocket } from 'lucide-react';
+import { BookOpen, Users, Sparkles, FilePlus2, ArrowRight, Trophy, GraduationCap, Rocket, CreditCard } from 'lucide-react';
 
 export default function AdminPortalPage() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -27,7 +27,7 @@ export default function AdminPortalPage() {
     {
       href: '/admin-portal/courses',
       title: 'Manage Courses',
-      description: 'View catalog and open the editor',
+      description: 'Publish live courses and edit the catalog',
       icon: BookOpen,
     },
     {
@@ -35,6 +35,12 @@ export default function AdminPortalPage() {
       title: 'Manage Users',
       description: 'Roles, XP, and progress',
       icon: Users,
+    },
+    {
+      href: '/admin-portal/billing',
+      title: 'Payments & coupons',
+      description: 'Coupon codes, ledger, and grants',
+      icon: CreditCard,
     },
     {
       href: '/admin-portal/startup',

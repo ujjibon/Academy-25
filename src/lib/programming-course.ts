@@ -30,6 +30,8 @@ export const PROGRAMMING_COURSE_IDS = new Set([
   'react-fundamentals',
   'Python-SP-101',
   'advanced-css',
+  'masters-codex',
+  'masters-antigravity',
 ]);
 
 const DEFAULT_STARTER: Partial<Record<CodeLanguage, string>> = {

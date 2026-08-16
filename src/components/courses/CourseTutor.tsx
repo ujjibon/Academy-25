@@ -345,14 +345,14 @@ ${teachingResult.nextStep}`;
   };
 
   return (
-    <div className="flex h-[60vh] min-h-[460px] flex-col rounded-lg border border-border bg-card sm:h-[70vh]">
+    <div className="flex h-[min(52vh,420px)] min-h-[280px] flex-col overflow-hidden rounded-xl border border-royal/15 bg-chalk sm:h-[min(65vh,560px)] sm:min-h-[420px] sm:rounded-lg">
        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
         <ScrollArea className="h-full" ref={scrollAreaRef}>
              <div className="space-y-4 pr-2 sm:pr-4">
               {messages.length === 0 && !isLoading && (
                  <div className="text-center text-muted-foreground py-8">
-                    <Bot className="h-12 w-12 mx-auto mb-4 text-primary" />
-                    <h3 className="text-lg font-semibold mb-2">AI Teacher for {course.title}</h3>
+                    <Bot className="mx-auto mb-4 h-10 w-10 text-royal sm:h-12 sm:w-12" />
+                    <h3 className="mb-2 text-base font-semibold text-midnight sm:text-lg">AI Teacher for {course.title}</h3>
                     <p className="mb-4">I'll automatically start teaching you this lesson with comprehensive explanations, practical examples, and interactive learning!</p>
                     <div className="space-y-3">
                       <p className="text-sm font-medium">Quick Learning Options:</p>
@@ -375,8 +375,8 @@ ${teachingResult.nextStep}`;
               )}
               {isLoading && messages.length === 0 && (
                  <div className="text-center text-muted-foreground py-8">
-                    <Bot className="h-12 w-12 mx-auto mb-4 text-primary" />
-                    <h3 className="text-lg font-semibold mb-2">Starting AI Teaching...</h3>
+                    <Bot className="mx-auto mb-4 h-10 w-10 text-royal sm:h-12 sm:w-12" />
+                    <h3 className="mb-2 text-base font-semibold text-midnight sm:text-lg">Starting AI Teaching...</h3>
                     <p className="mb-4">Your AI teacher is preparing a comprehensive lesson for you!</p>
                     <div className="flex items-center justify-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -393,7 +393,7 @@ ${teachingResult.nextStep}`;
                 >
                   {message.role === 'model' && (
                     <Avatar className="h-8 w-8 border">
-                      <AvatarFallback><Bot className="h-5 w-5 text-primary"/></AvatarFallback>
+                      <AvatarFallback><Bot className="h-5 w-5 text-royal"/></AvatarFallback>
                     </Avatar>
                   )}
                   <div
@@ -421,7 +421,7 @@ ${teachingResult.nextStep}`;
               {isLoading && (
                 <div className="flex items-start gap-3">
                     <Avatar className="h-8 w-8 border">
-                      <AvatarFallback><Bot className="h-5 w-5 text-primary"/></AvatarFallback>
+                      <AvatarFallback><Bot className="h-5 w-5 text-royal"/></AvatarFallback>
                     </Avatar>
                     <div className="flex items-center rounded-2xl border border-border bg-white px-4 py-2 shadow-[0_1px_4px_rgb(0_11_88/0.05)]">
                         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -431,12 +431,12 @@ ${teachingResult.nextStep}`;
             </div>
         </ScrollArea>
        </div>
-       <div className="border-t border-border bg-surface-muted-deep p-3 sm:p-4">
+       <div className="border-t border-royal/10 bg-canvas/80 p-2.5 sm:p-4">
          {file && (
-           <div className="mb-2 flex items-center gap-3 p-2 rounded-lg border bg-background">
-             {file.type.startsWith('image/') ? <ImageIcon className="h-5 w-5 text-muted-foreground" /> : <FileIcon className="h-5 w-5 text-muted-foreground" />}
-             <span className="text-sm truncate flex-1">{file.name}</span>
-             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={removeFile}>
+           <div className="mb-2 flex items-center gap-3 rounded-lg border border-royal/15 bg-chalk p-2">
+             {file.type.startsWith('image/') ? <ImageIcon className="h-5 w-5 text-royal" /> : <FileIcon className="h-5 w-5 text-royal" />}
+             <span className="min-w-0 flex-1 truncate text-sm">{file.name}</span>
+             <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={removeFile}>
                 <X className="h-4 w-4" />
              </Button>
            </div>
@@ -455,6 +455,7 @@ ${teachingResult.nextStep}`;
                             type="button"
                             variant="ghost"
                             size="icon"
+                            className="h-10 w-10 shrink-0 rounded-full text-royal hover:bg-royal/10"
                             onClick={() => fileInputRef.current?.click()}
                             disabled={isLoading}
                          >
@@ -478,12 +479,18 @@ ${teachingResult.nextStep}`;
             <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about this course or your attached file..."
+                placeholder="Ask about this lesson…"
                 autoComplete="off"
                 disabled={isLoading}
+                className="h-10 min-w-0 flex-1 rounded-full border-royal/20 bg-chalk"
             />
-            <Button type="submit" size="icon" disabled={isLoading || (!input.trim() && !file)}>
-                <Send className="h-5 w-5" />
+            <Button
+              type="submit"
+              size="icon"
+              className="h-10 w-10 shrink-0 rounded-full bg-royal text-white hover:bg-royal-light"
+              disabled={isLoading || (!input.trim() && !file)}
+            >
+                <Send className="h-4 w-4" />
             </Button>
             </form>
        </div>

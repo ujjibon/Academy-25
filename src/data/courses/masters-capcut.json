@@ -1,0 +1,890 @@
+{
+  "id": "masters-capcut",
+  "title": "CapCut Masters Class",
+  "description": "A full CapCut apprenticeship: timeline craft, pacing, captions, sound design, effects discipline, and exporting short-form video that holds attention end to end on social platforms.",
+  "image": "/images/masters-capcut.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "CapCut as a Short-Form Edit Bay",
+      "duration": 25,
+      "introduction": {
+        "text": "CapCut is built for fast social editing: timeline cuts, captions, effects, and platform exports. Speed without an edit plan creates noisy videos. This apprenticeship trains end-to-end short-form craft—from rough cut to captioned, mixed, export-ready stories."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "CapCut is primarily used for:",
+            "options": [
+              "Database admin",
+              "Short-form video editing and export",
+              "3D CAD kernels",
+              "Compiler design"
+            ],
+            "correctAnswer": "Short-form video editing and export"
+          },
+          {
+            "question": "An edit plan prevents:",
+            "options": [
+              "Pacing intentionality",
+              "Random clip soup",
+              "Good captions",
+              "Clean exports"
+            ],
+            "correctAnswer": "Random clip soup"
+          },
+          {
+            "question": "Rough cut first means:",
+            "options": [
+              "Effects before story",
+              "Story and order before polish",
+              "Export first",
+              "Captions only"
+            ],
+            "correctAnswer": "Story and order before polish"
+          },
+          {
+            "question": "Platform exports require attention to:",
+            "options": [
+              "Only filters",
+              "Aspect ratio, length, and specs",
+              "SQL",
+              "Brand PDFs only"
+            ],
+            "correctAnswer": "Aspect ratio, length, and specs"
+          },
+          {
+            "question": "Masters CapCut work aims for:",
+            "options": [
+              "Effect spam",
+              "Clear stories that hold attention",
+              "No sound",
+              "No captions"
+            ],
+            "correctAnswer": "Clear stories that hold attention"
+          }
+        ]
+      },
+      "project": {
+        "title": "Edit Plan Card",
+        "description": "Write a 20–30s edit plan: hook (0–3s), problem, demo/proof, CTA. List shot types needed and what you will refuse to add (effect clutter list)."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Hooks must earn:",
+            "options": [
+              "A slow logo 10s in",
+              "Continued watch in the first seconds",
+              "Only end cards",
+              "Silent openings always"
+            ],
+            "correctAnswer": "Continued watch in the first seconds"
+          },
+          {
+            "question": "Effect clutter usually:",
+            "options": [
+              "Clarifies story",
+              "Distracts from the message",
+              "Fixes pacing",
+              "Replaces CTAs"
+            ],
+            "correctAnswer": "Distracts from the message"
+          },
+          {
+            "question": "Shot lists help when filming/generating:",
+            "options": [
+              "Random coverage",
+              "Coverage that matches the plan",
+              "No B-roll",
+              "Only text posts"
+            ],
+            "correctAnswer": "Coverage that matches the plan"
+          },
+          {
+            "question": "CTA placement is often best:",
+            "options": [
+              "Buried mid-ramble only",
+              "After value is shown, still early enough to act",
+              "Never",
+              "Only in filename"
+            ],
+            "correctAnswer": "After value is shown, still early enough to act"
+          },
+          {
+            "question": "Edit bays succeed with:",
+            "options": [
+              "Discipline + tool fluency",
+              "Filters alone",
+              "No plan",
+              "Max transitions"
+            ],
+            "correctAnswer": "Discipline + tool fluency"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"CapCut as a Short-Form Edit Bay\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Edit Plan Card"
+      ],
+      "keyTakeaways": [
+        "CapCut is built for fast social editing: timeline cuts, captions, effects, and platform exports.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a 20–30s edit plan: hook (0–3s), problem, demo/proof, CTA. List shot types needed and what you will refuse to add (effect clutter list)."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: CapCut as a Short-Form Edit Bay"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Timeline Craft: Cuts, Pacing, and Structure",
+      "duration": 35,
+      "introduction": {
+        "text": "Pacing is meaning. Cut on intention: remove air, keep breaths that sell emotion. Alternate wide/detail when it helps comprehension. Use J/L patterns conceptually—let sound lead picture when useful. Structure beats: hook, develop, payoff."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Removing air means:",
+            "options": [
+              "Deleting all silence including emotional beats",
+              "Trimming dead time that adds nothing",
+              "Cutting all B-roll",
+              "Muting music"
+            ],
+            "correctAnswer": "Trimming dead time that adds nothing"
+          },
+          {
+            "question": "Hook → develop → payoff is a:",
+            "options": [
+              "Random order",
+              "Simple short-form narrative spine",
+              "Color preset",
+              "Export codec"
+            ],
+            "correctAnswer": "Simple short-form narrative spine"
+          },
+          {
+            "question": "Detail shots help when:",
+            "options": [
+              "Viewers need to understand a small action",
+              "You want more confusion",
+              "Wide is always enough",
+              "Text replaces all visuals"
+            ],
+            "correctAnswer": "Viewers need to understand a small action"
+          },
+          {
+            "question": "Cutting on intention means:",
+            "options": [
+              "Cutting every 0.2s always",
+              "Each cut advances story or energy",
+              "Never cutting",
+              "Only using jump cuts for errors"
+            ],
+            "correctAnswer": "Each cut advances story or energy"
+          },
+          {
+            "question": "Emotional breaths can be kept when:",
+            "options": [
+              "They serve feeling or emphasis",
+              "They are always mistakes",
+              "Pacing must be flat",
+              "Hooks forbid them"
+            ],
+            "correctAnswer": "They serve feeling or emphasis"
+          }
+        ]
+      },
+      "project": {
+        "title": "Pacing Rebuild",
+        "description": "Take a rambling 45s script (or invent one). Rebuild a 25s cut list with timestamps for hook/develop/payoff. Mark three places you will cut air and one intentional pause you will keep."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Jump cuts are useful for:",
+            "options": [
+              "Hiding all meaning",
+              "Energy and removing filler",
+              "Replacing story",
+              "Breaking all continuity always"
+            ],
+            "correctAnswer": "Energy and removing filler"
+          },
+          {
+            "question": "Payoff failure usually means:",
+            "options": [
+              "Strong hooks alone suffice",
+              "The video promised something it did not deliver",
+              "Too many detail shots",
+              "Good CTAs"
+            ],
+            "correctAnswer": "The video promised something it did not deliver"
+          },
+          {
+            "question": "Timestamped cut lists communicate:",
+            "options": [
+              "Only vibes",
+              "Edit intent to collaborators",
+              "Codec choice",
+              "Font licensing"
+            ],
+            "correctAnswer": "Edit intent to collaborators"
+          },
+          {
+            "question": "Alternating shot scale can:",
+            "options": [
+              "Guide attention",
+              "Always confuse",
+              "Replace sound",
+              "Fix exports"
+            ],
+            "correctAnswer": "Guide attention"
+          },
+          {
+            "question": "Masters pacing feels:",
+            "options": [
+              "Accidental",
+              "Designed for attention and clarity",
+              "Maximally long",
+              "Effect-led"
+            ],
+            "correctAnswer": "Designed for attention and clarity"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Timeline Craft: Cuts, Pacing, and Structure\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Pacing Rebuild"
+      ],
+      "keyTakeaways": [
+        "Pacing is meaning.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take a rambling 45s script (or invent one). Rebuild a 25s cut list with timestamps for hook/develop/payoff. Mark three places you will cut air and one intentional pause you will keep."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Timeline Craft: Cuts, Pacing, and Structure"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Captions, On-Screen Text, and Accessibility",
+      "duration": 30,
+      "introduction": {
+        "text": "Most social video is watched without sound at first. Captions are product, not garnish. Keep lines short, high-contrast, and timed to speech. Avoid covering faces and key actions. Style captions to brand without sacrificing readability."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Captions matter because:",
+            "options": [
+              "Nobody mutes videos",
+              "Many viewers start without sound",
+              "Platforms ban audio",
+              "Text is decorative only"
+            ],
+            "correctAnswer": "Many viewers start without sound"
+          },
+          {
+            "question": "Short caption lines help:",
+            "options": [
+              "Walls of text",
+              "Reading speed on mobile",
+              "Lower contrast",
+              "Covering faces more"
+            ],
+            "correctAnswer": "Reading speed on mobile"
+          },
+          {
+            "question": "High contrast captions improve:",
+            "options": [
+              "Mystery",
+              "Legibility",
+              "Only aesthetics in dark rooms never",
+              "Export speed"
+            ],
+            "correctAnswer": "Legibility"
+          },
+          {
+            "question": "Covering faces with captions often:",
+            "options": [
+              "Helps emotion",
+              "Hurts connection and clarity",
+              "Fixes timing",
+              "Is required"
+            ],
+            "correctAnswer": "Hurts connection and clarity"
+          },
+          {
+            "question": "Brand-styled captions should still:",
+            "options": [
+              "Remain readable",
+              "Use unreadable scripts",
+              "Blink violently always",
+              "Ignore safe zones"
+            ],
+            "correctAnswer": "Remain readable"
+          }
+        ]
+      },
+      "project": {
+        "title": "Caption Style Guide",
+        "description": "Create a caption style guide: font, size, position, max characters per line, highlight rules for keywords, and do-nots. Apply it to a 15s sample transcript with proper line breaks."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Keyword highlights should:",
+            "options": [
+              "Color every word",
+              "Emphasize sparse key phrases",
+              "Replace timing",
+              "Hide CTAs"
+            ],
+            "correctAnswer": "Emphasize sparse key phrases"
+          },
+          {
+            "question": "Timing captions to speech prevents:",
+            "options": [
+              "Comprehension",
+              "Reading ahead/behind confusion",
+              "Accessibility",
+              "Brand use"
+            ],
+            "correctAnswer": "Reading ahead/behind confusion"
+          },
+          {
+            "question": "Safe zones keep captions:",
+            "options": [
+              "Under UI chrome",
+              "In the crushed corners always",
+              "Off-screen",
+              "Behind stickers only"
+            ],
+            "correctAnswer": "Under UI chrome"
+          },
+          {
+            "question": "Accessibility is:",
+            "options": [
+              "Optional flair",
+              "Part of professional short-form craft",
+              "Only for long docs",
+              "Solved by music"
+            ],
+            "correctAnswer": "Part of professional short-form craft"
+          },
+          {
+            "question": "Masters captioning looks like:",
+            "options": [
+              "Afterthought burned-in mess",
+              "Designed, timed, readable text",
+              "All-caps walls",
+              "No style guide"
+            ],
+            "correctAnswer": "Designed, timed, readable text"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Captions, On-Screen Text, and Accessibility\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Caption Style Guide"
+      ],
+      "keyTakeaways": [
+        "Most social video is watched without sound at first.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a caption style guide: font, size, position, max characters per line, highlight rules for keywords, and do-nots. Apply it to a 15s sample transcript with proper line breaks."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Captions, On-Screen Text, and Accessibility"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Sound: Music, VO, and Mix Basics",
+      "duration": 30,
+      "introduction": {
+        "text": "Sound carries emotion and clarity. Balance VO against music; duck beds under speech. Avoid copyright traps for client work. Use silence as a tool. A clean mix often outperforms another effect pack."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Ducking music means:",
+            "options": [
+              "Deleting VO",
+              "Lowering bed under speech",
+              "Maximizing both forever",
+              "Muting captions"
+            ],
+            "correctAnswer": "Lowering bed under speech"
+          },
+          {
+            "question": "Copyright awareness matters for:",
+            "options": [
+              "Personal meme drafts only",
+              "Client and monetized publishing",
+              "Offline private tests never",
+              "Filename length"
+            ],
+            "correctAnswer": "Client and monetized publishing"
+          },
+          {
+            "question": "Silence can:",
+            "options": [
+              "Only bore",
+              "Create emphasis and breathing room",
+              "Break all videos",
+              "Replace VO always"
+            ],
+            "correctAnswer": "Create emphasis and breathing room"
+          },
+          {
+            "question": "A clean mix vs more effects:",
+            "options": [
+              "Effects always win",
+              "Clarity often wins attention",
+              "Mix never matters",
+              "VO should be quiet"
+            ],
+            "correctAnswer": "Clarity often wins attention"
+          },
+          {
+            "question": "VO clarity requires:",
+            "options": [
+              "Music louder than speech",
+              "Intelligibility first",
+              "No ducking ever",
+              "Only reverb"
+            ],
+            "correctAnswer": "Intelligibility first"
+          }
+        ]
+      },
+      "project": {
+        "title": "Mix Checklist Spot",
+        "description": "Design a mix checklist for a 20s promo (VO + music + optional SFX). Define target priorities, ducking rule, and three failure sounds you will reject (mud, clipping, competing leads)."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Competing leads means:",
+            "options": [
+              "VO and music fighting for attention",
+              "Perfect ducking",
+              "Clean SFX",
+              "Good silence"
+            ],
+            "correctAnswer": "VO and music fighting for attention"
+          },
+          {
+            "question": "Clipping audio sounds:",
+            "options": [
+              "Smooth",
+              "Harsh/distorted from levels too hot",
+              "Always cinematic",
+              "Like silence"
+            ],
+            "correctAnswer": "Harsh/distorted from levels too hot"
+          },
+          {
+            "question": "SFX should:",
+            "options": [
+              "Arrive every frame",
+              "Support moments without clutter",
+              "Replace story",
+              "Drown VO"
+            ],
+            "correctAnswer": "Support moments without clutter"
+          },
+          {
+            "question": "Client-safe music choices reduce:",
+            "options": [
+              "Legal and platform risk",
+              "Emotion always",
+              "Need for mix",
+              "Captions"
+            ],
+            "correctAnswer": "Legal and platform risk"
+          },
+          {
+            "question": "Masters sound craft is:",
+            "options": [
+              "Afterthought loudness wars",
+              "Intentional balance serving story",
+              "Stock noise",
+              "No checklist"
+            ],
+            "correctAnswer": "Intentional balance serving story"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Sound: Music, VO, and Mix Basics\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Mix Checklist Spot"
+      ],
+      "keyTakeaways": [
+        "Sound carries emotion and clarity.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a mix checklist for a 20s promo (VO + music + optional SFX). Define target priorities, ducking rule, and three failure sounds you will reject (mud, clipping, competing leads)."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Sound: Music, VO, and Mix Basics"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Effects and Transitions with Restraint",
+      "duration": 30,
+      "introduction": {
+        "text": "Effects should motivate: emphasize a beat, hide a jump, or match brand motion language. Unmotivated transitions scream amateur template. Build a small approved effect set. If you remove an effect and the story holds, you probably did not need it."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Motivated effects:",
+            "options": [
+              "Exist for their own spectacle",
+              "Serve a story or emphasis reason",
+              "Must appear every cut",
+              "Replace captions"
+            ],
+            "correctAnswer": "Serve a story or emphasis reason"
+          },
+          {
+            "question": "The removal test asks:",
+            "options": [
+              "Whether story still holds without the effect",
+              "Whether more glow helps",
+              "Whether to ban all cuts",
+              "Whether to mute VO"
+            ],
+            "correctAnswer": "Whether story still holds without the effect"
+          },
+          {
+            "question": "Approved effect sets help teams:",
+            "options": [
+              "Invent new chaos per editor",
+              "Stay on-brand and consistent",
+              "Ignore pacing",
+              "Skip hooks"
+            ],
+            "correctAnswer": "Stay on-brand and consistent"
+          },
+          {
+            "question": "Unmotivated transitions often:",
+            "options": [
+              "Feel premium",
+              "Feel template-y and distracting",
+              "Clarify CTAs",
+              "Fix mix"
+            ],
+            "correctAnswer": "Feel template-y and distracting"
+          },
+          {
+            "question": "Brand motion language means:",
+            "options": [
+              "Random trends weekly",
+              "Recognizable motion habits matching brand",
+              "No transitions ever",
+              "Only shake"
+            ],
+            "correctAnswer": "Recognizable motion habits matching brand"
+          }
+        ]
+      },
+      "project": {
+        "title": "Effect Budget",
+        "description": "Create an effect budget for a brand: 3 allowed transitions, 2 emphasis effects, and a ban list. Apply the budget to a 20s cut description—justify each allowed effect in one line."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Emphasis effects work best:",
+            "options": [
+              "On every word",
+              "On sparse key moments",
+              "Instead of hooks",
+              "Under all captions"
+            ],
+            "correctAnswer": "On sparse key moments"
+          },
+          {
+            "question": "Ban lists exist because:",
+            "options": [
+              "Trends never hurt clarity",
+              "Some effects damage trust/readability",
+              "Editors lack taste forever",
+              "Platforms require them"
+            ],
+            "correctAnswer": "Some effects damage trust/readability"
+          },
+          {
+            "question": "Template-y feel comes from:",
+            "options": [
+              "Motivated, sparse motion",
+              "Overused default packs without story link",
+              "Clean cuts",
+              "Good mix"
+            ],
+            "correctAnswer": "Overused default packs without story link"
+          },
+          {
+            "question": "Justification lines force:",
+            "options": [
+              "Accountability for each effect",
+              "More spam",
+              "No brand rules",
+              "Silent videos"
+            ],
+            "correctAnswer": "Accountability for each effect"
+          },
+          {
+            "question": "Restraint is a:",
+            "options": [
+              "Lack of skill",
+              "Mark of editorial control",
+              "Ban on creativity",
+              "Codec setting"
+            ],
+            "correctAnswer": "Mark of editorial control"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Effects and Transitions with Restraint\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Effect Budget"
+      ],
+      "keyTakeaways": [
+        "Effects should motivate: emphasize a beat, hide a jump, or match brand motion language.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create an effect budget for a brand: 3 allowed transitions, 2 emphasis effects, and a ban list. Apply the budget to a 20s cut description—justify each allowed effect in one line."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Effects and Transitions with Restraint"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Export, Platforms, and Delivery QA",
+      "duration": 35,
+      "introduction": {
+        "text": "Delivery is part of craft: correct aspect ratio, length, loudness sanity, caption burn-in decisions, and thumbnail frame. QA on device. Keep a version log. Masters CapCut editors ship reliably across Instagram, TikTok, and YouTube Shorts without rework surprises."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Device QA catches:",
+            "options": [
+              "Only desktop perfection",
+              "Crop, caption, and loudness issues on phones",
+              "Nothing useful",
+              "Only filename typos"
+            ],
+            "correctAnswer": "Crop, caption, and loudness issues on phones"
+          },
+          {
+            "question": "Thumbnail frames should:",
+            "options": [
+              "Be random",
+              "Read clearly at small size",
+              "Ignore faces/subjects",
+              "Be the blurriest frame"
+            ],
+            "correctAnswer": "Read clearly at small size"
+          },
+          {
+            "question": "Version logs help when:",
+            "options": [
+              "Clients request tweaks",
+              "You never iterate",
+              "Exports are perfect once",
+              "Platforms vanish"
+            ],
+            "correctAnswer": "Clients request tweaks"
+          },
+          {
+            "question": "Burn-in vs soft captions depends on:",
+            "options": [
+              "Platform and workflow needs",
+              "Only taste",
+              "Ignoring accessibility",
+              "Music genre"
+            ],
+            "correctAnswer": "Platform and workflow needs"
+          },
+          {
+            "question": "Rework surprises often come from:",
+            "options": [
+              "Checklists",
+              "Wrong specs discovered after publish",
+              "Device QA",
+              "Clear ratios"
+            ],
+            "correctAnswer": "Wrong specs discovered after publish"
+          }
+        ]
+      },
+      "project": {
+        "title": "Multi-Platform Delivery Pack",
+        "description": "Produce a delivery pack plan for one video: 9:16 master specs, caption decision, thumbnail still description, 8-item QA checklist, and naming for v1/v2. Note one platform-specific tweak you would make."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Platform-specific tweaks might include:",
+            "options": [
+              "Safe-zone or length adjustments",
+              "Changing the entire offer randomly",
+              "Deleting CTA always",
+              "Removing captions forever"
+            ],
+            "correctAnswer": "Safe-zone or length adjustments"
+          },
+          {
+            "question": "Loudness sanity means:",
+            "options": [
+              "Painfully quiet or clipped peaks are fixed",
+              "Music always maxed",
+              "VO whispered",
+              "No ducking"
+            ],
+            "correctAnswer": "Painfully quiet or clipped peaks are fixed"
+          },
+          {
+            "question": "9:16 masters are common because:",
+            "options": [
+              "Desktop only viewing",
+              "Vertical social is dominant for short-form",
+              "Print needs",
+              "Cinema only"
+            ],
+            "correctAnswer": "Vertical social is dominant for short-form"
+          },
+          {
+            "question": "Publish checklists reduce:",
+            "options": [
+              "Consistency",
+              "Avoidable errors under deadline",
+              "QA",
+              "Versioning"
+            ],
+            "correctAnswer": "Avoidable errors under deadline"
+          },
+          {
+            "question": "End-to-end CapCut mastery ships:",
+            "options": [
+              "Draft timelines forever",
+              "Platform-ready stories with disciplined polish",
+              "Effect demos only",
+              "No plans"
+            ],
+            "correctAnswer": "Platform-ready stories with disciplined polish"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Export, Platforms, and Delivery QA\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Multi-Platform Delivery Pack"
+      ],
+      "keyTakeaways": [
+        "Delivery is part of craft: correct aspect ratio, length, loudness sanity, caption burn-in decisions, and thumbnail frame.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Produce a delivery pack plan for one video: 9:16 master specs, caption decision, thumbnail still description, 8-item QA checklist, and naming for v1/v2. Note one platform-specific tweak you would make."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Export, Platforms, and Delivery QA"
+        }
+      ]
+    }
+  ]
+}

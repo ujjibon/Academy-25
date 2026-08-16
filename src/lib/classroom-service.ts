@@ -255,6 +255,46 @@ export async function updateClassroomCourseSettings(
   });
 }
 
+/** Admin-only: update marketplace/settings for any classroom course (no ownership check). */
+export async function adminUpdateClassroomCourseSettings(
+  courseId: string,
+  updates: Partial<
+    Pick<
+      ClassroomCourse,
+      | 'title'
+      | 'description'
+      | 'coverImage'
+      | 'dripSchedule'
+      | 'prerequisiteCourseIds'
+      | 'priceCents'
+      | 'isForSale'
+      | 'modules'
+    >
+  >
+): Promise<void> {
+  if (!shouldAttemptFirestoreOperation()) {
+    throw new Error('Firestore is unavailable.');
+  }
+  const existing = await getClassroomCourse(courseId);
+  if (!existing) throw new Error('Course not found.');
+
+  await updateDoc(doc(db, 'classroomCourses', courseId), {
+    ...updates,
+    updatedAt: serverTimestamp(),
+  });
+}
+
+/** Admin-only: permanently remove a classroom course document. */
+export async function adminDeleteClassroomCourse(courseId: string): Promise<void> {
+  if (!shouldAttemptFirestoreOperation()) {
+    throw new Error('Firestore is unavailable.');
+  }
+  const existing = await getClassroomCourse(courseId);
+  if (!existing) throw new Error('Course not found.');
+
+  await deleteDoc(doc(db, 'classroomCourses', courseId));
+}
+
 export async function getInstructorAssignments(
   instructorId: string
 ): Promise<(ClassroomAssignment & { courseTitle: string })[]> {

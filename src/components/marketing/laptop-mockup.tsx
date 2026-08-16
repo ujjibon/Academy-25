@@ -41,7 +41,7 @@ export function LaptopMockup({ autoRotate = true, className }: LaptopMockupProps
         style={{ animationDelay: '0.4s' }}
       >
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-royal/10 text-royal">
             <Zap className="h-4 w-4" />
           </span>
           <div>
@@ -73,8 +73,8 @@ export function LaptopMockup({ autoRotate = true, className }: LaptopMockupProps
             className={cn(
               'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all',
               activeView === view.id
-                ? 'border-primary bg-primary/10 text-primary shadow-sm'
-                : 'border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                ? 'border-royal bg-royal text-white shadow-[0_2px_8px_rgb(0_19_158/0.25)]'
+                : 'border-royal/20 bg-royal/5 text-midnight/70 hover:border-royal/40 hover:bg-royal/10 hover:text-royal'
             )}
           >
             <view.icon className="h-3.5 w-3.5" />

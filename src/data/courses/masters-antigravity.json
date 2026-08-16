@@ -1,0 +1,891 @@
+{
+  "id": "masters-antigravity",
+  "title": "Antigravity Masters Class",
+  "description": "Full Antigravity mastery: agent briefs, workspace context, multi-step missions, review discipline, session systems, and team-ready AI development habits.",
+  "image": "/images/masters-antigravity.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Antigravity as an Agent Workspace",
+      "duration": 25,
+      "introduction": {
+        "text": "Antigravity is built for agentic coding: the environment carries project context so agents can propose edits with awareness of your files and goals. Your job is to define missions, constrain blast radius, and enforce review. Chatbots answer; agents attempt work—you still approve."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Antigravity is best described as:",
+            "options": [
+              "A spreadsheet",
+              "An AI-assisted agent development environment",
+              "A printer utility",
+              "A music DAW"
+            ],
+            "correctAnswer": "An AI-assisted agent development environment"
+          },
+          {
+            "question": "Agents differ from plain chat mainly by:",
+            "options": [
+              "Being slower always",
+              "Acting on tasks in your workspace with context",
+              "Ignoring files",
+              "Only drawing"
+            ],
+            "correctAnswer": "Acting on tasks in your workspace with context"
+          },
+          {
+            "question": "Blast radius means:",
+            "options": [
+              "Font size",
+              "How much of the system a change can affect",
+              "Wi-Fi range",
+              "Build time only"
+            ],
+            "correctAnswer": "How much of the system a change can affect"
+          },
+          {
+            "question": "Approval gates exist to:",
+            "options": [
+              "Slow learning forever",
+              "Prevent unreviewed harmful edits",
+              "Ban agents",
+              "Delete logs"
+            ],
+            "correctAnswer": "Prevent unreviewed harmful edits"
+          },
+          {
+            "question": "Project context improves agents by:",
+            "options": [
+              "Hiding goals",
+              "Grounding actions in real files and conventions",
+              "Removing types",
+              "Skipping git"
+            ],
+            "correctAnswer": "Grounding actions in real files and conventions"
+          }
+        ]
+      },
+      "project": {
+        "title": "Environment Map",
+        "description": "Document your ideal Antigravity workspace map: key folders, forbidden paths, coding standards link, and how you want agents to open PRs or diffs."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "You should treat agent patches as:",
+            "options": [
+              "Auto-merged truth",
+              "Proposals under review",
+              "Unreadable",
+              "Final forever"
+            ],
+            "correctAnswer": "Proposals under review"
+          },
+          {
+            "question": "Clear missions reduce:",
+            "options": [
+              "All speed",
+              "Wandering edits and scope creep",
+              "Need for tests",
+              "Documentation"
+            ],
+            "correctAnswer": "Wandering edits and scope creep"
+          },
+          {
+            "question": "Forbidden paths protect:",
+            "options": [
+              "Nothing",
+              "Secrets, infra, or fragile modules",
+              "Only README",
+              "CSS"
+            ],
+            "correctAnswer": "Secrets, infra, or fragile modules"
+          },
+          {
+            "question": "Conventions files help agents:",
+            "options": [
+              "Ignore style",
+              "Match team patterns",
+              "Delete lint",
+              "Skip naming"
+            ],
+            "correctAnswer": "Match team patterns"
+          },
+          {
+            "question": "Without review discipline, agents can:",
+            "options": [
+              "Only help",
+              "Introduce subtle breakages at scale",
+              "Replace CI",
+              "Fix prod magically"
+            ],
+            "correctAnswer": "Introduce subtle breakages at scale"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Antigravity as an Agent Workspace\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Environment Map"
+      ],
+      "keyTakeaways": [
+        "Antigravity is built for agentic coding: the environment carries project context so agents can propose edits with awareness of your files and goals.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Document your ideal Antigravity workspace map: key folders, forbidden paths, coding standards link, and how you want agents to open PRs or diffs."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Antigravity as an Agent Workspace"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Writing Agent Briefs that Ship",
+      "duration": 30,
+      "introduction": {
+        "text": "A strong agent brief has: objective, non-goals, acceptance tests, allowed files, reference examples, and definition of done. Include “stop and ask” conditions. Prefer checkable outcomes over vibes. Briefs are the product spec for autonomous work."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Non-goals help by:",
+            "options": [
+              "Expanding scope",
+              "Preventing unwanted work",
+              "Hiding acceptance",
+              "Removing tests"
+            ],
+            "correctAnswer": "Preventing unwanted work"
+          },
+          {
+            "question": "Acceptance tests in a brief should be:",
+            "options": [
+              "Vague",
+              "Observable and checkable",
+              "Secret",
+              "Only visual"
+            ],
+            "correctAnswer": "Observable and checkable"
+          },
+          {
+            "question": "“Stop and ask” conditions trigger when:",
+            "options": [
+              "Everything is fine",
+              "Uncertainty or risk is high",
+              "Tests pass",
+              "Files are small"
+            ],
+            "correctAnswer": "Uncertainty or risk is high"
+          },
+          {
+            "question": "Allowed files constrain:",
+            "options": [
+              "Nothing",
+              "Where the agent may edit",
+              "Only commits",
+              "DNS"
+            ],
+            "correctAnswer": "Where the agent may edit"
+          },
+          {
+            "question": "Reference examples show:",
+            "options": [
+              "Passwords",
+              "The pattern of good output",
+              "Random noise",
+              "Prod keys"
+            ],
+            "correctAnswer": "The pattern of good output"
+          }
+        ]
+      },
+      "project": {
+        "title": "Brief: Dark Mode Toggle",
+        "description": "Write a complete agent brief for adding a dark-mode toggle: objective, non-goals, files, acceptance checks, stop conditions, and rollback notes."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Definition of done should include:",
+            "options": [
+              "Only “looks ok”",
+              "Behavior, tests, and docs touchpoints",
+              "Force push",
+              "No review"
+            ],
+            "correctAnswer": "Behavior, tests, and docs touchpoints"
+          },
+          {
+            "question": "Ambiguous briefs usually produce:",
+            "options": [
+              "Perfect PRs",
+              "Misaligned changes",
+              "Faster CI always",
+              "No diffs"
+            ],
+            "correctAnswer": "Misaligned changes"
+          },
+          {
+            "question": "Including current UX copy helps agents:",
+            "options": [
+              "Invent brand voice wrongly less often",
+              "Skip UI",
+              "Break a11y more",
+              "Ignore i18n always"
+            ],
+            "correctAnswer": "Invent brand voice wrongly less often"
+          },
+          {
+            "question": "Rollback notes prepare you for:",
+            "options": [
+              "Success only",
+              "Quick undo if the change fails",
+              "Deleting git",
+              "Skipping QA"
+            ],
+            "correctAnswer": "Quick undo if the change fails"
+          },
+          {
+            "question": "Checkable outcomes beat vibes because:",
+            "options": [
+              "Vibes are measurable",
+              "Teams can agree when it is finished",
+              "Agents hate clarity",
+              "CI bans them"
+            ],
+            "correctAnswer": "Teams can agree when it is finished"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Writing Agent Briefs that Ship\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Brief: Dark Mode Toggle"
+      ],
+      "keyTakeaways": [
+        "A strong agent brief has: objective, non-goals, acceptance tests, allowed files, reference examples, and definition of done.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a complete agent brief for adding a dark-mode toggle: objective, non-goals, files, acceptance checks, stop conditions, and rollback notes."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Writing Agent Briefs that Ship"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Context Engineering for Agents",
+      "duration": 30,
+      "introduction": {
+        "text": "Feed the smallest sufficient context: interfaces, failing tests, error logs, and adjacent modules—not the whole monorepo. Maintain a living “project card” (stack, commands, conventions). Refresh context when the agent drifts."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Smallest sufficient context means:",
+            "options": [
+              "No files",
+              "Only what is needed to act correctly",
+              "Entire git history always",
+              "Only images"
+            ],
+            "correctAnswer": "Only what is needed to act correctly"
+          },
+          {
+            "question": "A project card might include:",
+            "options": [
+              "Stack, scripts, and conventions",
+              "Bank logins",
+              "Only jokes",
+              "Private keys"
+            ],
+            "correctAnswer": "Stack, scripts, and conventions"
+          },
+          {
+            "question": "Failing tests are high-signal context because:",
+            "options": [
+              "They confuse agents",
+              "They specify broken behavior precisely",
+              "They hide bugs",
+              "They replace specs"
+            ],
+            "correctAnswer": "They specify broken behavior precisely"
+          },
+          {
+            "question": "When an agent drifts you should:",
+            "options": [
+              "Ignore it",
+              "Re-state goal and refresh relevant context",
+              "Delete the repo",
+              "Disable review"
+            ],
+            "correctAnswer": "Re-state goal and refresh relevant context"
+          },
+          {
+            "question": "Too much unrelated context often causes:",
+            "options": [
+              "Perfect focus",
+              "Distracted or wrong edits",
+              "Faster builds",
+              "Better security"
+            ],
+            "correctAnswer": "Distracted or wrong edits"
+          }
+        ]
+      },
+      "project": {
+        "title": "Project Card v1",
+        "description": "Create a one-screen project card for a sample Next.js app: stack, run/test commands, folder map, coding rules, and top 5 agent pitfalls to avoid."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Adjacent modules matter when:",
+            "options": [
+              "Changes touch shared contracts",
+              "You edit unrelated docs only",
+              "Offline forever",
+              "No APIs exist"
+            ],
+            "correctAnswer": "Changes touch shared contracts"
+          },
+          {
+            "question": "Error logs should be:",
+            "options": [
+              "Stripped of secrets then shared",
+              "Pasted with tokens included",
+              "Ignored",
+              "Deleted first"
+            ],
+            "correctAnswer": "Stripped of secrets then shared"
+          },
+          {
+            "question": "Living docs beat stale README myths because:",
+            "options": [
+              "Agents prefer lies",
+              "Agents act on what you maintain",
+              "Git bans README",
+              "CI deletes docs"
+            ],
+            "correctAnswer": "Agents act on what you maintain"
+          },
+          {
+            "question": "Interface snippets help agents:",
+            "options": [
+              "Guess public APIs less",
+              "Ignore types",
+              "Skip tests",
+              "Rewrite CSS only"
+            ],
+            "correctAnswer": "Guess public APIs less"
+          },
+          {
+            "question": "Context refresh is part of:",
+            "options": [
+              "Giving up",
+              "Session hygiene",
+              "Deleting history",
+              "Avoiding goals"
+            ],
+            "correctAnswer": "Session hygiene"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Context Engineering for Agents\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Project Card v1"
+      ],
+      "keyTakeaways": [
+        "Feed the smallest sufficient context: interfaces, failing tests, error logs, and adjacent modules—not the whole monorepo.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a one-screen project card for a sample Next.js app: stack, run/test commands, folder map, coding rules, and top 5 agent pitfalls to avoid."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Context Engineering for Agents"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Multi-Step Missions and Orchestration",
+      "duration": 35,
+      "introduction": {
+        "text": "Break epics into missions with dependencies: spike → implement → test → polish. Run one mission at a time unless you have isolation. Require artifacts at each gate (plan.md, diff, test output). Parallelize only independent workstreams."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Missions with dependencies should run:",
+            "options": [
+              "All at once always",
+              "In order of prerequisites",
+              "Randomly",
+              "Never"
+            ],
+            "correctAnswer": "In order of prerequisites"
+          },
+          {
+            "question": "Gate artifacts prove:",
+            "options": [
+              "Nothing",
+              "A stage actually finished",
+              "Only design",
+              "Wi-Fi speed"
+            ],
+            "correctAnswer": "A stage actually finished"
+          },
+          {
+            "question": "Parallel agent work is safer when streams are:",
+            "options": [
+              "Tightly coupled",
+              "Independent",
+              "Editing the same file",
+              "Unreviewed"
+            ],
+            "correctAnswer": "Independent"
+          },
+          {
+            "question": "A spike mission is for:",
+            "options": [
+              "Final polish only",
+              "Learning unknowns cheaply",
+              "Deleting tests",
+              "Prod deploys"
+            ],
+            "correctAnswer": "Learning unknowns cheaply"
+          },
+          {
+            "question": "Orchestration means:",
+            "options": [
+              "Random chatting",
+              "Sequencing agent work toward an outcome",
+              "Only UI animation",
+              "Ignoring deps"
+            ],
+            "correctAnswer": "Sequencing agent work toward an outcome"
+          }
+        ]
+      },
+      "project": {
+        "title": "Mission Board",
+        "description": "Design a 4-mission board to add search to a notes app: Spike, API, UI, Hardening. List dependencies, artifacts, and owner (you vs agent) per mission."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Skipping the spike often causes:",
+            "options": [
+              "Cheaper delivery",
+              "Expensive wrong implementation",
+              "Perfect APIs",
+              "No bugs"
+            ],
+            "correctAnswer": "Expensive wrong implementation"
+          },
+          {
+            "question": "Test output as a gate ensures:",
+            "options": [
+              "Docs only",
+              "Behavior evidence before polish",
+              "Faster ignore",
+              "No CI"
+            ],
+            "correctAnswer": "Behavior evidence before polish"
+          },
+          {
+            "question": "Coupled parallel edits risk:",
+            "options": [
+              "Clean merges always",
+              "Conflict and inconsistent design",
+              "Better a11y",
+              "Auto docs"
+            ],
+            "correctAnswer": "Conflict and inconsistent design"
+          },
+          {
+            "question": "You remain the orchestrator because:",
+            "options": [
+              "Agents own product",
+              "You set priorities and quality bars",
+              "Git commits itself",
+              "QA is optional"
+            ],
+            "correctAnswer": "You set priorities and quality bars"
+          },
+          {
+            "question": "Polish missions should not:",
+            "options": [
+              "Rewrite architecture casually",
+              "Fix copy and small UX",
+              "Add tests",
+              "Update changelog"
+            ],
+            "correctAnswer": "Rewrite architecture casually"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Multi-Step Missions and Orchestration\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Mission Board"
+      ],
+      "keyTakeaways": [
+        "Break epics into missions with dependencies: spike → implement → test → polish.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a 4-mission board to add search to a notes app: Spike, API, UI, Hardening. List dependencies, artifacts, and owner (you vs agent) per mission."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Multi-Step Missions and Orchestration"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Review Discipline: Diffs, Risks, Rollbacks",
+      "duration": 35,
+      "introduction": {
+        "text": "Read every agent diff like a PR from a new teammate. Check intent vs brief, security, data handling, and test gaps. Require agents to summarize risk and rollback. Reject “drive-by” refactors. Keep an allowlist of auto-apply for trivial edits only."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Drive-by refactors in feature diffs are:",
+            "options": [
+              "Always welcome",
+              "Usually harmful to review focus",
+              "Required",
+              "Safer than tests"
+            ],
+            "correctAnswer": "Usually harmful to review focus"
+          },
+          {
+            "question": "Risk summaries should call out:",
+            "options": [
+              "Only file count",
+              "User impact and failure modes",
+              "Emojis",
+              "Font choices"
+            ],
+            "correctAnswer": "User impact and failure modes"
+          },
+          {
+            "question": "Auto-apply allowlists should cover:",
+            "options": [
+              "Prod migrations",
+              "Trivial safe edits you define",
+              "Secret rotation",
+              "Everything"
+            ],
+            "correctAnswer": "Trivial safe edits you define"
+          },
+          {
+            "question": "Security review includes:",
+            "options": [
+              "Ignoring auth",
+              "Authz, injection, and secret leakage",
+              "Only CSS",
+              "Deleting HTTPS"
+            ],
+            "correctAnswer": "Authz, injection, and secret leakage"
+          },
+          {
+            "question": "Rollback clarity answers:",
+            "options": [
+              "How to undo safely",
+              "How to force push",
+              "How to hide logs",
+              "How to skip QA"
+            ],
+            "correctAnswer": "How to undo safely"
+          }
+        ]
+      },
+      "project": {
+        "title": "Diff Review Scorecard",
+        "description": "Build a 10-item scorecard for agent PRs (brief match, tests, security, scope, rollback, etc.). Score a fictional messy diff and write the reject message."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Intent vs brief checks catch:",
+            "options": [
+              "Perfect alignment only",
+              "Agents solving the wrong problem",
+              "Only typos",
+              "CI flakes"
+            ],
+            "correctAnswer": "Agents solving the wrong problem"
+          },
+          {
+            "question": "Test gaps mean:",
+            "options": [
+              "Ship faster always",
+              "Unknown broken paths",
+              "No users",
+              "Better UX"
+            ],
+            "correctAnswer": "Unknown broken paths"
+          },
+          {
+            "question": "Rejecting bad diffs teaches agents/sessions to:",
+            "options": [
+              "Ignore quality",
+              "Align to your bar next iteration",
+              "Delete briefs",
+              "Skip context"
+            ],
+            "correctAnswer": "Align to your bar next iteration"
+          },
+          {
+            "question": "Data handling review asks:",
+            "options": [
+              "Where PII goes and how it is stored",
+              "Only button colors",
+              "Only latency",
+              "Nothing"
+            ],
+            "correctAnswer": "Where PII goes and how it is stored"
+          },
+          {
+            "question": "Trivial auto-apply still needs:",
+            "options": [
+              "Zero policy",
+              "Boundaries and auditability",
+              "Prod access",
+              "No logs"
+            ],
+            "correctAnswer": "Boundaries and auditability"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Review Discipline: Diffs, Risks, Rollbacks\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Diff Review Scorecard"
+      ],
+      "keyTakeaways": [
+        "Read every agent diff like a PR from a new teammate.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a 10-item scorecard for agent PRs (brief match, tests, security, scope, rollback, etc.). Score a fictional messy diff and write the reject message."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Review Discipline: Diffs, Risks, Rollbacks"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Session Systems and Team Playbooks",
+      "duration": 40,
+      "introduction": {
+        "text": "Turn personal wins into team playbooks: brief templates, project cards, review scorecards, and “when to use an agent vs do it yourself.” Log session retros. Standardize class codes of conduct for AI edits so velocity does not erase craft."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Playbooks help teams by:",
+            "options": [
+              "Hiding knowledge",
+              "Making good habits repeatable",
+              "Banning agents",
+              "Deleting docs"
+            ],
+            "correctAnswer": "Making good habits repeatable"
+          },
+          {
+            "question": "A session retro should capture:",
+            "options": [
+              "Only vibes",
+              "What worked, failed, and next experiment",
+              "Secrets",
+              "Nothing"
+            ],
+            "correctAnswer": "What worked, failed, and next experiment"
+          },
+          {
+            "question": "DIY vs agent decision depends on:",
+            "options": [
+              "Mood only",
+              "Risk, novelty, and review cost",
+              "Font size",
+              "Coffee"
+            ],
+            "correctAnswer": "Risk, novelty, and review cost"
+          },
+          {
+            "question": "Craft standards exist so:",
+            "options": [
+              "Speed erases quality",
+              "Speed serves quality bars",
+              "Agents own product",
+              "Tests disappear"
+            ],
+            "correctAnswer": "Speed serves quality bars"
+          },
+          {
+            "question": "Shared templates reduce:",
+            "options": [
+              "Consistency",
+              "Onboarding time for new teammates",
+              "Clarity",
+              "Review quality"
+            ],
+            "correctAnswer": "Onboarding time for new teammates"
+          }
+        ]
+      },
+      "project": {
+        "title": "Team Antigravity Playbook",
+        "description": "Write a 1–2 page playbook: brief template link, project card outline, review scorecard, DIY/agent rubric, and a weekly retro agenda."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Without playbooks, AI usage becomes:",
+            "options": [
+              "Uniformly excellent",
+              "Inconsistent and risky",
+              "Automatically safe",
+              "Self-documenting"
+            ],
+            "correctAnswer": "Inconsistent and risky"
+          },
+          {
+            "question": "Logging experiments helps:",
+            "options": [
+              "Nobody",
+              "Compound learning across sessions",
+              "Delete history",
+              "Skip reviews"
+            ],
+            "correctAnswer": "Compound learning across sessions"
+          },
+          {
+            "question": "High-risk tasks should lean:",
+            "options": [
+              "Fully autonomous always",
+              "Human-led with narrow agent assists",
+              "No tests",
+              "Secret sharing"
+            ],
+            "correctAnswer": "Human-led with narrow agent assists"
+          },
+          {
+            "question": "Playbooks should evolve when:",
+            "options": [
+              "Never",
+              "Retros show repeated failures or wins",
+              "Only on Fridays",
+              "Agents demand it"
+            ],
+            "correctAnswer": "Retros show repeated failures or wins"
+          },
+          {
+            "question": "The end goal of Antigravity mastery is:",
+            "options": [
+              "Zero human thought",
+              "Reliable leverage with strong judgment",
+              "Deleting code review",
+              "Shipping unbroken"
+            ],
+            "correctAnswer": "Reliable leverage with strong judgment"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Session Systems and Team Playbooks\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Team Antigravity Playbook"
+      ],
+      "keyTakeaways": [
+        "Turn personal wins into team playbooks: brief templates, project cards, review scorecards, and “when to use an agent vs do it yourself.” Log session retros.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a 1–2 page playbook: brief template link, project card outline, review scorecard, DIY/agent rubric, and a weekly retro agenda."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Session Systems and Team Playbooks"
+        }
+      ]
+    }
+  ],
+  "category": "programming"
+}

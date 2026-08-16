@@ -75,8 +75,12 @@ export class DeepSeekVisualGenerator {
         throw new Error('No content received from OpenAI API');
       }
 
-      // Parse the JSON response
-      const visualData = JSON.parse(content);
+      // Parse JSON (tolerate markdown fences)
+      const jsonMatch = String(content).match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error('No JSON object in visual generator response');
+      }
+      const visualData = JSON.parse(jsonMatch[0]);
       
       return {
         id: `visual_${Date.now()}`,

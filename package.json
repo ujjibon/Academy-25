@@ -53,6 +53,7 @@
     "nodemailer": "^8.0.7",
     "patch-package": "^8.0.0",
     "pdf-parse": "^2.4.5",
+    "pptxgenjs": "^4.0.1",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",

@@ -151,6 +151,17 @@ PAYPAL_PLAN_ID_PREMIUM=P-xxxxxxxx
 | `PAYPAL_PLAN_ID_PREMIUM` | PayPal billing plan ID for Premium |
 | `NEXT_PUBLIC_APP_URL` | Return URL after PayPal approval (e.g. `http://localhost:3000`) |
 
+### Admin payments & coupons
+
+Admins manage billing at **`/admin-portal/billing`**:
+
+- Generate coupon codes (percent off, fixed amount, or plan grant)
+- View payment ledger (PayPal, coupon grants, manual records)
+- Grant subscriptions and record offline payments
+- View active paid subscribers
+
+Learners redeem **100% off** or **plan-grant** codes on **Account → Subscription**. Deploy updated `firestore.rules` so `coupons`, `payments`, and `couponRedemptions` collections work.
+
 Profile photos upload to `public/avatars/` via `/api/account/avatar` (max 5 MB).
 
 ### Firebase Configuration

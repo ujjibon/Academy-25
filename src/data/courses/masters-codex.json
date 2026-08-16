@@ -1,0 +1,1054 @@
+{
+  "id": "masters-codex",
+  "title": "Codex Masters Class",
+  "description": "A full Codex apprenticeship: prompt craft, refactoring, tests, debugging, architecture sketches, and shipping features with AI pair programming.",
+  "image": "/images/masters-codex.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Codex Mindset: AI as a Junior Pair",
+      "duration": 25,
+      "introduction": {
+        "text": "Treat Codex like a fast junior engineer who needs clear specs. You own architecture, correctness, and taste. Codex drafts code; you review diffs, demand tests, and reject vague work. This mindset prevents blind copy-paste and builds a reusable prompting habit: goal → context → constraints → acceptance checks."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "The best mental model for Codex is:",
+            "options": [
+              "An infallible senior",
+              "A fast junior pair you supervise",
+              "A compiler replacement",
+              "A designer only"
+            ],
+            "correctAnswer": "A fast junior pair you supervise"
+          },
+          {
+            "question": "Who is responsible for correctness?",
+            "options": [
+              "Only Codex",
+              "You, the developer",
+              "The hosting provider",
+              "Nobody"
+            ],
+            "correctAnswer": "You, the developer"
+          },
+          {
+            "question": "A weak Codex session usually starts with:",
+            "options": [
+              "A clear goal",
+              "Vague one-line asks",
+              "Acceptance criteria",
+              "Repo context"
+            ],
+            "correctAnswer": "Vague one-line asks"
+          },
+          {
+            "question": "Before accepting generated code you should:",
+            "options": [
+              "Ship instantly",
+              "Review and run tests",
+              "Delete comments",
+              "Ignore edge cases"
+            ],
+            "correctAnswer": "Review and run tests"
+          },
+          {
+            "question": "Acceptance checks help Codex by:",
+            "options": [
+              "Hiding requirements",
+              "Defining what done means",
+              "Removing types",
+              "Skipping review"
+            ],
+            "correctAnswer": "Defining what done means"
+          }
+        ]
+      },
+      "project": {
+        "title": "Pair Contract",
+        "description": "Write a one-page “Codex pair contract”: your review rules, what you always ask for (tests, edge cases, complexity notes), and three prompts you refuse to send (too vague)."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Codex output should be treated as:",
+            "options": [
+              "Final truth",
+              "A draft under review",
+              "Uneditable",
+              "Always slower than you"
+            ],
+            "correctAnswer": "A draft under review"
+          },
+          {
+            "question": "Clear specs reduce:",
+            "options": [
+              "All creativity",
+              "Hallucinated APIs and wrong assumptions",
+              "Need for git",
+              "Keyboard use"
+            ],
+            "correctAnswer": "Hallucinated APIs and wrong assumptions"
+          },
+          {
+            "question": "A good first prompt includes:",
+            "options": [
+              "Only “fix this”",
+              "Goal, files, constraints, and done criteria",
+              "Emojis only",
+              "Your password"
+            ],
+            "correctAnswer": "Goal, files, constraints, and done criteria"
+          },
+          {
+            "question": "Why keep a prompt library?",
+            "options": [
+              "Waste disk",
+              "Reuse patterns that produced clean diffs",
+              "Ban learning",
+              "Replace docs"
+            ],
+            "correctAnswer": "Reuse patterns that produced clean diffs"
+          },
+          {
+            "question": "Blind trust in AI code often causes:",
+            "options": [
+              "Fewer bugs always",
+              "Subtle regressions and security holes",
+              "Instant mastery",
+              "Perfect architecture"
+            ],
+            "correctAnswer": "Subtle regressions and security holes"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Codex Mindset: AI as a Junior Pair\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Pair Contract"
+      ],
+      "keyTakeaways": [
+        "Treat Codex like a fast junior engineer who needs clear specs.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a one-page “Codex pair contract”: your review rules, what you always ask for (tests, edge cases, complexity notes), and three prompts you refuse to send (too vague)."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Codex Mindset: AI as a Junior Pair"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Prompt Anatomy for Code Generation",
+      "duration": 30,
+      "introduction": {
+        "text": "High-yield Codex prompts name the language, runtime, inputs/outputs, error behavior, and style rules. Add a minimal example or signature. Ask for a short plan before code when the task spans multiple files. Prefer “edit this function” over “rewrite the app.”"
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Which detail most improves generation quality?",
+            "options": [
+              "Favorite color",
+              "Input/output contract and constraints",
+              "Random slang",
+              "Empty prompt"
+            ],
+            "correctAnswer": "Input/output contract and constraints"
+          },
+          {
+            "question": "Asking for a plan first is useful when:",
+            "options": [
+              "The task is one typo",
+              "Work spans multiple steps or files",
+              "You hate reading",
+              "Offline mode only"
+            ],
+            "correctAnswer": "Work spans multiple steps or files"
+          },
+          {
+            "question": "A signature or example helps Codex:",
+            "options": [
+              "Guess worse",
+              "Match expected shape",
+              "Ignore types",
+              "Skip naming"
+            ],
+            "correctAnswer": "Match expected shape"
+          },
+          {
+            "question": "Prefer editing scope that is:",
+            "options": [
+              "The entire monorepo blindly",
+              "The smallest clear unit of work",
+              "Only README",
+              "Only CSS forever"
+            ],
+            "correctAnswer": "The smallest clear unit of work"
+          },
+          {
+            "question": "Style rules in prompts can include:",
+            "options": [
+              "Indentation, naming, no new deps",
+              "Bank PINs",
+              "Unrelated memes",
+              "Nothing useful"
+            ],
+            "correctAnswer": "Indentation, naming, no new deps"
+          }
+        ]
+      },
+      "project": {
+        "title": "Generation Prompt Pack",
+        "description": "Create 4 Codex prompts for the same feature (email validator): (1) plan only, (2) implementation, (3) unit tests, (4) edge-case hardening. Keep them under 12 lines each.",
+        "code": {
+          "language": "javascript",
+          "starterCode": "// Target: isValidEmail(email: string) => boolean\n// Write your four Codex prompts as comments below, then a stub implementation.\n\nexport function isValidEmail(email) {\n  // TODO: implement after Codex draft + your review\n  return false;\n}\n",
+          "enablePreview": false,
+          "enableConsole": true
+        }
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Multi-file work should usually start with:",
+            "options": [
+              "Random files",
+              "A short plan of steps",
+              "Deleting tests",
+              "Force push"
+            ],
+            "correctAnswer": "A short plan of steps"
+          },
+          {
+            "question": "“No new dependencies” is an example of a:",
+            "options": [
+              "Constraint",
+              "Citation",
+              "Deploy key",
+              "Theme"
+            ],
+            "correctAnswer": "Constraint"
+          },
+          {
+            "question": "Providing current code context reduces:",
+            "options": [
+              "Token use only",
+              "Invented APIs that do not exist in your repo",
+              "Need for review",
+              "Git history"
+            ],
+            "correctAnswer": "Invented APIs that do not exist in your repo"
+          },
+          {
+            "question": "Good prompts specify error behavior because:",
+            "options": [
+              "Errors never happen",
+              "Codex otherwise invents inconsistent handling",
+              "It slows typing",
+              "It breaks JSON"
+            ],
+            "correctAnswer": "Codex otherwise invents inconsistent handling"
+          },
+          {
+            "question": "A reusable prompt template should have placeholders for:",
+            "options": [
+              "GOAL, CONTEXT, CONSTRAINTS, FORMAT",
+              "Only emojis",
+              "Secrets",
+              "Nothing"
+            ],
+            "correctAnswer": "GOAL, CONTEXT, CONSTRAINTS, FORMAT"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Prompt Anatomy for Code Generation\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Generation Prompt Pack"
+      ],
+      "keyTakeaways": [
+        "High-yield Codex prompts name the language, runtime, inputs/outputs, error behavior, and style rules.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create 4 Codex prompts for the same feature (email validator): (1) plan only, (2) implementation, (3) unit tests, (4) edge-case hardening. Keep them under 12 lines each."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Prompt Anatomy for Code Generation"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Explain, Navigate, and Document Codebases",
+      "duration": 30,
+      "introduction": {
+        "text": "Use Codex to map unfamiliar code: module purpose, call graphs, risky areas, and “how do I change X safely?” Ask for diagrams in Mermaid or bullet call chains. Demand citations as file paths and function names so you can verify."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "When exploring a repo, ask Codex for:",
+            "options": [
+              "Only jokes",
+              "Purpose, entry points, and risky modules",
+              "Deleted history",
+              "Passwords"
+            ],
+            "correctAnswer": "Purpose, entry points, and risky modules"
+          },
+          {
+            "question": "Path/function citations let you:",
+            "options": [
+              "Skip reading",
+              "Verify the explanation against real code",
+              "Encrypt disks",
+              "Ignore types"
+            ],
+            "correctAnswer": "Verify the explanation against real code"
+          },
+          {
+            "question": "A call chain summary helps you:",
+            "options": [
+              "See how data flows through functions",
+              "Bake bread",
+              "Tune Wi-Fi",
+              "Design logos"
+            ],
+            "correctAnswer": "See how data flows through functions"
+          },
+          {
+            "question": "Documentation prompts should request:",
+            "options": [
+              "Audience and accuracy over fluff",
+              "Maximum length only",
+              "No structure",
+              "Secrets"
+            ],
+            "correctAnswer": "Audience and accuracy over fluff"
+          },
+          {
+            "question": "Unverified summaries are risky because:",
+            "options": [
+              "They are always correct",
+              "They may invent modules",
+              "Git forbids them",
+              "They improve CI"
+            ],
+            "correctAnswer": "They may invent modules"
+          }
+        ]
+      },
+      "project": {
+        "title": "Codebase Brief",
+        "description": "Pick any small open-source file or invent a 40-line module. Produce a Codex-ready brief: purpose, public API, dependencies, and 3 safe change ideas with risk notes."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Mermaid diagrams from Codex are best used as:",
+            "options": [
+              "Final architecture law",
+              "Draft visuals you verify",
+              "Deploy scripts",
+              "Secrets vault"
+            ],
+            "correctAnswer": "Draft visuals you verify"
+          },
+          {
+            "question": "“Where should I add logging?” is a good:",
+            "options": [
+              "Navigation question with context",
+              "Vague rant",
+              "Design-only ask",
+              "Illegal ask"
+            ],
+            "correctAnswer": "Navigation question with context"
+          },
+          {
+            "question": "Asking for “unknowns / assumptions” surfaces:",
+            "options": [
+              "Nothing",
+              "Gaps you must fill before coding",
+              "Only CSS",
+              "Hosting bills"
+            ],
+            "correctAnswer": "Gaps you must fill before coding"
+          },
+          {
+            "question": "Good onboarding docs include:",
+            "options": [
+              "Setup, architecture map, common tasks",
+              "Only memes",
+              "Private keys",
+              "Blank pages"
+            ],
+            "correctAnswer": "Setup, architecture map, common tasks"
+          },
+          {
+            "question": "You should cross-check explanations because:",
+            "options": [
+              "AI never errs",
+              "Models can hallucinate structure",
+              "It wastes time always",
+              "Linters ban it"
+            ],
+            "correctAnswer": "Models can hallucinate structure"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Explain, Navigate, and Document Codebases\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Codebase Brief"
+      ],
+      "keyTakeaways": [
+        "Use Codex to map unfamiliar code: module purpose, call graphs, risky areas, and “how do I change X safely?” Ask for diagrams in Mermaid or bullet call chains.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Pick any small open-source file or invent a 40-line module. Produce a Codex-ready brief: purpose, public API, dependencies, and 3 safe change ideas with risk notes."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Explain, Navigate, and Document Codebases"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Refactoring and Code Health with Codex",
+      "duration": 35,
+      "introduction": {
+        "text": "Refactor in thin slices: extract function, rename for clarity, reduce nesting, then re-run tests. Tell Codex the invariant that must not change. Ask for a before/after complexity note and a regression checklist. Never mix feature work with large refactors in one prompt."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Thin-slice refactors are safer because:",
+            "options": [
+              "They skip tests",
+              "Each change is easier to review and revert",
+              "Git hates them",
+              "They delete coverage"
+            ],
+            "correctAnswer": "Each change is easier to review and revert"
+          },
+          {
+            "question": "An invariant is:",
+            "options": [
+              "A random comment",
+              "A behavior that must stay true",
+              "A CSS variable",
+              "A deploy flag"
+            ],
+            "correctAnswer": "A behavior that must stay true"
+          },
+          {
+            "question": "Mixing features and big refactors:",
+            "options": [
+              "Is ideal",
+              "Makes reviews and rollbacks harder",
+              "Is required by Codex",
+              "Removes bugs magically"
+            ],
+            "correctAnswer": "Makes reviews and rollbacks harder"
+          },
+          {
+            "question": "Ask Codex to preserve:",
+            "options": [
+              "Public API and tests passing",
+              "All dead code forever",
+              "Typos",
+              "Secrets in source"
+            ],
+            "correctAnswer": "Public API and tests passing"
+          },
+          {
+            "question": "A regression checklist should cover:",
+            "options": [
+              "Happy path and edge cases you care about",
+              "Only fonts",
+              "Only CI badges",
+              "Nothing"
+            ],
+            "correctAnswer": "Happy path and edge cases you care about"
+          }
+        ]
+      },
+      "project": {
+        "title": "Nested Logic Cleanup",
+        "description": "Take a messy nested if/else (or invent one). Write a Codex refactor prompt that demands: extract helpers, early returns, same outputs, and a short complexity note.",
+        "code": {
+          "language": "javascript",
+          "starterCode": "export function price(user, items) {\n  let total = 0;\n  if (items) {\n    for (const it of items) {\n      if (it && it.price) {\n        if (user && user.vip) {\n          if (it.price > 100) total += it.price * 0.8;\n          else total += it.price * 0.9;\n        } else {\n          if (it.onSale) total += it.price * 0.95;\n          else total += it.price;\n        }\n      }\n    }\n  }\n  return total;\n}\n\n// TODO: refactor with Codex guidance into clear helpers + early returns\n",
+          "enableConsole": true
+        }
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Before refactoring, ensure you have:",
+            "options": [
+              "No tests",
+              "A way to verify behavior (tests or cases)",
+              "Deleted git",
+              "Only screenshots"
+            ],
+            "correctAnswer": "A way to verify behavior (tests or cases)"
+          },
+          {
+            "question": "Early returns often help by:",
+            "options": [
+              "Increasing nesting",
+              "Flattening control flow",
+              "Breaking types always",
+              "Hiding errors"
+            ],
+            "correctAnswer": "Flattening control flow"
+          },
+          {
+            "question": "Asking for a diff-sized change means:",
+            "options": [
+              "Rewrite everything",
+              "Keep the patch reviewable",
+              "Skip commits",
+              "Force push main"
+            ],
+            "correctAnswer": "Keep the patch reviewable"
+          },
+          {
+            "question": "Dead code removal should be:",
+            "options": [
+              "Unverified",
+              "Confirmed unused then deleted",
+              "Done with features mixed in",
+              "Hidden"
+            ],
+            "correctAnswer": "Confirmed unused then deleted"
+          },
+          {
+            "question": "Complexity notes help reviewers:",
+            "options": [
+              "Ignore the PR",
+              "Understand why the change is better",
+              "Deploy faster only",
+              "Skip QA"
+            ],
+            "correctAnswer": "Understand why the change is better"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Refactoring and Code Health with Codex\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Nested Logic Cleanup"
+      ],
+      "keyTakeaways": [
+        "Refactor in thin slices: extract function, rename for clarity, reduce nesting, then re-run tests.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take a messy nested if/else (or invent one). Write a Codex refactor prompt that demands: extract helpers, early returns, same outputs, and a short complexity note."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Refactoring and Code Health with Codex"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Tests, Property Checks, and Fixtures",
+      "duration": 35,
+      "introduction": {
+        "text": "Have Codex propose test cases from the spec first, then implement. Cover happy path, boundaries, and failure modes. Prefer deterministic fixtures. Ask for table-driven tests when many inputs share structure. Use failing tests to drive fixes."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Generating cases before code helps you:",
+            "options": [
+              "Skip thinking",
+              "Lock expected behavior early",
+              "Delete CI",
+              "Avoid edges"
+            ],
+            "correctAnswer": "Lock expected behavior early"
+          },
+          {
+            "question": "Boundary tests target:",
+            "options": [
+              "Only happy paths",
+              "Limits like empty, max, zero, null",
+              "Only UI colors",
+              "DNS"
+            ],
+            "correctAnswer": "Limits like empty, max, zero, null"
+          },
+          {
+            "question": "Table-driven tests are good when:",
+            "options": [
+              "One case exists",
+              "Many inputs share the same assertion shape",
+              "You dislike arrays",
+              "Offline forever"
+            ],
+            "correctAnswer": "Many inputs share the same assertion shape"
+          },
+          {
+            "question": "Flaky tests usually come from:",
+            "options": [
+              "Deterministic fixtures",
+              "Time, randomness, or shared state",
+              "Clear names",
+              "Pure functions"
+            ],
+            "correctAnswer": "Time, randomness, or shared state"
+          },
+          {
+            "question": "A failing test first is useful to:",
+            "options": [
+              "Confuse CI",
+              "Prove the bug and guide the fix",
+              "Delete coverage",
+              "Hide regressions"
+            ],
+            "correctAnswer": "Prove the bug and guide the fix"
+          }
+        ]
+      },
+      "project": {
+        "title": "Spec → Cases → Tests",
+        "description": "For isValidEmail, list 8 cases (valid/invalid). Write a Codex prompt that generates table-driven tests, then implement stubs that make intentional failures obvious.",
+        "code": {
+          "language": "javascript",
+          "starterCode": "export function isValidEmail(email) {\n  return typeof email === \"string\" && email.includes(\"@\") && email.includes(\".\");\n}\n\n// Cases Codex should cover (edit/expand):\n// 1) user@example.com -> true\n// 2) \"\" -> false\n// ...\n",
+          "enableConsole": true
+        }
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Fixtures should be:",
+            "options": [
+              "Random each run",
+              "Stable and readable",
+              "Hidden secrets",
+              "Network-only"
+            ],
+            "correctAnswer": "Stable and readable"
+          },
+          {
+            "question": "Failure-mode tests assert:",
+            "options": [
+              "Only success",
+              "Errors or rejection behavior",
+              "Font size",
+              "Deploy URLs"
+            ],
+            "correctAnswer": "Errors or rejection behavior"
+          },
+          {
+            "question": "Asking Codex for “missing cases” can reveal:",
+            "options": [
+              "Nothing",
+              "Gaps in your mental model",
+              "Only CSS bugs",
+              "DNS issues"
+            ],
+            "correctAnswer": "Gaps in your mental model"
+          },
+          {
+            "question": "Tests that mirror implementation details too tightly:",
+            "options": [
+              "Never break",
+              "Become brittle under refactors",
+              "Are ideal always",
+              "Replace code review"
+            ],
+            "correctAnswer": "Become brittle under refactors"
+          },
+          {
+            "question": "Coverage is a:",
+            "options": [
+              "Guarantee of correctness",
+              "Signal, not a substitute for thoughtful cases",
+              "Reason to skip edges",
+              "Deploy key"
+            ],
+            "correctAnswer": "Signal, not a substitute for thoughtful cases"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Tests, Property Checks, and Fixtures\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Spec → Cases → Tests"
+      ],
+      "keyTakeaways": [
+        "Have Codex propose test cases from the spec first, then implement.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "For isValidEmail, list 8 cases (valid/invalid). Write a Codex prompt that generates table-driven tests, then implement stubs that make intentional failures obvious."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Tests, Property Checks, and Fixtures"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Debugging Loops with Codex",
+      "duration": 35,
+      "introduction": {
+        "text": "Feed Codex the error, stack, relevant snippet, and what you already tried. Ask for ranked hypotheses, then a minimal experiment. Avoid dumping the whole repo. After a fix, request a regression test and a one-line root-cause summary for your notes."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "A strong debug prompt includes:",
+            "options": [
+              "Only “it broke”",
+              "Error, stack, snippet, attempts",
+              "Emojis",
+              "Secrets"
+            ],
+            "correctAnswer": "Error, stack, snippet, attempts"
+          },
+          {
+            "question": "Ranked hypotheses help you:",
+            "options": [
+              "Try random edits forever",
+              "Test the most likely causes first",
+              "Skip logs",
+              "Delete stacks"
+            ],
+            "correctAnswer": "Test the most likely causes first"
+          },
+          {
+            "question": "Minimal experiments are better because:",
+            "options": [
+              "They change everything",
+              "They isolate the cause",
+              "They hide evidence",
+              "CI forbids them"
+            ],
+            "correctAnswer": "They isolate the cause"
+          },
+          {
+            "question": "After fixing, add:",
+            "options": [
+              "Nothing",
+              "A regression test when practical",
+              "More dead code",
+              "Force push"
+            ],
+            "correctAnswer": "A regression test when practical"
+          },
+          {
+            "question": "Root-cause notes help future you:",
+            "options": [
+              "Forget",
+              "Recognize the pattern faster",
+              "Avoid git",
+              "Skip reading errors"
+            ],
+            "correctAnswer": "Recognize the pattern faster"
+          }
+        ]
+      },
+      "project": {
+        "title": "Bug Clinic Card",
+        "description": "Invent a TypeError from a real-looking stack. Write a Codex debug prompt and a 5-step investigation plan with expected signals at each step."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Dumping unrelated files into the prompt often:",
+            "options": [
+              "Improves focus",
+              "Adds noise and wrong fixes",
+              "Fixes flaky CI always",
+              "Removes need for stacks"
+            ],
+            "correctAnswer": "Adds noise and wrong fixes"
+          },
+          {
+            "question": "“What would falsify this hypothesis?” is a good:",
+            "options": [
+              "Distraction",
+              "Scientific check on Codex advice",
+              "Design-only question",
+              "Illegal ask"
+            ],
+            "correctAnswer": "Scientific check on Codex advice"
+          },
+          {
+            "question": "Logging at boundaries helps because:",
+            "options": [
+              "It always slows forever",
+              "You see where values go wrong",
+              "It replaces tests",
+              "It encrypts errors"
+            ],
+            "correctAnswer": "You see where values go wrong"
+          },
+          {
+            "question": "If Codex suggests an API that does not exist:",
+            "options": [
+              "Trust it",
+              "Verify against docs/types",
+              "Ship it",
+              "Ban TypeScript"
+            ],
+            "correctAnswer": "Verify against docs/types"
+          },
+          {
+            "question": "A good fix PR description includes:",
+            "options": [
+              "Root cause and test plan",
+              "Only “fixed”",
+              "Memes only",
+              "Secrets"
+            ],
+            "correctAnswer": "Root cause and test plan"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Debugging Loops with Codex\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Bug Clinic Card"
+      ],
+      "keyTakeaways": [
+        "Feed Codex the error, stack, relevant snippet, and what you already tried.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Invent a TypeError from a real-looking stack. Write a Codex debug prompt and a 5-step investigation plan with expected signals at each step."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Debugging Loops with Codex"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Feature Delivery: Plan → PR → Polish",
+      "duration": 40,
+      "introduction": {
+        "text": "Ship with Codex across a full loop: clarify user story, spike interfaces, implement behind small commits, write tests, update docs, and self-review with a checklist (security, a11y basics, performance obvious wins). Ask Codex for a PR summary from the diff."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "A user story should capture:",
+            "options": [
+              "Only fonts",
+              "Who, need, and why it matters",
+              "Server IPs",
+              "Git hooks only"
+            ],
+            "correctAnswer": "Who, need, and why it matters"
+          },
+          {
+            "question": "Small commits help:",
+            "options": [
+              "Hide history",
+              "Review and revert cleanly",
+              "Break bisect",
+              "Skip tests"
+            ],
+            "correctAnswer": "Review and revert cleanly"
+          },
+          {
+            "question": "Self-review checklists catch:",
+            "options": [
+              "Nothing useful",
+              "Common misses before human review",
+              "Only spelling",
+              "CI badges"
+            ],
+            "correctAnswer": "Common misses before human review"
+          },
+          {
+            "question": "PR summaries from diffs should emphasize:",
+            "options": [
+              "Behavior change and risk",
+              "Only file counts",
+              "Emojis",
+              "Secrets"
+            ],
+            "correctAnswer": "Behavior change and risk"
+          },
+          {
+            "question": "Docs updates belong with:",
+            "options": [
+              "A later mystery PR",
+              "The feature that changed behavior",
+              "Never",
+              "Only design"
+            ],
+            "correctAnswer": "The feature that changed behavior"
+          }
+        ]
+      },
+      "project": {
+        "title": "Ship Pack",
+        "description": "Deliver a mini feature pack for “remember last search query”: user story, 3 Codex prompts (API, UI hook, tests), PR description outline, and rollback plan."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Rollback plans matter when:",
+            "options": [
+              "Changes never fail",
+              "You need a safe undo path",
+              "Git is unused",
+              "Only for design"
+            ],
+            "correctAnswer": "You need a safe undo path"
+          },
+          {
+            "question": "Security basics in review include:",
+            "options": [
+              "Ignoring inputs",
+              "Validating untrusted input and secrets handling",
+              "Hardcoding tokens",
+              "Disabling HTTPS"
+            ],
+            "correctAnswer": "Validating untrusted input and secrets handling"
+          },
+          {
+            "question": "Asking Codex for edge cases before merge can:",
+            "options": [
+              "Only waste time",
+              "Reveal missed product behaviors",
+              "Replace QA entirely",
+              "Break git"
+            ],
+            "correctAnswer": "Reveal missed product behaviors"
+          },
+          {
+            "question": "Performance “obvious wins” might include:",
+            "options": [
+              "N+1 calls you introduced",
+              "Random micro-opts everywhere",
+              "Deleting indexes blindly",
+              "Ignoring profiles"
+            ],
+            "correctAnswer": "N+1 calls you introduced"
+          },
+          {
+            "question": "A done feature includes:",
+            "options": [
+              "Code, tests, and communicated change",
+              "Only local hacks",
+              "No review",
+              "Force push"
+            ],
+            "correctAnswer": "Code, tests, and communicated change"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Feature Delivery: Plan → PR → Polish\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Ship Pack"
+      ],
+      "keyTakeaways": [
+        "Ship with Codex across a full loop: clarify user story, spike interfaces, implement behind small commits, write tests, update docs, and self-review with a checklist (security, a11y basics, performance obvious wins).",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Deliver a mini feature pack for “remember last search query”: user story, 3 Codex prompts (API, UI hook, tests), PR description outline, and rollback plan."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Feature Delivery: Plan → PR → Polish"
+        }
+      ]
+    }
+  ],
+  "category": "programming"
+}

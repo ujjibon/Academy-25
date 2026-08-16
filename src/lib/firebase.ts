@@ -547,7 +547,12 @@ export const updateUserProfile = async (uid: string, updates: Partial<UserProfil
   }
 };
 
-export const updateCourseProgress = async (uid: string, courseId: string, progress: number) => {
+export const updateCourseProgress = async (
+  uid: string,
+  courseId: string,
+  progress: number,
+  lessonId?: string
+) => {
   try {
     const userRef = doc(db, 'users', uid);
     const updates: Record<string, unknown> = {
@@ -555,6 +560,9 @@ export const updateCourseProgress = async (uid: string, courseId: string, progre
       activeCourseId: courseId,
       lastLoginAt: new Date(),
     };
+    if (lessonId) {
+      updates.activeLessonId = lessonId;
+    }
     if (progress >= 100) {
       updates.completedCourses = arrayUnion(courseId);
     }
@@ -566,6 +574,23 @@ export const updateCourseProgress = async (uid: string, courseId: string, progre
     }
     console.error('Error updating course progress:', error);
     throw error;
+  }
+};
+
+/** Resume position without changing progress percentage. */
+export const setActiveLesson = async (uid: string, courseId: string, lessonId: string) => {
+  try {
+    const userRef = doc(db, 'users', uid);
+    await updateDoc(userRef, {
+      activeCourseId: courseId,
+      activeLessonId: lessonId,
+      lastLoginAt: new Date(),
+    });
+  } catch (error: any) {
+    if (error.code === 'failed-precondition' || error.code === 'unavailable') {
+      return;
+    }
+    console.error('Error setting active lesson:', error);
   }
 };
 
@@ -679,6 +704,26 @@ export const getAllUsers = async (maxUsers = 100): Promise<UserProfile[]> => {
             ...badge,
             earnedAt: badge.earnedAt?.toDate?.() || new Date(),
           })) || [],
+        subscription: data.subscription
+          ? {
+              ...data.subscription,
+              currentPeriodEnd:
+                data.subscription.currentPeriodEnd?.toDate?.() ??
+                (data.subscription.currentPeriodEnd
+                  ? new Date(data.subscription.currentPeriodEnd)
+                  : undefined),
+              startedAt:
+                data.subscription.startedAt?.toDate?.() ??
+                (data.subscription.startedAt
+                  ? new Date(data.subscription.startedAt)
+                  : undefined),
+              updatedAt:
+                data.subscription.updatedAt?.toDate?.() ??
+                (data.subscription.updatedAt
+                  ? new Date(data.subscription.updatedAt)
+                  : undefined),
+            }
+          : undefined,
       } as UserProfile;
     });
   } catch (error) {

@@ -41,6 +41,7 @@ import {
   ChevronRight,
   Rocket,
   Mail,
+  CreditCard,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { signOut as firebaseSignOut } from '@/lib/firebase';
@@ -82,6 +83,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     { href: '/admin-portal', label: 'Overview', icon: LayoutDashboard, exact: true },
     { href: '/admin-portal/courses', label: 'Courses', icon: BookOpen },
     { href: '/admin-portal/users', label: 'Users', icon: Users },
+    { href: '/admin-portal/billing', label: 'Payments', icon: CreditCard },
     { href: '/admin-portal/notifications', label: 'Notifications', icon: Mail },
     { href: '/admin-portal/startup', label: 'Startup program', icon: Rocket },
     { href: '/admin-portal/course-creator', label: 'AI Course Creator', icon: Sparkles },

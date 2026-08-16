@@ -1,0 +1,890 @@
+{
+  "id": "masters-higgsfield",
+  "title": "Higgsfield Masters Class",
+  "description": "A full Higgsfield apprenticeship: motion briefs, prompt craft for AI video, style locking, iteration loops, export discipline, and shipping short-form motion pieces end to end.",
+  "image": "/images/masters-higgsfield.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Higgsfield in the Creative Pipeline",
+      "duration": 25,
+      "introduction": {
+        "text": "Higgsfield sits in the AI motion layer: turn briefs into clips you can iterate and export. Treat generations as footage options, not final films. Your apprenticeship builds end-to-end motion craft—brief, generate, select, refine, and package for CapCut or social."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "AI video outputs should be treated as:",
+            "options": [
+              "Untouchable finals",
+              "Footage options under creative direction",
+              "Legal documents",
+              "Database dumps"
+            ],
+            "correctAnswer": "Footage options under creative direction"
+          },
+          {
+            "question": "Higgsfield’s role in a pipeline is often:",
+            "options": [
+              "Replacing all editing forever",
+              "Generating motion candidates fast",
+              "Printing posters only",
+              "Writing SQL"
+            ],
+            "correctAnswer": "Generating motion candidates fast"
+          },
+          {
+            "question": "Creative direction remains:",
+            "options": [
+              "Optional",
+              "Your responsibility",
+              "The model’s legal duty",
+              "A filter preset"
+            ],
+            "correctAnswer": "Your responsibility"
+          },
+          {
+            "question": "Packaging for CapCut/social means:",
+            "options": [
+              "Ignoring aspect ratio",
+              "Exporting usable clips for assembly",
+              "Skipping selection",
+              "No brief"
+            ],
+            "correctAnswer": "Exporting usable clips for assembly"
+          },
+          {
+            "question": "Masters motion work needs:",
+            "options": [
+              "One lucky generate",
+              "Brief → iterate → select → ship loops",
+              "No style notes",
+              "Random prompts only"
+            ],
+            "correctAnswer": "Brief → iterate → select → ship loops"
+          }
+        ]
+      },
+      "project": {
+        "title": "Pipeline Map",
+        "description": "Draw (or outline) your Higgsfield pipeline: brief inputs, generation settings you care about, selection criteria, refine steps, and where CapCut/Figma/Canva enter. Mark failure points where people usually waste credits."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Wasted credits often come from:",
+            "options": [
+              "Clear briefs",
+              "Vague prompts and no selection criteria",
+              "Style locks",
+              "Export checklists"
+            ],
+            "correctAnswer": "Vague prompts and no selection criteria"
+          },
+          {
+            "question": "Selection criteria might include:",
+            "options": [
+              "Only “cool”",
+              "Brief match, continuity, and usability",
+              "File name length",
+              "Random seed worship"
+            ],
+            "correctAnswer": "Brief match, continuity, and usability"
+          },
+          {
+            "question": "Treating AI clips as finals risks:",
+            "options": [
+              "Better taste",
+              "Shipping incoherent or off-brief motion",
+              "Stronger pipelines",
+              "Clearer QA"
+            ],
+            "correctAnswer": "Shipping incoherent or off-brief motion"
+          },
+          {
+            "question": "Downstream editors need:",
+            "options": [
+              "Mystery aspect ratios",
+              "Clean labeled exports",
+              "Unsorted dumps",
+              "No duration notes"
+            ],
+            "correctAnswer": "Clean labeled exports"
+          },
+          {
+            "question": "End-to-end thinking prevents:",
+            "options": [
+              "Siloed generate-and-pray workflows",
+              "Collaboration",
+              "Iteration",
+              "Briefs"
+            ],
+            "correctAnswer": "Siloed generate-and-pray workflows"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Higgsfield in the Creative Pipeline\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Pipeline Map"
+      ],
+      "keyTakeaways": [
+        "Higgsfield sits in the AI motion layer: turn briefs into clips you can iterate and export.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Draw (or outline) your Higgsfield pipeline: brief inputs, generation settings you care about, selection criteria, refine steps, and where CapCut/Figma/Canva enter. Mark failure points where people usually waste credits."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Higgsfield in the Creative Pipeline"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Motion Briefs that Constrain Chaos",
+      "duration": 30,
+      "introduction": {
+        "text": "A motion brief specifies subject, action, camera, mood, duration intent, and do-nots. Ambiguity burns generations. Include reference stills or adjectives that lock style. Write acceptance checks: what must be true to keep a take."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Camera notes in briefs help:",
+            "options": [
+              "Ignore framing",
+              "Guide shot language (push, orbit, static)",
+              "Delete subjects",
+              "Ban mood"
+            ],
+            "correctAnswer": "Guide shot language (push, orbit, static)"
+          },
+          {
+            "question": "Do-nots prevent:",
+            "options": [
+              "Useful constraints",
+              "Common unwanted artifacts or themes",
+              "All creativity",
+              "Exports"
+            ],
+            "correctAnswer": "Common unwanted artifacts or themes"
+          },
+          {
+            "question": "Acceptance checks are:",
+            "options": [
+              "Vague vibes",
+              "Observable keep/kill rules",
+              "Only seeds",
+              "Hidden forever"
+            ],
+            "correctAnswer": "Observable keep/kill rules"
+          },
+          {
+            "question": "Duration intent matters because:",
+            "options": [
+              "All clips are identical length needs",
+              "Edit plans depend on usable beat length",
+              "Social ignores timing",
+              "Prompts ban time"
+            ],
+            "correctAnswer": "Edit plans depend on usable beat length"
+          },
+          {
+            "question": "Ambiguous briefs usually produce:",
+            "options": [
+              "On-target first takes",
+              "Wide miss variance",
+              "Perfect continuity",
+              "No artifacts"
+            ],
+            "correctAnswer": "Wide miss variance"
+          }
+        ]
+      },
+      "project": {
+        "title": "Motion Brief Sheet",
+        "description": "Write a complete brief for a 6–8s product hero clip: subject, action, camera, mood, style refs, do-nots, and 5 acceptance checks. Add a backup brief if the first look fails."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Style references reduce:",
+            "options": [
+              "Direction",
+              "Random style drift across takes",
+              "Need for mood words",
+              "Camera notes"
+            ],
+            "correctAnswer": "Random style drift across takes"
+          },
+          {
+            "question": "Subject clarity avoids:",
+            "options": [
+              "Clean focus",
+              "Model inventing the wrong hero",
+              "Better framing",
+              "Usable exports"
+            ],
+            "correctAnswer": "Model inventing the wrong hero"
+          },
+          {
+            "question": "Backup briefs are useful when:",
+            "options": [
+              "First look always wins",
+              "Exploration needs a controlled pivot",
+              "You ban iteration",
+              "Credits are infinite and unguided"
+            ],
+            "correctAnswer": "Exploration needs a controlled pivot"
+          },
+          {
+            "question": "Action verbs in briefs beat:",
+            "options": [
+              "Static noun lists only",
+              "Clear motion targets",
+              "Camera language",
+              "Do-nots"
+            ],
+            "correctAnswer": "Static noun lists only"
+          },
+          {
+            "question": "Keep/kill rules should be applied:",
+            "options": [
+              "After emotional attachment",
+              "Before you sink more generations",
+              "Never",
+              "Only at publish"
+            ],
+            "correctAnswer": "Before you sink more generations"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Motion Briefs that Constrain Chaos\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Motion Brief Sheet"
+      ],
+      "keyTakeaways": [
+        "A motion brief specifies subject, action, camera, mood, duration intent, and do-nots.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a complete brief for a 6–8s product hero clip: subject, action, camera, mood, style refs, do-nots, and 5 acceptance checks. Add a backup brief if the first look fails."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Motion Briefs that Constrain Chaos"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Prompt Craft for Coherent Motion",
+      "duration": 35,
+      "introduction": {
+        "text": "Prompt for coherent motion: stable subject, clear verb, lighting, lens feel, and fewer conflicting styles. Iterate one variable at a time. Save prompt versions that worked. Negative constraints matter as much as positives."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Changing many variables at once makes learning:",
+            "options": [
+              "Clear",
+              "Harder—you cannot attribute results",
+              "Faster forever",
+              "Unnecessary"
+            ],
+            "correctAnswer": "Harder—you cannot attribute results"
+          },
+          {
+            "question": "Conflicting styles in one prompt often yield:",
+            "options": [
+              "Clean identity",
+              "Muddy or unstable looks",
+              "Perfect continuity",
+              "Better audio"
+            ],
+            "correctAnswer": "Muddy or unstable looks"
+          },
+          {
+            "question": "Negative constraints help by:",
+            "options": [
+              "Encouraging banned artifacts",
+              "Steering away from known failure modes",
+              "Removing all detail",
+              "Hiding the subject"
+            ],
+            "correctAnswer": "Steering away from known failure modes"
+          },
+          {
+            "question": "Lens/lighting language influences:",
+            "options": [
+              "Only file size",
+              "Mood and perceived production value",
+              "SQL joins",
+              "Brand PDFs only"
+            ],
+            "correctAnswer": "Mood and perceived production value"
+          },
+          {
+            "question": "Prompt versioning lets you:",
+            "options": [
+              "Forget wins",
+              "Return to known-good recipes",
+              "Ban iteration",
+              "Delete briefs"
+            ],
+            "correctAnswer": "Return to known-good recipes"
+          }
+        ]
+      },
+      "project": {
+        "title": "Prompt Lab Log",
+        "description": "Run (or simulate) a 6-row prompt lab: baseline + five single-variable changes (camera, lighting, action intensity, style, negative). Log outcome notes and crown a winner with reasons."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Stable subject wording reduces:",
+            "options": [
+              "Identity flicker across takes",
+              "All motion",
+              "Need for verbs",
+              "Lighting"
+            ],
+            "correctAnswer": "Identity flicker across takes"
+          },
+          {
+            "question": "A good lab log captures:",
+            "options": [
+              "Only final MP4",
+              "Prompt, change, and observed result",
+              "Secrets",
+              "No criteria"
+            ],
+            "correctAnswer": "Prompt, change, and observed result"
+          },
+          {
+            "question": "Overstuffed prompts tend to:",
+            "options": [
+              "Clarify priorities",
+              "Compete with themselves",
+              "Guarantee coherence",
+              "Remove artifacts"
+            ],
+            "correctAnswer": "Compete with themselves"
+          },
+          {
+            "question": "Intensity of action should match:",
+            "options": [
+              "Brief and edit needs",
+              "Maximum chaos always",
+              "No camera",
+              "Random nouns"
+            ],
+            "correctAnswer": "Brief and edit needs"
+          },
+          {
+            "question": "Masters prompt craft is:",
+            "options": [
+              "Magic words once",
+              "Controlled experimentation with memory",
+              "Copying strangers blindly",
+              "No negatives"
+            ],
+            "correctAnswer": "Controlled experimentation with memory"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Prompt Craft for Coherent Motion\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Prompt Lab Log"
+      ],
+      "keyTakeaways": [
+        "Prompt for coherent motion: stable subject, clear verb, lighting, lens feel, and fewer conflicting styles.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Run (or simulate) a 6-row prompt lab: baseline + five single-variable changes (camera, lighting, action intensity, style, negative). Log outcome notes and crown a winner with reasons."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Prompt Craft for Coherent Motion"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Style Locking and Continuity",
+      "duration": 35,
+      "introduction": {
+        "text": "Campaigns need continuity across clips: palette, lens, subject identity, and motion energy. Lock style early. Build a look bible. When continuity breaks, fix with constrained regenerations rather than random new aesthetics."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "A look bible documents:",
+            "options": [
+              "Server passwords",
+              "Visual rules for continuity",
+              "Only budgets",
+              "Chat logs"
+            ],
+            "correctAnswer": "Visual rules for continuity"
+          },
+          {
+            "question": "Locking style early helps:",
+            "options": [
+              "Endless aesthetic thrash",
+              "Cohesive multi-clip sets",
+              "More conflicting prompts",
+              "Weaker brands"
+            ],
+            "correctAnswer": "Cohesive multi-clip sets"
+          },
+          {
+            "question": "Identity drift is:",
+            "options": [
+              "Always good",
+              "Subject looking inconsistently across takes",
+              "Only audio",
+              "An export preset"
+            ],
+            "correctAnswer": "Subject looking inconsistently across takes"
+          },
+          {
+            "question": "Constrained regenerations mean:",
+            "options": [
+              "New brand every take",
+              "Changing few variables to repair continuity",
+              "Deleting the bible",
+              "Ignoring palette"
+            ],
+            "correctAnswer": "Changing few variables to repair continuity"
+          },
+          {
+            "question": "Motion energy should be:",
+            "options": [
+              "Random per clip",
+              "Matched to campaign tone",
+              "Always maximal",
+              "Never discussed"
+            ],
+            "correctAnswer": "Matched to campaign tone"
+          }
+        ]
+      },
+      "project": {
+        "title": "Look Bible + Pair Test",
+        "description": "Create a one-page look bible (palette, lighting, lens, motion energy, do-nots). Generate or describe two clips that must feel like the same campaign; write a continuity score and repair plan for mismatches."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Continuity scores should judge:",
+            "options": [
+              "Only file names",
+              "Identity, palette, lens, energy",
+              "Only duration",
+              "Only seed numbers"
+            ],
+            "correctAnswer": "Identity, palette, lens, energy"
+          },
+          {
+            "question": "Repair plans beat:",
+            "options": [
+              "Throwing away the campaign look casually",
+              "Documented fixes",
+              "Look bibles",
+              "Constrained prompts"
+            ],
+            "correctAnswer": "Throwing away the campaign look casually"
+          },
+          {
+            "question": "Palette locking supports:",
+            "options": [
+              "Brand recognition in motion",
+              "More rainbow noise",
+              "Unrelated stills only",
+              "No Canva link"
+            ],
+            "correctAnswer": "Brand recognition in motion"
+          },
+          {
+            "question": "Multi-clip sets fail when:",
+            "options": [
+              "Energy matches",
+              "Each take invents a new genre",
+              "Look bible exists",
+              "Acceptance checks run"
+            ],
+            "correctAnswer": "Each take invents a new genre"
+          },
+          {
+            "question": "Masters continuity is:",
+            "options": [
+              "Accidental",
+              "Designed and enforced",
+              "Impossible",
+              "Only for live film"
+            ],
+            "correctAnswer": "Designed and enforced"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Style Locking and Continuity\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Look Bible + Pair Test"
+      ],
+      "keyTakeaways": [
+        "Campaigns need continuity across clips: palette, lens, subject identity, and motion energy.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a one-page look bible (palette, lighting, lens, motion energy, do-nots). Generate or describe two clips that must feel like the same campaign; write a continuity score and repair plan for mismatches."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Style Locking and Continuity"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Selection, Iteration, and Cost Control",
+      "duration": 30,
+      "introduction": {
+        "text": "Selection is a creative skill: pick for editability, not just wow frames. Kill early. Batch similar experiments. Track what burned credits without learning. Iteration is scheduled, not infinite scroll."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Editability means:",
+            "options": [
+              "Pretty but unusable morphs",
+              "Clips that cut into a sequence cleanly",
+              "Longest possible always",
+              "No subject"
+            ],
+            "correctAnswer": "Clips that cut into a sequence cleanly"
+          },
+          {
+            "question": "Killing early saves:",
+            "options": [
+              "Learning",
+              "Credits and time",
+              "Taste",
+              "Briefs"
+            ],
+            "correctAnswer": "Credits and time"
+          },
+          {
+            "question": "Batching similar experiments helps:",
+            "options": [
+              "Attribute outcomes and compare fairly",
+              "Maximize chaos",
+              "Hide logs",
+              "Skip criteria"
+            ],
+            "correctAnswer": "Attribute outcomes and compare fairly"
+          },
+          {
+            "question": "Infinite scroll iteration often yields:",
+            "options": [
+              "Clear learning",
+              "Diminishing returns and fatigue",
+              "Better briefs automatically",
+              "Perfect continuity"
+            ],
+            "correctAnswer": "Diminishing returns and fatigue"
+          },
+          {
+            "question": "Credit burn without learning indicates:",
+            "options": [
+              "Good labs",
+              "Missing hypotheses and logs",
+              "Strong selection",
+              "Clear acceptance checks"
+            ],
+            "correctAnswer": "Missing hypotheses and logs"
+          }
+        ]
+      },
+      "project": {
+        "title": "Selection Board",
+        "description": "Build a selection board template: Keep / Maybe / Kill with reasons tied to the brief. Fill it for 9 fictional takes. Write a next-iteration hypothesis for the top Maybe."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Maybe piles should be:",
+            "options": [
+              "Infinite forever",
+              "Time-boxed and re-reviewed",
+              "Treated as Keep always",
+              "Deleted unread"
+            ],
+            "correctAnswer": "Time-boxed and re-reviewed"
+          },
+          {
+            "question": "Hypotheses for next iteration state:",
+            "options": [
+              "“Try stuff”",
+              "What you will change and why",
+              "Only seeds",
+              "No link to failures"
+            ],
+            "correctAnswer": "What you will change and why"
+          },
+          {
+            "question": "Wow frames that fail continuity are usually:",
+            "options": [
+              "Auto-Keep",
+              "Kill or heavy repair",
+              "Look bible replacements",
+              "Export masters"
+            ],
+            "correctAnswer": "Kill or heavy repair"
+          },
+          {
+            "question": "Scheduled iteration means:",
+            "options": [
+              "No limits",
+              "Bounded rounds with goals",
+              "Scrolling until dawn",
+              "No selection"
+            ],
+            "correctAnswer": "Bounded rounds with goals"
+          },
+          {
+            "question": "Cost control is part of:",
+            "options": [
+              "Producing like a studio",
+              "Ignoring craft",
+              "Only enterprise legal",
+              "Skipping briefs"
+            ],
+            "correctAnswer": "Producing like a studio"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Selection, Iteration, and Cost Control\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Selection Board"
+      ],
+      "keyTakeaways": [
+        "Selection is a creative skill: pick for editability, not just wow frames.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a selection board template: Keep / Maybe / Kill with reasons tied to the brief. Fill it for 9 fictional takes. Write a next-iteration hypothesis for the top Maybe."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Selection, Iteration, and Cost Control"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Export, Handoff, and Short-Form Packaging",
+      "duration": 35,
+      "introduction": {
+        "text": "Export with naming, aspect ratio, and duration notes editors need. Package selects with brief + look bible. Plan how clips enter CapCut timelines. Masters Higgsfield work ends when another teammate can assemble without guessing."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Handoff packages should include:",
+            "options": [
+              "Only raw mystery files",
+              "Selects, brief, look notes, and naming",
+              "Passwords",
+              "No ratios"
+            ],
+            "correctAnswer": "Selects, brief, look notes, and naming"
+          },
+          {
+            "question": "Aspect ratio mistakes cause:",
+            "options": [
+              "Clean social crops",
+              "Painful rework downstream",
+              "Better audio",
+              "Stronger briefs"
+            ],
+            "correctAnswer": "Painful rework downstream"
+          },
+          {
+            "question": "Duration notes help editors:",
+            "options": [
+              "Guess cuts",
+              "Plan pacing and music hits",
+              "Ignore selects",
+              "Delete looks"
+            ],
+            "correctAnswer": "Plan pacing and music hits"
+          },
+          {
+            "question": "Guess-free assembly means:",
+            "options": [
+              "Missing labels",
+              "Clear metadata and intent",
+              "Random folder dumps",
+              "No CapCut plan"
+            ],
+            "correctAnswer": "Clear metadata and intent"
+          },
+          {
+            "question": "Short-form packaging often targets:",
+            "options": [
+              "Feature films only",
+              "Platform-ready clip sets",
+              "Print posters",
+              "SQL exports"
+            ],
+            "correctAnswer": "Platform-ready clip sets"
+          }
+        ]
+      },
+      "project": {
+        "title": "Editor Handoff Kit",
+        "description": "Create a handoff kit outline for a 20s social spot: clip list with roles (open/hook/demo/close), aspect ratios, look bible link, and CapCut assembly notes for order and music energy."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Clip roles in a list prevent:",
+            "options": [
+              "Purposeful sequencing",
+              "Editors not knowing why a take exists",
+              "Good pacing",
+              "Clear hooks"
+            ],
+            "correctAnswer": "Editors not knowing why a take exists"
+          },
+          {
+            "question": "Music energy notes align:",
+            "options": [
+              "Motion intensity with soundtrack",
+              "Random cuts only",
+              "Look bible fonts",
+              "Brand PDFs"
+            ],
+            "correctAnswer": "Motion intensity with soundtrack"
+          },
+          {
+            "question": "Naming conventions should encode:",
+            "options": [
+              "Nothing useful",
+              "Scene role and version",
+              "Only timestamps forever",
+              "Secrets"
+            ],
+            "correctAnswer": "Scene role and version"
+          },
+          {
+            "question": "Downstream rework often starts at:",
+            "options": [
+              "Clear handoffs",
+              "Sloppy exports and missing intent",
+              "Acceptance checks",
+              "Selection boards"
+            ],
+            "correctAnswer": "Sloppy exports and missing intent"
+          },
+          {
+            "question": "End-to-end Higgsfield mastery ships:",
+            "options": [
+              "Orphan MP4s",
+              "Directed, continuous, editable motion sets",
+              "Infinite Maybes",
+              "No briefs"
+            ],
+            "correctAnswer": "Directed, continuous, editable motion sets"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Export, Handoff, and Short-Form Packaging\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Editor Handoff Kit"
+      ],
+      "keyTakeaways": [
+        "Export with naming, aspect ratio, and duration notes editors need.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a handoff kit outline for a 20s social spot: clip list with roles (open/hook/demo/close), aspect ratios, look bible link, and CapCut assembly notes for order and music energy."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Export, Handoff, and Short-Form Packaging"
+        }
+      ]
+    }
+  ]
+}

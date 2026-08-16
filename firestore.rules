@@ -156,5 +156,67 @@ service cloud.firestore {
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'topic']));
       allow delete: if isAdmin();
     }
+
+    // Coupons — doc id is the normalized code. Learners may get one code; only admins list/manage.
+    // Signed-in users may increment redemptionCount by exactly 1 when redeeming.
+    match /coupons/{couponId} {
+      allow get: if signedIn();
+      allow list: if isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (signedIn()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['redemptionCount', 'updatedAt'])
+          && request.resource.data.redemptionCount == resource.data.redemptionCount + 1);
+    }
+
+    // Payment ledger — owners read own rows; admins manage all
+    match /payments/{paymentId} {
+      allow read: if signedIn()
+        && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAdmin()
+        || (signedIn()
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.status in ['pending', 'completed']);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Coupon redemption log
+    match /couponRedemptions/{redemptionId} {
+      allow read: if signedIn()
+        && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // Lesson notes — owner only
+    match /lessonNotes/{noteId} {
+      allow read, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create, update: if signedIn()
+        && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Spaced-repetition study cards — owner only
+    match /studyCards/{cardId} {
+      allow read, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if signedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // Verifiable certificates — owners manage; anyone can read for public verify
+    match /certificates/{certificateId} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin()
+        || (signedIn() && resource.data.userId == request.auth.uid);
+    }
+
+    match /certificateCodes/{code} {
+      allow read: if true;
+      allow create: if signedIn();
+      allow update, delete: if isAdmin();
+    }
   }
 }

@@ -4,6 +4,16 @@ import advancedCss from '@/data/courses/advanced-css.json';
 import digitalProductivity from '@/data/courses/digital-productivity-mastery.json';
 import reactFundamentals from '@/data/courses/react-fundamentals.json';
 import pythonSP101 from '@/data/courses/Python-SP-101.json';
+import mastersCodex from '@/data/courses/masters-codex.json';
+import mastersAntigravity from '@/data/courses/masters-antigravity.json';
+import mastersClaude from '@/data/courses/masters-claude.json';
+import mastersPerplexity from '@/data/courses/masters-perplexity.json';
+import mastersFigma from '@/data/courses/masters-figma.json';
+import mastersCanva from '@/data/courses/masters-canva.json';
+import mastersHiggsfield from '@/data/courses/masters-higgsfield.json';
+import mastersCapcut from '@/data/courses/masters-capcut.json';
+import mastersPromptEngineering from '@/data/courses/masters-prompt-engineering.json';
+import mastersCreativeAiCapstone from '@/data/courses/masters-creative-ai-capstone.json';
 
 export type CourseCategory = 'general' | 'programming';
 
@@ -28,6 +38,12 @@ export type Course = {
   lessons: Lesson[];
 };
 
+export type LearningActivity = {
+  id: string;
+  title: string;
+  description: string;
+};
+
 export type Lesson = {
   id: string;
   title: string;
@@ -35,6 +51,12 @@ export type Lesson = {
   introduction: {
     text: string;
   };
+  /** Optional learning goals shown as interactive checklist. */
+  objectives?: string[];
+  /** Optional hands-on steps for the project phase. */
+  activities?: LearningActivity[];
+  /** Optional takeaways revealed after the learn phase. */
+  keyTakeaways?: string[];
   practice: Quiz;
   project: Project;
   assessment: Quiz;
@@ -63,6 +85,16 @@ export type Project = {
 // This is a map of the course IDs to the imported JSON data.
 // In a real application, you would fetch this from a database.
 const coursesData: { [key: string]: Course } = {
+  'masters-codex': mastersCodex as Course,
+  'masters-antigravity': mastersAntigravity as Course,
+  'masters-claude': mastersClaude as Course,
+  'masters-perplexity': mastersPerplexity as Course,
+  'masters-figma': mastersFigma as Course,
+  'masters-canva': mastersCanva as Course,
+  'masters-higgsfield': mastersHiggsfield as Course,
+  'masters-capcut': mastersCapcut as Course,
+  'masters-prompt-engineering': mastersPromptEngineering as Course,
+  'masters-creative-ai-capstone': mastersCreativeAiCapstone as Course,
   'react-fundamentals': reactFundamentals as Course,
   'advanced-css': advancedCss as Course,
   'digital-productivity-mastery': digitalProductivity as Course,
@@ -78,8 +110,8 @@ export const user = {
   level: 8,
   dailyStreak: 5,
   weeklyProgress: 60,
-  activeCourseId: 'react-fundamentals',
-  activeLessonId: '2',
+  activeCourseId: 'masters-codex',
+  activeLessonId: '1',
   strengths: [
     { name: 'React', value: 90 },
     { name: 'JavaScript', value: 85 },
