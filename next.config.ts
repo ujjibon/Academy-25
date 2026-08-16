@@ -18,9 +18,22 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+  webpack: (
+    config: any,
+    { isServer, webpack }: { isServer: boolean; webpack: any }
+  ) => {
     // Handle Node.js modules that are not available in the browser
     if (!isServer) {
+      // pptxgenjs (and similar) use `import('node:fs')`; webpack must strip the
+      // `node:` scheme before resolve.fallback can stub those modules.
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(/^node:/, (resource: {
+          request: string;
+        }) => {
+          resource.request = resource.request.replace(/^node:/, '');
+        })
+      );
+
       config.resolve.fallback = {
         ...config.resolve.fallback,
         async_hooks: false,
@@ -52,6 +65,7 @@ const nextConfig = {
         tty: false,
         vm: false,
         worker_threads: false,
+        'image-size': false,
       };
     }
     return config;

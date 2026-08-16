@@ -1,4 +1,3 @@
-import PptxGenJS from 'pptxgenjs';
 import {
   type ClassroomExportMeta,
   type ClassroomExportSlide,
@@ -33,6 +32,9 @@ export async function downloadClassroomSlidesPptx(
   slides: ClassroomExportSlide[],
   meta: ClassroomExportMeta
 ): Promise<void> {
+  // Dynamic import keeps pptxgenjs out of the initial client graph and lets
+  // webpack apply node: fallbacks only when export is requested.
+  const { default: PptxGenJS } = await import('pptxgenjs');
   const pptx = new PptxGenJS();
   pptx.author = BRAND;
   pptx.title = meta.lessonTitle;

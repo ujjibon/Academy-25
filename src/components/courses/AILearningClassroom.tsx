@@ -53,7 +53,6 @@ import type {
 } from '@/ai/flows/classroom-slide-generator-flow';
 import type { ClassroomExportSlide } from '@/lib/classroom-slides-export-types';
 import { downloadClassroomSlidesPdf } from '@/lib/classroom-slides-pdf';
-import { downloadClassroomSlidesPptx } from '@/lib/classroom-slides-pptx';
 import ReactMarkdown from 'react-markdown';
 import { cn } from '@/lib/utils';
 
@@ -446,6 +445,7 @@ export function AILearningClassroom({ course, lesson }: { course: Course; lesson
     if (!slides.length) return;
     setIsExporting(true);
     try {
+      const { downloadClassroomSlidesPptx } = await import('@/lib/classroom-slides-pptx');
       await downloadClassroomSlidesPptx(slidesToExportPayload(slides), exportMeta);
       toast({ title: 'PowerPoint downloaded', description: 'Your .pptx deck is ready.' });
     } catch (error) {
