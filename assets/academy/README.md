@@ -1,4 +1,32 @@
-# Quest Isles
+# Academy 3D learning assets
+
+## Minimal play kit (current)
+
+`minimal-play-kit.blend` contains six freestanding sculptures in porcelain,
+graphite, royal blue, and a small warm accent. They have no scenery or external
+textures. The browser uses `public/models/academy/minimal-play-kit.glb` and moves
+the individually named parts in response to gameplay. The family roots are
+`Prompt_Play`, `Code_Play`, `Video_Play`, `Research_Play`, `Design_Play`, and
+`Creative_Play`.
+
+Rebuild in an isolated headless Blender process:
+
+```powershell
+& 'C:\path\to\blender.exe' --background --factory-startup --python scripts/blender/build_minimal_play_kit.py
+node scripts/check-minimal-play.cjs
+```
+
+The builder also runs under a compatible official `bpy` Python runtime and refuses
+to replace an unrelated saved scene. This delivery used that runtime. It exports
+the editable source, browser GLB, and `minimal-play-kit-preview.png`. The kit is
+376,768 bytes with 7,316 triangles and 57 individually named meshes.
+
+`LearningPlayScene` fixes the camera and animates the game's piece poses and
+outcomes. It pauses inactive/offscreen animation, respects reduced motion, and
+provides a matching SVG fallback. The actual game board supports pointer and
+keyboard controls independently of WebGL.
+
+## Quest Isles (legacy asset)
 
 Original geometry authored for Academy. The editable source contains individual
 named books, trees, presentation slides, game pieces, atom orbits and portal parts.
@@ -30,7 +58,7 @@ The browser component renders on demand and provides all five station controls
 when WebGL or model loading is unavailable. Drag to orbit; arrow keys rotate;
 plus/minus zoom; Home or the reset button restores the starting view.
 
-## Playable lesson workshops
+## Playable lesson workshops (legacy asset)
 
 `lesson-lab-kit.blend` is the editable source for six original tabletop studios:
 prompt building, motion editing, code pipelines, research, interface design, and

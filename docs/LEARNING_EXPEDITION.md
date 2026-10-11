@@ -1,54 +1,68 @@
-# Academy learning expedition
+# Academy play and learn
 
-Open **Quest World** from the learning sidebar, `/learn/adventure`, or the course's
-Quest world tab. Every published lesson also includes the expedition experience.
-The learning navigation connects the quest world, adaptive path, recall lab,
-training programs, and field notes across learner pages.
-The island map opens automatically. Learner controls use game language such as
-**Create a new briefing**, **Customize my quests**, and **Create a remix**;
-provider names and technical generation errors stay out of the learning screens.
+Open **Play & learn** from the learning navigation, `/learn/adventure`, or a
+course's Play & learn tab. Every published lesson starts on **Play**. The design
+uses quiet white surfaces, charcoal type, blue controls, and small freestanding
+Blender objects. The island map is no longer part of the learning interface.
 
-Each lesson has five stations:
+Each of the 84 lessons has three changing rounds grounded in its authored
+objectives, takeaway, and project. Six subject families have different mechanics:
 
-- **Discover:** the existing guided lesson and a slide studio with 8, 14, or 22
-  slides. Choose visual storytelling, a workshop, or challenge-and-reveal.
-- **Play:** six curriculum-backed games available immediately, plus OpenAI remixes
-  grounded in the selected course and lesson. Every answer has feedback.
-- **Create:** a skill sprint, deep expedition, or portfolio project. Customize
-  your quests, record evidence, and self-review the success criteria.
-- **Remember:** flip flashcards, review a field guide, and use reflection prompts.
-- **Master:** complete the four practice stations, then reach 80% on the lesson's
-  assessment. Courses without authored questions use clearly labeled recall
-  questions drawn from their actual material.
+- **Signal path:** rotate circuit pieces, process real sample values, reject
+  invalid inputs, and deliver a result through the required operations.
+- **Brief builder:** arrange instruction blocks, remove conflicts, constrain
+  scope, and add a review check.
+- **Cut & rhythm:** order clips, trim their duration, and add captions to a
+  complete teaching sequence.
+- **Evidence links:** connect claims to the actual lesson objectives, project
+  brief, or takeaway; unsupported claims must stay outside the brief.
+- **Layout move:** move heading, explanation, and action elements onto a
+  readable grid and try different screen compositions.
+- **Frame finder:** move and resize the focal subject, protect message space,
+  and inspect the final crop's safe area.
 
-Expedition XP and station completion are saved in browser storage, scoped by
-account, course, and lesson. Each game format/difficulty pays its reward once at
-70% mastery; repeated attempts can improve the stored best score. These practice
-rewards do not modify cloud XP, leaderboard rank, or certificate eligibility.
-Lesson assessment completion still uses the course's existing progress workflow.
-Project evidence is session-only; use **Save materials** to retain your own notes.
+Moves change the visible board and 3D state. Each round has a goal, retry, hint,
+and specific feedback. Pointer controls have keyboard alternatives. All three
+rounds must be solved before Play completion is awarded; replays do not duplicate
+practice XP. Animation pauses when the activity or browser tab is inactive.
 
-OpenAI calls run on the server with `OPENAI_API_KEY`. Training and slide services
-return explicitly labeled course material if generation fails. Game remixes keep
-the ready curriculum game available. API inputs are bounded and canonical lesson
-IDs are checked before generation. Generated answer sets are validated before play.
-Optional image/diagram enrichment uses the classroom's **Visuals** button.
+Four supplemental activities remain available:
 
-The floating island is original Blender geometry. Its editable source is
-`assets/academy/quest-isles.blend`; the optimized browser model is
-`public/models/academy/quest-isles.glb`. See `assets/academy/README.md` for the
-reproducible Blender MCP pipeline. The viewer renders on demand and supports
-orbit, keyboard controls, selectable stations, and a fallback image/control view.
+- **Watch:** a captioned animated sketch film with worked examples, replay,
+  chapter controls, and read-aloud. Optional reading and slide decks offer 8,
+  14, or 22 slides.
+- **Practice:** choose a skill sprint, deep practice, or portfolio program,
+  customize a practice plan, record evidence, and review its criteria.
+- **Notes:** flashcards, a field guide, and reflection prompts.
+- **Check:** finish the four activities, then reach 80% on the authored lesson
+  assessment. Courses without authored questions use labeled recall questions
+  drawn from their actual material.
 
-Verification commands:
+Practice XP and activity completion are saved in browser storage, scoped by
+account, course, and lesson. These rewards do not change cloud XP, rank, or
+certificate eligibility. Lesson completion retains the existing course progress
+workflow. Project evidence stays in the session; use **Save materials** to keep it.
+
+Optional generated practice plans and slide material use the server-side
+`OPENAI_API_KEY`. The services validate canonical course/lesson IDs and bounded
+inputs. Authored materials remain available when generation fails. Provider names
+and technical errors stay out of learner screens.
+
+The current Blender assets and rebuild instructions are in
+`assets/academy/README.md`. The browser loads `minimal-play-kit.glb`; its editable
+source has named moving parts for all six families. A matching SVG scene keeps
+the game available when WebGL or model loading is unavailable.
+
+Verification:
 
 ```sh
 npm run typecheck
 npm run check:learning
-npm run check:world
+npm run check:visual-learning
+npm run check:minimal-play
 npm run build
 ```
 
-For an authorized live OpenAI smoke test, run
-`node --env-file=.env.local scripts/live-learning-smoke.cjs`. It prints only
-sanitized result metadata. The curriculum checks require no API credentials.
+`check:minimal-play` exercises all lesson rounds, failure conditions, real action
+transitions, and the current model's geometry and size budget. The curriculum
+checks require no API credentials.

@@ -103,7 +103,7 @@ export default function LessonPage({
 
   return (
     <AppLayout>
-      <div className="lesson-page space-y-6">
+      <div className="lesson-page space-y-5">
         <Link
           href={`/courses/${course.id}`}
           className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
@@ -112,38 +112,20 @@ export default function LessonPage({
           Back to {course.title}
         </Link>
 
-        <div className="stat-card stat-card-muted !min-h-0">
-          <span className="stat-card-label">Course progress</span>
-          <p className="stat-card-value">{Math.round(currentProgress)}%</p>
-          <div className="lesson-progress-track my-3 w-full">
-            <div
-              className="lesson-progress-fill"
-              style={{ width: `${currentProgress}%` }}
-            />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+          <span>Lesson {lessonIndex + 1} of {course.lessons.length}</span>
+          <div className="h-1 w-24 overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-label="Course progress" aria-valuenow={Math.round(currentProgress)} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full rounded-full bg-[#335cff]" style={{ width: `${Math.min(100, Math.max(0, currentProgress))}%` }} />
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="stat-card-sub">
-              Lesson {lessonIndex + 1} of {course.lessons.length}
-            </p>
-            {isLessonCompleted ? (
-              <span className="text-flare flex items-center gap-1 text-sm font-medium">
-                <CheckCircle className="h-3 w-3" />
-                Completed
-              </span>
-            ) : (
-              <span className="text-muted-foreground flex items-center gap-1 text-sm">
-                <Lock className="h-3 w-3" />
-                Finish assessment to complete
-              </span>
-            )}
-          </div>
+          <span>{Math.round(currentProgress)}% complete</span>
+          {isLessonCompleted && <span className="flex items-center gap-1 text-[#335cff]"><CheckCircle className="h-3 w-3" />Completed</span>}
         </div>
 
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h1 className="lesson-page-title">{lesson.title}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight text-[#20242b] sm:text-3xl">{lesson.title}</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Guided path · ~{lesson.duration} min · Learn → Practice → Project → Assess
+              ~{lesson.duration} min · Play, watch, and try it yourself
             </p>
           </div>
           <LessonNotesPanel

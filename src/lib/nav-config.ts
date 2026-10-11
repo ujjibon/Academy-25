@@ -27,7 +27,7 @@ import {
   BarChart3,
   CreditCard,
   Search,
-  Compass,
+  Gamepad2,
 } from 'lucide-react';
 
 export type NavItem = {
@@ -56,7 +56,7 @@ export const mainNavSections: NavSection[] = [
     label: 'Learn',
     items: [
       { href: '/learn', label: 'My Learning', icon: BookOpenCheck, exact: true },
-      { href: '/learn/adventure', label: 'Quest World', icon: Compass, badge: 'New' },
+      { href: '/learn/adventure', label: 'Play & learn', icon: Gamepad2, badge: 'New' },
       { href: '/learn/path', label: 'Adaptive Path', icon: GitBranch },
       { href: '/learn/study', label: 'Study Lab', icon: Dumbbell },
       { href: '/learn/notes', label: 'Notes', icon: FileEdit },
@@ -126,7 +126,7 @@ export const footerNavItems: NavItem[] = [
 export const pageTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/learn': 'My Learning',
-  '/learn/adventure': 'Quest World',
+  '/learn/adventure': 'Play & learn',
   '/learn/path': 'Adaptive Path',
   '/learn/study': 'Study Lab',
   '/learn/notes': 'Notes Vault',

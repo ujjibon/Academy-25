@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, ClipboardList, Layers, BookMarked, Compass } from 'lucide-react';
+import { BookOpen, ClipboardList, Layers, BookMarked, Gamepad2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const TABS = [
@@ -10,7 +10,7 @@ const TABS = [
   { suffix: '/curriculum', label: 'Curriculum', icon: Layers },
   { suffix: '/materials', label: 'Materials', icon: ClipboardList },
   { suffix: '/resources', label: 'Resources', icon: BookMarked },
-  { suffix: '/gamify', label: 'Watch & play', icon: Compass },
+  { suffix: '/gamify', label: 'Play & learn', icon: Gamepad2 },
 ] as const;
 
 export function CourseDetailNav({ courseId }: { courseId: string }) {

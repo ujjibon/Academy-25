@@ -62,16 +62,16 @@ export function createLessonTrainingPack(
   const takeaways = lesson.keyTakeaways?.filter(Boolean) ?? [];
   const questions = [...lesson.practice.questions, ...lesson.assessment.questions]
     .filter((question, index, all) => all.findIndex(other => other.question === question.question) === index);
-  const label = program === 'deep-dive' ? 'Mastery expedition' : program === 'project' ? 'Build mission' : 'Skill sprint';
+  const label = program === 'deep-dive' ? 'Deep practice' : program === 'project' ? 'Project practice' : 'Skill sprint';
   const quest = (id: string, title: string, instructions: string, successCriteria: string[], xpReward = xp) => ({
     id, title: title.slice(0, 160), instructions: instructions.slice(0, 1800),
     successCriteria: successCriteria.slice(0, 4).map(item => item.slice(0, 400)), xpReward,
   });
   const quests = [
-    quest('decode', 'Decode the mission',
+    quest('decode', 'Explain the idea',
       `Read ${lesson.title}. Close your notes and explain the main idea in your own words. ${difficulty === 'hard' ? 'Add a concrete counterexample and explain its limits.' : 'Use one concrete example to make the idea clear.'}`,
       [objectives[0] || `Explain the main idea of ${lesson.title}.`, 'Record your explanation before checking the lesson.']),
-    quest('checkpoint', 'Clear the knowledge checkpoint',
+    quest('checkpoint', 'Check your understanding',
       `Complete the lesson practice. For each missed answer, compare your choice with the correct answer and explain what you will change next time.`,
       ['Attempt every practice question.', 'Write a correction for any missed concept.']),
   ];

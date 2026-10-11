@@ -7,12 +7,12 @@ import { Check, Captions, Film, Maximize, Minimize, Pause, Play, RotateCcw, Volu
 import type { Course, Lesson } from '@/lib/data-provider';
 import { buildSketchLessonStoryboard, SKETCH_FAMILY_NAMES, sketchViewingProgress, type SketchLessonStoryboard } from '@/lib/visual-lessons';
 
-const INK = '#252b36';
-const PAPER = '#fff9ec';
-const BLUE = '#355cdb';
+const INK = '#20242b';
+const PAPER = '#fcfcfd';
+const BLUE = '#335cff';
 const CORAL = '#ed6b51';
 const LIME = '#cee780';
-const FONT = 'ui-rounded, "Trebuchet MS", system-ui, sans-serif';
+const FONT = 'Inter, ui-sans-serif, system-ui, sans-serif';
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const short = (text: string, limit = 42) => text.length > limit ? `${text.slice(0, limit - 1).trimEnd()}…` : text;
 
@@ -36,7 +36,7 @@ function Draw({ d, progress, color = INK, width = 4, dashed = false }: { d: stri
   return <path d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={dashed ? '0.025 0.025' : 1} strokeDashoffset={dashed ? 0 : 1 - clamp(progress)} opacity={dashed ? clamp(progress) : 1} />;
 }
 
-function PaperCard({ x, y, w, h, color = '#fffdf6', progress = 1, children }: { x: number; y: number; w: number; h: number; color?: string; progress?: number; children?: React.ReactNode }) {
+function PaperCard({ x, y, w, h, color = '#ffffff', progress = 1, children }: { x: number; y: number; w: number; h: number; color?: string; progress?: number; children?: React.ReactNode }) {
   return <g opacity={clamp(progress * 2)}>
     <path d={`M ${x + 5} ${y + 7} L ${x + w + 5} ${y + 5} L ${x + w + 7} ${y + h + 7} L ${x + 3} ${y + h + 5} Z`} fill={INK} opacity="0.09" />
     <path d={`M ${x + 2} ${y + 1} L ${x + w} ${y - 1} L ${x + w + 2} ${y + h} L ${x - 1} ${y + h + 2} Z`} fill={color} />
@@ -56,7 +56,7 @@ function PromptDiagram({ film, phase, progress }: DiagramProps) {
   const assemble = phase >= 2 ? clamp(progress * 1.65) : 0;
   const colors = [LIME, '#dce5ff', '#ffe0d4', '#f1e2ff', '#ddf2e4'];
   return <>
-    <PaperCard x={480} y={40} w={720} h={475} color="#fffdf6" progress={phase >= 2 ? 1 : clamp(progress * 4)}>
+    <PaperCard x={480} y={40} w={720} h={475} color="#ffffff" progress={phase >= 2 ? 1 : clamp(progress * 4)}>
       <Words text="A brief you can inspect" x={515} y={91} size={32} width={34} />
       <Draw d="M 514 113 Q 780 105 1160 113" progress={clamp(progress * 4)} color={BLUE} />
     </PaperCard>
@@ -90,7 +90,7 @@ function CodeDiagram({ film, phase, progress }: DiagramProps) {
     const labels = ['User story', 'Implementation', 'Tests', 'Reviewed change'];
     return <>
       <Draw d="M 320 239 Q 353 140 410 131 M 320 239 Q 349 383 410 385 M 694 131 Q 753 130 805 254 M 694 385 Q 741 382 805 254" progress={clamp(progress * 2)} color={BLUE} />
-      {positions.map((position, index) => <PaperCard key={index} x={position.x} y={position.y} w={index === 3 ? 370 : 284} h={110} progress={phase >= 2 ? 1 : clamp(progress * 3 - index * .35)} color={index === 3 ? LIME : '#fffdf6'}><Words text={labels[index]} x={position.x + 18} y={position.y + 35} width={23} size={27} /><Words text={short(film.labels[index].detail, 42)} x={position.x + 18} y={position.y + 69} width={25} size={20} weight={500} lines={2} /></PaperCard>)}
+      {positions.map((position, index) => <PaperCard key={index} x={position.x} y={position.y} w={index === 3 ? 370 : 284} h={110} progress={phase >= 2 ? 1 : clamp(progress * 3 - index * .35)} color={index === 3 ? LIME : '#ffffff'}><Words text={labels[index]} x={position.x + 18} y={position.y + 35} width={23} size={27} /><Words text={short(film.labels[index].detail, 42)} x={position.x + 18} y={position.y + 69} width={25} size={20} weight={500} lines={2} /></PaperCard>)}
       <Words text="A change is ready when the behavior matches the brief." x={150} y={545} width={60} size={28} color={BLUE} />
       <circle cx={110 + progress * 1040} cy={297} r="12" fill={CORAL} stroke={INK} strokeWidth="3" />
     </>;
@@ -109,7 +109,7 @@ function CodeDiagram({ film, phase, progress }: DiagramProps) {
     </PaperCard>
     <PaperCard x={840} y={65} w={355} h={165} color="#dce5ff"><Words text="MEMORY" x={868} y={103} size={22} color={BLUE} width={18} /><Words text={trace.state} x={868} y={148} width={22} size={27} lines={2} /></PaperCard>
     <Draw d={`M 780 ${140 + trace.line * lineHeight} Q 812 ${140 + trace.line * lineHeight}, 790 150, 834 150`} progress={1} color={BLUE} />
-    <PaperCard x={840} y={275} w={355} h={250} color={phase >= 2 ? '#eff5df' : '#fffdf6'}><Words text="VISIBLE OUTPUT" x={868} y={314} size={22} color={BLUE} width={20} />
+    <PaperCard x={840} y={275} w={355} h={250} color={phase >= 2 ? '#eff5df' : '#ffffff'}><Words text="VISIBLE OUTPUT" x={868} y={314} size={22} color={BLUE} width={20} />
       {(phase === 0 ? [] : trace.output.split('\n')).map((line, lineIndex) => <text key={lineIndex} x={868} y={359 + lineIndex * 37} fontFamily="ui-monospace, monospace" fill={INK} fontSize="27">{line}</text>)}
       {!trace.output && <Words text="No output yet…" x={868} y={363} width={21} size={25} color="#737780" weight={500} />}
     </PaperCard>
@@ -122,8 +122,8 @@ function EvidenceDiagram({ film, phase, progress }: DiagramProps) {
   const reveal = phase === 0 ? progress * 4 : phase === 1 ? progress * 6 : 6;
   const nodes = [
     { x: 65, y: 212, w: 270, h: 125, label: film.labels[0].label, fill: '#ffe0d4' },
-    { x: 415, y: 52, w: 290, h: 152, label: film.labels[1].label, fill: '#fffdf6' },
-    { x: 415, y: 355, w: 290, h: 152, label: film.labels[3].label, fill: '#fffdf6' },
+    { x: 415, y: 52, w: 290, h: 152, label: film.labels[1].label, fill: '#ffffff' },
+    { x: 415, y: 355, w: 290, h: 152, label: film.labels[3].label, fill: '#ffffff' },
     { x: 806, y: 150, w: 330, h: 125, label: film.labels[2].label, fill: '#dce5ff' },
     { x: 840, y: 395, w: 330, h: 125, label: film.labels[4].label, fill: LIME },
   ];
@@ -146,13 +146,13 @@ function DesignDiagram({ film, phase, progress }: DiagramProps) {
   return <>
     <Words text="ROUGH IDEA" x={86} y={40} size={23} color={CORAL} width={19} />
     <Words text="A SYSTEM THAT SURVIVES CHANGE" x={585} y={40} size={23} color={BLUE} width={43} />
-    <PaperCard x={80} y={72} w={335} h={455} color="#fffdf6">
+    <PaperCard x={80} y={72} w={335} h={455} color="#ffffff">
       <path d="M 106 115 L 382 130 L 368 203 L 111 188 Z" fill="#f8c2ac" stroke={INK} strokeWidth="3" />
       <Words text={short(film.project.title, 32)} x={124} y={148} width={17} size={28} />
       {[0, 1, 2].map(index => <path key={index} d={`M ${102 + index * 12} ${241 + index * 74} L ${370 - index * 15} ${221 + index * 74} L ${374 - index * 15} ${273 + index * 74} L ${106 + index * 12} ${295 + index * 74} Z`} fill={index === 1 ? '#dedbff' : '#e5e8e7'} stroke={INK} strokeWidth="3" />)}
     </PaperCard>
     <Draw d="M 445 281 Q 476 264 533 276 M 514 257 L 534 276 L 515 295" progress={clamp(progress * 3)} color={BLUE} width={5} />
-    <PaperCard x={580} y={72} w={rightWidth} h={455} color="#fffdf6">
+    <PaperCard x={580} y={72} w={rightWidth} h={455} color="#ffffff">
       <rect x={602} y={94} width={rightWidth - 44} height="96" rx="8" fill={LIME} />
       <Words text={short(film.project.title, 42)} x={626} y={132} width={Math.floor((rightWidth - 80) / 23)} size={33 + tidy * 7} lines={2} />
       {[0, 1, 2].map(index => {
@@ -189,7 +189,7 @@ function TimelineDiagram({ film, phase, progress, seconds }: DiagramProps) {
       {captions && <><rect x="132" y="198" width="481" height="53" rx="8" fill={INK} /><Words text={short(film.project.title, 38)} x={150} y={233} size={25} color="white" width={40} lines={1} /><Draw d="M 108 67 L 673 67 L 673 258 L 108 258 Z" color={CORAL} progress={clamp(progress * 3)} dashed /></>}
       {!captions && <Draw d={`M ${previewX - 75} 67 L ${previewX + 75} 67 L ${previewX + 75} 254 L ${previewX - 75} 254 Z`} progress={clamp(progress * 3)} color={BLUE} dashed />}
     </PaperCard>
-    <PaperCard x={772} y={40} w={425} h={240} color="#fffdf6"><Words text={exporting ? 'DELIVERY CHECK' : sound ? 'VOICE ABOVE MUSIC' : 'EVERY SHOT HAS A JOB'} x={795} y={82} size={23} color={BLUE} width={29} />
+    <PaperCard x={772} y={40} w={425} h={240} color="#ffffff"><Words text={exporting ? 'DELIVERY CHECK' : sound ? 'VOICE ABOVE MUSIC' : 'EVERY SHOT HAS A JOB'} x={795} y={82} size={23} color={BLUE} width={29} />
       {sound ? <>
         <Words text="Voice" x={798} y={131} size={25} width={18} /><rect x="900" y="109" width="260" height="25" rx="10" fill="#e9e6dd" /><rect x="900" y="109" width={190 + progress * 15} height="25" rx="10" fill={BLUE} />
         <Words text="Music" x={798} y={183} size={25} width={18} /><rect x="900" y="161" width="260" height="25" rx="10" fill="#e9e6dd" /><rect x="900" y="161" width={150 - progress * 90} height="25" rx="10" fill={CORAL} /><Words text="Duck the bed under speech" x={798} y={240} width={31} size={23} color={BLUE} />
@@ -202,7 +202,7 @@ function TimelineDiagram({ film, phase, progress, seconds }: DiagramProps) {
       return <g key={index} opacity={phase === 0 ? clamp(progress * 5 - index * .6) : 1}><PaperCard x={95 + offset} y={348} w={widths[index]} h={100} color={['#ffe0d4', '#dce5ff', LIME, '#e7dcf8'][index]}><Words text={['Hook', 'Story', 'Show proof', 'Next step'][index]} x={110 + offset} y={393} size={28} width={19} /><Words text={['0–3s', '3–8s', '8–15s', '15–20s'][index]} x={110 + offset} y={425} size={20} width={20} weight={500} /></PaperCard></g>;
     })}
     <Words text="SOUND" x={60} y={489} size={22} color={BLUE} width={15} />
-    <rect x="95" y="506" width="1116" height="70" fill="#fffdf6" stroke={INK} strokeWidth="3" rx="5" />
+    <rect x="95" y="506" width="1116" height="70" fill="#ffffff" stroke={INK} strokeWidth="3" rx="5" />
     <path d={Array.from({ length: 90 }, (_, index) => { const amplitude = (12 + Math.sin(index * 3.4) * 10) * (sound && index > 25 && index < 70 ? .5 : 1); return `M ${109 + index * 12} ${540 - amplitude} L ${109 + index * 12} ${540 + amplitude}`; }).join(' ')} stroke={BLUE} strokeWidth="3" strokeLinecap="round" />
     <Draw d={`M ${x} 315 L ${x} 590`} color={CORAL} width={5} progress={1} /><path d={`M ${x - 12} 306 L ${x + 12} 306 L ${x} 321 Z`} fill={CORAL} />
     <Words text={sound ? 'Listen for a clear voice; let the music support it.' : captions ? 'Keep captions inside the safe area and easy to read.' : exporting ? 'Watch the first and final frames before delivering.' : 'Illustrative 20-second edit: intention before decoration.'} x={96} y={620} size={26} width={70} color={BLUE} />
@@ -211,7 +211,7 @@ function TimelineDiagram({ film, phase, progress, seconds }: DiagramProps) {
 
 function WorkflowDiagram({ film, phase, progress }: DiagramProps) {
   if (film.variant === 'spreadsheet') return <>
-    <PaperCard x={78} y={50} w={630} h={465} color="#fffdf6"><Words text="ILLUSTRATIVE DATA" x={109} y={95} size={23} color={BLUE} width={30} />
+    <PaperCard x={78} y={50} w={630} h={465} color="#ffffff"><Words text="ILLUSTRATIVE DATA" x={109} y={95} size={23} color={BLUE} width={30} />
       {[0, 1, 2, 3].map(row => <g key={row}><rect x="110" y={119 + row * 80} width="552" height="80" fill={row === 0 ? '#dce5ff' : 'transparent'} stroke={INK} strokeWidth="2" /><path d={`M 380 ${119 + row * 80} L 380 ${199 + row * 80}`} stroke={INK} strokeWidth="2" /><Words text={['Task', 'Plan', 'Build', 'Review'][row]} x={132} y={169 + row * 80} width={17} size={29} /><Words text={['Minutes', '12', '18', '15'][row]} x={406} y={169 + row * 80} width={16} size={29} /></g>)}
       <rect x="384" y={202 + Math.min(2, Math.floor(progress * 3)) * 80} width="271" height="70" fill={LIME} fillOpacity=".45" stroke={BLUE} strokeWidth="4" />
     </PaperCard>
@@ -222,7 +222,7 @@ function WorkflowDiagram({ film, phase, progress }: DiagramProps) {
   if (film.variant === 'document' || film.variant === 'presentation') {
     const slide = film.variant === 'presentation';
     return <>
-      {[0, 1, 2].map(index => <PaperCard key={index} x={85 + index * 395} y={slide ? 150 : 70} w={315} h={slide ? 290 : 455} progress={phase >= 2 ? 1 : clamp(progress * 4 - index * .65)} color={index === 2 ? '#eff5df' : '#fffdf6'}>
+      {[0, 1, 2].map(index => <PaperCard key={index} x={85 + index * 395} y={slide ? 150 : 70} w={315} h={slide ? 290 : 455} progress={phase >= 2 ? 1 : clamp(progress * 4 - index * .65)} color={index === 2 ? '#eff5df' : '#ffffff'}>
         <Words text={['Outline', 'Draft', 'Edit & check'][index]} x={111 + index * 395} y={slide ? 200 : 118} width={18} size={29} color={BLUE} />
         <rect x={112 + index * 395} y={slide ? 224 : 158} width="258" height={index === 2 ? 76 : 44} rx="5" fill={index === 2 ? LIME : '#dce5ff'} />
         {Array.from({ length: slide ? 3 : 7 }, (_, line) => <Draw key={line} d={`M ${111 + index * 395} ${(slide ? 323 : 261) + line * 30} L ${(line % 3 === 1 ? 290 : 363) + index * 395} ${(slide ? 323 : 261) + line * 30}`} progress={clamp(progress * 5 - index * .2 - line * .06)} width={3} color={index === 1 && line === 2 ? CORAL : INK} />)}
@@ -239,8 +239,8 @@ function WorkflowDiagram({ film, phase, progress }: DiagramProps) {
       const y = index % 2 === 0 ? 87 : 350;
       return <g key={item.label}>
         <Draw d={`M ${x + 109} ${y < 300 ? y + 145 : y} L ${x + 109} 283`} progress={clamp(progress * 4 - index * .35)} color={BLUE} />
-        <PaperCard x={x} y={y} w={218} h={145} color={index === 4 ? LIME : index === 0 ? '#ffe0d4' : '#fffdf6'} progress={phase >= 2 ? 1 : clamp(progress * 5 - index * .55)}><Words text={item.label} x={x + 15} y={y + 36} width={15} size={28} /><Words text={short(item.detail, 46)} x={x + 15} y={y + 77} width={20} size={21} lines={3} weight={500} /></PaperCard>
-        <circle cx={x + 109} cy={283} r="16" fill={phase >= 2 && progress * 5 > index ? LIME : '#fffdf6'} stroke={INK} strokeWidth="4" />
+        <PaperCard x={x} y={y} w={218} h={145} color={index === 4 ? LIME : index === 0 ? '#ffe0d4' : '#ffffff'} progress={phase >= 2 ? 1 : clamp(progress * 5 - index * .55)}><Words text={item.label} x={x + 15} y={y + 36} width={15} size={28} /><Words text={short(item.detail, 46)} x={x + 15} y={y + 77} width={20} size={21} lines={3} weight={500} /></PaperCard>
+        <circle cx={x + 109} cy={283} r="16" fill={phase >= 2 && progress * 5 > index ? LIME : '#ffffff'} stroke={INK} strokeWidth="4" />
       </g>;
     })}
     <g transform={`translate(${76 + progress * 1127} 283)`}><path d="M -20 -14 L 20 -14 L 20 14 L -20 14 Z" fill={CORAL} stroke={INK} strokeWidth="3" /><path d="M -20 -14 L 0 3 L 20 -14" fill="none" stroke={INK} strokeWidth="3" /></g>
@@ -259,12 +259,12 @@ export function SketchLessonComposition({ film, showCaptions = true }: { film: S
   const caption = film.captions.find(item => frame / fps * 1000 >= item.startMs && frame / fps * 1000 < item.endMs);
   const Diagram = { prompt: PromptDiagram, code: CodeDiagram, evidence: EvidenceDiagram, design: DesignDiagram, timeline: TimelineDiagram, workflow: WorkflowDiagram }[film.family];
   return <div data-sketch-composition="true" style={{ position: 'absolute', inset: 0, width: 1280, height: 960, background: PAPER, color: INK, fontFamily: FONT, overflow: 'hidden' }}>
-    <svg width="1280" height="960" viewBox="0 0 1280 960" aria-hidden="true" style={{ position: 'absolute', inset: 0 }}><defs><pattern id="sketch-paper-dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#aa9e86" opacity=".17" /></pattern></defs><rect width="1280" height="960" fill="url(#sketch-paper-dots)" /><path d="M 35 24 L 1247 27 L 1241 933 L 38 937 Z" fill="none" stroke="#d6cdbc" strokeWidth="2" /></svg>
+    <svg width="1280" height="960" viewBox="0 0 1280 960" aria-hidden="true" style={{ position: 'absolute', inset: 0 }}><defs><pattern id="sketch-paper-dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#adb7c7" opacity=".17" /></pattern></defs><rect width="1280" height="960" fill="url(#sketch-paper-dots)" /><path d="M 35 24 L 1247 27 L 1241 933 L 38 937 Z" fill="none" stroke="#e0e3e9" strokeWidth="2" /></svg>
     <div style={{ position: 'absolute', top: 42, left: 65, right: 65, display: 'flex', justifyContent: 'space-between', gap: 30, fontSize: 24, fontWeight: 700, color: BLUE }}><span>{SKETCH_FAMILY_NAMES[film.family].toUpperCase()}</span><span>CHAPTER {phase + 1} / {film.chapters.length}</span></div>
     <div style={{ position: 'absolute', top: 91, left: 65, right: 65, fontSize: film.title.length > 48 ? 40 : 47, fontWeight: 800, lineHeight: 1.12 }}>{film.title}</div>
     <svg width="1280" height="655" viewBox="0 0 1280 655" aria-label={`${chapter.title}: ${film.principle}`} role="img" style={{ position: 'absolute', top: 183, left: 0, opacity: interpolate(local, [0, .3 * fps], [.45, 1], { extrapolateRight: 'clamp' }) }}><Diagram film={film} phase={phase} progress={progress} seconds={local / fps} /></svg>
-    {showCaptions ? <div style={{ position: 'absolute', left: 65, right: 65, bottom: 52, minHeight: 79, padding: '15px 23px', borderRadius: 12, background: INK, color: '#fffdf6', display: 'flex', alignItems: 'center', fontSize: 27, lineHeight: 1.25, fontWeight: 600 }}>{caption?.text || chapter.title}</div> : <div style={{ position: 'absolute', left: 65, right: 65, bottom: 45, fontSize: 24, color: BLUE, fontWeight: 700 }}>{chapter.title}</div>}
-    <div style={{ position: 'absolute', left: 65, bottom: 25, width: 1150, height: 5, background: '#ded7c9' }}><div style={{ width: `${frame / film.durationInFrames * 100}%`, height: '100%', background: BLUE }} /></div>
+    {showCaptions ? <div style={{ position: 'absolute', left: 65, right: 65, bottom: 52, minHeight: 79, padding: '15px 23px', borderRadius: 12, background: INK, color: '#ffffff', display: 'flex', alignItems: 'center', fontSize: 27, lineHeight: 1.25, fontWeight: 600 }}>{caption?.text || chapter.title}</div> : <div style={{ position: 'absolute', left: 65, right: 65, bottom: 45, fontSize: 24, color: BLUE, fontWeight: 700 }}>{chapter.title}</div>}
+    <div style={{ position: 'absolute', left: 65, bottom: 25, width: 1150, height: 5, background: '#e0e3e9' }}><div style={{ width: `${frame / film.durationInFrames * 100}%`, height: '100%', background: BLUE }} /></div>
   </div>;
 }
 
@@ -377,23 +377,23 @@ function SketchLessonFilmSession({ course, lesson, active = true, onComplete }: 
   }
 
   const timeLabel = (frames: number) => `${Math.floor(frames / film.fps / 60)}:${String(Math.floor(frames / film.fps) % 60).padStart(2, '0')}`;
-  return <section aria-label={`Sketch film: ${lesson.title}`} className="overflow-hidden rounded-[1.75rem] border border-[#ded6c7] bg-[#fff9ec] text-[#252b36] shadow-sm">
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#ded6c7] px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#355cdb] text-white"><Film className="h-5 w-5" /></span><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#355cdb]">Watch & learn</p><h3 className="text-lg font-bold">The sketch studio</h3></div></div><span className="rounded-full border border-[#ded6c7] bg-white/70 px-3 py-1 text-xs font-semibold">{SKETCH_FAMILY_NAMES[film.family]} · {timeLabel(film.durationInFrames)}</span></div>
-    <div className="relative bg-[#fff9ec]"><Player ref={playerRef} component={SketchLessonComposition} inputProps={{ film, showCaptions: captions && fullscreen }} durationInFrames={film.durationInFrames} compositionWidth={1280} compositionHeight={960} fps={film.fps} playbackRate={speed} controls={fullscreen} showVolumeControls={false} moveToBeginningWhenEnded={false} showPlaybackRateControl={false} clickToPlay={fullscreen} style={{ width: '100%' }} errorFallback={() => <div className="flex h-full items-center justify-center p-8 text-center">The film could not start. Use the chapter transcript below, then reload to try playback again.</div>} /></div>
-    <div className="space-y-4 border-t border-[#ded6c7] px-5 py-4 sm:px-6">
-      {captions && <p aria-live="off" className="min-h-12 rounded-xl bg-[#252b36] px-4 py-3 text-sm font-medium leading-relaxed text-[#fffdf6] sm:text-base">{currentCaption?.text || film.chapters[Math.max(0, currentChapter)].title}</p>}
+  return <section aria-label={`Sketch film: ${lesson.title}`} className="overflow-hidden rounded-[1.25rem] border border-[#e0e3e9] bg-[#fcfcfd] text-[#20242b] shadow-sm">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e0e3e9] px-5 py-4 sm:px-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#335cff] text-white"><Film className="h-5 w-5" /></span><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#335cff]">Watch & learn</p><h3 className="text-lg font-bold">The sketch studio</h3></div></div><span className="rounded-full border border-[#e0e3e9] bg-white/70 px-3 py-1 text-xs font-semibold">{SKETCH_FAMILY_NAMES[film.family]} · {timeLabel(film.durationInFrames)}</span></div>
+    <div className="relative bg-[#fcfcfd]"><Player ref={playerRef} component={SketchLessonComposition} inputProps={{ film, showCaptions: captions && fullscreen }} durationInFrames={film.durationInFrames} compositionWidth={1280} compositionHeight={960} fps={film.fps} playbackRate={speed} controls={fullscreen} showVolumeControls={false} moveToBeginningWhenEnded={false} showPlaybackRateControl={false} clickToPlay={fullscreen} style={{ width: '100%' }} errorFallback={() => <div className="flex h-full items-center justify-center p-8 text-center">The film could not start. Use the chapter transcript below, then reload to try playback again.</div>} /></div>
+    <div className="space-y-4 border-t border-[#e0e3e9] px-5 py-4 sm:px-6">
+      {captions && <p aria-live="off" className="min-h-12 rounded-xl bg-[#20242b] px-4 py-3 text-sm font-medium leading-relaxed text-[#ffffff] sm:text-base">{currentCaption?.text || film.chapters[Math.max(0, currentChapter)].title}</p>}
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => { if (frame >= film.durationInFrames - 1) seek(0); playerRef.current?.toggle(); }} disabled={!active} className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#252b36] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}{playing ? 'Pause' : frame > 0 ? 'Resume film' : 'Play the sketch'}</button>
-        <button type="button" aria-label="Replay this sketch film from the beginning" onClick={() => seek(0)} className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#ded6c7] bg-white/70"><RotateCcw className="h-4 w-4" /></button>
-        <button type="button" aria-pressed={captions} onClick={() => setCaptions(value => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#ded6c7] bg-white/70 px-3 text-sm"><Captions className="h-4 w-4" />Captions {captions ? 'on' : 'off'}</button>
-        {speechAvailable && <button type="button" aria-pressed={readAloud} onClick={() => setReadAloud(value => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#ded6c7] bg-white/70 px-3 text-sm">{readAloud ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}Read aloud {readAloud ? 'on' : 'off'}</button>}
-        <button type="button" aria-label={fullscreen ? 'Exit fullscreen film' : 'View film fullscreen'} onClick={() => { if (fullscreen) playerRef.current?.exitFullscreen(); else playerRef.current?.requestFullscreen(); }} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#ded6c7] bg-white/70 px-3 text-sm">{fullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}Fullscreen</button>
-        <label className="ml-auto flex min-h-10 items-center gap-2 text-sm font-medium">Speed<select aria-label="Film playback speed" value={speed} onChange={event => setSpeed(Number(event.target.value))} className="rounded-lg border border-[#ded6c7] bg-white px-2 py-1.5">{[.75, 1, 1.25, 1.5, 2].map(rate => <option key={rate} value={rate}>{rate}×</option>)}</select></label>
+        <button type="button" onClick={() => { if (frame >= film.durationInFrames - 1) seek(0); playerRef.current?.toggle(); }} disabled={!active} className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#20242b] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}{playing ? 'Pause' : frame > 0 ? 'Resume film' : 'Play the sketch'}</button>
+        <button type="button" aria-label="Replay this sketch film from the beginning" onClick={() => seek(0)} className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e0e3e9] bg-white/70"><RotateCcw className="h-4 w-4" /></button>
+        <button type="button" aria-pressed={captions} onClick={() => setCaptions(value => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#e0e3e9] bg-white/70 px-3 text-sm"><Captions className="h-4 w-4" />Captions {captions ? 'on' : 'off'}</button>
+        {speechAvailable && <button type="button" aria-pressed={readAloud} onClick={() => setReadAloud(value => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#e0e3e9] bg-white/70 px-3 text-sm">{readAloud ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}Read aloud {readAloud ? 'on' : 'off'}</button>}
+        <button type="button" aria-label={fullscreen ? 'Exit fullscreen film' : 'View film fullscreen'} onClick={() => { if (fullscreen) playerRef.current?.exitFullscreen(); else playerRef.current?.requestFullscreen(); }} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#e0e3e9] bg-white/70 px-3 text-sm">{fullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}Fullscreen</button>
+        <label className="ml-auto flex min-h-10 items-center gap-2 text-sm font-medium">Speed<select aria-label="Film playback speed" value={speed} onChange={event => setSpeed(Number(event.target.value))} className="rounded-lg border border-[#e0e3e9] bg-white px-2 py-1.5">{[.75, 1, 1.25, 1.5, 2].map(rate => <option key={rate} value={rate}>{rate}×</option>)}</select></label>
       </div>
-      <label className="flex items-center gap-3"><span className="min-w-20 text-xs font-semibold tabular-nums">{timeLabel(frame)} / {timeLabel(film.durationInFrames)}</span><input type="range" min={0} max={film.durationInFrames - 1} value={frame} aria-label="Seek through the sketch film" aria-valuetext={`${timeLabel(frame)} of ${timeLabel(film.durationInFrames)}`} onChange={event => seek(Number(event.target.value))} className="h-2 w-full cursor-pointer accent-[#355cdb]" /></label>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5" aria-label="Film chapters">{film.chapters.map((chapter, index) => <button key={chapter.id} type="button" onClick={() => seek(chapter.startFrame)} aria-current={currentChapter === index ? 'step' : undefined} className={`min-h-16 rounded-xl border px-3 py-2 text-left transition-colors ${currentChapter === index ? 'border-[#355cdb] bg-[#e1e9ff]' : 'border-[#ded6c7] bg-white/60 hover:bg-white'}`}><span className="mb-1 flex items-center justify-between text-[10px] font-bold uppercase tracking-wide text-[#596273]">{timeLabel(chapter.startFrame)}{coverage.chapterCoverage[index] >= .7 && <Check className="h-3 w-3 text-[#355cdb]" />}</span><span className="block text-xs font-semibold leading-snug">{chapter.title}</span></button>)}</div>
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs"><p className="text-[#596273]">Pause to predict. Replay a drawing. Then build your own version.</p><p role="status" className={`font-semibold ${coverage.complete ? 'text-[#355cdb]' : 'text-[#596273]'}`}>{coverage.complete ? 'Film explored ✓' : `${Math.round(coverage.ratio * 100)}% watched`}</p></div>
-      <details className="rounded-xl border border-[#ded6c7] bg-white/60 p-4"><summary className="cursor-pointer text-sm font-semibold">Chapter transcript & project brief</summary><div className="mt-4 space-y-4">{film.chapters.map(chapter => <div key={chapter.id}><button type="button" onClick={() => seek(chapter.startFrame)} className="text-left text-sm font-bold text-[#355cdb]">{timeLabel(chapter.startFrame)} · {chapter.title}</button><p className="mt-1 text-sm leading-relaxed text-[#454c58]">{chapter.narration}</p></div>)}<p className="border-t border-[#ded6c7] pt-3 text-xs leading-relaxed text-[#596273]">The drawings explain this lesson’s teaching and project. Small data and code examples are illustrative. Reading aloud uses a voice available on your device.</p></div></details>
+      <label className="flex items-center gap-3"><span className="min-w-20 text-xs font-semibold tabular-nums">{timeLabel(frame)} / {timeLabel(film.durationInFrames)}</span><input type="range" min={0} max={film.durationInFrames - 1} value={frame} aria-label="Seek through the sketch film" aria-valuetext={`${timeLabel(frame)} of ${timeLabel(film.durationInFrames)}`} onChange={event => seek(Number(event.target.value))} className="h-2 w-full cursor-pointer accent-[#335cff]" /></label>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5" aria-label="Film chapters">{film.chapters.map((chapter, index) => <button key={chapter.id} type="button" onClick={() => seek(chapter.startFrame)} aria-current={currentChapter === index ? 'step' : undefined} className={`min-h-16 rounded-xl border px-3 py-2 text-left transition-colors ${currentChapter === index ? 'border-[#335cff] bg-[#e1e9ff]' : 'border-[#e0e3e9] bg-white/60 hover:bg-white'}`}><span className="mb-1 flex items-center justify-between text-[10px] font-bold uppercase tracking-wide text-[#596273]">{timeLabel(chapter.startFrame)}{coverage.chapterCoverage[index] >= .7 && <Check className="h-3 w-3 text-[#335cff]" />}</span><span className="block text-xs font-semibold leading-snug">{chapter.title}</span></button>)}</div>
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs"><p className="text-[#596273]">Pause to predict. Replay a drawing. Then build your own version.</p><p role="status" className={`font-semibold ${coverage.complete ? 'text-[#335cff]' : 'text-[#596273]'}`}>{coverage.complete ? 'Film explored ✓' : `${Math.round(coverage.ratio * 100)}% watched`}</p></div>
+      <details className="rounded-xl border border-[#e0e3e9] bg-white/60 p-4"><summary className="cursor-pointer text-sm font-semibold">Chapter transcript & project brief</summary><div className="mt-4 space-y-4">{film.chapters.map(chapter => <div key={chapter.id}><button type="button" onClick={() => seek(chapter.startFrame)} className="text-left text-sm font-bold text-[#335cff]">{timeLabel(chapter.startFrame)} · {chapter.title}</button><p className="mt-1 text-sm leading-relaxed text-[#454c58]">{chapter.narration}</p></div>)}<p className="border-t border-[#e0e3e9] pt-3 text-xs leading-relaxed text-[#596273]">The drawings explain this lesson’s teaching and project. Small data and code examples are illustrative. Reading aloud uses a voice available on your device.</p></div></details>
     </div>
   </section>;
 }
