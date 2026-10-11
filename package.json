@@ -13,6 +13,8 @@
     "check:learning": "node scripts/check-learning-experience.cjs",
     "check:visual-learning": "node scripts/check-visual-learning.cjs",
     "check:minimal-play": "node scripts/check-minimal-play.cjs",
+    "check:narrated-sketch": "node scripts/check-narrated-sketch.cjs",
+    "check:sketch-narration-server": "node scripts/check-sketch-narration-server.cjs",
     "check:world": "node scripts/blender/validate_world.mjs",
     "seed:admin": "node scripts/seed-default-admin.mjs",
     "postinstall": "patch-package"
@@ -43,6 +45,7 @@
     "@radix-ui/react-tabs": "^1.1.3",
     "@radix-ui/react-toast": "^1.2.6",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@remotion/media": "4.0.534",
     "@remotion/player": "4.0.534",
     "@tailwindcss/typography": "^0.5.13",
     "class-variance-authority": "^0.7.1",

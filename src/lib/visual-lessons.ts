@@ -99,7 +99,11 @@ function codeFor(course: Course, lesson: Lesson): SketchLessonStoryboard['code']
 
 function labelsFor(family: SketchVisualFamily, lesson: Lesson): SketchLabel[] {
   const checks = [...lesson.practice.questions, ...lesson.assessment.questions];
-  const facts = unique([...checks.map(item => item.correctAnswer), firstSentence(lesson.introduction.text), ...(lesson.keyTakeaways || [])]);
+  // Answers to "what can go wrong?" need their question to make sense. They
+  // still appear in the prediction chapter with that context, never as advice
+  // on an isolated diagram card or in the mental-model narration.
+  const standaloneChecks = checks.filter(item => !/\b(without|avoid|reduce|risk|wrong|incorrect|least|bad|problem|mistake|unsafe|never|forbidden|failure)\b|should(?:n’t|n't)\b/i.test(item.question));
+  const facts = unique([...standaloneChecks.map(item => item.correctAnswer), firstSentence(lesson.introduction.text), ...(lesson.keyTakeaways || [])]);
   const named: Record<SketchVisualFamily, string[]> = {
     prompt: ['Goal', 'Context', 'Constraints', 'Output', 'Check'],
     code: ['Input', 'Understand', 'Change', 'Test', 'Ship'],
@@ -128,7 +132,7 @@ function labelsFor(family: SketchVisualFamily, lesson: Lesson): SketchLabel[] {
     Hook: /hook|first|attention/, Story: /story|rough|pacing/, Proof: /proof|demo|select/, Caption: /caption|text|read/, Deliver: /export|deliver|ratio/,
   };
   return names.map((label, index) => {
-    const supported = questionTerms[label] ? checks.find(item => questionTerms[label].test(item.question))?.correctAnswer : undefined;
+    const supported = questionTerms[label] ? standaloneChecks.find(item => questionTerms[label].test(item.question))?.correctAnswer : undefined;
     const detail = family === 'prompt' && label === 'Goal' ? `Build ${lesson.project.title}`
       : family === 'prompt' && label === 'Constraints' ? supported || 'Keep the project brief’s requirements'
       : family === 'prompt' && label === 'Output' ? lesson.project.description
@@ -183,8 +187,8 @@ export function buildSketchLessonStoryboard(course: Course, lesson: Lesson): Ske
   ];
   let startFrame = 0;
   const chapters = definitions.map(({ seconds, ...chapter }) => {
-    // Captions and the optional device voice need enough time for the actual
-    // teaching text, including unusually detailed project briefs.
+    // Silent captions need enough time for the actual teaching text. Recorded
+    // narration later retimes this storyboard to the measured speech duration.
     const readableSeconds = Math.max(seconds, Math.ceil(chapter.narration.split(/\s+/).length / 2.7));
     const result = { ...chapter, startFrame, durationInFrames: readableSeconds * fps };
     startFrame += result.durationInFrames;

@@ -28,8 +28,8 @@ practice XP. Animation pauses when the activity or browser tab is inactive.
 
 Four supplemental activities remain available:
 
-- **Watch:** a captioned animated sketch film with worked examples, replay,
-  chapter controls, and read-aloud. Optional reading and slide decks offer 8,
+- **Watch:** a narrated pencil sketch film with worked examples, replay,
+  chapter controls, synchronized speech, and captions. Optional reading and slide decks offer 8,
   14, or 22 slides.
 - **Practice:** choose a skill sprint, deep practice, or portfolio program,
   customize a practice plan, record evidence, and review its criteria.
@@ -48,6 +48,29 @@ Optional generated practice plans and slide material use the server-side
 inputs. Authored materials remain available when generation fails. Provider names
 and technical errors stay out of learner screens.
 
+The sketch studio uses five lesson-specific voice recordings from OpenAI's
+`gpt-4o-mini-tts` model with the `marin` voice. A learner's first narrated play
+prepares them; opening a lesson only checks for an existing recording. Chapter
+durations follow the actual WAV audio, with brief space before and after the
+speech. Caption text remains exactly the authored narration; phrase timings are
+estimated by word count within each recorded chapter. Pencil paths, worked
+examples, and chapter focus follow the same player timeline. Pause, seek, speed,
+muting, activity changes, and hidden browser tabs control both speech and drawing.
+Learners see an **AI-generated narration** disclosure without provider branding.
+
+`GET /api/learning/narration` checks the cache. `POST` accepts only canonical
+course and lesson identifiers; it never relays arbitrary text. Hashed WAV clips
+are stored in `.runtime/sketch-narration`, with an OS temporary-directory fallback
+for read-only hosts. The audio route supports byte ranges for seeking. Cached
+playback needs no new generation call, including after a local server restart.
+Two films and two speech calls can run concurrently per server process, with
+generation rate limits, bounded audio size, timeouts, and partial-cache recovery.
+Serverless deployments should use persistent storage for recordings if they
+must survive instance replacement; temporary files are an instance cache.
+Captions and the transcript remain available when narration is unavailable.
+
+Speech integration reference: [OpenAI text-to-speech guide](https://developers.openai.com/api/docs/guides/text-to-speech).
+
 The current Blender assets and rebuild instructions are in
 `assets/academy/README.md`. The browser loads `minimal-play-kit.glb`; its editable
 source has named moving parts for all six families. A matching SVG scene keeps
@@ -60,6 +83,8 @@ npm run typecheck
 npm run check:learning
 npm run check:visual-learning
 npm run check:minimal-play
+npm run check:narrated-sketch
+npm run check:sketch-narration-server
 npm run build
 ```
 
