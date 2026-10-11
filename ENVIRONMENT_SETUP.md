@@ -78,7 +78,7 @@ To get your Hugging Face token:
 
 ### Admin (default dev account)
 
-After Firebase is configured, create the built-in admin user once:
+After Firebase is configured, supply `SEED_ADMIN_PASSWORD` through your shell environment or ignored `.env.local`, then create the built-in admin user once. The script requires this value and never prints it:
 
 ```bash
 npm run seed:admin
@@ -94,14 +94,13 @@ Sign in at **`/admin/login`**:
 
 | Field | Value |
 |--------|--------|
-| **Username** | `admin` (maps to `admin@peeracademy.com`) |
-| **Password** | `Peer@2026` |
+| **Username** | `Peer` (maps to `admin@peeracademy.com`) |
+| **Password** | The private value you supplied through `SEED_ADMIN_PASSWORD` |
 
-Override seed values (optional):
+Override the other seed values (optional):
 
 ```env
 SEED_ADMIN_EMAIL=you@example.com
-SEED_ADMIN_PASSWORD=YourSecurePassword
 SEED_ADMIN_DISPLAY_NAME=Admin
 ```
 

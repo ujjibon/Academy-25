@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { getAdminEmailsFromEnv } from '@/lib/admin';
 
 const FIREBASE_API_KEY =
-  process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyB47TJPJJShQQrKOJ91baovmWCCU4HSrdo';
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyAGubLjD_cXaiPjYHQ6ooYY0JtZYB73mcQ';
 
 export type VerifiedAdmin = {
   uid: string;

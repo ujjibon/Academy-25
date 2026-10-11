@@ -1,0 +1,890 @@
+{
+  "id": "masters-perplexity",
+  "title": "Perplexity Masters Class",
+  "description": "A full Perplexity apprenticeship: cited research loops, source triage, claim verification, note systems, brief writing, and turning web answers into trustworthy decisions end to end.",
+  "image": "/images/masters-perplexity.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Perplexity as a Research Copilot",
+      "duration": 25,
+      "introduction": {
+        "text": "Perplexity shines when you need answers grounded in current web sources with citations you can open. It is not a substitute for reading primary material on high-stakes claims. Your apprenticeship goal is a repeatable research loop: question → sources → triage → notes → brief—not screenshotting the first answer."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Perplexity’s main advantage is:",
+            "options": [
+              "Offline CAD",
+              "Cited answers from web sources you can inspect",
+              "Hardware drivers",
+              "Music mixing"
+            ],
+            "correctAnswer": "Cited answers from web sources you can inspect"
+          },
+          {
+            "question": "High-stakes claims require:",
+            "options": [
+              "Blind trust",
+              "Opening and evaluating primary sources",
+              "Only AI summaries",
+              "Ignoring dates"
+            ],
+            "correctAnswer": "Opening and evaluating primary sources"
+          },
+          {
+            "question": "A research loop should end in:",
+            "options": [
+              "A random tab",
+              "Notes or a brief you can defend",
+              "Only a chat screenshot",
+              "Deleted citations"
+            ],
+            "correctAnswer": "Notes or a brief you can defend"
+          },
+          {
+            "question": "First-answer screenshots are weak because:",
+            "options": [
+              "They always cite perfectly",
+              "They skip triage and verification",
+              "They are archival gold",
+              "They replace reading"
+            ],
+            "correctAnswer": "They skip triage and verification"
+          },
+          {
+            "question": "You use Perplexity best as:",
+            "options": [
+              "An oracle",
+              "A copilot that accelerates sourcing",
+              "A lawyer replacement",
+              "A bank"
+            ],
+            "correctAnswer": "A copilot that accelerates sourcing"
+          }
+        ]
+      },
+      "project": {
+        "title": "Research Loop Card",
+        "description": "Write a one-page research loop card for your domain: question types Perplexity is great for, red-flag topics that need primary docs, and your mandatory verification steps before sharing answers."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Citations matter because they let you:",
+            "options": [
+              "Skip URLs",
+              "Audit where claims came from",
+              "Hide bias",
+              "Ban dates"
+            ],
+            "correctAnswer": "Audit where claims came from"
+          },
+          {
+            "question": "Copilot framing emphasizes:",
+            "options": [
+              "Zero responsibility",
+              "Human judgment over AI speed",
+              "Auto-publish",
+              "No notes"
+            ],
+            "correctAnswer": "Human judgment over AI speed"
+          },
+          {
+            "question": "Current web grounding helps most for:",
+            "options": [
+              "Timely facts and landscape scans",
+              "Timeless pure math proofs only",
+              "Local files only",
+              "Passwords"
+            ],
+            "correctAnswer": "Timely facts and landscape scans"
+          },
+          {
+            "question": "Sharing unverified AI answers risks:",
+            "options": [
+              "Nothing",
+              "Spreading errors with false confidence",
+              "Better ethics",
+              "Stronger trust"
+            ],
+            "correctAnswer": "Spreading errors with false confidence"
+          },
+          {
+            "question": "Masters research habit #1 is:",
+            "options": [
+              "Stop at answer one",
+              "Inspect sources before trusting",
+              "Delete questions",
+              "Ignore conflicts"
+            ],
+            "correctAnswer": "Inspect sources before trusting"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Perplexity as a Research Copilot\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Research Loop Card"
+      ],
+      "keyTakeaways": [
+        "Perplexity shines when you need answers grounded in current web sources with citations you can open.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a one-page research loop card for your domain: question types Perplexity is great for, red-flag topics that need primary docs, and your mandatory verification steps before sharing answers."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Perplexity as a Research Copilot"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Query Design for Better Sources",
+      "duration": 30,
+      "introduction": {
+        "text": "Sharp queries name the entity, timeframe, geography, and desired evidence type (stats, docs, reviews, papers). Use follow-ups to narrow. Ask for contrasting viewpoints when the topic is contested. Bad queries get SEO sludge; good queries invite primary-ish sources."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Timeframe in queries reduces:",
+            "options": [
+              "Relevance",
+              "Outdated hits dominating the answer",
+              "All results",
+              "Citations"
+            ],
+            "correctAnswer": "Outdated hits dominating the answer"
+          },
+          {
+            "question": "Evidence-type cues help Perplexity:",
+            "options": [
+              "Ignore sources",
+              "Prefer the kind of material you need",
+              "Only invent stats",
+              "Skip entities"
+            ],
+            "correctAnswer": "Prefer the kind of material you need"
+          },
+          {
+            "question": "Contested topics need:",
+            "options": [
+              "One blog only",
+              "Contrasting viewpoints on purpose",
+              "No dates",
+              "No follow-ups"
+            ],
+            "correctAnswer": "Contrasting viewpoints on purpose"
+          },
+          {
+            "question": "Entity naming improves:",
+            "options": [
+              "Vague celebrity gossip only",
+              "Disambiguation of who/what you mean",
+              "Random SEO",
+              "Hidden URLs"
+            ],
+            "correctAnswer": "Disambiguation of who/what you mean"
+          },
+          {
+            "question": "Follow-ups are for:",
+            "options": [
+              "Starting over always",
+              "Narrowing scope with what you learned",
+              "Deleting citations",
+              "Avoiding sources"
+            ],
+            "correctAnswer": "Narrowing scope with what you learned"
+          }
+        ]
+      },
+      "project": {
+        "title": "Query Ladder",
+        "description": "Pick a product or policy question. Write a 5-step query ladder from broad landscape to specific verification asks. Note which step should produce primary sources vs secondary commentary."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "SEO sludge often appears when queries are:",
+            "options": [
+              "Precise and constrained",
+              "Vague and hype-heavy",
+              "Dated carefully",
+              "Entity-specific"
+            ],
+            "correctAnswer": "Vague and hype-heavy"
+          },
+          {
+            "question": "Geography matters when:",
+            "options": [
+              "Laws, markets, or availability differ by place",
+              "Physics constants change by city",
+              "Never",
+              "Only for fonts"
+            ],
+            "correctAnswer": "Laws, markets, or availability differ by place"
+          },
+          {
+            "question": "Asking “according to official docs” biases toward:",
+            "options": [
+              "Memes",
+              "Primary documentation when available",
+              "Rumors only",
+              "No links"
+            ],
+            "correctAnswer": "Primary documentation when available"
+          },
+          {
+            "question": "A weak follow-up looks like:",
+            "options": [
+              "“Compare the two sources’ methods”",
+              "“Tell me more” with no target",
+              "“Extract numbers into a table”",
+              "“Flag conflicts”"
+            ],
+            "correctAnswer": "“Tell me more” with no target"
+          },
+          {
+            "question": "Query design is part of:",
+            "options": [
+              "Luck",
+              "Research craft you can teach",
+              "Only coding",
+              "Design tools only"
+            ],
+            "correctAnswer": "Research craft you can teach"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Query Design for Better Sources\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Query Ladder"
+      ],
+      "keyTakeaways": [
+        "Sharp queries name the entity, timeframe, geography, and desired evidence type (stats, docs, reviews, papers).",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Pick a product or policy question. Write a 5-step query ladder from broad landscape to specific verification asks. Note which step should produce primary sources vs secondary commentary."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Query Design for Better Sources"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Source Triage and Credibility",
+      "duration": 30,
+      "introduction": {
+        "text": "Not all citations are equal. Triage by primary vs secondary, date, author incentives, and methodological clarity. Prefer official docs, papers, and reputable reporting for hard claims. Use Perplexity to gather candidates—then you rank them."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Primary sources are generally:",
+            "options": [
+              "Always wrong",
+              "Closer to original evidence or documentation",
+              "Only tweets",
+              "Never useful"
+            ],
+            "correctAnswer": "Closer to original evidence or documentation"
+          },
+          {
+            "question": "Author incentives matter because:",
+            "options": [
+              "Nobody has bias",
+              "Motivation can skew framing and selection",
+              "Dates fix bias",
+              "URLs remove bias"
+            ],
+            "correctAnswer": "Motivation can skew framing and selection"
+          },
+          {
+            "question": "Old citations on fast-moving topics are:",
+            "options": [
+              "Always best",
+              "Suspect until confirmed current",
+              "Required",
+              "Equal to new"
+            ],
+            "correctAnswer": "Suspect until confirmed current"
+          },
+          {
+            "question": "Method clarity helps you judge:",
+            "options": [
+              "Font choice",
+              "Whether a statistic is trustworthy",
+              "Only headlines",
+              "Ad color"
+            ],
+            "correctAnswer": "Whether a statistic is trustworthy"
+          },
+          {
+            "question": "Your ranking job exists because:",
+            "options": [
+              "AI already ranked perfectly forever",
+              "Relevance ≠ credibility",
+              "Citations are fake always",
+              "Triage is optional"
+            ],
+            "correctAnswer": "Relevance ≠ credibility"
+          }
+        ]
+      },
+      "project": {
+        "title": "Triage Scorecard",
+        "description": "Build a 8-criteria source scorecard (primary/secondary, date, incentive, method, corroboration, etc.). Score three fictional citations for a claim and write a keep/kill note for each."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Corroboration means:",
+            "options": [
+              "One blog said it",
+              "Independent sources agree on the substance",
+              "The AI sounded sure",
+              "The title is long"
+            ],
+            "correctAnswer": "Independent sources agree on the substance"
+          },
+          {
+            "question": "Secondary commentary is useful for:",
+            "options": [
+              "Replacing data",
+              "Context and interpretation after facts are checked",
+              "Hard numbers alone",
+              "Ignoring primaries"
+            ],
+            "correctAnswer": "Context and interpretation after facts are checked"
+          },
+          {
+            "question": "A press release should be treated as:",
+            "options": [
+              "Neutral science",
+              "Interested-party communication",
+              "Peer review",
+              "Law"
+            ],
+            "correctAnswer": "Interested-party communication"
+          },
+          {
+            "question": "Paywalled or incomplete access means:",
+            "options": [
+              "Claim is proven",
+              "You may lack full method—note the limit",
+              "Skip triage",
+              "Auto-accept"
+            ],
+            "correctAnswer": "You may lack full method—note the limit"
+          },
+          {
+            "question": "Masters triage ends with:",
+            "options": [
+              "A pile of tabs",
+              "A short ranked source list with reasons",
+              "No notes",
+              "Only screenshots"
+            ],
+            "correctAnswer": "A short ranked source list with reasons"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Source Triage and Credibility\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Triage Scorecard"
+      ],
+      "keyTakeaways": [
+        "Not all citations are equal.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a 8-criteria source scorecard (primary/secondary, date, incentive, method, corroboration, etc.). Score three fictional citations for a claim and write a keep/kill note for each."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Source Triage and Credibility"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Claim Extraction and Verification",
+      "duration": 35,
+      "introduction": {
+        "text": "Break answers into atomic claims. For each claim, record source, quote/paraphrase, and verification status (confirmed / contested / unsupported). This turns chat into an audit trail. Escalate contested claims to primary documents or subject experts."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Atomic claims are:",
+            "options": [
+              "Whole essays",
+              "Single checkable statements",
+              "Only titles",
+              "Feelings"
+            ],
+            "correctAnswer": "Single checkable statements"
+          },
+          {
+            "question": "Unsupported means:",
+            "options": [
+              "Confirmed twice",
+              "No adequate source backs the claim",
+              "Contested equally",
+              "Primary proven"
+            ],
+            "correctAnswer": "No adequate source backs the claim"
+          },
+          {
+            "question": "An audit trail helps when:",
+            "options": [
+              "Nobody asks later",
+              "Someone challenges your brief",
+              "You delete notes",
+              "You ship vibes"
+            ],
+            "correctAnswer": "Someone challenges your brief"
+          },
+          {
+            "question": "Escalation is for:",
+            "options": [
+              "Typos only",
+              "Contested or high-impact claims",
+              "All adjectives",
+              "Font size"
+            ],
+            "correctAnswer": "Contested or high-impact claims"
+          },
+          {
+            "question": "Paraphrase carefully because:",
+            "options": [
+              "Meaning never shifts",
+              "Sloppy paraphrase invents precision",
+              "Quotes are illegal",
+              "Sources hate accuracy"
+            ],
+            "correctAnswer": "Sloppy paraphrase invents precision"
+          }
+        ]
+      },
+      "project": {
+        "title": "Claim Ledger",
+        "description": "Take a Perplexity answer on a topic you know. Build a claim ledger with ≥8 rows: claim, source, status, notes. Fix or drop anything unsupported before writing a 150-word verified summary."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Contested status should trigger:",
+            "options": [
+              "Auto-publish",
+              "More evidence gathering or hedging",
+              "Deleting the topic",
+              "Ignoring incentives"
+            ],
+            "correctAnswer": "More evidence gathering or hedging"
+          },
+          {
+            "question": "High-impact claims deserve:",
+            "options": [
+              "Less checking",
+              "Stricter verification",
+              "Only AI confidence",
+              "No dates"
+            ],
+            "correctAnswer": "Stricter verification"
+          },
+          {
+            "question": "Mixing multiple claims in one sentence makes:",
+            "options": [
+              "Verification easier",
+              "Verification harder",
+              "Better SEO always",
+              "Stronger methods"
+            ],
+            "correctAnswer": "Verification harder"
+          },
+          {
+            "question": "A verified summary may only include:",
+            "options": [
+              "Confirmed or carefully hedged claims",
+              "Anything confident-sounding",
+              "Rumors",
+              "Unsourced numbers"
+            ],
+            "correctAnswer": "Confirmed or carefully hedged claims"
+          },
+          {
+            "question": "Claim ledgers are masters practice because they:",
+            "options": [
+              "Slow thinking forever",
+              "Make research accountable",
+              "Replace curiosity",
+              "Ban Perplexity"
+            ],
+            "correctAnswer": "Make research accountable"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Claim Extraction and Verification\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Claim Ledger"
+      ],
+      "keyTakeaways": [
+        "Break answers into atomic claims.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take a Perplexity answer on a topic you know. Build a claim ledger with ≥8 rows: claim, source, status, notes. Fix or drop anything unsupported before writing a 150-word verified summary."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Claim Extraction and Verification"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Notes, Briefs, and Knowledge Capture",
+      "duration": 35,
+      "introduction": {
+        "text": "Convert verified findings into durable notes: question, answer, sources, confidence, and next actions. Briefs for stakeholders should lead with the decision-relevant point, then evidence. Capture “what I still don’t know” so future you continues the thread."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Durable notes should include:",
+            "options": [
+              "Only the chat UI",
+              "Question, answer, sources, confidence",
+              "Passwords",
+              "Only emojis"
+            ],
+            "correctAnswer": "Question, answer, sources, confidence"
+          },
+          {
+            "question": "Decision-relevant leads help readers:",
+            "options": [
+              "Hunt for the point",
+              "Act without drowning in tabs",
+              "Ignore evidence",
+              "Skip owners"
+            ],
+            "correctAnswer": "Act without drowning in tabs"
+          },
+          {
+            "question": "“Still don’t know” sections prevent:",
+            "options": [
+              "Curiosity",
+              "False closure",
+              "Good briefs",
+              "Follow-ups"
+            ],
+            "correctAnswer": "False closure"
+          },
+          {
+            "question": "Next actions turn research into:",
+            "options": [
+              "Archive dust",
+              "Operational progress",
+              "Longer chats only",
+              "Deleted sources"
+            ],
+            "correctAnswer": "Operational progress"
+          },
+          {
+            "question": "Confidence labels communicate:",
+            "options": [
+              "Certainty theater",
+              "How hard to lean on the finding",
+              "Font weight",
+              "Ad spend"
+            ],
+            "correctAnswer": "How hard to lean on the finding"
+          }
+        ]
+      },
+      "project": {
+        "title": "Brief Template + Sample",
+        "description": "Design a one-page research brief template. Fill it using a real Perplexity session on a tool or market question, including ranked sources and open questions."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Stakeholder briefs should avoid:",
+            "options": [
+              "Front-loading the answer",
+              "Dumping raw chat transcripts as the deliverable",
+              "Clear sources",
+              "Next steps"
+            ],
+            "correctAnswer": "Dumping raw chat transcripts as the deliverable"
+          },
+          {
+            "question": "Knowledge capture fails when notes are:",
+            "options": [
+              "Searchable and sourced",
+              "Trapped in ephemeral chats",
+              "Versioned",
+              "Linked to actions"
+            ],
+            "correctAnswer": "Trapped in ephemeral chats"
+          },
+          {
+            "question": "Open questions belong in briefs because:",
+            "options": [
+              "They look weak",
+              "They set honest scope for decisions",
+              "They ban research",
+              "They hide gaps"
+            ],
+            "correctAnswer": "They set honest scope for decisions"
+          },
+          {
+            "question": "Linking sources in notes enables:",
+            "options": [
+              "Future audit and refresh",
+              "Nothing useful",
+              "Automatic truth",
+              "No rereading"
+            ],
+            "correctAnswer": "Future audit and refresh"
+          },
+          {
+            "question": "Masters capture habit is:",
+            "options": [
+              "Save once, never revisit",
+              "Refresh notes when sources age",
+              "Delete confidence",
+              "Skip actions"
+            ],
+            "correctAnswer": "Refresh notes when sources age"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Notes, Briefs, and Knowledge Capture\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Brief Template + Sample"
+      ],
+      "keyTakeaways": [
+        "Convert verified findings into durable notes: question, answer, sources, confidence, and next actions.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a one-page research brief template. Fill it using a real Perplexity session on a tool or market question, including ranked sources and open questions."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Notes, Briefs, and Knowledge Capture"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Research Ops for Teams",
+      "duration": 40,
+      "introduction": {
+        "text": "Standardize how your team asks, verifies, and files Perplexity work: query patterns, triage scorecards, claim ledgers, and brief templates. Define SLAs for “good enough” vs “publishable.” Teach juniors the difference between speed and rigor."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Research Ops means:",
+            "options": [
+              "Random heroics",
+              "Shared process for asking and verifying",
+              "Banning tools",
+              "Only design"
+            ],
+            "correctAnswer": "Shared process for asking and verifying"
+          },
+          {
+            "question": "SLAs for rigor help by:",
+            "options": [
+              "Forcing one speed always",
+              "Matching depth to decision stakes",
+              "Removing judgment",
+              "Hiding sources"
+            ],
+            "correctAnswer": "Matching depth to decision stakes"
+          },
+          {
+            "question": "Juniors need:",
+            "options": [
+              "Blind copy-paste",
+              "Explicit verification checklists",
+              "No templates",
+              "Secret prompts only"
+            ],
+            "correctAnswer": "Explicit verification checklists"
+          },
+          {
+            "question": "Publishable bar is higher than:",
+            "options": [
+              "Good-enough exploration notes",
+              "Peer review always",
+              "Primary law",
+              "Nothing"
+            ],
+            "correctAnswer": "Good-enough exploration notes"
+          },
+          {
+            "question": "Shared query patterns reduce:",
+            "options": [
+              "Consistency",
+              "Repeated weak questions",
+              "Onboarding",
+              "Quality"
+            ],
+            "correctAnswer": "Repeated weak questions"
+          }
+        ]
+      },
+      "project": {
+        "title": "Team Research Playbook",
+        "description": "Write a short playbook: when to use Perplexity, query ladder examples, triage scorecard link, claim-ledger rule, brief template, and a two-tier quality bar (explore vs publish)."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Without Research Ops, teams tend to:",
+            "options": [
+              "Share consistent quality",
+              "Produce uneven, unverifiable answers",
+              "Always cite primaries",
+              "Never ship"
+            ],
+            "correctAnswer": "Produce uneven, unverifiable answers"
+          },
+          {
+            "question": "Explore-tier work can be faster because:",
+            "options": [
+              "Truth does not matter ever",
+              "It is explicitly labeled incomplete",
+              "Citations are banned",
+              "Stakeholders decide blindly"
+            ],
+            "correctAnswer": "It is explicitly labeled incomplete"
+          },
+          {
+            "question": "Publish-tier work must include:",
+            "options": [
+              "Verification evidence",
+              "Only confidence theater",
+              "No sources",
+              "Hidden methods"
+            ],
+            "correctAnswer": "Verification evidence"
+          },
+          {
+            "question": "Playbooks should update when:",
+            "options": [
+              "Never",
+              "Retros show repeated miss-ranks or outdated sources",
+              "Only yearly parties",
+              "AI demands it"
+            ],
+            "correctAnswer": "Retros show repeated miss-ranks or outdated sources"
+          },
+          {
+            "question": "End-to-end Perplexity mastery is:",
+            "options": [
+              "One lucky citation",
+              "Trusted research throughput with auditability",
+              "Chat addiction",
+              "Skipping triage"
+            ],
+            "correctAnswer": "Trusted research throughput with auditability"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Research Ops for Teams\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Team Research Playbook"
+      ],
+      "keyTakeaways": [
+        "Standardize how your team asks, verifies, and files Perplexity work: query patterns, triage scorecards, claim ledgers, and brief templates.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a short playbook: when to use Perplexity, query ladder examples, triage scorecard link, claim-ledger rule, brief template, and a two-tier quality bar (explore vs publish)."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Research Ops for Teams"
+        }
+      ]
+    }
+  ]
+}

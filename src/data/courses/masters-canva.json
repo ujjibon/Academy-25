@@ -1,0 +1,890 @@
+{
+  "id": "masters-canva",
+  "title": "Canva Masters Class",
+  "description": "A full Canva apprenticeship: brand kits, layout craft, social systems, presentations, campaign kits, and shipping polished marketing visuals end to end without design-tool chaos.",
+  "image": "/images/masters-canva.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Canva for Fast, On-Brand Visuals",
+      "duration": 25,
+      "introduction": {
+        "text": "Canva is a production studio for non-designers and lean teams: templates, brand kits, and rapid export. Speed without a brand system creates clutter. This apprenticeship builds end-to-end visual ops—from brief to consistent assets across channels."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Canva’s strength is:",
+            "options": [
+              "Kernel drivers",
+              "Fast branded visual production",
+              "Database indexing",
+              "Compiler design"
+            ],
+            "correctAnswer": "Fast branded visual production"
+          },
+          {
+            "question": "Without a brand system, speed creates:",
+            "options": [
+              "Perfect consistency",
+              "Visual clutter and drift",
+              "Better accessibility always",
+              "Automatic grids"
+            ],
+            "correctAnswer": "Visual clutter and drift"
+          },
+          {
+            "question": "A creative brief should include:",
+            "options": [
+              "Only “make it pop”",
+              "Audience, message, channel, and constraints",
+              "Passwords",
+              "No size"
+            ],
+            "correctAnswer": "Audience, message, channel, and constraints"
+          },
+          {
+            "question": "Templates are best used as:",
+            "options": [
+              "Final law never edited",
+              "Starting structures you adapt to brand",
+              "Random scrapbooks",
+              "Only for print forever"
+            ],
+            "correctAnswer": "Starting structures you adapt to brand"
+          },
+          {
+            "question": "Masters Canva work aims to:",
+            "options": [
+              "Ship one-off chaos",
+              "Build repeatable on-brand asset systems",
+              "Avoid exports",
+              "Ignore channels"
+            ],
+            "correctAnswer": "Build repeatable on-brand asset systems"
+          }
+        ]
+      },
+      "project": {
+        "title": "Brief → Asset Spec",
+        "description": "Write a one-page brief for a course launch graphic: audience, single message, CTA, do/don’t, and sizes needed for Instagram post + story. Note which brand elements are mandatory."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Channel constraints matter because:",
+            "options": [
+              "All sizes are identical",
+              "Crops and safe zones differ",
+              "Fonts never change",
+              "CTAs are optional"
+            ],
+            "correctAnswer": "Crops and safe zones differ"
+          },
+          {
+            "question": "Single-message discipline prevents:",
+            "options": [
+              "Clarity",
+              "Overloaded posters nobody reads",
+              "Strong CTAs",
+              "Brand use"
+            ],
+            "correctAnswer": "Overloaded posters nobody reads"
+          },
+          {
+            "question": "Mandatory brand elements typically include:",
+            "options": [
+              "Random stock only",
+              "Logo, colors, and type rules",
+              "Only memes",
+              "No margins"
+            ],
+            "correctAnswer": "Logo, colors, and type rules"
+          },
+          {
+            "question": "Visual ops means:",
+            "options": [
+              "One hero designer forever",
+              "Process from brief to export at quality",
+              "Skipping review",
+              "No templates"
+            ],
+            "correctAnswer": "Process from brief to export at quality"
+          },
+          {
+            "question": "Adapting templates poorly often causes:",
+            "options": [
+              "Better hierarchy",
+              "Broken alignment and off-brand fonts",
+              "Perfect spacing",
+              "Clearer CTAs"
+            ],
+            "correctAnswer": "Broken alignment and off-brand fonts"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Canva for Fast, On-Brand Visuals\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Brief → Asset Spec"
+      ],
+      "keyTakeaways": [
+        "Canva is a production studio for non-designers and lean teams: templates, brand kits, and rapid export.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a one-page brief for a course launch graphic: audience, single message, CTA, do/don’t, and sizes needed for Instagram post + story. Note which brand elements are mandatory."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Canva for Fast, On-Brand Visuals"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Brand Kits and Consistency Rules",
+      "duration": 30,
+      "introduction": {
+        "text": "Lock colors, fonts, and logos into a Brand Kit. Define photo style and forbidden patterns. Consistency is a product feature for marketing. Teach the team how to apply the kit so every intern does not invent a new look."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Brand Kits store:",
+            "options": [
+              "Server keys",
+              "Colors, fonts, and logos for reuse",
+              "Only videos",
+              "Chat logs"
+            ],
+            "correctAnswer": "Colors, fonts, and logos for reuse"
+          },
+          {
+            "question": "Forbidden patterns help by:",
+            "options": [
+              "Encouraging chaos",
+              "Preventing off-brand experiments from shipping",
+              "Banning all creativity",
+              "Deleting templates"
+            ],
+            "correctAnswer": "Preventing off-brand experiments from shipping"
+          },
+          {
+            "question": "Photo style guides cover:",
+            "options": [
+              "Only file size",
+              "Lighting, crop, and subject treatment",
+              "DNS",
+              "Code lint"
+            ],
+            "correctAnswer": "Lighting, crop, and subject treatment"
+          },
+          {
+            "question": "Team application rules reduce:",
+            "options": [
+              "Onboarding time waste and drift",
+              "Consistency",
+              "Speed with quality",
+              "Clear CTAs"
+            ],
+            "correctAnswer": "Onboarding time waste and drift"
+          },
+          {
+            "question": "Consistency as a feature means:",
+            "options": [
+              "Customers recognize you across touchpoints",
+              "Every post looks unrelated",
+              "No logo ever",
+              "Random palettes"
+            ],
+            "correctAnswer": "Customers recognize you across touchpoints"
+          }
+        ]
+      },
+      "project": {
+        "title": "Brand Kit One-Pager",
+        "description": "Create (or fictively specify) a Brand Kit one-pager: primary/secondary colors, two fonts, logo clear-space, photo dos/don’ts, and three off-brand examples to reject."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Clear-space around logos prevents:",
+            "options": [
+              "Breathing room",
+              "Crowding and illegible marks",
+              "Better exports",
+              "Grid use"
+            ],
+            "correctAnswer": "Crowding and illegible marks"
+          },
+          {
+            "question": "Secondary colors should:",
+            "options": [
+              "Replace primaries everywhere",
+              "Support accents without fighting hierarchy",
+              "Be neon only",
+              "Ignore contrast"
+            ],
+            "correctAnswer": "Support accents without fighting hierarchy"
+          },
+          {
+            "question": "Reject examples teach faster than:",
+            "options": [
+              "Abstract rules alone",
+              "No examples",
+              "Secret taste",
+              "Random Pinterest"
+            ],
+            "correctAnswer": "Abstract rules alone"
+          },
+          {
+            "question": "Interns without kit rules will:",
+            "options": [
+              "Always match brand",
+              "Invent conflicting styles",
+              "Never export",
+              "Only use one font magically"
+            ],
+            "correctAnswer": "Invent conflicting styles"
+          },
+          {
+            "question": "Masters brand ops includes:",
+            "options": [
+              "Living rules people actually use",
+              "A forgotten PDF",
+              "No kit",
+              "Weekly total redesigns"
+            ],
+            "correctAnswer": "Living rules people actually use"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Brand Kits and Consistency Rules\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Brand Kit One-Pager"
+      ],
+      "keyTakeaways": [
+        "Lock colors, fonts, and logos into a Brand Kit.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create (or fictively specify) a Brand Kit one-pager: primary/secondary colors, two fonts, logo clear-space, photo dos/don’ts, and three off-brand examples to reject."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Brand Kits and Consistency Rules"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Layout Craft: Hierarchy and Whitespace",
+      "duration": 30,
+      "introduction": {
+        "text": "Even with templates, you must control hierarchy: one dominant headline, supporting line, CTA. Use whitespace as structure. Align edges. Limit type sizes. If everything shouts, nothing converts."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "One dominant headline creates:",
+            "options": [
+              "Noise",
+              "Clear entry point for the eye",
+              "Equal weight everywhere",
+              "No CTA room"
+            ],
+            "correctAnswer": "Clear entry point for the eye"
+          },
+          {
+            "question": "Whitespace is:",
+            "options": [
+              "Wasted space always",
+              "A structural tool for grouping and focus",
+              "Only for print novels",
+              "A bug"
+            ],
+            "correctAnswer": "A structural tool for grouping and focus"
+          },
+          {
+            "question": "Too many type sizes cause:",
+            "options": [
+              "Calm hierarchy",
+              "Visual noise",
+              "Better scanning",
+              "Stronger brand"
+            ],
+            "correctAnswer": "Visual noise"
+          },
+          {
+            "question": "Alignment issues make designs feel:",
+            "options": [
+              "Intentional",
+              "Amateur and restless",
+              "More premium always",
+              "More accessible automatically"
+            ],
+            "correctAnswer": "Amateur and restless"
+          },
+          {
+            "question": "If everything shouts:",
+            "options": [
+              "Conversion rises always",
+              "Hierarchy collapses",
+              "Whitespace increases",
+              "CTAs clarify"
+            ],
+            "correctAnswer": "Hierarchy collapses"
+          }
+        ]
+      },
+      "project": {
+        "title": "Hierarchy Remake",
+        "description": "Take a cluttered promo layout (or invent one). Remake it with one headline, one support line, one CTA, and generous whitespace. Deliver before/after and a 5-bullet critique of the original."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Supporting lines should:",
+            "options": [
+              "Compete with the headline",
+              "Clarify without overpowering",
+              "Use larger type than the headline",
+              "Include five CTAs"
+            ],
+            "correctAnswer": "Clarify without overpowering"
+          },
+          {
+            "question": "Grouping related items with space helps:",
+            "options": [
+              "Scanning",
+              "Random scattering",
+              "More borders always",
+              "Lower contrast"
+            ],
+            "correctAnswer": "Scanning"
+          },
+          {
+            "question": "CTA buttons need:",
+            "options": [
+              "Tiny low-contrast labels",
+              "Clear affordance and short labels",
+              "No margins",
+              "Five actions"
+            ],
+            "correctAnswer": "Clear affordance and short labels"
+          },
+          {
+            "question": "Before/after critiques train:",
+            "options": [
+              "Taste without criteria",
+              "Eye for hierarchy rules",
+              "Only filter use",
+              "Stock photo search"
+            ],
+            "correctAnswer": "Eye for hierarchy rules"
+          },
+          {
+            "question": "Layout craft in Canva is still:",
+            "options": [
+              "Optional decoration",
+              "Core to readable marketing",
+              "Solved by AI alone",
+              "Only for Figma users"
+            ],
+            "correctAnswer": "Core to readable marketing"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Layout Craft: Hierarchy and Whitespace\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Hierarchy Remake"
+      ],
+      "keyTakeaways": [
+        "Even with templates, you must control hierarchy: one dominant headline, supporting line, CTA.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take a cluttered promo layout (or invent one). Remake it with one headline, one support line, one CTA, and generous whitespace. Deliver before/after and a 5-bullet critique of the original."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Layout Craft: Hierarchy and Whitespace"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Social Systems and Resize Workflows",
+      "duration": 35,
+      "introduction": {
+        "text": "Social marketing is a system of sizes. Design the master composition, then resize with intentional reflow—not blind stretch. Keep safe zones for stories. Maintain a naming scheme so campaigns stay findable."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Blind stretching across sizes often:",
+            "options": [
+              "Preserves hierarchy",
+              "Breaks composition and crops poorly",
+              "Improves CTAs",
+              "Fixes safe zones"
+            ],
+            "correctAnswer": "Breaks composition and crops poorly"
+          },
+          {
+            "question": "Safe zones matter on stories because:",
+            "options": [
+              "UI chrome can cover edges",
+              "Edges never matter",
+              "Fonts auto-fix",
+              "Logos vanish helpfully"
+            ],
+            "correctAnswer": "UI chrome can cover edges"
+          },
+          {
+            "question": "A master composition is:",
+            "options": [
+              "Every size designed from scratch always",
+              "The primary layout you adapt",
+              "Only a color",
+              "An export bug"
+            ],
+            "correctAnswer": "The primary layout you adapt"
+          },
+          {
+            "question": "Naming schemes help teams:",
+            "options": [
+              "Lose files",
+              "Find campaign assets quickly",
+              "Ignore versions",
+              "Duplicate chaos"
+            ],
+            "correctAnswer": "Find campaign assets quickly"
+          },
+          {
+            "question": "Intentional reflow means:",
+            "options": [
+              "Moving and resizing elements for the new frame",
+              "Only scaling uniformly always",
+              "Deleting the CTA",
+              "Ignoring margins"
+            ],
+            "correctAnswer": "Moving and resizing elements for the new frame"
+          }
+        ]
+      },
+      "project": {
+        "title": "Campaign Size Set",
+        "description": "Produce one campaign message across three sizes (feed square, story, and landscape). Keep brand kit consistency. Document what you changed in each reflow in three bullets per size."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Landscape vs story often needs:",
+            "options": [
+              "Identical layouts",
+              "Different focal crops and type scale",
+              "No CTA",
+              "Same safe zones"
+            ],
+            "correctAnswer": "Different focal crops and type scale"
+          },
+          {
+            "question": "Campaign findability fails when files are:",
+            "options": [
+              "Named consistently",
+              "Called Final2_reallyFINAL",
+              "Brand-kitted",
+              "Versioned lightly"
+            ],
+            "correctAnswer": "Called Final2_reallyFINAL"
+          },
+          {
+            "question": "Reflow notes teach:",
+            "options": [
+              "Nothing",
+              "What breaks when sizes change",
+              "Only filters",
+              "Stock search"
+            ],
+            "correctAnswer": "What breaks when sizes change"
+          },
+          {
+            "question": "Feed square compositions should protect:",
+            "options": [
+              "Tiny edge logos only",
+              "Central focus and readable type",
+              "Maximum clutter",
+              "No margins"
+            ],
+            "correctAnswer": "Central focus and readable type"
+          },
+          {
+            "question": "Social systems mastery is:",
+            "options": [
+              "One pretty PNG",
+              "Repeatable multi-size shipping",
+              "Random crops",
+              "No brand kit"
+            ],
+            "correctAnswer": "Repeatable multi-size shipping"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Social Systems and Resize Workflows\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Campaign Size Set"
+      ],
+      "keyTakeaways": [
+        "Social marketing is a system of sizes.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Produce one campaign message across three sizes (feed square, story, and landscape). Keep brand kit consistency. Document what you changed in each reflow in three bullets per size."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Social Systems and Resize Workflows"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Presentations and Narrative Slides",
+      "duration": 35,
+      "introduction": {
+        "text": "Slides fail when they are documents. One idea per slide, strong titles, and visuals that support the point. Build a reusable deck system: title, section, content, and closing templates aligned to brand."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "One idea per slide improves:",
+            "options": [
+              "Wall-of-text density",
+              "Audience comprehension",
+              "Font count",
+              "Hidden CTAs"
+            ],
+            "correctAnswer": "Audience comprehension"
+          },
+          {
+            "question": "Slide titles should:",
+            "options": [
+              "Be vague",
+              "State the point of the slide",
+              "Only show dates",
+              "Be decorative only"
+            ],
+            "correctAnswer": "State the point of the slide"
+          },
+          {
+            "question": "Document-like slides usually:",
+            "options": [
+              "Engage better",
+              "Lose the room",
+              "Need no visuals",
+              "Replace talks"
+            ],
+            "correctAnswer": "Lose the room"
+          },
+          {
+            "question": "A deck system includes:",
+            "options": [
+              "Only random layouts",
+              "Reusable slide types for narrative structure",
+              "No brand colors",
+              "Only GIFs"
+            ],
+            "correctAnswer": "Reusable slide types for narrative structure"
+          },
+          {
+            "question": "Visuals on slides should:",
+            "options": [
+              "Distract from the point",
+              "Support the stated point",
+              "Replace the speaker always",
+              "Be unreadably small always"
+            ],
+            "correctAnswer": "Support the stated point"
+          }
+        ]
+      },
+      "project": {
+        "title": "Six-Slide Pitch System",
+        "description": "Build a 6-slide pitch: title, problem, approach, proof, offer, close. Use Brand Kit. Keep ≤20 words of body text per content slide; put detail in speaker notes instead."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Speaker notes are for:",
+            "options": [
+              "Crowding the slide",
+              "Detail the audience need not read on-screen",
+              "Hiding the brand",
+              "Replacing rehearsal"
+            ],
+            "correctAnswer": "Detail the audience need not read on-screen"
+          },
+          {
+            "question": "Section slides help by:",
+            "options": [
+              "Confusing order",
+              "Signaling narrative turns",
+              "Adding more text walls",
+              "Removing hierarchy"
+            ],
+            "correctAnswer": "Signaling narrative turns"
+          },
+          {
+            "question": "Proof slides should show:",
+            "options": [
+              "Vague claims only",
+              "Concrete evidence or examples",
+              "Only stock smiles",
+              "No source of credibility"
+            ],
+            "correctAnswer": "Concrete evidence or examples"
+          },
+          {
+            "question": "Closing slides need:",
+            "options": [
+              "A clear ask or next step",
+              "More bullet soup",
+              "No contact path",
+              "Five competing CTAs"
+            ],
+            "correctAnswer": "A clear ask or next step"
+          },
+          {
+            "question": "Masters presentation craft in Canva is:",
+            "options": [
+              "Decorating bullet hell",
+              "Narrative clarity with brand-consistent templates",
+              "Max animations always",
+              "No system"
+            ],
+            "correctAnswer": "Narrative clarity with brand-consistent templates"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Presentations and Narrative Slides\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Six-Slide Pitch System"
+      ],
+      "keyTakeaways": [
+        "Slides fail when they are documents.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a 6-slide pitch: title, problem, approach, proof, offer, close. Use Brand Kit. Keep ≤20 words of body text per content slide; put detail in speaker notes instead."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Presentations and Narrative Slides"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Campaign Kits and Production QA",
+      "duration": 40,
+      "introduction": {
+        "text": "Ship campaigns as kits: masters, resized set, copy variants, and export checklist. QA for contrast, typos, logo clear-space, and wrong-size exports. Retros improve the next sprint. End-to-end Canva mastery is reliable marketing production."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "A campaign kit typically includes:",
+            "options": [
+              "One mystery JPEG",
+              "Masters, sizes, copy variants, exports",
+              "Only fonts",
+              "Server logs"
+            ],
+            "correctAnswer": "Masters, sizes, copy variants, exports"
+          },
+          {
+            "question": "Export QA should catch:",
+            "options": [
+              "Only taste debates",
+              "Wrong sizes, typos, contrast, logo issues",
+              "Nothing measurable",
+              "Only animations"
+            ],
+            "correctAnswer": "Wrong sizes, typos, contrast, logo issues"
+          },
+          {
+            "question": "Copy variants help:",
+            "options": [
+              "A/B tests and channel tone",
+              "Breaking brand",
+              "Ignoring CTA",
+              "Deleting masters"
+            ],
+            "correctAnswer": "A/B tests and channel tone"
+          },
+          {
+            "question": "Retros after campaigns improve:",
+            "options": [
+              "Amnesia",
+              "Next production speed and quality",
+              "Random drift",
+              "No checklists"
+            ],
+            "correctAnswer": "Next production speed and quality"
+          },
+          {
+            "question": "Reliable production means:",
+            "options": [
+              "Heroic last-minute panic",
+              "Checklists and reusable kits",
+              "No Brand Kit",
+              "Blind stretch forever"
+            ],
+            "correctAnswer": "Checklists and reusable kits"
+          }
+        ]
+      },
+      "project": {
+        "title": "Launch Kit + QA Checklist",
+        "description": "Assemble a mini launch kit for a fictional workshop: 1 master, 2 resized posts, 2 copy variants, export list, and a 10-item QA checklist you actually tick off."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Wrong-size exports waste:",
+            "options": [
+              "Nothing",
+              "Media buy and credibility",
+              "Only ink",
+              "Brand kits"
+            ],
+            "correctAnswer": "Media buy and credibility"
+          },
+          {
+            "question": "Contrast failures hurt:",
+            "options": [
+              "Only printers",
+              "Readability and accessibility",
+              "File names",
+              "Folder order"
+            ],
+            "correctAnswer": "Readability and accessibility"
+          },
+          {
+            "question": "Tick-off checklists beat memory because:",
+            "options": [
+              "Memory is perfect under deadline",
+              "Deadlines create tunnel vision",
+              "QA is optional",
+              "Exports auto-fix"
+            ],
+            "correctAnswer": "Deadlines create tunnel vision"
+          },
+          {
+            "question": "Copy variants should keep:",
+            "options": [
+              "The same core offer clarity",
+              "Contradictory promises",
+              "No CTA",
+              "Hidden sizes"
+            ],
+            "correctAnswer": "The same core offer clarity"
+          },
+          {
+            "question": "End-to-end Canva mastery looks like:",
+            "options": [
+              "Random pretty files",
+              "Brief → brand → system → QA → ship",
+              "No resize notes",
+              "Template worship without craft"
+            ],
+            "correctAnswer": "Brief → brand → system → QA → ship"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Campaign Kits and Production QA\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Launch Kit + QA Checklist"
+      ],
+      "keyTakeaways": [
+        "Ship campaigns as kits: masters, resized set, copy variants, and export checklist.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Assemble a mini launch kit for a fictional workshop: 1 master, 2 resized posts, 2 copy variants, export list, and a 10-item QA checklist you actually tick off."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Campaign Kits and Production QA"
+        }
+      ]
+    }
+  ]
+}

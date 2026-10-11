@@ -1,0 +1,79 @@
+{
+  "name": "Quest Isles",
+  "generator": "scripts/blender/build_academy_world.py",
+  "blender": "5.2.1 LTS",
+  "source": "assets/academy/quest-isles.blend",
+  "model": "/models/academy/quest-isles.glb",
+  "preview": "/models/academy/quest-isles-preview.png",
+  "triangles": 15574,
+  "meshObjects": 34,
+  "materials": 8,
+  "bytes": 1082992,
+  "stations": {
+    "learn": {
+      "name": "Slide sanctuary",
+      "position": [
+        -3.1,
+        -2.5
+      ],
+      "color": "Coral clay",
+      "anchor": [
+        -3.1,
+        2.3,
+        2.5
+      ]
+    },
+    "play": {
+      "name": "Puzzle arena",
+      "position": [
+        3.1,
+        -2.5
+      ],
+      "color": "Golden sparks",
+      "anchor": [
+        3.1,
+        2.3,
+        2.5
+      ]
+    },
+    "build": {
+      "name": "Maker observatory",
+      "position": [
+        3.3,
+        1.8
+      ],
+      "color": "Teal lagoon",
+      "anchor": [
+        3.3,
+        2.3,
+        -1.8
+      ]
+    },
+    "recall": {
+      "name": "Memory grove",
+      "position": [
+        -3.3,
+        1.8
+      ],
+      "color": "Lavender crystal",
+      "anchor": [
+        -3.3,
+        2.3,
+        -1.8
+      ]
+    },
+    "boss": {
+      "name": "Mastery gateway",
+      "position": [
+        0,
+        4.3
+      ],
+      "color": "Indigo ink",
+      "anchor": [
+        0,
+        2.3,
+        -4.3
+      ]
+    }
+  }
+}

@@ -2,8 +2,7 @@
  * Creates the default Peer Academy admin in Firebase Auth (one-time / dev).
  *
  * Login in the app (admin sign-in page):
- *   Username: admin
- *   Password: Peer@2026
+ *   Username: Peer
  *
  * Uses the same public Web API key as the client (see src/lib/firebase.ts).
  * Run: npm run seed:admin
@@ -39,7 +38,7 @@ const API_KEY =
   process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyAGubLjD_cXaiPjYHQ6ooYY0JtZYB73mcQ';
 
 const EMAIL = (process.env.SEED_ADMIN_EMAIL || 'admin@peeracademy.com').trim().toLowerCase();
-const PASSWORD = process.env.SEED_ADMIN_PASSWORD || 'Peer@2026';
+const PASSWORD = process.env.SEED_ADMIN_PASSWORD;
 const DISPLAY_NAME = process.env.SEED_ADMIN_DISPLAY_NAME || 'Admin';
 
 async function postJson(path, body) {
@@ -54,6 +53,11 @@ async function postJson(path, body) {
 }
 
 async function main() {
+  if (!PASSWORD || PASSWORD.trim().length < 6) {
+    console.error('Set SEED_ADMIN_PASSWORD to at least six characters in your shell or ignored .env.local before running seed:admin.');
+    process.exit(1);
+  }
+
   console.log('Seeding Firebase Auth admin:', EMAIL);
 
   let { ok, data } = await postJson('accounts:signUp', {
@@ -96,8 +100,7 @@ async function main() {
   }
 
   console.log('Done. Sign in at: https://localhost:3000/admin/login (or your deployed URL)');
-  console.log('  Username: admin');
-  console.log('  Password:', PASSWORD);
+  console.log('  Username: Peer');
   console.log('');
   console.log('Ensure .env.local includes:');
   console.log('  ADMIN_EMAILS=' + EMAIL);

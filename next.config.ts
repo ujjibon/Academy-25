@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  distDir: process.env.ACADEMY_BUILD_DIR || '.next',
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
@@ -18,9 +19,15 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+  webpack: (config: any, { isServer, webpack }: { isServer: boolean; webpack: any }) => {
     // Handle Node.js modules that are not available in the browser
     if (!isServer) {
+      // PptxGenJS 4 uses lazy node: imports even in its browser ESM build.
+      // Normalize only its two built-ins so the browser fallbacks below apply.
+      config.plugins.push(new webpack.NormalModuleReplacementPlugin(
+        /^node:(fs|https)$/,
+        (resource: { request: string }) => { resource.request = resource.request.slice(5); }
+      ));
       config.resolve.fallback = {
         ...config.resolve.fallback,
         async_hooks: false,

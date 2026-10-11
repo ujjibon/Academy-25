@@ -10,6 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "check:learning": "node scripts/check-learning-experience.cjs",
+    "check:world": "node scripts/blender/validate_world.mjs",
     "seed:admin": "node scripts/seed-default-admin.mjs",
     "postinstall": "patch-package"
   },
@@ -53,6 +55,7 @@
     "nodemailer": "^8.0.7",
     "patch-package": "^8.0.0",
     "pdf-parse": "^2.4.5",
+    "pptxgenjs": "^4.0.1",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
@@ -61,6 +64,7 @@
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.186.1",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -68,6 +72,7 @@
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.186.0",
     "autoprefixer": "^10.4.21",
     "genkit-cli": "^1.14.1",
     "postcss": "^8.5.6",

@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 
 export default {
   darkMode: ['class'],
@@ -21,55 +22,13 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: [
-          'var(--font-inter)',
-          'Inter',
-          'SF Pro Text',
-          'system-ui',
-          'sans-serif',
-        ],
-        body: [
-          'var(--font-inter)',
-          'Inter',
-          'SF Pro Text',
-          'system-ui',
-          'sans-serif',
-        ],
-        headline: [
-          'var(--font-inter)',
-          'Inter',
-          'SF Pro Display',
-          'system-ui',
-          'sans-serif',
-        ],
-        heading: [
-          'var(--font-inter)',
-          'Inter',
-          'SF Pro Display',
-          'system-ui',
-          'sans-serif',
-        ],
-        display: [
-          'var(--font-instrument)',
-          'Instrument Serif',
-          'Times New Roman',
-          'serif',
-        ],
-        mono: [
-          'var(--font-jetbrains)',
-          'JetBrains Mono',
-          'Geist Mono',
-          'ui-monospace',
-          'monospace',
-        ],
-        'dashboard-title': [
-          'var(--font-manrope)',
-          'Manrope',
-          'Inter',
-          'SF Pro Display',
-          'system-ui',
-          'sans-serif',
-        ],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        headline: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-instrument)', 'Instrument Serif', 'Georgia', 'serif'],
+        mono: ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'monospace'],
+        'dashboard-title': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'rgb(var(--background) / <alpha-value>)',
@@ -106,7 +65,7 @@ export default {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
           foreground: 'rgb(var(--destructive-foreground) / <alpha-value>)',
         },
-        border: 'rgb(var(--border) / <alpha-value>)',
+        border: 'rgb(var(--border) / calc(var(--border-opacity) * <alpha-value>))',
         input: 'rgb(var(--input) / <alpha-value>)',
         ring: 'rgb(var(--ring) / <alpha-value>)',
         chart: {
@@ -125,12 +84,15 @@ export default {
           accent: 'rgb(var(--sidebar-accent) / <alpha-value>)',
           'accent-foreground':
             'rgb(var(--sidebar-accent-foreground) / <alpha-value>)',
-          border: 'rgb(var(--sidebar-border) / <alpha-value>)',
+          border: 'rgb(var(--sidebar-border) / calc(var(--sidebar-border-opacity) * <alpha-value>))',
           ring: 'rgb(var(--sidebar-ring) / <alpha-value>)',
         },
         chalk: 'rgb(var(--chalk) / <alpha-value>)',
         'chalk-soft': 'rgb(var(--chalk-soft) / <alpha-value>)',
-        slate: 'rgb(var(--slate) / <alpha-value>)',
+        slate: {
+          ...colors.slate,
+          DEFAULT: 'rgb(var(--slate) / <alpha-value>)',
+        },
         'slate-dark': 'rgb(var(--slate-dark) / <alpha-value>)',
         midnight: 'rgb(var(--midnight) / <alpha-value>)',
         'midnight-light': 'rgb(var(--midnight-light) / <alpha-value>)',
@@ -141,8 +103,8 @@ export default {
       },
       borderRadius: {
         lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 4px)',
-        sm: 'calc(var(--radius) - 8px)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
         xl: 'calc(var(--radius) + 4px)',
       },
       keyframes: {

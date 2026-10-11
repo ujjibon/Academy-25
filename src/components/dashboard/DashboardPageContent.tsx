@@ -19,6 +19,8 @@ import { PersonalTrainer } from '@/components/dashboard/PersonalTrainer';
 import { StrengthsWeaknessesChart } from '@/components/dashboard/StrengthsWeaknessesChart';
 import { UpcomingAssignments } from '@/components/dashboard/UpcomingAssignments';
 import { PlatformFeaturesGrid } from '@/components/platform/PlatformFeaturesGrid';
+import { CourseCard } from '@/components/courses/CourseCard';
+import { mastersCourses } from '@/lib/courses';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConnectionError } from '@/components/ui/connection-error';
 
@@ -97,11 +99,33 @@ export function DashboardPageContent() {
         </header>
         <PlatformFeaturesGrid role="learner" />
         <Link href="/learn" className="text-sm text-primary hover:underline inline-block">
-          View all tools →
+          Open My Learning →
         </Link>
       </section>
 
       <ActiveCourse userProfile={userProfile} />
+
+      <section className="space-y-4">
+        <header className="flex items-end justify-between gap-4">
+          <div>
+            <span className="dashboard-kicker">Masters Class</span>
+            <h2 className="font-heading text-xl font-semibold tracking-tight mt-3">
+              Live masters courses
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Codex, Antigravity, Claude, Perplexity, Figma, Canva, Higgsfield, CapCut, and more.
+            </p>
+          </div>
+          <Link href="/courses" className="text-sm font-medium text-primary hover:underline shrink-0">
+            View catalog
+          </Link>
+        </header>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {mastersCourses.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      </section>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <WeeklyGoals userProfile={userProfile} />

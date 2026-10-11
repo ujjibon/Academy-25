@@ -10,47 +10,55 @@ interface AuthShellProps {
   footer?: ReactNode;
   /** Wider card for sign-up path picker + forms */
   wide?: boolean;
+  /** Optional top-right header action (e.g. Log in link) */
+  headerAction?: ReactNode;
 }
 
-export function AuthShell({ title, description, children, footer, wide }: AuthShellProps) {
+export function AuthShell({
+  title,
+  description,
+  children,
+  footer,
+  wide,
+  headerAction,
+}: AuthShellProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden>
-        <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
+    <div className="auth-mesh relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgb(var(--border)/0.55)_1px,transparent_1px),linear-gradient(90deg,rgb(var(--border)/0.55)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]" />
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        <div className="container flex h-16 items-center">
-          <Link href="/">
+        <header className="container flex h-16 items-center justify-between gap-4">
+          <Link href="/" className="transition-opacity hover:opacity-80">
             <Logo />
           </Link>
-        </div>
+          {headerAction}
+        </header>
 
-        <div className="flex flex-1 items-center justify-center px-4 py-10 sm:py-12">
+        <div className="flex flex-1 items-center justify-center px-4 pb-12 pt-2 sm:pb-16 sm:pt-4">
           <div
             className={cn(
-              'w-full space-y-5 animate-fade-in-up',
+              'w-full space-y-6 animate-fade-in-up',
               wide ? 'max-w-2xl' : 'max-w-[26rem]'
             )}
           >
-            <div className="text-center space-y-2">
+            <div className="space-y-3 text-center">
               <span className="badge-royal mx-auto">
                 <span className="dot-flare" aria-hidden />
                 Peer Academy
               </span>
-              <h1 className="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              <h1 className="font-heading text-[1.75rem] font-semibold tracking-tight text-foreground sm:text-3xl">
                 {title}
               </h1>
-              <p className="text-sm text-muted-foreground text-balance">{description}</p>
+              <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground text-balance">
+                {description}
+              </p>
             </div>
 
-            <div className="brand-card p-5 sm:p-7">
-              {children}
-              {footer ? (
-                <div className="mt-5 border-t border-border/60 pt-5">{footer}</div>
-              ) : null}
-            </div>
+            <div className="auth-panel p-5 sm:p-8">{children}</div>
+
+            {footer ? <div className="animate-fade-in px-1">{footer}</div> : null}
           </div>
         </div>
       </div>

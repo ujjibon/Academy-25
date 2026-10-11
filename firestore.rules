@@ -35,7 +35,7 @@ service cloud.firestore {
       allow read: if signedIn();
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();
-      allow delete: if false;
+      allow delete: if isAdmin() && request.auth.uid != userId;
     }
 
     match /courses/{courseId} {

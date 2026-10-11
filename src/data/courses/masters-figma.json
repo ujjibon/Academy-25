@@ -1,0 +1,890 @@
+{
+  "id": "masters-figma",
+  "title": "Figma Masters Class",
+  "description": "A full Figma apprenticeship: frames, layout systems, components, variants, prototyping, and handoff-ready UI craft from blank canvas to developer-ready specs.",
+  "image": "/images/masters-figma.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Figma Mindset: Structure Before Decoration",
+      "duration": 25,
+      "introduction": {
+        "text": "Great Figma files are systems, not artboards of one-offs. Start with frames, spacing rhythm, and hierarchy before shadows and flourishes. Name layers. Think in reusable parts. This apprenticeship trains end-to-end product UI craft—from wire to polished, handoff-ready screens."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "You should prioritize early:",
+            "options": [
+              "Random effects",
+              "Structure, spacing, and hierarchy",
+              "Only gradients",
+              "Export chaos"
+            ],
+            "correctAnswer": "Structure, spacing, and hierarchy"
+          },
+          {
+            "question": "Named layers help:",
+            "options": [
+              "Nobody",
+              "You and teammates navigate the file",
+              "Only printers",
+              "Hide components"
+            ],
+            "correctAnswer": "You and teammates navigate the file"
+          },
+          {
+            "question": "One-off art without systems causes:",
+            "options": [
+              "Easy handoff",
+              "Inconsistent UI and painful edits",
+              "Perfect tokens",
+              "Faster variants"
+            ],
+            "correctAnswer": "Inconsistent UI and painful edits"
+          },
+          {
+            "question": "Frames are for:",
+            "options": [
+              "Doodles only",
+              "Containing layout and screen structure",
+              "Deleting Auto Layout",
+              "Hiding text"
+            ],
+            "correctAnswer": "Containing layout and screen structure"
+          },
+          {
+            "question": "Masters Figma work aims for:",
+            "options": [
+              "Pretty chaos",
+              "Reusable, handoff-ready structure",
+              "No naming",
+              "No spacing rules"
+            ],
+            "correctAnswer": "Reusable, handoff-ready structure"
+          }
+        ]
+      },
+      "project": {
+        "title": "File Hygiene Starter",
+        "description": "Create a starter file structure: Cover page, Foundations (type/color/spacing), Components, Screens, and Archive. Document naming rules for frames and layers in a sticky note on the cover."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Hierarchy in UI means:",
+            "options": [
+              "Everything same size",
+              "Clear primary vs secondary content",
+              "Only color noise",
+              "No CTAs"
+            ],
+            "correctAnswer": "Clear primary vs secondary content"
+          },
+          {
+            "question": "Spacing rhythm means:",
+            "options": [
+              "Random gaps",
+              "Consistent spacing scale across the UI",
+              "Only 1px everywhere",
+              "Ignoring alignment"
+            ],
+            "correctAnswer": "Consistent spacing scale across the UI"
+          },
+          {
+            "question": "Decorations should come:",
+            "options": [
+              "Before wire structure",
+              "After structure reads clearly",
+              "Instead of type",
+              "Without frames"
+            ],
+            "correctAnswer": "After structure reads clearly"
+          },
+          {
+            "question": "Reusable parts mindset prepares you for:",
+            "options": [
+              "More duplicate boxes",
+              "Components and variants",
+              "Deleting libraries",
+              "No handoff"
+            ],
+            "correctAnswer": "Components and variants"
+          },
+          {
+            "question": "Archive pages exist to:",
+            "options": [
+              "Confuse developers",
+              "Park old explorations without cluttering active screens",
+              "Delete history",
+              "Break links"
+            ],
+            "correctAnswer": "Park old explorations without cluttering active screens"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Figma Mindset: Structure Before Decoration\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: File Hygiene Starter"
+      ],
+      "keyTakeaways": [
+        "Great Figma files are systems, not artboards of one-offs.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a starter file structure: Cover page, Foundations (type/color/spacing), Components, Screens, and Archive. Document naming rules for frames and layers in a sticky note on the cover."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Figma Mindset: Structure Before Decoration"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Frames, Grids, and Auto Layout",
+      "duration": 35,
+      "introduction": {
+        "text": "Auto Layout is how modern Figma UI survives content changes. Learn direction, gap, padding, and hugging vs filling. Combine with layout grids for page rhythm. Resize like a product, not a poster: components must flex without manual nudging."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Auto Layout primarily controls:",
+            "options": [
+              "Video codecs",
+              "Direction, gap, padding, and resizing behavior",
+              "Only shadows",
+              "Font licensing"
+            ],
+            "correctAnswer": "Direction, gap, padding, and resizing behavior"
+          },
+          {
+            "question": "Hugging content means:",
+            "options": [
+              "Fixed forever width",
+              "Sizing to the content",
+              "Ignoring padding",
+              "Breaking grids"
+            ],
+            "correctAnswer": "Sizing to the content"
+          },
+          {
+            "question": "Fill container is useful when:",
+            "options": [
+              "Items should expand into available space",
+              "Everything must be absolute",
+              "You ban gaps",
+              "Text never wraps"
+            ],
+            "correctAnswer": "Items should expand into available space"
+          },
+          {
+            "question": "Layout grids help with:",
+            "options": [
+              "Random alignment",
+              "Consistent page columns and margins",
+              "Only effects",
+              "Export bitrate"
+            ],
+            "correctAnswer": "Consistent page columns and margins"
+          },
+          {
+            "question": "Manual nudging everywhere is a sign:",
+            "options": [
+              "Of mastery",
+              "The layout system is missing",
+              "Of perfect Auto Layout",
+              "Of token maturity"
+            ],
+            "correctAnswer": "The layout system is missing"
+          }
+        ]
+      },
+      "project": {
+        "title": "Responsive Card Row",
+        "description": "Design a card row with Auto Layout: image, title, meta, and CTA. Demonstrate hugging vs filling. Show desktop and a narrower breakpoint frame that still holds together without broken overlaps."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Gap vs padding:",
+            "options": [
+              "Are identical",
+              "Gap spaces children; padding spaces inside the parent edge",
+              "Padding spaces children only",
+              "Neither matter"
+            ],
+            "correctAnswer": "Gap spaces children; padding spaces inside the parent edge"
+          },
+          {
+            "question": "Nested Auto Layout is common because:",
+            "options": [
+              "UI is hierarchical",
+              "Figma forbids nesting",
+              "Grids ban it",
+              "Text cannot wrap"
+            ],
+            "correctAnswer": "UI is hierarchical"
+          },
+          {
+            "question": "Absolute positioning should be:",
+            "options": [
+              "Default for everything",
+              "Used sparingly for overlays",
+              "Required for text",
+              "Used instead of frames"
+            ],
+            "correctAnswer": "Used sparingly for overlays"
+          },
+          {
+            "question": "Content changes breaking layout indicate:",
+            "options": [
+              "Need for more fixed sizes only",
+              "Weak Auto Layout setup",
+              "Perfect systems",
+              "No grids needed"
+            ],
+            "correctAnswer": "Weak Auto Layout setup"
+          },
+          {
+            "question": "Breakpoint frames communicate:",
+            "options": [
+              "Only print sizes",
+              "How UI adapts at key widths",
+              "Video length",
+              "API routes"
+            ],
+            "correctAnswer": "How UI adapts at key widths"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Frames, Grids, and Auto Layout\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Responsive Card Row"
+      ],
+      "keyTakeaways": [
+        "Auto Layout is how modern Figma UI survives content changes.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a card row with Auto Layout: image, title, meta, and CTA. Demonstrate hugging vs filling. Show desktop and a narrower breakpoint frame that still holds together without broken overlaps."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Frames, Grids, and Auto Layout"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Typography, Color, and Foundations",
+      "duration": 30,
+      "introduction": {
+        "text": "Foundations are the tokens of your file: type styles, color styles, and spacing habits. Limit the palette. Define text styles for roles (display, title, body, caption). Accessibility starts here—contrast and readable sizes are not optional polish."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Text styles should map to:",
+            "options": [
+              "Random whims",
+              "Roles like title/body/caption",
+              "Only one size ever",
+              "Export presets"
+            ],
+            "correctAnswer": "Roles like title/body/caption"
+          },
+          {
+            "question": "Limiting palette helps:",
+            "options": [
+              "More chaos",
+              "Consistency and faster decisions",
+              "Worse brand",
+              "No contrast"
+            ],
+            "correctAnswer": "Consistency and faster decisions"
+          },
+          {
+            "question": "Contrast matters because:",
+            "options": [
+              "Decoration only",
+              "People need to read the UI",
+              "Developers hate color",
+              "Grids forbid it"
+            ],
+            "correctAnswer": "People need to read the UI"
+          },
+          {
+            "question": "Foundations belong:",
+            "options": [
+              "Scattered per screen",
+              "In a shared Foundations area/library",
+              "Only in Archive",
+              "In filenames only"
+            ],
+            "correctAnswer": "In a shared Foundations area/library"
+          },
+          {
+            "question": "Spacing habits beat:",
+            "options": [
+              "Ad-hoc 7px and 13px everywhere",
+              "A clear scale",
+              "Auto Layout gaps",
+              "Alignment"
+            ],
+            "correctAnswer": "Ad-hoc 7px and 13px everywhere"
+          }
+        ]
+      },
+      "project": {
+        "title": "Mini Design Tokens",
+        "description": "Create a foundations page: 1 color ramp (primary/neutral/danger), 4 text styles, and a spacing scale (4/8/12/16/24). Apply them to a sample settings screen without one-off overrides."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "One-off overrides of text styles cause:",
+            "options": [
+              "Easy global updates",
+              "Drift and hard maintenance",
+              "Better a11y",
+              "Cleaner libraries"
+            ],
+            "correctAnswer": "Drift and hard maintenance"
+          },
+          {
+            "question": "Danger color should be reserved for:",
+            "options": [
+              "Decoration gradients",
+              "Destructive or critical states",
+              "All buttons",
+              "Backgrounds only"
+            ],
+            "correctAnswer": "Destructive or critical states"
+          },
+          {
+            "question": "Caption styles are for:",
+            "options": [
+              "Hero headlines",
+              "Secondary supporting text",
+              "Only logos",
+              "Video titles only"
+            ],
+            "correctAnswer": "Secondary supporting text"
+          },
+          {
+            "question": "Readable body size on mobile is generally:",
+            "options": [
+              "6px",
+              "Not tiny decorative type",
+              "Unrelated to a11y",
+              "Only for print"
+            ],
+            "correctAnswer": "Not tiny decorative type"
+          },
+          {
+            "question": "Tokenized foundations enable:",
+            "options": [
+              "Faster, consistent screen building",
+              "More unique snowflake screens",
+              "No handoff",
+              "Broken Auto Layout"
+            ],
+            "correctAnswer": "Faster, consistent screen building"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Typography, Color, and Foundations\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Mini Design Tokens"
+      ],
+      "keyTakeaways": [
+        "Foundations are the tokens of your file: type styles, color styles, and spacing habits.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create a foundations page: 1 color ramp (primary/neutral/danger), 4 text styles, and a spacing scale (4/8/12/16/24). Apply them to a sample settings screen without one-off overrides."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Typography, Color, and Foundations"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Components, Variants, and Instances",
+      "duration": 35,
+      "introduction": {
+        "text": "Components encode reusable UI. Variants express states (default/hover/disabled) and types (primary/secondary) without duplicating frames. Prefer properties over sprawling variant matrices when possible. Instances should be nudged via properties, not detached chaos."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Variants commonly represent:",
+            "options": [
+              "Git branches only",
+              "States and types of one component",
+              "Entire apps",
+              "Only colors outside UI"
+            ],
+            "correctAnswer": "States and types of one component"
+          },
+          {
+            "question": "Detaching instances casually causes:",
+            "options": [
+              "Clean libraries",
+              "Lost updates when the main changes",
+              "Better tokens",
+              "Auto a11y"
+            ],
+            "correctAnswer": "Lost updates when the main changes"
+          },
+          {
+            "question": "Component properties help by:",
+            "options": [
+              "Forcing more duplicates",
+              "Swapping content/icons without new variants",
+              "Deleting Auto Layout",
+              "Hiding names"
+            ],
+            "correctAnswer": "Swapping content/icons without new variants"
+          },
+          {
+            "question": "A button set should include:",
+            "options": [
+              "Only one mystery state",
+              "Key states like default and disabled",
+              "Only hover art",
+              "No labels"
+            ],
+            "correctAnswer": "Key states like default and disabled"
+          },
+          {
+            "question": "Sprawling variant matrices become:",
+            "options": [
+              "Always ideal",
+              "Hard to maintain when overgrown",
+              "Required by Figma",
+              "Better than properties always"
+            ],
+            "correctAnswer": "Hard to maintain when overgrown"
+          }
+        ]
+      },
+      "project": {
+        "title": "Button + Input Library",
+        "description": "Build a small library: Button (primary/secondary × default/disabled) and Input (default/focus/error). Use Auto Layout. Document instance rules on the library page (when not to detach)."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Main component updates should:",
+            "options": [
+              "Never propagate",
+              "Flow to instances that were not detached",
+              "Break all screens",
+              "Delete variants"
+            ],
+            "correctAnswer": "Flow to instances that were not detached"
+          },
+          {
+            "question": "Error input state should show:",
+            "options": [
+              "Nothing different",
+              "Clear error affordance and helper text pattern",
+              "Only a red page",
+              "Disabled forever"
+            ],
+            "correctAnswer": "Clear error affordance and helper text pattern"
+          },
+          {
+            "question": "Icons in buttons are best handled via:",
+            "options": [
+              "Redrawing each time",
+              "Component properties or nested instances",
+              "Detaching always",
+              "Raster screenshots"
+            ],
+            "correctAnswer": "Component properties or nested instances"
+          },
+          {
+            "question": "Library pages communicate:",
+            "options": [
+              "Secret shortcuts only",
+              "How to use the system",
+              "Only Archive junk",
+              "Export settings"
+            ],
+            "correctAnswer": "How to use the system"
+          },
+          {
+            "question": "Masters component craft means:",
+            "options": [
+              "Pretty orphans",
+              "Consistent UI that scales across screens",
+              "No variants",
+              "Manual copies"
+            ],
+            "correctAnswer": "Consistent UI that scales across screens"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Components, Variants, and Instances\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Button + Input Library"
+      ],
+      "keyTakeaways": [
+        "Components encode reusable UI.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Build a small library: Button (primary/secondary × default/disabled) and Input (default/focus/error). Use Auto Layout. Document instance rules on the library page (when not to detach)."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Components, Variants, and Instances"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Flows, Prototypes, and Critique",
+      "duration": 35,
+      "introduction": {
+        "text": "Screens without flows hide UX problems. Prototype key paths: happy path and one failure path. Use critique prompts focused on clarity, hierarchy, and next action—not taste wars. Record decisions so the file remains a product artifact."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Prototyping happy + failure paths reveals:",
+            "options": [
+              "Only animations",
+              "Whether recovery UX exists",
+              "Export size",
+              "Token names"
+            ],
+            "correctAnswer": "Whether recovery UX exists"
+          },
+          {
+            "question": "Critique should prioritize:",
+            "options": [
+              "Personal font feuds",
+              "Clarity, hierarchy, and next action",
+              "Only shadows",
+              "Layer count"
+            ],
+            "correctAnswer": "Clarity, hierarchy, and next action"
+          },
+          {
+            "question": "Decision notes in-file help:",
+            "options": [
+              "Future you and teammates",
+              "Nobody",
+              "Only exporters",
+              "Deleting history"
+            ],
+            "correctAnswer": "Future you and teammates"
+          },
+          {
+            "question": "A flow is:",
+            "options": [
+              "One isolated artboard",
+              "A connected user journey across screens",
+              "Only a color style",
+              "A plugin"
+            ],
+            "correctAnswer": "A connected user journey across screens"
+          },
+          {
+            "question": "Taste-only feedback is weak because:",
+            "options": [
+              "It always ships better UX",
+              "It lacks actionable product criteria",
+              "It fixes hierarchy",
+              "It replaces research"
+            ],
+            "correctAnswer": "It lacks actionable product criteria"
+          }
+        ]
+      },
+      "project": {
+        "title": "Onboarding Flow Prototype",
+        "description": "Design a 4-screen onboarding flow (welcome → value → permissions/setup → success) with prototype links. Include one error/empty state. Add a critique sticky with three severity-ranked issues you would fix next."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Empty states should:",
+            "options": [
+              "Be blank forever",
+              "Explain what to do next",
+              "Only show errors",
+              "Hide CTAs"
+            ],
+            "correctAnswer": "Explain what to do next"
+          },
+          {
+            "question": "Severity-ranked issues help teams:",
+            "options": [
+              "Argue endlessly",
+              "Fix the highest impact problems first",
+              "Ignore UX",
+              "Ship random polish"
+            ],
+            "correctAnswer": "Fix the highest impact problems first"
+          },
+          {
+            "question": "Prototype friction often indicates:",
+            "options": [
+              "Need for more purple",
+              "Unclear next action or labeling",
+              "Perfect IA",
+              "No research needed"
+            ],
+            "correctAnswer": "Unclear next action or labeling"
+          },
+          {
+            "question": "Success screens should confirm:",
+            "options": [
+              "Nothing happened",
+              "Outcome and next step",
+              "Only branding",
+              "Only legal text"
+            ],
+            "correctAnswer": "Outcome and next step"
+          },
+          {
+            "question": "Product artifacts include:",
+            "options": [
+              "Only PNGs emailed",
+              "Flows, decisions, and living components",
+              "No notes",
+              "Detached chaos"
+            ],
+            "correctAnswer": "Flows, decisions, and living components"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Flows, Prototypes, and Critique\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Onboarding Flow Prototype"
+      ],
+      "keyTakeaways": [
+        "Screens without flows hide UX problems.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a 4-screen onboarding flow (welcome → value → permissions/setup → success) with prototype links. Include one error/empty state. Add a critique sticky with three severity-ranked issues you would fix next."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Flows, Prototypes, and Critique"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Handoff: Specs, Assets, and Dev Collaboration",
+      "duration": 40,
+      "introduction": {
+        "text": "Handoff is a conversation with evidence: spacing, type, states, and assets. Use inspect-friendly structure, export rules, and a short handoff note covering behavior not visible in static frames. Reduce “design intent” guesswork—masters deliver clarity developers can build."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Inspect-friendly structure means:",
+            "options": [
+              "Mystery groups",
+              "Clean hierarchy developers can measure",
+              "Flattened chaos",
+              "No components"
+            ],
+            "correctAnswer": "Clean hierarchy developers can measure"
+          },
+          {
+            "question": "Behavior notes cover:",
+            "options": [
+              "Only hex codes",
+              "Interactions and edge cases not obvious in stills",
+              "Only logos",
+              "Bitrate"
+            ],
+            "correctAnswer": "Interactions and edge cases not obvious in stills"
+          },
+          {
+            "question": "Export rules should specify:",
+            "options": [
+              "Random crops",
+              "Formats, sizes, and naming",
+              "Only vibes",
+              "No assets"
+            ],
+            "correctAnswer": "Formats, sizes, and naming"
+          },
+          {
+            "question": "Guesswork in handoff causes:",
+            "options": [
+              "Faster builds always",
+              "Rework and mismatched UI",
+              "Perfect a11y",
+              "Better tokens"
+            ],
+            "correctAnswer": "Rework and mismatched UI"
+          },
+          {
+            "question": "States in handoff must include:",
+            "options": [
+              "Default only",
+              "Key interactive and error states",
+              "Archive only",
+              "Cover page only"
+            ],
+            "correctAnswer": "Key interactive and error states"
+          }
+        ]
+      },
+      "project": {
+        "title": "Handoff Packet",
+        "description": "Prepare a handoff packet for a settings screen: annotated spacing, component list, exportable icons, and a one-page behavior note (toggles, validation, empty). Write three questions you would ask engineering in kickoff."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Kickoff questions prevent:",
+            "options": [
+              "Alignment",
+              "Late surprises about constraints",
+              "Good specs",
+              "Asset naming"
+            ],
+            "correctAnswer": "Late surprises about constraints"
+          },
+          {
+            "question": "Mismatched UI after build often traces to:",
+            "options": [
+              "Clear variants",
+              "Missing states or unclear specs",
+              "Too many notes",
+              "Clean Auto Layout"
+            ],
+            "correctAnswer": "Missing states or unclear specs"
+          },
+          {
+            "question": "Icon naming conventions help:",
+            "options": [
+              "Designers only",
+              "Design and eng share the same asset language",
+              "Break CI",
+              "Hide exports"
+            ],
+            "correctAnswer": "Design and eng share the same asset language"
+          },
+          {
+            "question": "A living file beats:",
+            "options": [
+              "Final frozen mystery PNGs only",
+              "Updated sources of truth",
+              "Component libraries",
+              "Decision notes"
+            ],
+            "correctAnswer": "Final frozen mystery PNGs only"
+          },
+          {
+            "question": "End-to-end Figma mastery ships:",
+            "options": [
+              "Pretty orphans",
+              "Buildable UI systems and flows",
+              "No handoff",
+              "Detached copies"
+            ],
+            "correctAnswer": "Buildable UI systems and flows"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Handoff: Specs, Assets, and Dev Collaboration\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Handoff Packet"
+      ],
+      "keyTakeaways": [
+        "Handoff is a conversation with evidence: spacing, type, states, and assets.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Prepare a handoff packet for a settings screen: annotated spacing, component list, exportable icons, and a one-page behavior note (toggles, validation, empty). Write three questions you would ask engineering in kickoff."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Handoff: Specs, Assets, and Dev Collaboration"
+        }
+      ]
+    }
+  ]
+}

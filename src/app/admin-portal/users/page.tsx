@@ -24,15 +24,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { getAllUsers, resetUserProgress, setUserRole, type UserProfile } from '@/lib/firebase';
+import { getAllUsers, resetUserProgress, setUserRole, editAdminUser, removeAdminUserProfile, type UserProfile } from '@/lib/firebase';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { isAdminProfile, normalizeRole } from '@/lib/admin';
-import { Loader2, Shield, ShieldOff, RotateCcw } from 'lucide-react';
+import { Loader2, Shield, Pencil, Trash2, RotateCcw } from 'lucide-react';
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<UserProfile | null>(null);
+  const [removing, setRemoving] = useState<UserProfile | null>(null);
+  const [name, setName] = useState('');
+  const [role, setRole] = useState<'learner' | 'instructor' | 'admin'>('learner');
+  const [saving, setSaving] = useState(false);
   const { user: currentUser, refreshProfile } = useAuth();
   const { toast } = useToast();
 
@@ -55,6 +63,33 @@ export default function AdminUsersPage() {
   useEffect(() => {
     loadUsers();
   }, []);
+
+  const saveUser = async () => {
+    if (!editing || saving) return;
+    setSaving(true);
+    try {
+      await editAdminUser(editing.uid, { displayName: name, role });
+      setUsers((existing) => existing.map((u) => u.uid === editing.uid ? { ...u, displayName: name.trim(), role } : u));
+      if (editing.uid === currentUser?.uid) await refreshProfile();
+      setEditing(null);
+      toast({ title: 'User updated' });
+    } catch (error) {
+      toast({ title: 'Could not update user', description: error instanceof Error ? error.message : 'Please try again.', variant: 'destructive' });
+    } finally { setSaving(false); }
+  };
+
+  const removeUser = async () => {
+    if (!removing || saving) return;
+    setSaving(true);
+    try {
+      await removeAdminUserProfile(removing.uid);
+      setUsers((existing) => existing.filter((u) => u.uid !== removing.uid));
+      setRemoving(null);
+      toast({ title: 'User profile removed' });
+    } catch (error) {
+      toast({ title: 'Could not remove user', description: error instanceof Error ? error.message : 'Please try again.', variant: 'destructive' });
+    } finally { setSaving(false); }
+  };
 
   const handleCycleRole = async (target: UserProfile) => {
     const current = target.role === 'admin' ? 'admin' : target.role === 'instructor' ? 'instructor' : 'learner';
@@ -115,9 +150,9 @@ export default function AdminUsersPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>All learners</CardTitle>
+          <CardTitle>All users</CardTitle>
           <CardDescription>
-            Promote users to admin or reset their learning progress.
+            Edit user details, manage roles, remove profiles, or reset learning progress.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -167,7 +202,15 @@ export default function AdminUsersPage() {
                         <TableCell>{u.xp?.toLocaleString()}</TableCell>
                         <TableCell>{u.dailyStreak} days</TableCell>
                         <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
+                          <div className="flex flex-wrap justify-end gap-2">
+                            <Button size="sm" variant="outline" disabled={saving} onClick={() => {
+                              setEditing(u); setName(u.displayName); setRole(isAdminProfile(u) ? 'admin' : normalizeRole(u.role));
+                            }}>
+                              <Pencil className="mr-1 h-3 w-3" />Edit
+                            </Button>
+                            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive" disabled={saving || u.uid === currentUser?.uid} onClick={() => setRemoving(u)}>
+                              <Trash2 className="mr-1 h-3 w-3" />Remove
+                            </Button>
                             <Button
                               size="sm"
                               variant="outline"
@@ -210,6 +253,26 @@ export default function AdminUsersPage() {
           )}
         </CardContent>
       </Card>
+      <Dialog open={!!editing} onOpenChange={(open) => { if (!open && !saving) setEditing(null); }}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Edit user</DialogTitle><DialogDescription>Update the user’s name and role. Login email: {editing?.email}</DialogDescription></DialogHeader>
+          <form onSubmit={(event) => { event.preventDefault(); void saveUser(); }} className="space-y-4">
+            <div className="space-y-2"><Label htmlFor="user-name">Name</Label><Input id="user-name" value={name} onChange={(event) => setName(event.target.value)} required maxLength={100} disabled={saving} /></div>
+            <div className="space-y-2"><Label htmlFor="user-role">Role</Label>
+              <select id="user-role" className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm" value={role} onChange={(event) => setRole(event.target.value as typeof role)} disabled={saving || editing?.uid === currentUser?.uid}>
+                <option value="learner">Learner</option><option value="instructor">Instructor</option><option value="admin">Admin</option>
+              </select>
+            </div>
+            <DialogFooter><Button type="button" variant="outline" disabled={saving} onClick={() => setEditing(null)}>Cancel</Button><Button type="submit" disabled={saving || !name.trim()}>{saving ? 'Saving…' : 'Save changes'}</Button></DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <AlertDialog open={!!removing} onOpenChange={(open) => { if (!open && !saving) setRemoving(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader><AlertDialogTitle>Remove {removing?.displayName}?</AlertDialogTitle><AlertDialogDescription>This permanently deletes this user’s profile and learning progress from the Users list. Their Firebase sign-in account and separately stored records remain. This cannot be undone.</AlertDialogDescription></AlertDialogHeader>
+          <AlertDialogFooter><AlertDialogCancel disabled={saving}>Cancel</AlertDialogCancel><AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90" disabled={saving} onClick={(event) => { event.preventDefault(); void removeUser(); }}>{saving ? 'Removing…' : 'Remove profile'}</AlertDialogAction></AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

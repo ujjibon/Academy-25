@@ -1,0 +1,1037 @@
+{
+  "id": "masters-prompt-engineering",
+  "title": "Prompt Engineering Masters Class",
+  "description": "A full prompt-engineering apprenticeship: patterns that transfer across Codex, Claude, Perplexity, and creative AI—specs, evaluation, libraries, failure diagnosis, and team standards end to end.",
+  "image": "/images/masters-prompt-engineering.png",
+  "lessons": [
+    {
+      "id": "1",
+      "title": "Universal Prompt Anatomy",
+      "duration": 25,
+      "introduction": {
+        "text": "Across tools, strong prompts share anatomy: goal, context, constraints, examples, and output format. Tool differences matter, but structure travels. This apprenticeship builds a cross-tool prompting system you can teach—not trivia for one chatbot."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Universal anatomy usually includes:",
+            "options": [
+              "Only emojis",
+              "Goal, context, constraints, format",
+              "Passwords",
+              "No examples ever"
+            ],
+            "correctAnswer": "Goal, context, constraints, format"
+          },
+          {
+            "question": "Examples help models:",
+            "options": [
+              "Ignore patterns",
+              "Match desired shape and style",
+              "Delete constraints",
+              "Skip goals"
+            ],
+            "correctAnswer": "Match desired shape and style"
+          },
+          {
+            "question": "Constraints reduce:",
+            "options": [
+              "All creativity forever",
+              "Off-brief and unsafe output",
+              "Need for goals",
+              "Context use"
+            ],
+            "correctAnswer": "Off-brief and unsafe output"
+          },
+          {
+            "question": "Format instructions matter when:",
+            "options": [
+              "Nothing consumes the output",
+              "Humans/tools must reuse the result",
+              "You ban structure",
+              "Stakes are zero always"
+            ],
+            "correctAnswer": "Humans/tools must reuse the result"
+          },
+          {
+            "question": "Cross-tool mastery means:",
+            "options": [
+              "Memorizing one UI",
+              "Patterns that transfer with local adaptation",
+              "No evaluation",
+              "Secret personal slang"
+            ],
+            "correctAnswer": "Patterns that transfer with local adaptation"
+          }
+        ]
+      },
+      "project": {
+        "title": "Anatomy Cheatsheet",
+        "description": "Design a one-page cheatsheet with the universal prompt blocks and 2 example prompts (coding + writing) showing each block labeled in comments or brackets."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Context without a goal tends to produce:",
+            "options": [
+              "Focused action",
+              "Wandering answers",
+              "Perfect formats",
+              "Strong constraints"
+            ],
+            "correctAnswer": "Wandering answers"
+          },
+          {
+            "question": "Local adaptation means:",
+            "options": [
+              "Ignoring tool strengths",
+              "Tuning the same pattern to Claude vs Codex vs Perplexity",
+              "Copy-pasting blindly",
+              "No format"
+            ],
+            "correctAnswer": "Tuning the same pattern to Claude vs Codex vs Perplexity"
+          },
+          {
+            "question": "Teaching prompts requires:",
+            "options": [
+              "Hidden folklore",
+              "Explicit reusable structure",
+              "One-off chats only",
+              "No examples"
+            ],
+            "correctAnswer": "Explicit reusable structure"
+          },
+          {
+            "question": "Unsafe output risk is lowered by:",
+            "options": [
+              "Clear constraints and refusal boundaries",
+              "More vagueness",
+              "No review",
+              "Hidden goals"
+            ],
+            "correctAnswer": "Clear constraints and refusal boundaries"
+          },
+          {
+            "question": "Masters prompting starts with:",
+            "options": [
+              "Tool worship",
+              "Clear intent and structure",
+              "Longest prompt wins",
+              "No cheatsheets"
+            ],
+            "correctAnswer": "Clear intent and structure"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Universal Prompt Anatomy\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Anatomy Cheatsheet"
+      ],
+      "keyTakeaways": [
+        "Across tools, strong prompts share anatomy: goal, context, constraints, examples, and output format.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Design a one-page cheatsheet with the universal prompt blocks and 2 example prompts (coding + writing) showing each block labeled in comments or brackets."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Universal Prompt Anatomy"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Patterns: Plan, Critique, Extract, Transform",
+      "duration": 30,
+      "introduction": {
+        "text": "Reusable patterns beat clever one-liners: plan-then-act, red-team critique, extract-to-schema, and transform-with-invariants. Name your patterns. Combine them into pipelines. Pattern literacy is how teams scale prompting skill."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Plan-then-act reduces:",
+            "options": [
+              "Thoughtfulness",
+              "Blind jumping into wrong solutions",
+              "Need for goals",
+              "All speed"
+            ],
+            "correctAnswer": "Blind jumping into wrong solutions"
+          },
+          {
+            "question": "Red-team critique asks the model to:",
+            "options": [
+              "Only praise",
+              "Attack weaknesses of a draft",
+              "Delete evidence",
+              "Ignore risks"
+            ],
+            "correctAnswer": "Attack weaknesses of a draft"
+          },
+          {
+            "question": "Extract-to-schema is for:",
+            "options": [
+              "Poetry only",
+              "Pulling fields into a consistent structure",
+              "Hiding data",
+              "Random prose"
+            ],
+            "correctAnswer": "Pulling fields into a consistent structure"
+          },
+          {
+            "question": "Transform-with-invariants means:",
+            "options": [
+              "Change anything freely",
+              "Rewrite while preserving must-keep facts/behavior",
+              "No constraints",
+              "Drop the audience"
+            ],
+            "correctAnswer": "Rewrite while preserving must-keep facts/behavior"
+          },
+          {
+            "question": "Naming patterns helps teams:",
+            "options": [
+              "Forget them",
+              "Call for the right move quickly",
+              "Hide pipelines",
+              "Avoid reuse"
+            ],
+            "correctAnswer": "Call for the right move quickly"
+          }
+        ]
+      },
+      "project": {
+        "title": "Pattern Cards",
+        "description": "Create four pattern cards (Plan, Critique, Extract, Transform). Each card: when to use, template prompt, failure mode, and one mini example in your domain."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Pipelines combine patterns when:",
+            "options": [
+              "Tasks are multi-stage",
+              "One emoji suffices",
+              "No output is needed",
+              "Tools are offline forever"
+            ],
+            "correctAnswer": "Tasks are multi-stage"
+          },
+          {
+            "question": "Critique before final draft helps catch:",
+            "options": [
+              "Only typos later",
+              "Structural and logical holes early",
+              "Perfect praise",
+              "No risks"
+            ],
+            "correctAnswer": "Structural and logical holes early"
+          },
+          {
+            "question": "Schema extraction fails when schemas are:",
+            "options": [
+              "Clear",
+              "Ambiguous or overloaded",
+              "Documented",
+              "Tested"
+            ],
+            "correctAnswer": "Ambiguous or overloaded"
+          },
+          {
+            "question": "Invariants should be:",
+            "options": [
+              "Listed explicitly",
+              "Assumed telepathically",
+              "Optional always",
+              "Secret"
+            ],
+            "correctAnswer": "Listed explicitly"
+          },
+          {
+            "question": "Pattern literacy scales skill because:",
+            "options": [
+              "Everyone reinvents prompting",
+              "Shared moves compound",
+              "Tools ban templates",
+              "Evaluation dies"
+            ],
+            "correctAnswer": "Shared moves compound"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Patterns: Plan, Critique, Extract, Transform\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Pattern Cards"
+      ],
+      "keyTakeaways": [
+        "Reusable patterns beat clever one-liners: plan-then-act, red-team critique, extract-to-schema, and transform-with-invariants.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Create four pattern cards (Plan, Critique, Extract, Transform). Each card: when to use, template prompt, failure mode, and one mini example in your domain."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Patterns: Plan, Critique, Extract, Transform"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Tool-Specific Adaptation",
+      "duration": 30,
+      "introduction": {
+        "text": "Same anatomy, different accents: Codex wants interfaces and tests; Claude wants long-context contracts; Perplexity wants query precision and citations; creative tools want visual constraints. Learn adapters, not entirely new religions per app."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Codex prompts should emphasize:",
+            "options": [
+              "Only mood boards",
+              "Interfaces, constraints, and verification",
+              "Citations only",
+              "Lens flares"
+            ],
+            "correctAnswer": "Interfaces, constraints, and verification"
+          },
+          {
+            "question": "Perplexity prompts should emphasize:",
+            "options": [
+              "Secret APIs",
+              "Query precision and source needs",
+              "Unit tests",
+              "Auto Layout"
+            ],
+            "correctAnswer": "Query precision and source needs"
+          },
+          {
+            "question": "Creative AI prompts should emphasize:",
+            "options": [
+              "SQL indexes",
+              "Subject, style, camera/composition constraints",
+              "Jest configs",
+              "Citation ledgers"
+            ],
+            "correctAnswer": "Subject, style, camera/composition constraints"
+          },
+          {
+            "question": "Adapters are:",
+            "options": [
+              "Whole new frameworks per button",
+              "Small modifications of a shared core",
+              "Useless",
+              "Only for Claude"
+            ],
+            "correctAnswer": "Small modifications of a shared core"
+          },
+          {
+            "question": "Claude often benefits from:",
+            "options": [
+              "No structure",
+              "Long-context packs and output contracts",
+              "Ignoring assumptions",
+              "No critique"
+            ],
+            "correctAnswer": "Long-context packs and output contracts"
+          }
+        ]
+      },
+      "project": {
+        "title": "Four-Adapter Pack",
+        "description": "Take one task (launch a workshop). Write four adapted prompts: Codex (landing page component), Claude (email + FAQ), Perplexity (competitor scan), Higgsfield/Canva-style (visual motion brief). Keep shared goal language consistent."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Shared goal language across adapters ensures:",
+            "options": [
+              "Drift of intent",
+              "Comparable outcomes toward one objective",
+              "Random metrics",
+              "No evaluation"
+            ],
+            "correctAnswer": "Comparable outcomes toward one objective"
+          },
+          {
+            "question": "Wrong accent (e.g., citation asks to Codex) wastes:",
+            "options": [
+              "Nothing",
+              "Tokens and attention on mismatched strengths",
+              "Only fonts",
+              "Only seeds"
+            ],
+            "correctAnswer": "Tokens and attention on mismatched strengths"
+          },
+          {
+            "question": "Tool religions fail because:",
+            "options": [
+              "Tools never change",
+              "They block transfer learning",
+              "Adapters are illegal",
+              "Patterns do not exist"
+            ],
+            "correctAnswer": "They block transfer learning"
+          },
+          {
+            "question": "Visual briefs still need:",
+            "options": [
+              "Anatomy: goal/constraints/format",
+              "No constraints",
+              "Only “make pretty”",
+              "Unit tests"
+            ],
+            "correctAnswer": "Anatomy: goal/constraints/format"
+          },
+          {
+            "question": "Masters adapters feel:",
+            "options": [
+              "Incoherent",
+              "Same spine, local dialect",
+              "Copy-identical always",
+              "Anti-pattern"
+            ],
+            "correctAnswer": "Same spine, local dialect"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Tool-Specific Adaptation\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Four-Adapter Pack"
+      ],
+      "keyTakeaways": [
+        "Same anatomy, different accents: Codex wants interfaces and tests; Claude wants long-context contracts; Perplexity wants query precision and citations; creative tools want visual constraints.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Take one task (launch a workshop). Write four adapted prompts: Codex (landing page component), Claude (email + FAQ), Perplexity (competitor scan), Higgsfield/Canva-style (visual motion brief). Keep shared goal language consistent."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Tool-Specific Adaptation"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Evaluation: Rubrics, Tests, and Blind Spots",
+      "duration": 35,
+      "introduction": {
+        "text": "If you cannot evaluate, you cannot improve prompts. Build rubrics: correctness, completeness, format compliance, and risk. Use golden examples. Watch for sycophancy and confident wrongness. Evaluation is the difference between tinkering and engineering."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Rubrics make quality:",
+            "options": [
+              "Subjective only forever",
+              "Discussable and comparable",
+              "Impossible",
+              "Hidden"
+            ],
+            "correctAnswer": "Discussable and comparable"
+          },
+          {
+            "question": "Golden examples are:",
+            "options": [
+              "Random chats",
+              "Known-good input/output pairs for regression",
+              "Secrets",
+              "Only failures"
+            ],
+            "correctAnswer": "Known-good input/output pairs for regression"
+          },
+          {
+            "question": "Sycophancy means:",
+            "options": [
+              "Critical pushback",
+              "Agreeableness that hides hard truths",
+              "Perfect citation",
+              "Format compliance"
+            ],
+            "correctAnswer": "Agreeableness that hides hard truths"
+          },
+          {
+            "question": "Format compliance checks whether:",
+            "options": [
+              "Facts are true",
+              "The shape matches the contract",
+              "Tone is funny",
+              "Sources exist"
+            ],
+            "correctAnswer": "The shape matches the contract"
+          },
+          {
+            "question": "Confident wrongness is dangerous because:",
+            "options": [
+              "It is easy to spot always",
+              "Fluency masks errors",
+              "Rubrics ban it",
+              "Tests love it"
+            ],
+            "correctAnswer": "Fluency masks errors"
+          }
+        ]
+      },
+      "project": {
+        "title": "Rubric + Golden Set",
+        "description": "Write a 4-criterion rubric for a research brief prompt. Create 2 golden examples (good/bad). Score a third sample answer and list prompt changes suggested by the scores."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Regression in prompting means:",
+            "options": [
+              "Never retesting",
+              "Re-checking golden cases after edits",
+              "Deleting rubrics",
+              "Only vibes"
+            ],
+            "correctAnswer": "Re-checking golden cases after edits"
+          },
+          {
+            "question": "Completeness differs from correctness by asking:",
+            "options": [
+              "Whether required parts are present",
+              "Only spelling",
+              "Only tone",
+              "Only speed"
+            ],
+            "correctAnswer": "Whether required parts are present"
+          },
+          {
+            "question": "Risk criteria might include:",
+            "options": [
+              "Overclaiming and missing caveats",
+              "Font size",
+              "Emoji count",
+              "Seed values"
+            ],
+            "correctAnswer": "Overclaiming and missing caveats"
+          },
+          {
+            "question": "Prompt changes should be driven by:",
+            "options": [
+              "Scored failures",
+              "Random rewrites",
+              "Longer text always",
+              "More adjectives"
+            ],
+            "correctAnswer": "Scored failures"
+          },
+          {
+            "question": "Engineering mindset treats prompts as:",
+            "options": [
+              "Unmeasurable spells",
+              "Artifacts under test",
+              "One-off jokes",
+              "UI themes"
+            ],
+            "correctAnswer": "Artifacts under test"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Evaluation: Rubrics, Tests, and Blind Spots\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Rubric + Golden Set"
+      ],
+      "keyTakeaways": [
+        "If you cannot evaluate, you cannot improve prompts.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a 4-criterion rubric for a research brief prompt. Create 2 golden examples (good/bad). Score a third sample answer and list prompt changes suggested by the scores."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Evaluation: Rubrics, Tests, and Blind Spots"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Failure Diagnosis and Repair Loops",
+      "duration": 35,
+      "introduction": {
+        "text": "Diagnose failures by class: missing context, conflicting instructions, underspecified format, wrong tool, or evaluation mismatch. Repair with the smallest change. Keep a failure diary. Pros debug prompts; amateurs just rephrase forever."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Conflicting instructions often cause:",
+            "options": [
+              "Perfect obedience",
+              "Unstable or compromised outputs",
+              "Better citations",
+              "Cleaner schemas"
+            ],
+            "correctAnswer": "Unstable or compromised outputs"
+          },
+          {
+            "question": "Smallest change repairs help you:",
+            "options": [
+              "Learn what fixed it",
+              "Obscure causality",
+              "Maximize tokens always",
+              "Skip diagnosis"
+            ],
+            "correctAnswer": "Learn what fixed it"
+          },
+          {
+            "question": "Wrong-tool failures need:",
+            "options": [
+              "Louder prompts to the same tool",
+              "Switching or adapting to a better-fit tool",
+              "No brief",
+              "Deleting goals"
+            ],
+            "correctAnswer": "Switching or adapting to a better-fit tool"
+          },
+          {
+            "question": "Failure diaries capture:",
+            "options": [
+              "Only successes",
+              "Class of failure and fix",
+              "Passwords",
+              "Nothing actionable"
+            ],
+            "correctAnswer": "Class of failure and fix"
+          },
+          {
+            "question": "Rephrasing forever without diagnosis is:",
+            "options": [
+              "Engineering",
+              "Amateur thrash",
+              "Rubric-driven",
+              "Golden testing"
+            ],
+            "correctAnswer": "Amateur thrash"
+          }
+        ]
+      },
+      "project": {
+        "title": "Failure Diary Starter",
+        "description": "Log five realistic prompt failures (invented OK): class, evidence, smallest fix, and a prevention rule for your template library."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Missing context symptoms include:",
+            "options": [
+              "Generic advice and invented details",
+              "Perfect citations always",
+              "Exact file diffs",
+              "Strict schema fit"
+            ],
+            "correctAnswer": "Generic advice and invented details"
+          },
+          {
+            "question": "Underspecified format yields:",
+            "options": [
+              "Reliable tables",
+              "Inconsistent shapes",
+              "Guaranteed JSON",
+              "No prose"
+            ],
+            "correctAnswer": "Inconsistent shapes"
+          },
+          {
+            "question": "Prevention rules belong in:",
+            "options": [
+              "Folklore only",
+              "Templates and checklists",
+              "Deleted diaries",
+              "Secret chats"
+            ],
+            "correctAnswer": "Templates and checklists"
+          },
+          {
+            "question": "Evidence in a failure log might be:",
+            "options": [
+              "The bad output excerpt and what was asked",
+              "Only “it failed”",
+              "A vibe",
+              "A seed alone"
+            ],
+            "correctAnswer": "The bad output excerpt and what was asked"
+          },
+          {
+            "question": "Masters repair loops are:",
+            "options": [
+              "Random",
+              "Classified, minimal, and recorded",
+              "Maximal rewrites always",
+              "Tool-blaming only"
+            ],
+            "correctAnswer": "Classified, minimal, and recorded"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Failure Diagnosis and Repair Loops\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Failure Diary Starter"
+      ],
+      "keyTakeaways": [
+        "Diagnose failures by class: missing context, conflicting instructions, underspecified format, wrong tool, or evaluation mismatch.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Log five realistic prompt failures (invented OK): class, evidence, smallest fix, and a prevention rule for your template library."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Failure Diagnosis and Repair Loops"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Libraries, Governance, and Team Standards",
+      "duration": 40,
+      "introduction": {
+        "text": "Ship a prompt library with owners, versioning, and allowed tools. Define review rules for high-risk prompts. Teach onboarding with pattern cards. Governance keeps speed from becoming unmanaged risk—masters prompt engineering is organizational."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Owners of prompts ensure:",
+            "options": [
+              "Nobody maintains them",
+              "Someone updates when tools change",
+              "Secrets in prompts",
+              "No versions"
+            ],
+            "correctAnswer": "Someone updates when tools change"
+          },
+          {
+            "question": "High-risk prompts need:",
+            "options": [
+              "Zero review",
+              "Extra evaluation and approval",
+              "Public passwords",
+              "No rubrics"
+            ],
+            "correctAnswer": "Extra evaluation and approval"
+          },
+          {
+            "question": "Versioning libraries prevents:",
+            "options": [
+              "Traceability",
+              "Silent drift and broken dependents",
+              "Onboarding",
+              "Pattern reuse"
+            ],
+            "correctAnswer": "Silent drift and broken dependents"
+          },
+          {
+            "question": "Onboarding with pattern cards speeds:",
+            "options": [
+              "Confusion",
+              "Shared vocabulary for new teammates",
+              "Private folklore",
+              "Tool lock-in only"
+            ],
+            "correctAnswer": "Shared vocabulary for new teammates"
+          },
+          {
+            "question": "Governance exists to:",
+            "options": [
+              "Ban all AI",
+              "Balance leverage with risk control",
+              "Delete evaluation",
+              "Hide failures"
+            ],
+            "correctAnswer": "Balance leverage with risk control"
+          }
+        ]
+      },
+      "project": {
+        "title": "Team Prompt Standard",
+        "description": "Write a 1–2 page standard: library structure, naming, version policy, risk tiers, required rubric for publish-tier prompts, and a monthly review agenda."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Risk tiers might separate:",
+            "options": [
+              "Explore vs customer-facing outputs",
+              "Only font choices",
+              "All prompts identical",
+              "No tools"
+            ],
+            "correctAnswer": "Explore vs customer-facing outputs"
+          },
+          {
+            "question": "Silent drift hurts when:",
+            "options": [
+              "Dependents still assume old behavior",
+              "Nobody uses prompts",
+              "Versions are explicit",
+              "Owners exist"
+            ],
+            "correctAnswer": "Dependents still assume old behavior"
+          },
+          {
+            "question": "Monthly reviews should look for:",
+            "options": [
+              "Stale prompts and repeated failures",
+              "Only new emojis",
+              "Deleting diaries",
+              "No metrics"
+            ],
+            "correctAnswer": "Stale prompts and repeated failures"
+          },
+          {
+            "question": "Organizational mastery means:",
+            "options": [
+              "One genius prompter",
+              "Shared standards others can run",
+              "Hidden libraries",
+              "No adapters"
+            ],
+            "correctAnswer": "Shared standards others can run"
+          },
+          {
+            "question": "End-to-end prompt engineering ships:",
+            "options": [
+              "Chat folklore",
+              "Evaluated, versioned, governed prompt systems",
+              "One-liners",
+              "Tool wars"
+            ],
+            "correctAnswer": "Evaluated, versioned, governed prompt systems"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Libraries, Governance, and Team Standards\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Team Prompt Standard"
+      ],
+      "keyTakeaways": [
+        "Ship a prompt library with owners, versioning, and allowed tools.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Write a 1–2 page standard: library structure, naming, version policy, risk tiers, required rubric for publish-tier prompts, and a monthly review agenda."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Libraries, Governance, and Team Standards"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Capstone Patterns: Multi-Tool Playbooks",
+      "duration": 40,
+      "introduction": {
+        "text": "Combine patterns into playbooks that span research → brief → assets → motion → edit. Assign each stage a tool and a prompt pattern. Define handoff artifacts. This lesson bridges into the Creative AI Capstone with portable prompting discipline."
+      },
+      "practice": {
+        "questions": [
+          {
+            "question": "Playbooks span tools by:",
+            "options": [
+              "Ignoring handoffs",
+              "Defining stages, tools, and artifacts",
+              "Using one chat only",
+              "Skipping evaluation"
+            ],
+            "correctAnswer": "Defining stages, tools, and artifacts"
+          },
+          {
+            "question": "Handoff artifacts prevent:",
+            "options": [
+              "Guesswork between stages",
+              "Clear ownership",
+              "Rubrics",
+              "Versioning"
+            ],
+            "correctAnswer": "Guesswork between stages"
+          },
+          {
+            "question": "Research → brief → assets is an example of:",
+            "options": [
+              "Random order",
+              "A staged creative pipeline",
+              "A single prompt",
+              "A codec"
+            ],
+            "correctAnswer": "A staged creative pipeline"
+          },
+          {
+            "question": "Portable discipline means:",
+            "options": [
+              "Prompts only work once",
+              "Patterns survive tool changes",
+              "No libraries",
+              "No adapters"
+            ],
+            "correctAnswer": "Patterns survive tool changes"
+          },
+          {
+            "question": "Assigning tools per stage reduces:",
+            "options": [
+              "Fit",
+              "Using the wrong strength for the job",
+              "Clarity",
+              "Speed with quality"
+            ],
+            "correctAnswer": "Using the wrong strength for the job"
+          }
+        ]
+      },
+      "project": {
+        "title": "Multi-Tool Playbook v1",
+        "description": "Draft a playbook for launching a 30s course promo: stages, tool per stage, prompt pattern, artifact out, and rubric checkpoint. Keep it to one page if possible."
+      },
+      "assessment": {
+        "questions": [
+          {
+            "question": "Rubric checkpoints between stages catch:",
+            "options": [
+              "Errors before they cascade",
+              "Only final publish issues",
+              "Nothing",
+              "Only color"
+            ],
+            "correctAnswer": "Errors before they cascade"
+          },
+          {
+            "question": "Wrong-strength tool use looks like:",
+            "options": [
+              "Perplexity for unit tests; Codex for web citations",
+              "Matched strengths",
+              "Clear adapters",
+              "Good handoffs"
+            ],
+            "correctAnswer": "Perplexity for unit tests; Codex for web citations"
+          },
+          {
+            "question": "One-page playbooks help because:",
+            "options": [
+              "They stay usable under deadline",
+              "Longer is always better",
+              "They hide stages",
+              "They ban artifacts"
+            ],
+            "correctAnswer": "They stay usable under deadline"
+          },
+          {
+            "question": "This lesson prepares Capstone by:",
+            "options": [
+              "Isolating tools forever",
+              "Practicing integrated prompting ops",
+              "Skipping motion",
+              "Removing rubrics"
+            ],
+            "correctAnswer": "Practicing integrated prompting ops"
+          },
+          {
+            "question": "Masters prompting at pipeline scale is:",
+            "options": [
+              "Single-chat heroics",
+              "Orchestrated patterns with artifacts",
+              "No stages",
+              "Anti-governance"
+            ],
+            "correctAnswer": "Orchestrated patterns with artifacts"
+          }
+        ]
+      },
+      "objectives": [
+        "Explain the main idea of \"Capstone Patterns: Multi-Tool Playbooks\" without looking at notes",
+        "Identify one mistake beginners make on this topic and how to avoid it",
+        "Complete a concrete artifact for: Multi-Tool Playbook v1"
+      ],
+      "keyTakeaways": [
+        "Combine patterns into playbooks that span research → brief → assets → motion → edit.",
+        "Check understanding with practice before you build.",
+        "A small shipped artifact beats a perfect unread summary."
+      ],
+      "activities": [
+        {
+          "id": "explore",
+          "title": "Explore the brief",
+          "description": "Re-read the project goal and note constraints in 3 bullets."
+        },
+        {
+          "id": "draft",
+          "title": "Build the deliverable",
+          "description": "Draft a playbook for launching a 30s course promo: stages, tool per stage, prompt pattern, artifact out, and rubric checkpoint. Keep it to one page if possible."
+        },
+        {
+          "id": "reflect",
+          "title": "Reflect and ship",
+          "description": "Write what worked, what you would change, and one reusable template from: Capstone Patterns: Multi-Tool Playbooks"
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, Auth, User } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, arrayUnion, Firestore } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc, collection, query, orderBy, limit, getDocs, enableNetwork, enableIndexedDbPersistence, arrayUnion, Firestore } from 'firebase/firestore';
 import type { CertificateRecord } from '@/lib/training-types';
 import type { UserSubscription } from '@/lib/subscription-types';
 import { isAdminEmail, type UserRole } from '@/lib/admin';
@@ -547,7 +547,12 @@ export const updateUserProfile = async (uid: string, updates: Partial<UserProfil
   }
 };
 
-export const updateCourseProgress = async (uid: string, courseId: string, progress: number) => {
+export const updateCourseProgress = async (
+  uid: string,
+  courseId: string,
+  progress: number,
+  lessonId?: string
+) => {
   try {
     const userRef = doc(db, 'users', uid);
     const updates: Record<string, unknown> = {
@@ -555,6 +560,9 @@ export const updateCourseProgress = async (uid: string, courseId: string, progre
       activeCourseId: courseId,
       lastLoginAt: new Date(),
     };
+    if (lessonId) {
+      updates.activeLessonId = lessonId;
+    }
     if (progress >= 100) {
       updates.completedCourses = arrayUnion(courseId);
     }
@@ -566,6 +574,23 @@ export const updateCourseProgress = async (uid: string, courseId: string, progre
     }
     console.error('Error updating course progress:', error);
     throw error;
+  }
+};
+
+/** Resume position without changing progress percentage. */
+export const setActiveLesson = async (uid: string, courseId: string, lessonId: string) => {
+  try {
+    const userRef = doc(db, 'users', uid);
+    await updateDoc(userRef, {
+      activeCourseId: courseId,
+      activeLessonId: lessonId,
+      lastLoginAt: new Date(),
+    });
+  } catch (error: any) {
+    if (error.code === 'failed-precondition' || error.code === 'unavailable') {
+      return;
+    }
+    console.error('Error setting active lesson:', error);
   }
 };
 
@@ -679,6 +704,26 @@ export const getAllUsers = async (maxUsers = 100): Promise<UserProfile[]> => {
             ...badge,
             earnedAt: badge.earnedAt?.toDate?.() || new Date(),
           })) || [],
+        subscription: data.subscription
+          ? {
+              ...data.subscription,
+              currentPeriodEnd:
+                data.subscription.currentPeriodEnd?.toDate?.() ??
+                (data.subscription.currentPeriodEnd
+                  ? new Date(data.subscription.currentPeriodEnd)
+                  : undefined),
+              startedAt:
+                data.subscription.startedAt?.toDate?.() ??
+                (data.subscription.startedAt
+                  ? new Date(data.subscription.startedAt)
+                  : undefined),
+              updatedAt:
+                data.subscription.updatedAt?.toDate?.() ??
+                (data.subscription.updatedAt
+                  ? new Date(data.subscription.updatedAt)
+                  : undefined),
+            }
+          : undefined,
       } as UserProfile;
     });
   } catch (error) {
@@ -694,6 +739,26 @@ export const setUserRole = async (targetUid: string, role: UserRole | 'learner' 
 
   const userRef = doc(db, 'users', targetUid);
   await updateDoc(userRef, { role });
+};
+
+export const editAdminUser = async (
+  targetUid: string,
+  updates: Pick<UserProfile, 'displayName' | 'role'>
+) => {
+  if (!shouldAttemptFirestoreOperation()) throw new Error('Database is currently unavailable.');
+  if (targetUid === auth.currentUser?.uid && updates.role !== 'admin') {
+    throw new Error('You cannot remove your own admin access.');
+  }
+  const displayName = updates.displayName.trim();
+  if (!displayName || displayName.length > 100) throw new Error('Enter a name of 1–100 characters.');
+  if (!updates.role || !['learner', 'instructor', 'admin'].includes(updates.role)) throw new Error('Invalid role.');
+  await updateDoc(doc(db, 'users', targetUid), { displayName, role: updates.role });
+};
+
+export const removeAdminUserProfile = async (targetUid: string) => {
+  if (!shouldAttemptFirestoreOperation()) throw new Error('Database is currently unavailable.');
+  if (targetUid === auth.currentUser?.uid) throw new Error('You cannot remove your own account.');
+  await deleteDoc(doc(db, 'users', targetUid));
 };
 
 export const resetUserProgress = async (targetUid: string) => {

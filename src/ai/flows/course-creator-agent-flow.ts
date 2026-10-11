@@ -113,7 +113,7 @@ export type CreatorAgentOutput = z.infer<typeof CreatorAgentOutputSchema>;
 const TOOLS = [generateLessonContent, planNextLesson];
 
 async function executeToolCalls(
-  toolCalls: { toolRequest: { name: string; input: unknown } }[]
+  toolCalls: { toolRequest: { name: string; input?: unknown } }[]
 ): Promise<{
   generatedLesson?: LessonOutput;
   suggestedNextLesson?: CreatorAgentOutput['suggestedNextLesson'];

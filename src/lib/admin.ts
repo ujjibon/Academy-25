@@ -10,7 +10,7 @@ export function normalizeRole(role: string | undefined): 'learner' | 'instructor
   return role === 'learner' ? 'learner' : 'learner';
 }
 
-/** Default admin email when signing in with username `admin`. */
+/** Default admin email when signing in with username `Peer`. */
 export const DEFAULT_ADMIN_EMAIL = 'admin@peeracademy.com';
 
 export function getAdminLoginEmail(): string {
@@ -20,11 +20,11 @@ export function getAdminLoginEmail(): string {
   );
 }
 
-/** Map username `admin` or a full email to the Firebase auth email. */
+/** Map username `Peer` or a full email to the Firebase auth email. */
 export function resolveAdminLoginEmail(input: string): string {
   const value = input.trim().toLowerCase();
   if (value.includes('@')) return value;
-  if (value === 'admin') return getAdminLoginEmail();
+  if (value === 'peer') return getAdminLoginEmail();
   return `${value}@peeracademy.com`;
 }
 

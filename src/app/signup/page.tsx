@@ -56,9 +56,9 @@ function SignUpPageInner() {
   }
 
   const descriptions: Record<SignupPath, string> = {
-    learner: 'Join as a learner — courses, classroom, leaderboard, and AI tutoring.',
-    founder: 'Join as a founder — startup ideas, pitch reviews, mentorship, and Founder AI.',
-    instructor: 'Join as an instructor — build classrooms and guide learners.',
+    learner: 'Build skills with courses, classroom, and AI tutoring.',
+    founder: 'Launch ideas with pitch reviews, mentorship, and Founder AI.',
+    instructor: 'Create classrooms, assign work, and guide learners.',
   };
 
   return (
@@ -66,21 +66,20 @@ function SignUpPageInner() {
       wide
       title="Create your account"
       description={descriptions[signupPath]}
+      headerAction={
+        <Link
+          href="/login"
+          className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        >
+          Log in
+        </Link>
+      }
       footer={<SignupAuthFooter />}
     >
-      <div className="space-y-8">
+      <div className="space-y-6">
         <SignupPathPicker value={signupPath} onChange={handlePathChange} />
 
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-border" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-3 text-muted-foreground font-medium">
-              {signupPath === 'instructor' ? 'Instructor details' : 'Your details'}
-            </span>
-          </div>
-        </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {signupPath === 'instructor' ? (
           <InstructorSignUpForm />
@@ -88,9 +87,9 @@ function SignUpPageInner() {
           <SignUpForm signupPath={signupPath} />
         )}
 
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="text-center text-[0.7rem] leading-relaxed text-muted-foreground">
           By creating an account you agree to our{' '}
-          <Link href="/" className="text-primary hover:underline">
+          <Link href="/" className="font-medium text-foreground/80 underline-offset-2 hover:underline">
             terms of use
           </Link>
           .

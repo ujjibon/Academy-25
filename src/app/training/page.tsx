@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AppLayout from '@/components/layout/AppLayout';
+import { AdventureInvitation } from '@/components/learning/LearningAdventure';
 import {
   Card,
   CardContent,
@@ -122,6 +123,7 @@ export default function TrainingPage() {
   return (
     <AppLayout>
       <div className="space-y-6 max-w-4xl">
+        <AdventureInvitation />
         <div className="dashboard-hero">
           <span className="dashboard-kicker">Professional development</span>
           <h1 className="font-dashboard-title text-3xl font-bold tracking-tight flex items-center gap-2">

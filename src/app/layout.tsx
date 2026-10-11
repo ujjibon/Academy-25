@@ -1,36 +1,12 @@
 import type {Metadata} from 'next';
-import {Inter, Instrument_Serif, JetBrains_Mono, Manrope} from 'next/font/google';
+import {Inter, Instrument_Serif, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {AuthProvider} from '@/hooks/use-auth';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  weight: ['400', '600', '700'],
-});
-
-const instrument = Instrument_Serif({
-  subsets: ['latin'],
-  variable: '--font-instrument',
-  display: 'swap',
-  weight: ['400'],
-  style: ['normal', 'italic'],
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-  weight: ['500', '600', '700', '800'],
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const instrument = Instrument_Serif({ subsets: ['latin'], variable: '--font-instrument', weight: '400', style: ['normal', 'italic'], display: 'swap' });
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Peer Academy',
@@ -51,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${instrument.variable} ${jetbrains.variable} ${manrope.variable} font-sans antialiased`}
+        className={`${inter.variable} ${instrument.variable} ${geistMono.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <AuthProvider>

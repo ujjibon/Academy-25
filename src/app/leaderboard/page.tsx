@@ -22,6 +22,7 @@ interface LeaderboardEntry {
   name: string;
   xp: number;
   avatar: string;
+  isCurrentUser: boolean;
 }
 
 export default function LeaderboardPage() {
@@ -41,7 +42,8 @@ export default function LeaderboardPage() {
         // Mark current user
         const leaderboardWithCurrentUser = data.map(entry => ({
           ...entry,
-          isCurrentUser: entry.uid === user?.uid
+          uid: 'uid' in entry ? entry.uid : `sample-${entry.rank}`,
+          isCurrentUser: 'uid' in entry && entry.uid === user.uid,
         }));
         setLeaderboard(leaderboardWithCurrentUser);
       } catch (error) {

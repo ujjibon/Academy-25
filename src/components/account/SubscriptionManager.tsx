@@ -7,6 +7,7 @@ import {
   Crown,
   Loader2,
   Sparkles,
+  Ticket,
   X,
   ExternalLink,
 } from 'lucide-react';
@@ -21,6 +22,8 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import { updateUserProfile } from '@/lib/firebase';
@@ -37,6 +40,12 @@ import {
   createPayPalCheckout,
   storePendingPayPalSubscription,
 } from '@/lib/account-api';
+import {
+  redeemSubscriptionCoupon,
+  recordPayPalSubscriptionPayment,
+  validateCouponForUser,
+} from '@/lib/payment-service';
+import { formatCents, planPriceCents } from '@/lib/coupon-utils';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -48,13 +57,17 @@ export function SubscriptionManager({ paypalReturn }: Props) {
   const { toast } = useToast();
   const [busyPlan, setBusyPlan] = useState<SubscriptionPlanId | null>(null);
   const [cancelling, setCancelling] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponHint, setCouponHint] = useState<string | null>(null);
+  const [validatingCoupon, setValidatingCoupon] = useState(false);
+  const [redeemingCoupon, setRedeemingCoupon] = useState(false);
 
   const subscription = userProfile?.subscription;
   const currentPlanId = getEffectivePlanId(subscription);
   const currentPlan = getPlanById(currentPlanId);
 
   useEffect(() => {
-    if (paypalReturn !== 'success' || !user) return;
+    if (paypalReturn !== 'success' || !user || !userProfile) return;
 
     const pending = consumePendingPayPalSubscription();
     if (!pending) return;
@@ -67,6 +80,17 @@ export function SubscriptionManager({ paypalReturn }: Props) {
           pending.planId
         );
         await updateUserProfile(user.uid, { subscription: activated });
+        try {
+          await recordPayPalSubscriptionPayment({
+            userId: user.uid,
+            userEmail: userProfile.email || user.email || '',
+            userDisplayName: userProfile.displayName,
+            planId: pending.planId,
+            paypalSubscriptionId: pending.subscriptionId,
+          });
+        } catch (ledgerErr) {
+          console.warn('Payment ledger write failed:', ledgerErr);
+        }
         await refreshProfile();
         toast({
           title: 'Subscription active',
@@ -82,7 +106,7 @@ export function SubscriptionManager({ paypalReturn }: Props) {
         setBusyPlan(null);
       }
     })();
-  }, [paypalReturn, user, refreshProfile, toast]);
+  }, [paypalReturn, user, userProfile, refreshProfile, toast]);
 
   useEffect(() => {
     if (paypalReturn === 'cancelled') {
@@ -93,6 +117,76 @@ export function SubscriptionManager({ paypalReturn }: Props) {
       });
     }
   }, [paypalReturn, toast]);
+
+  async function handleValidateCoupon() {
+    if (!user || !couponCode.trim()) return;
+    setValidatingCoupon(true);
+    setCouponHint(null);
+    try {
+      const result = await validateCouponForUser(couponCode, {
+        userId: user.uid,
+        amountCents: planPriceCents('pro'),
+        appliesTo: 'subscription',
+        planId: 'pro',
+      });
+      if (!result.valid) {
+        setCouponHint(result.error);
+        return;
+      }
+      if (result.grantsFreeAccess) {
+        setCouponHint(
+          `Valid — unlocks ${result.grantPlanId === 'premium' ? 'Premium' : 'Pro'} at no charge (${formatCents(result.discountCents)} value).`
+        );
+      } else {
+        setCouponHint(
+          `Valid — saves ${formatCents(result.discountCents)}. Full free unlock requires 100% off or a plan-grant code.`
+        );
+      }
+    } catch (err) {
+      setCouponHint(err instanceof Error ? err.message : 'Could not validate');
+    } finally {
+      setValidatingCoupon(false);
+    }
+  }
+
+  async function handleRedeemCoupon(planId: SubscriptionPlanId) {
+    if (!user || !userProfile || !couponCode.trim()) {
+      toast({
+        title: 'Enter a coupon',
+        description: 'Add a coupon code above, then redeem.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setRedeemingCoupon(true);
+    setBusyPlan(planId);
+    try {
+      const result = await redeemSubscriptionCoupon({
+        code: couponCode,
+        userId: user.uid,
+        userEmail: userProfile.email || user.email || '',
+        userDisplayName: userProfile.displayName,
+        planId,
+      });
+      await refreshProfile();
+      setCouponCode('');
+      setCouponHint(null);
+      toast({
+        title: 'Coupon applied',
+        description: result.message,
+      });
+    } catch (err) {
+      toast({
+        title: 'Coupon not applied',
+        description: err instanceof Error ? err.message : 'Could not redeem',
+        variant: 'destructive',
+      });
+    } finally {
+      setRedeemingCoupon(false);
+      setBusyPlan(null);
+    }
+  }
 
   async function handleSubscribe(planId: SubscriptionPlanId) {
     if (!user) return;
@@ -106,6 +200,11 @@ export function SubscriptionManager({ paypalReturn }: Props) {
       });
       await refreshProfile();
       toast({ title: 'Free plan', description: 'You are on the Free plan.' });
+      return;
+    }
+
+    if (couponCode.trim()) {
+      await handleRedeemCoupon(planId);
       return;
     }
 
@@ -239,10 +338,58 @@ export function SubscriptionManager({ paypalReturn }: Props) {
         </AlertDescription>
       </Alert>
 
+      <Card className="brand-card">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Ticket className="h-5 w-5" />
+            Coupon code
+          </CardTitle>
+          <CardDescription>
+            Have a promo code? Enter it here, then choose a plan. Full-cover codes unlock Pro or
+            Premium without PayPal.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex-1 space-y-1.5">
+              <Label htmlFor="sub-coupon" className="sr-only">
+                Coupon code
+              </Label>
+              <Input
+                id="sub-coupon"
+                value={couponCode}
+                onChange={(e) => {
+                  setCouponCode(e.target.value.toUpperCase());
+                  setCouponHint(null);
+                }}
+                placeholder="ENTER CODE"
+                className="font-mono uppercase"
+                autoComplete="off"
+              />
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={validatingCoupon || !couponCode.trim()}
+              onClick={() => void handleValidateCoupon()}
+            >
+              {validatingCoupon ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              Check code
+            </Button>
+          </div>
+          {couponHint ? (
+            <p className="text-sm text-muted-foreground">{couponHint}</p>
+          ) : null}
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 md:grid-cols-3">
         {SUBSCRIPTION_PLANS.map((plan) => {
           const isCurrent = currentPlanId === plan.id;
           const isPaid = plan.id !== 'free';
+          const useCoupon = Boolean(couponCode.trim()) && isPaid;
 
           return (
             <Card
@@ -285,15 +432,17 @@ export function SubscriptionManager({ paypalReturn }: Props) {
                   <Button
                     className="w-full"
                     variant={plan.popular ? 'default' : 'outline'}
-                    disabled={busyPlan !== null}
+                    disabled={busyPlan !== null || redeemingCoupon}
                     onClick={() => handleSubscribe(plan.id)}
                   >
                     {busyPlan === plan.id ? (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : useCoupon ? (
+                      <Ticket className="mr-2 h-4 w-4" />
                     ) : (
                       <ExternalLink className="mr-2 h-4 w-4" />
                     )}
-                    Subscribe with PayPal
+                    {useCoupon ? 'Redeem coupon' : 'Subscribe with PayPal'}
                   </Button>
                 ) : (
                   <Button

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import AppLayout from '@/components/layout/AppLayout';
 import { CourseCard } from '@/components/courses/CourseCard';
 import { JoinCourseDialog } from '@/components/classroom/JoinCourseDialog';
-import { courses as catalog } from '@/lib/courses';
+import { courses as catalog, mastersCourses } from '@/lib/courses';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 import { INSTRUCTOR_DASHBOARD } from '@/lib/role-routes';
@@ -96,6 +96,22 @@ export default function CoursesPage() {
         <section className="space-y-4">
           <h3 className="font-heading text-lg font-semibold flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-primary" />
+            Masters Class
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Ready-to-learn courses on Codex, Antigravity, Claude, Perplexity, Figma, Canva,
+            Higgsfield, CapCut, prompting, and a creative AI capstone.
+          </p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {mastersCourses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h3 className="font-heading text-lg font-semibold flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-primary" />
             Course catalog
           </h3>
           <p className="text-sm text-muted-foreground">
@@ -123,9 +139,10 @@ function EnrolledCourseCard({ course }: { course: ClassroomCourse }) {
 }
 
 function CourseCatalog() {
+  const otherCourses = catalog.filter((c) => !c.id.startsWith('masters-'));
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {catalog.map((course) => (
+      {otherCourses.map((course) => (
         <CourseCard key={course.id} course={course} />
       ))}
     </div>

@@ -46,7 +46,7 @@ export function getPostAuthRedirect(
 export function canAccessLearnerDashboard(
   profile: Pick<UserProfile, 'role' | 'email'> | null | undefined,
   email?: string | null,
-  allowLearnerPreview: boolean
+  allowLearnerPreview: boolean = false
 ): boolean {
   if (!profile) return false;
   const role = resolveUserRole(profile, email);

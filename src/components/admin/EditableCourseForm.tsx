@@ -24,7 +24,6 @@ const BLANK_LESSON: Lesson = {
     duration: 10,
     introduction: {
         text: 'New lesson introduction.',
-        videoUrl: 'https://www.youtube.com/embed/9wK4gHo1c1A',
     },
     practice: { questions: [] },
     project: { title: 'New Project', description: 'Project description.' },
