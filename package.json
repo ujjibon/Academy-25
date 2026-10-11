@@ -13,6 +13,7 @@
     "check:learning": "node scripts/check-learning-experience.cjs",
     "check:visual-learning": "node scripts/check-visual-learning.cjs",
     "check:minimal-play": "node scripts/check-minimal-play.cjs",
+    "check:distinct-games": "node scripts/check-distinct-learning-games.cjs",
     "check:narrated-sketch": "node scripts/check-narrated-sketch.cjs",
     "check:sketch-narration-server": "node scripts/check-sketch-narration-server.cjs",
     "check:world": "node scripts/blender/validate_world.mjs",
