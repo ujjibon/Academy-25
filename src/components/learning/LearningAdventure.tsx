@@ -22,7 +22,7 @@ export function LearningAdventure({ fixedCourse }: { fixedCourse?: Course }) {
   return (
     <div className="mx-auto w-full max-w-6xl space-y-5 text-[#20242b]">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div><p className="text-xs font-medium text-[#335cff]">Academy / Play & learn</p><h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">A new idea. A different game.</h1><p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-500">Mix a soundtrack. Run a loop. Frame a shot. Try the skill in a playground made for the lesson.</p></div>
+        <div><p className="text-xs font-medium text-[#335cff]">Academy / Play & learn</p><h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">See it. Try it. Make it.</h1><p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-500">Watch Maya, Leo, and Pip explain the idea. Change a prompt or trace code, see why the result changes, then put the skill into play.</p></div>
         <Link href={`/courses/${course.id}`} className="inline-flex items-center gap-2 py-2 text-sm font-medium text-slate-500 hover:text-[#335cff]">Course overview<ArrowUpRight className="h-4 w-4" /></Link>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">

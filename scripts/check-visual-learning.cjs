@@ -29,7 +29,7 @@ for (const course of courses) for (const lesson of course.lessons) {
   assert.equal(film.title, lesson.title, 'The film teaches the selected lesson');
   assert(film.project.title && film.project.description, 'The authored project is present');
   assert.equal(film.chapters.length, 5, 'A complete teaching sequence');
-  assert(film.durationInFrames > 30 * 30 && film.durationInFrames < 30 * 240);
+  assert(film.durationInFrames > 30 * 30 && film.durationInFrames < 30 * 480, 'Deeper worked lessons remain under eight minutes');
   let end = 0;
   for (const chapter of film.chapters) {
     assert.equal(chapter.startFrame, end, 'Chapters are contiguous');

@@ -1,8 +1,36 @@
 # Learning playgrounds
 
-The primary Play tab uses `learning-game-catalog.ts` and the distinct game boards.
+Lessons open with Watch, followed by Try and Play. The Play tab uses `learning-game-catalog.ts` and the distinct game boards.
 It gives each authored lesson three different activities tied to its project.
 The older `learning-play-games.ts` remains available for compatibility checks.
+
+## Explanations and demonstrations
+
+`lesson-demonstrations.ts` explicitly authors the goal, concept, causal steps,
+misconception, prediction, prompt comparison, contrasting cases and transfer
+exercise for each of the 84 catalog lessons. Programming examples include code,
+state, output and a zero-based line trace. They are authored illustrations;
+the learner's arbitrary code is never executed by this component.
+
+The Watch film uses the same teaching content. Maya explains, Leo asks and
+predicts, and Pip demonstrates. Every caption carries its speaker and optional
+step, trace or experiment index. Those indices survive measured speech retiming,
+so a spoken code explanation points to the corresponding line and state.
+Changing the lesson text changes the narration cache identity automatically.
+
+The Try tab provides step controls, predictions with explanations, code tracing,
+contrasting examples and an editable prompt. The initial output is labelled an
+illustration. Only pressing Try prompt calls `/api/learning/try`; a validated live
+response contains an artifact, a causal explanation, three draft checks and a
+suggested next change. Results are text, not executed code or rendered media.
+Editing the prompt, changing lessons or hiding the activity cancels pending work.
+The optional Try activity does not gate existing XP or assessments.
+
+The server resolves lesson context from the catalog, bounds requests and response
+bodies, enforces concurrency and request windows, uses a server-side credential,
+and disables provider response storage. It returns sanitized errors without
+claiming that an authored fallback was generated. Limits are per server process;
+multi-instance deployments should move these counters to a shared rate limiter.
 
 ## Curriculum coverage
 
@@ -54,6 +82,8 @@ Keep board previews and evaluator mathematics consistent. In particular:
 ## Adding or changing a lesson
 
 1. Author the lesson and project in `src/data/courses`, with concrete learning goals.
+   Add its explicit teaching demonstration in `lesson-demonstrations.ts`, with
+   an accurate worked artifact, misconception, prediction and contrasting cases.
 2. Add or update its entry in `curriculum`, keeping the array aligned with lesson order.
 3. Choose three different mechanics that teach those goals. Avoid repeating an
    adjacent lesson's trio; multi-lesson courses should use at least four kinds.

@@ -2,6 +2,8 @@
 
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import { SKETCH_FAMILY_NAMES, type SketchLessonStoryboard } from '@/lib/visual-lessons';
+import { SketchTeachingCast } from './SketchTeachingCast';
+import { LessonCodePreview } from './LessonCodePreview';
 
 const INK = '#20242b';
 const PAPER = '#fcfcfd';
@@ -118,7 +120,7 @@ function Annotation({ text, x, y, progress, color = BLUE, width = 41, size = 23 
   return <g opacity={clamp(progress * 3)}><text x={x} y={y} fontFamily={NOTE_FONT} fontWeight="600" fontSize={size} fill={color}>{wrapped(text, width, 2).map((line, index) => <tspan key={index} x={x} dy={index === 0 ? 0 : size * 1.25}>{line}</tspan>)}</text><Draw d={`M${x} ${y + 10}Q${x + 110} ${y + 15} ${x + Math.min(330, text.length * 9)} ${y + 9}`} progress={clamp(progress * 2 - .2)} color={color} width={1.8} /></g>;
 }
 
-type DiagramProps = { film: SketchLessonStoryboard; phase: number; progress: number; seconds: number };
+type DiagramProps = { film: SketchLessonStoryboard; phase: number; progress: number; seconds: number; traceIndex?: number; stepIndex?: number; experimentIndex?: number; reveal?: boolean };
 
 function PromptDiagram({ film, phase, progress }: DiagramProps) {
   const visible = phase < 2 ? 1 + Math.floor(progress * 5) : 5;
@@ -154,7 +156,7 @@ function PromptDiagram({ film, phase, progress }: DiagramProps) {
   </>;
 }
 
-function CodeDiagram({ film, phase, progress }: DiagramProps) {
+function CodeDiagram({ film, phase, progress, traceIndex }: DiagramProps) {
   if (!film.code) {
     const positions = [{ x: 90, y: 190 }, { x: 410, y: 80 }, { x: 410, y: 335 }, { x: 805, y: 210 }];
     const labels = ['User story', 'Implementation', 'Tests', 'Reviewed change'];
@@ -166,24 +168,26 @@ function CodeDiagram({ film, phase, progress }: DiagramProps) {
     </>;
   }
   const code = film.code;
-  const index = Math.min(code.trace.length - 1, Math.floor(progress * code.trace.length));
-  const trace = code.trace[phase === 0 ? 0 : index];
+  const index = Math.min(code.trace.length - 1, traceIndex ?? (phase === 4 ? code.trace.length - 1 : 0));
+  const trace = code.trace[index];
   const stepProgress = clamp(progress * code.trace.length - index);
-  const lineHeight = code.lines.length > 6 ? 43 : 55;
+  const lineHeight = Math.min(55, 355 / code.lines.length);
   return <>
     <PaperCard x={55} y={45} w={725} h={480} color="#f9fbff"><Words text="WATCH THE EXECUTION" x={80} y={90} size={23} color={BLUE} width={29} />
       {code.lines.map((line, lineIndex) => <g key={lineIndex} opacity={phase === 0 && lineIndex > Math.floor(progress * code.lines.length) ? .16 : 1}>
-        {lineIndex === trace.line && <path d={`M 81 ${119 + lineIndex * lineHeight} L 754 ${117 + lineIndex * lineHeight} L 756 ${151 + lineIndex * lineHeight} L 80 ${154 + lineIndex * lineHeight} Z`} fill={LIME} />}
+        {lineIndex === trace.line && <path data-code-trace-line={lineIndex} d={`M 81 ${119 + lineIndex * lineHeight} L 754 ${117 + lineIndex * lineHeight} L 756 ${151 + lineIndex * lineHeight} L 80 ${154 + lineIndex * lineHeight} Z`} fill={LIME} />}
         <text x={81} y={144 + lineIndex * lineHeight} fontFamily="ui-monospace, monospace" fontSize="22" fill="#6d7483">{lineIndex + 1}</text>
-        <text x={125} y={144 + lineIndex * lineHeight} fontFamily="ui-monospace, monospace" fontSize={line.length > 34 ? 23 : 27} fill={INK} xmlSpace="preserve">{line}</text>
+        <text x={125} y={144 + lineIndex * lineHeight} fontFamily="ui-monospace, monospace" fontSize={Math.min(26, lineHeight * .66, 625 / Math.max(1, line.length * .62))} fill={INK} xmlSpace="preserve">{line}</text>
         {lineIndex === trace.line && <Draw d={`M125 ${155 + lineIndex * lineHeight}Q${Math.min(741, 130 + line.length * 6)} ${159 + lineIndex * lineHeight} ${Math.min(748, 125 + line.length * 13)} ${155 + lineIndex * lineHeight}`} progress={phase === 0 ? clamp(progress * 2) : stepProgress} color={BLUE} width={2} nib />}
       </g>)}
     </PaperCard>
     <PaperCard x={840} y={65} w={355} h={165} color="#f1f4ff"><Words text="MEMORY" x={868} y={103} size={22} color={BLUE} width={18} /><Words text={trace.state} x={868} y={148} width={22} size={27} lines={2} /></PaperCard>
     <Draw d={`M 780 ${140 + trace.line * lineHeight} C 812 ${140 + trace.line * lineHeight}, 790 150, 834 150`} progress={phase === 0 ? progress : clamp(stepProgress * 2)} color={BLUE} />
     <PaperCard x={840} y={275} w={355} h={250} color={phase >= 2 ? '#f3f6ff' : '#ffffff'}><Words text="VISIBLE OUTPUT" x={868} y={314} size={22} color={BLUE} width={20} />
-      {(phase === 0 ? [] : trace.output.split('\n')).map((line, lineIndex) => <text key={lineIndex} x={868} y={359 + lineIndex * 37} fontFamily="ui-monospace, monospace" fill={INK} fontSize="27">{line}</text>)}
-      {!trace.output && <Words text="No output yet…" x={868} y={363} width={21} size={25} color="#737780" weight={500} />}
+      {/^(css|jsx|tsx)$/.test(code.language || '') ? <foreignObject x={856} y={339} width={323} height={170}><LessonCodePreview language={code.language!} lines={code.lines} executedLine={phase === 0 ? null : trace.line} output={phase === 0 ? '' : trace.output} compact /></foreignObject> : <>
+        {(phase === 0 ? [] : trace.output.split('\n')).map((line, lineIndex) => <text key={lineIndex} x={868} y={359 + lineIndex * 37} fontFamily="ui-monospace, monospace" fill={INK} fontSize={Math.min(27, 300 / Math.max(1, line.length * .6))}>{line}</text>)}
+        {!trace.output && <Words text="No output yet…" x={868} y={363} width={21} size={25} color="#737780" weight={500} />}
+      </>}
     </PaperCard>
     <Annotation text={phase === 3 ? 'Predict the state before this line runs.' : phase === 4 ? short(film.project.title, 61) : `Trace ${phase === 0 ? 1 : index + 1}/${code.trace.length}: ${trace.state}`} x={90} y={575} size={25} width={66} progress={clamp(progress * 4)} />
   </>;
@@ -331,6 +335,36 @@ function WorkflowDiagram({ film, phase, progress }: DiagramProps) {
   </>;
 }
 
+function ArtifactText({ text, x, y, w, h, code = false }: { text: string; x: number; y: number; w: number; h: number; code?: boolean }) {
+  return <foreignObject x={x} y={y} width={w} height={h}><div style={{ color: INK, fontFamily: code ? 'ui-monospace, monospace' : FONT, fontSize: text.length > 420 ? 20 : text.length > 250 ? 24 : 29, lineHeight: 1.35, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{text}</div></foreignObject>;
+}
+
+function WorkedArtifactDiagram({ film, phase, progress, stepIndex, experimentIndex }: DiagramProps) {
+  const demo = film.demonstration;
+  const step = demo.steps[Math.min(demo.steps.length - 1, stepIndex ?? 0)];
+  const example = demo.experiments[Math.min(demo.experiments.length - 1, experimentIndex ?? 0)];
+  const input = phase === 1 ? step.action : example.input;
+  const result = phase === 1 ? step.visibleResult : example.result;
+  const reason = phase === 1 ? step.reason : example.reason;
+  return <g data-worked-artifact={phase === 1 ? stepIndex ?? 0 : experimentIndex ?? 0}>
+    <Words text={phase === 1 ? `STEP ${(stepIndex ?? 0) + 1}: ${step.title}` : `EXPERIMENT ${(experimentIndex ?? 0) + 1}: ${example.label}`} x={72} y={45} size={28} width={76} lines={2} color={BLUE} />
+    <PaperCard x={65} y={102} w={510} h={357} color="#ffffff"><Words text={phase === 1 ? 'WHAT WE CHANGE' : 'THE INPUT'} x={89} y={143} size={21} width={28} color={BLUE} /><ArtifactText text={input} x={89} y={168} w={460} h={267} code={film.family === 'timeline' || film.variant === 'spreadsheet'} /></PaperCard>
+    <Draw d="M 593 281 Q 629 259 665 281 M 646 263 L 665 281 L 646 300" color={BLUE} progress={clamp(progress * 4)} width={5} nib />
+    <PaperCard x={697} y={102} w={510} h={357} color="#f1f4ff"><Words text="WHAT WE CAN OBSERVE" x={721} y={143} size={21} width={31} color={BLUE} /><ArtifactText text={result} x={721} y={168} w={460} h={267} code={film.family === 'timeline' || film.variant === 'spreadsheet'} /></PaperCard>
+    <Words text="WHY THIS HAPPENS" x={88} y={513} size={22} color={BLUE} width={28} /><ArtifactText text={reason} x={88} y={535} w={1110} h={107} />
+  </g>;
+}
+
+function PredictionDiagram({ film, reveal }: DiagramProps) {
+  const prediction = film.demonstration.prediction;
+  return <g data-sketch-prediction={reveal ? 'explained' : 'question'}>
+    <Words text="PAUSE. PREDICT. EXPLAIN." x={78} y={43} size={25} color={BLUE} width={44} />
+    <ArtifactText text={prediction.question} x={78} y={75} w={1120} h={100} />
+    {prediction.options.slice(0, 4).map((option, index) => <PaperCard key={option} x={78} y={185 + index * 80} w={1120} h={68} color={reveal && option === prediction.answer ? '#e3eaff' : '#ffffff'}><Words text={`${index + 1}. ${option}`} x={100} y={225 + index * 80} width={95} size={24} lines={1} /></PaperCard>)}
+    <ArtifactText text={reveal ? prediction.explanation : 'Choose an answer before Maya reveals why. Then try the prediction yourself in the Try activity.'} x={78} y={540} w={1120} h={100} />
+  </g>;
+}
+
 /** A real frame-based composition. Every drawing follows the film timeline. */
 export function SketchLessonComposition({ film, showCaptions }: { film: SketchLessonStoryboard; showCaptions: boolean }) {
   const frame = useCurrentFrame();
@@ -341,14 +375,18 @@ export function SketchLessonComposition({ film, showCaptions }: { film: SketchLe
   const local = frame - chapter.startFrame;
   const progress = clamp(local / Math.max(1, chapter.durationInFrames - 1));
   const caption = film.captions.find(item => frame / fps * 1000 >= item.startMs && frame / fps * 1000 < item.endMs);
-  const Diagram = { prompt: PromptDiagram, code: CodeDiagram, evidence: EvidenceDiagram, design: DesignDiagram, timeline: TimelineDiagram, workflow: WorkflowDiagram }[film.family];
+  const chapterCaptions = film.captions.filter(item => item.startMs >= chapter.startFrame / fps * 1000 && item.startMs < (chapter.startFrame + chapter.durationInFrames) / fps * 1000);
+  const visualCaption = caption || chapterCaptions.filter(item => item.startMs <= frame / fps * 1000).at(-1) || chapterCaptions[0];
+  const speaker = visualCaption?.speaker || chapter.turns[0].speaker;
+  const Diagram = phase === 3 ? PredictionDiagram : phase === 1 || phase === 2 && !film.code ? WorkedArtifactDiagram : { prompt: PromptDiagram, code: CodeDiagram, evidence: EvidenceDiagram, design: DesignDiagram, timeline: TimelineDiagram, workflow: WorkflowDiagram }[film.family];
   const focus = film.family === 'prompt' ? { x: phase >= 2 ? 880 : 390, y: 300 } : film.family === 'code' ? { x: phase >= 2 ? 860 : 500, y: 285 } : film.family === 'design' ? { x: phase >= 2 ? 865 : 520, y: 285 } : film.family === 'evidence' ? { x: 660, y: phase === 3 ? 400 : 260 } : film.family === 'timeline' ? { x: 650, y: phase >= 2 ? 450 : 290 } : { x: 640, y: 280 };
   const zoom = 1 + (phase === 2 || phase === 3 ? .022 : .009) * Math.sin(progress * Math.PI);
   return <div data-sketch-composition="true" data-sketch-family={film.family} data-sketch-chapter={chapter.id} data-sketch-progress={progress.toFixed(3)} style={{ position: 'absolute', inset: 0, width: 1280, height: 960, background: PAPER, color: INK, fontFamily: FONT, overflow: 'hidden' }}>
     <svg width="1280" height="960" viewBox="0 0 1280 960" aria-hidden="true" style={{ position: 'absolute', inset: 0 }}><defs><pattern id="sketch-paper-dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".75" fill="#adb7c7" opacity=".13" /><path d="M17 8l3 .4M10 23l2-.3" stroke="#aab3c2" strokeWidth=".7" opacity=".07" /></pattern></defs><rect width="1280" height="960" fill="url(#sketch-paper-dots)" /><path d="M 35 24 L 1247 27 L 1241 933 L 38 937 Z" fill="none" stroke="#e0e3e9" strokeWidth="2" /></svg>
     <div style={{ position: 'absolute', top: 42, left: 65, right: 65, display: 'flex', justifyContent: 'space-between', gap: 30, fontSize: 24, fontWeight: 700, color: BLUE }}><span>{SKETCH_FAMILY_NAMES[film.family].toUpperCase()}</span><span>CHAPTER {phase + 1} / {film.chapters.length}</span></div>
     <div style={{ position: 'absolute', top: 91, left: 65, right: 65, fontSize: film.title.length > 72 ? 35 : film.title.length > 48 ? 40 : 47, fontWeight: 800, lineHeight: 1.12 }}>{film.title}</div>
-    <svg width="1280" height="655" viewBox="0 0 1280 655" aria-label={`${chapter.title}: ${film.principle}`} role="img" style={{ position: 'absolute', top: 183, left: 0, opacity: interpolate(local, [0, .3 * fps], [.45, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) }}><g transform={`translate(${focus.x} ${focus.y}) scale(${zoom}) translate(${-focus.x} ${-focus.y})`}><Diagram film={film} phase={phase} progress={progress} seconds={local / fps} /></g></svg>
+    <svg width="1280" height="525" viewBox="0 0 1280 655" preserveAspectRatio="none" aria-label={`${chapter.title}: ${film.principle}`} role="img" style={{ position: 'absolute', top: 173, left: 0, opacity: interpolate(local, [0, .3 * fps], [.45, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) }}><g transform={`translate(${focus.x} ${focus.y}) scale(${zoom}) translate(${-focus.x} ${-focus.y})`}><Diagram film={film} phase={phase} progress={progress} seconds={local / fps} traceIndex={visualCaption?.traceIndex} stepIndex={visualCaption?.stepIndex} experimentIndex={visualCaption?.experimentIndex} reveal={speaker !== 'leo'} /></g></svg>
+    <div style={{ position: 'absolute', top: 718, left: 60, width: 1160, height: 105 }}><SketchTeachingCast frame={frame} fps={fps} phase={phase} progress={progress} speaker={speaker} text={visualCaption?.text || chapter.title} talking={Boolean(caption)} /></div>
     {showCaptions ? <div data-sketch-caption="true" style={{ position: 'absolute', left: 65, right: 65, bottom: 52, minHeight: 79, padding: '15px 23px', borderRadius: 12, background: INK, color: '#ffffff', display: 'flex', alignItems: 'center', fontSize: 27, lineHeight: 1.25, fontWeight: 600 }}>{caption?.text || chapter.title}</div> : <div style={{ position: 'absolute', left: 65, right: 65, bottom: 45, fontSize: 24, color: BLUE, fontWeight: 700 }}>{chapter.title}</div>}
     <div style={{ position: 'absolute', left: 65, bottom: 25, width: 1150, height: 5, background: '#e0e3e9' }}><div style={{ width: `${frame / film.durationInFrames * 100}%`, height: '100%', background: BLUE }} /></div>
   </div>;

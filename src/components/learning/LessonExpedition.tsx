@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { ArrowRight, BookOpen, Check, CheckCircle2, ChevronLeft, ChevronRight, Download, Gamepad2, Layers3, Loader2, Play, RotateCcw, Sparkles, Trophy } from 'lucide-react';
+import { ArrowRight, BookOpen, Check, CheckCircle2, ChevronLeft, ChevronRight, Download, FlaskConical, Gamepad2, Layers3, Loader2, Play, RotateCcw, Sparkles, Trophy } from 'lucide-react';
 import type { Course, Lesson } from '@/lib/data-provider';
 import { createLessonTrainingPack, TrainingPackSchema, type TrainingPack } from '@/lib/learning-experience';
 import { useQuestProgress } from '@/hooks/use-quest-progress';
@@ -12,6 +12,7 @@ import { GuidedLessonFlow } from '@/components/courses/GuidedLessonFlow';
 import { AILearningClassroom } from '@/components/courses/AILearningClassroom';
 import { InteractiveQuizPlayer } from '@/components/courses/InteractiveQuizPlayer';
 import { buildCurriculumGame } from '@/lib/curriculum-games';
+import { LessonDemonstrationLab } from './LessonDemonstrationLab';
 
 const SketchLessonFilm = dynamic(() => import('@/components/learning/SketchLessonFilm').then(m => m.default), {
   ssr: false,
@@ -23,8 +24,9 @@ const LearningPlayGame = dynamic(() => import('@/components/learning/LearningPla
 });
 
 const stations = [
-  { id: 'play', title: 'Play', icon: Gamepad2 },
   { id: 'learn', title: 'Watch', icon: Play },
+  { id: 'try', title: 'Try', icon: FlaskConical },
+  { id: 'play', title: 'Play', icon: Gamepad2 },
   { id: 'build', title: 'Practice', icon: BookOpen },
   { id: 'recall', title: 'Notes', icon: Layers3 },
   { id: 'boss', title: 'Check', icon: CheckCircle2 },
@@ -36,8 +38,8 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
   course: Course; lesson: Lesson; autoStartAi?: boolean; onLessonComplete?: (payload: { assessmentScore: number }) => void;
 }) {
   const { progress, complete } = useQuestProgress(course.id, lesson.id);
-  const [station, setStationState] = useState<Station>('play');
-  const [visitedStations, setVisitedStations] = useState<Station[]>(['play']);
+  const [station, setStationState] = useState<Station>('learn');
+  const [visitedStations, setVisitedStations] = useState<Station[]>(['learn']);
   const setStation = (next: Station) => {
     setStationState(next);
     setVisitedStations(previous => previous.includes(next) ? previous : [...previous, next]);
@@ -125,12 +127,13 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
       <div>
         {visitedStations.includes('learn') && <div hidden={station !== 'learn'} role="tabpanel" id={`expedition-${lesson.id}-learn`} aria-labelledby={`station-${lesson.id}-learn`} className="space-y-7">
           <SketchLessonFilm course={course} lesson={lesson} active={station === 'learn'} onComplete={() => complete('learn', 20)} />
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-5"><p className="text-sm text-slate-500">Try the idea while it is fresh.</p><Button onClick={() => setStation('play')} className="rounded-full bg-[#335cff] hover:bg-[#2448d6]">Play this lesson<ArrowRight className="ml-2 h-4 w-4" /></Button></div>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-5"><p className="text-sm text-slate-500">Change one input. See the result. Explain what changed.</p><Button onClick={() => setStation('try')} className="rounded-full bg-[#335cff] hover:bg-[#2448d6]">Try the worked example<ArrowRight className="ml-2 h-4 w-4" /></Button></div>
           <div className="space-y-4 border-t border-slate-100 pt-5"><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Keep exploring this lesson</p><div className="flex flex-wrap gap-2"><Button variant="outline" aria-pressed={reviewMode === 'guided'} onClick={() => setReviewMode(reviewMode === 'guided' ? null : 'guided')} className="rounded-full"><BookOpen className="mr-2 h-4 w-4" />Read step by step</Button><Button variant="outline" aria-pressed={reviewMode === 'slides'} onClick={() => setReviewMode(reviewMode === 'slides' ? null : 'slides')} className="rounded-full"><Layers3 className="mr-2 h-4 w-4" />Explore the slide deck</Button></div>
             {reviewMode === 'guided' && <GuidedLessonFlow course={course} lesson={lesson} autoStartAi={autoStartAi && station === 'learn'} onLessonComplete={() => complete('learn', 20)} />}
             {reviewMode === 'slides' && <AILearningClassroom course={course} lesson={lesson} active={station === 'learn'} onReviewComplete={() => complete('learn', 20)} />}
           </div>
         </div>}
+        {visitedStations.includes('try') && <div hidden={station !== 'try'} role="tabpanel" id={`expedition-${lesson.id}-try`} aria-labelledby={`station-${lesson.id}-try`} className="space-y-6"><LessonDemonstrationLab key={`${course.id}:${lesson.id}`} course={course} lesson={lesson} active={station === 'try'} /><div className="flex justify-end"><Button onClick={() => setStation('play')} className="rounded-full bg-[#335cff] hover:bg-[#2448d6]">Put it into play<ArrowRight className="ml-2 h-4 w-4" /></Button></div></div>}
         {visitedStations.includes('play') && <div hidden={station !== 'play'} role="tabpanel" id={`expedition-${lesson.id}-play`} aria-labelledby={`station-${lesson.id}-play`}><LearningPlayGame course={course} lesson={lesson} active={station === 'play'} onComplete={score => { if (score >= 80) complete('play', 30); }} /></div>}
         {visitedStations.includes('build') && <div hidden={station !== 'build'} role="tabpanel" id={`expedition-${lesson.id}-build`} aria-labelledby={`station-${lesson.id}-build`} className="space-y-5">
           <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-widest text-[#335cff]">03 / Create something real</p><h3 className="mt-2 text-xl font-semibold">Practice plan</h3><p className="mt-1 text-sm text-muted-foreground">Turn this lesson into a practical skill, with a plan that fits your time.</p></div><Button variant="outline" onClick={downloadPack}><Download className="mr-2 h-4 w-4" />Save materials</Button></div>
@@ -151,7 +154,7 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
         </div>}
         {visitedStations.includes('boss') && <div hidden={station !== 'boss'} role="tabpanel" id={`expedition-${lesson.id}-boss`} aria-labelledby={`station-${lesson.id}-boss`} className="space-y-5">
           <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-xs font-semibold uppercase tracking-widest text-slate-500">05 / Knowledge check</p><h3 className="mt-2 text-xl font-semibold">Time to put it all together.</h3><p className="mt-2 text-sm text-slate-600">Complete the four learning activities, then score at least 80% on the lesson assessment. You can retry as often as you need.</p></div>
-          {!bossReady ? <div className="grid gap-2 sm:grid-cols-2">{stations.slice(0, 4).map(s => <button key={s.id} onClick={() => setStation(s.id)} className="flex items-center justify-between rounded-xl border border-slate-200 p-4 text-left text-sm"><span>{s.title}</span>{progress.completed.includes(s.id) ? <CheckCircle2 className="h-4 w-4 text-[#335cff]" /> : <span className="text-xs text-slate-500">Continue →</span>}</button>)}</div> : <>
+          {!bossReady ? <div className="grid gap-2 sm:grid-cols-2">{stations.filter(s => s.id !== 'try' && s.id !== 'boss').map(s => <button key={s.id} onClick={() => setStation(s.id)} className="flex items-center justify-between rounded-xl border border-slate-200 p-4 text-left text-sm"><span>{s.title}</span>{progress.completed.includes(s.id) ? <CheckCircle2 className="h-4 w-4 text-[#335cff]" /> : <span className="text-xs text-slate-500">Continue →</span>}</button>)}</div> : <>
             {!lesson.assessment.questions.length && !lesson.practice.questions.length && <p className="text-sm text-muted-foreground">This course has no published assessment. This recall challenge uses its lesson text and project prompts.</p>}
             {masteryQuiz.questions.length ? <InteractiveQuizPlayer key={`${lesson.id}-${bossAttempt}`} quiz={masteryQuiz} mode="assessment" passThreshold={0.8} onComplete={result => { if (result.passed) { complete('boss', 50); onLessonComplete?.({ assessmentScore: result.score }); } }} /> : <p>This lesson needs published assessment questions before the mastery challenge can open.</p>}
             <Button variant="outline" onClick={() => setBossAttempt(v => v + 1)}><RotateCcw className="mr-2 h-4 w-4" />Retry mastery challenge</Button>

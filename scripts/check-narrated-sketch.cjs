@@ -52,6 +52,8 @@ for (const course of courses) for (const lesson of course.lessons) {
   for (const key of ['id', 'title', 'courseTitle', 'family', 'variant', 'fps', 'principle', 'workedExample']) assert.equal(result[key], base[key]);
   assert.deepEqual(result.chapters.map(chapter => chapter.narration), base.chapters.map(chapter => chapter.narration));
   assert.deepEqual(result.captions.map(caption => caption.text), base.captions.map(caption => caption.text));
+  for (const key of ['speaker', 'traceIndex', 'stepIndex', 'experimentIndex']) assert.deepEqual(result.captions.map(caption => caption[key]), base.captions.map(caption => caption[key]), `${key} stays synchronized after speech retiming`);
+  assert.deepEqual(new Set(result.captions.map(caption => caption.speaker)), new Set(['maya', 'leo', 'pip']), 'The guide, learner and demonstrator all teach each lesson');
   assert.deepEqual(words(result.captions.map(caption => caption.text).join(' ')), words(base.chapters.map(chapter => chapter.narration).join(' ')), 'Every authored word survives');
   let endFrame = 0, captionEnd = 0;
   for (const chapter of result.chapters) {
@@ -130,6 +132,10 @@ const captionless = applySketchNarration({ ...base, captions: [] }, manifest);
 assert.deepEqual(words(captionless.captions.map(caption => caption.text).join(' ')), words(base.chapters.map(chapter => chapter.narration).join(' ')), 'Sentence fallback keeps every authored word');
 const fps24 = applySketchNarration({ ...base, fps: 24, durationInFrames: base.chapters.reduce((sum, chapter) => sum + chapter.durationInFrames, 0), captions: [] }, manifest);
 assert.equal(fps24.fps, 24, 'The original integer fps is preserved');
+const python = courses.find(item => item.id === 'Python-SP-101');
+const arithmetic = buildSketchLessonStoryboard(python, python.lessons[0]);
+assert(arithmetic.chapters.some(chapter => chapter.narration.includes('a * b')), 'Teaching narration preserves multiplication operators');
+assert(arithmetic.captions.some(caption => caption.text.includes('*')), 'Captions preserve code operators rather than stripping them as markup');
 const agentCourse = courses.find(item => item.id === 'masters-antigravity');
 const agentFilm = buildSketchLessonStoryboard(agentCourse, agentCourse.lessons[0]);
 assert(!agentFilm.labels.some(label => label.detail === 'Introduce subtle breakages at scale'), 'A warning answer cannot become isolated advice');

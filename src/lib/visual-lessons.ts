@@ -1,11 +1,14 @@
 import type { Course, Lesson } from '@/lib/data-provider';
+import { getLessonDemonstration, type LessonDemonstration } from './lesson-demonstrations';
 
 export type SketchVisualFamily = 'prompt' | 'code' | 'evidence' | 'design' | 'timeline' | 'workflow';
 export type SketchChapterKind = 'overview' | 'build' | 'example' | 'repair' | 'apply';
-export type SketchCaption = { text: string; startMs: number; endMs: number; timestampMs: null; confidence: null };
-export type SketchChapter = { id: SketchChapterKind; title: string; narration: string; startFrame: number; durationInFrames: number };
+export type SketchSpeaker = 'maya' | 'leo' | 'pip';
+export type SketchTeachingTurn = { speaker: SketchSpeaker; text: string; traceIndex?: number; stepIndex?: number; experimentIndex?: number };
+export type SketchCaption = SketchTeachingTurn & { startMs: number; endMs: number; timestampMs: null; confidence: null };
+export type SketchChapter = { id: SketchChapterKind; title: string; narration: string; turns: SketchTeachingTurn[]; startFrame: number; durationInFrames: number };
 export type SketchLabel = { label: string; detail: string };
-export type SketchCodeTrace = { line: number; state: string; output: string };
+export type SketchCodeTrace = { line: number; state: string; output: string; explanation?: string };
 export type SketchLessonStoryboard = {
   id: string;
   title: string;
@@ -20,7 +23,8 @@ export type SketchLessonStoryboard = {
   labels: SketchLabel[];
   principle: string;
   workedExample: string;
-  code: { lines: string[]; trace: SketchCodeTrace[] } | null;
+  demonstration: LessonDemonstration;
+  code: { language?: string; lines: string[]; trace: SketchCodeTrace[] } | null;
 };
 
 const clean = (text: string | undefined) => (text || '').replace(/[`*_#]/g, '').replace(/\s+/g, ' ').trim();
@@ -45,56 +49,6 @@ function familyFor(course: Course, lesson: Lesson): SketchVisualFamily {
   if (/creative-ai/.test(id) && /motion|edit/.test(topic)) return 'timeline';
   if (/claude/.test(id) && /prompt|contract/.test(topic)) return 'prompt';
   return 'workflow';
-}
-
-function codeFor(course: Course, lesson: Lesson): SketchLessonStoryboard['code'] {
-  const title = lesson.title.toLowerCase();
-  if (/python/i.test(course.id)) {
-    if (/conditional|decision/.test(title)) return {
-      lines: ['age = 16', 'if age < 13:', '    group = "child"', 'elif age < 18:', '    group = "teenager"', 'else:', '    group = "adult"', 'print(group)'],
-      trace: [{ line: 0, state: 'age → 16', output: '' }, { line: 1, state: '16 < 13 → False', output: '' }, { line: 3, state: '16 < 18 → True', output: '' }, { line: 4, state: 'group → teenager', output: '' }, { line: 7, state: 'Chosen branch only', output: 'teenager' }],
-    };
-    if (/loop/.test(title)) return {
-      lines: ['secret = 4', 'for guess in [2, 4]:', '    if guess == secret:', '        print("Found it!")', '        break', '    print("Try again")'],
-      trace: [{ line: 0, state: 'secret → 4', output: '' }, { line: 1, state: 'guess → 2', output: '' }, { line: 5, state: '2 != 4', output: 'Try again' }, { line: 1, state: 'guess → 4', output: 'Try again' }, { line: 3, state: '4 == 4', output: 'Try again\nFound it!' }, { line: 4, state: 'Exit the loop', output: 'Try again\nFound it!' }],
-    };
-    if (/string|text/.test(title)) return {
-      lines: ['sentence = "Learn by making"', 'words = sentence.split()', 'count = len(words)', 'print(count)'],
-      trace: [{ line: 0, state: 'One string', output: '' }, { line: 1, state: '[Learn, by, making]', output: '' }, { line: 2, state: 'count → 3', output: '' }, { line: 3, state: 'Print the word count', output: '3' }],
-    };
-    if (/list/.test(title)) return {
-      lines: ['tasks = ["Plan", "Build"]', 'tasks.append("Review")', 'print(tasks[0])', 'tasks.remove("Plan")', 'print(tasks)'],
-      trace: [{ line: 0, state: '[Plan, Build]', output: '' }, { line: 1, state: '[Plan, Build, Review]', output: '' }, { line: 2, state: 'Index 0 → Plan', output: 'Plan' }, { line: 3, state: '[Build, Review]', output: 'Plan' }, { line: 4, state: 'Updated collection', output: 'Plan\n[Build, Review]' }],
-    };
-    if (/diction|key-value/.test(title)) return {
-      lines: ['contacts = {"Maya": "555-0101"}', 'contacts["Leo"] = "555-0102"', 'number = contacts["Maya"]', 'print(number)'],
-      trace: [{ line: 0, state: 'Maya → 555-0101', output: '' }, { line: 1, state: 'Leo → 555-0102', output: '' }, { line: 2, state: 'Look up the key Maya', output: '' }, { line: 3, state: 'number → 555-0101', output: '555-0101' }],
-    };
-    if (/tuple|immutable/.test(title)) return {
-      lines: ['point = (3, 5)', 'x, y = point', 'print(x)', 'print(y)'],
-      trace: [{ line: 0, state: 'Fixed pair → (3, 5)', output: '' }, { line: 1, state: 'Unpack: x → 3, y → 5', output: '' }, { line: 2, state: 'Read x', output: '3' }, { line: 3, state: 'Read y', output: '3\n5' }],
-    };
-    if (/function/.test(title)) return {
-      lines: ['def greet(name):', '    return "Hello, " + name', 'message = greet("Maya")', 'print(message)'],
-      trace: [{ line: 0, state: 'Define the reusable function', output: '' }, { line: 2, state: 'Call: name → Maya', output: '' }, { line: 1, state: 'Return → Hello, Maya', output: '' }, { line: 3, state: 'message → Hello, Maya', output: 'Hello, Maya' }],
-    };
-    if (/sort/.test(title)) return {
-      lines: ['scores = [8, 3, 6]', 'ordered = sorted(scores)', 'print(ordered)', 'print(scores)'],
-      trace: [{ line: 0, state: 'Original → [8, 3, 6]', output: '' }, { line: 1, state: 'New list → [3, 6, 8]', output: '' }, { line: 2, state: 'Ascending order', output: '[3, 6, 8]' }, { line: 3, state: 'Original stays unchanged', output: '[3, 6, 8]\n[8, 3, 6]' }],
-    };
-    return {
-      lines: ['a = 8', 'b = 2', 'print(a + b)', 'print(a - b)', 'print(a * b)', 'print(a / b)'],
-      trace: [{ line: 0, state: 'a → 8', output: '' }, { line: 1, state: 'b → 2', output: '' }, { line: 2, state: '8 + 2 → 10', output: '10' }, { line: 3, state: '8 - 2 → 6', output: '10\n6' }, { line: 4, state: '8 × 2 → 16', output: '10\n6\n16' }, { line: 5, state: '8 ÷ 2 → 4.0', output: '10\n6\n16\n4.0' }],
-    };
-  }
-  if (/react/.test(course.id)) return /props/.test(title) ? {
-    lines: ['function Greeting({name}) {', '  return <h1>Hello, {name}</h1>;', '}', '<Greeting name="Maya" />', '<Greeting name="Leo" />'],
-    trace: [{ line: 3, state: 'name prop → Maya', output: '' }, { line: 1, state: 'Same component, first input', output: 'Hello, Maya' }, { line: 4, state: 'name prop → Leo', output: 'Hello, Maya' }, { line: 1, state: 'Same component, new input', output: 'Hello, Maya\nHello, Leo' }],
-  } : {
-    lines: ['const name = "Maya";', 'const element = (', '  <h1>Hello, {name}</h1>', ');', '// Render element in your app'],
-    trace: [{ line: 0, state: 'name → Maya', output: '' }, { line: 2, state: '{name} reads JavaScript', output: '' }, { line: 3, state: 'JSX describes the interface', output: '' }, { line: 4, state: 'A heading appears', output: 'Hello, Maya' }],
-  };
-  return null;
 }
 
 function labelsFor(family: SketchVisualFamily, lesson: Lesson): SketchLabel[] {
@@ -158,51 +112,66 @@ function variantFor(family: SketchVisualFamily, lesson: Lesson) {
  */
 export function buildSketchLessonStoryboard(course: Course, lesson: Lesson): SketchLessonStoryboard {
   const fps = 30;
-  const family = familyFor(course, lesson);
+  const demonstration = getLessonDemonstration(course, lesson);
+  const family = demonstration.code ? 'code' : familyFor(course, lesson);
   const labels = labelsFor(family, lesson);
-  const checks = [...lesson.practice.questions, ...lesson.assessment.questions];
-  const principle = firstSentence(lesson.introduction.text) || lesson.title;
-  const code = family === 'code' ? codeFor(course, lesson) : null;
-  const workedExample = code
-    ? `Follow this small ${/python/i.test(course.id) ? 'Python' : 'React'} example one line at a time. The highlighted line runs next. Watch the stored values change, then compare the output with your prediction.`
-    : family === 'design'
-      ? `Watch a rough composition become a usable system: establish a frame, make the main message dominant, create consistent spacing, and check the result at a smaller size. Apply the same reasoning to ${lesson.project.title}.`
-      : family === 'timeline'
-        ? `Watch the playhead move through the edit. Each visual choice has a job: establish the idea, show proof, keep the message readable, and deliver a clean result. Your project is ${lesson.project.title}.`
-        : family === 'evidence'
-          ? `Trace the path from a question to a source, from that source to a specific claim, and from a checked claim to a decision. A connection is only useful when you can explain the evidence behind it.`
-          : family === 'prompt'
-            ? `Build the instruction in layers. Start with the project goal, add the relevant context, make the constraints visible, name the expected output, and check it against the brief.`
-            : `Follow one piece of work through the system. Inputs become a draft, the draft passes review, and only then does it become a deliverable. Each handoff needs a clear owner and a visible check.`;
-  const checkpoint = checks[0];
-  const repair = checkpoint
-    ? `Pause and predict: ${clean(checkpoint.question)} The lesson-supported answer is ${clean(checkpoint.correctAnswer)}. Trace that answer back through the diagram. Then explain why it matters for ${lesson.project.title}.`
-    : `Pause and predict what changes next. ${principle} Trace the input through each visible step before you reveal the result. If the output surprises you, replay the step where your prediction changed.`;
-  const definitions: Array<{ id: SketchChapterKind; title: string; seconds: number; narration: string }> = [
-    { id: 'overview', title: 'See the idea', seconds: 13, narration: clean(lesson.introduction.text) || principle },
-    { id: 'build', title: 'Build the mental model', seconds: 16, narration: `The visual model breaks the work into ${labels.map(item => item.label.toLowerCase()).join(', ')}. ${unique(labels.slice(0, 3).map(item => item.detail)).join(' ')} Follow the moving marker to see how the parts connect.` },
-    { id: 'example', title: 'Watch a worked example', seconds: 21, narration: workedExample },
-    { id: 'repair', title: 'Pause, predict, check', seconds: 15, narration: repair },
-    { id: 'apply', title: 'Make it yourself', seconds: 15, narration: `Your challenge: ${clean(lesson.project.title)}. ${clean(lesson.project.description)} ${clean(lesson.activities?.[0]?.description) || 'Use the visual model to plan a small first version, then check your result.'}` },
+  const principle = demonstration.concept;
+  const code = demonstration.code;
+  const workedExample = demonstration.steps.map(step => step.action + ' ' + step.visibleResult + ' ' + step.reason).join(' ');
+  const turn = (speaker: SketchSpeaker, text: string, focus: Partial<SketchTeachingTurn> = {}): SketchTeachingTurn => ({ speaker, text: text.replace(/`/g, '').replace(/\s+/g, ' ').replace(/\.\s*\./g, '.').trim(), ...focus });
+  const definitions: Array<{ id: SketchChapterKind; title: string; turns: SketchTeachingTurn[] }> = [
+    { id: 'overview', title: 'Understand the idea', turns: [
+      turn('maya', demonstration.goal + '. ' + demonstration.concept),
+      turn('leo', 'I used to think: ' + demonstration.misconception.belief),
+      turn('maya', demonstration.misconception.correction + ' ' + demonstration.why),
+    ] },
+    { id: 'build', title: 'See how it works', turns: demonstration.steps.flatMap((step, stepIndex) => [
+      turn('maya', step.title + '. ' + step.action, { stepIndex }),
+      turn('pip', step.visibleResult + '. ' + step.reason, { stepIndex }),
+    ]) },
+    { id: 'example', title: code ? 'Trace real code' : 'Compare two results', turns: code
+      ? code.trace.map((step, traceIndex) => turn(traceIndex % 2 ? 'maya' : 'pip', step.explanation + ' The state is ' + step.state + (step.output ? '. The visible output is ' + step.output : '. There is no printed output yet.'), { traceIndex }))
+      : demonstration.experiments.slice(0, 2).flatMap((example, experimentIndex) => [
+        turn('leo', example.label + '. What happens with this input: ' + example.input + '?', { experimentIndex }),
+        turn('pip', 'Here is the result: ' + example.result, { experimentIndex }),
+        turn('maya', example.reason, { experimentIndex }),
+      ]) },
+    { id: 'repair', title: 'Predict, then explain', turns: [
+      turn('leo', demonstration.prediction.question + ' Pause and choose: ' + demonstration.prediction.options.join('; ') + '.'),
+      turn('maya', 'The answer is ' + demonstration.prediction.answer + '. ' + demonstration.prediction.explanation),
+      turn('pip', 'Watch for this mistake: ' + demonstration.misconception.belief + ' ' + demonstration.misconception.correction),
+    ] },
+    { id: 'apply', title: 'Change it yourself', turns: [
+      turn('maya', demonstration.transfer),
+      turn('leo', 'How can I give the next attempt a clear direction?'),
+      turn('maya', demonstration.prompt.whyBetter + ' Open Try, change one input, and explain the difference. Your project is ' + clean(lesson.project.title) + '. ' + clean(lesson.project.description)),
+    ] },
   ];
   let startFrame = 0;
-  const chapters = definitions.map(({ seconds, ...chapter }) => {
-    // Silent captions need enough time for the actual teaching text. Recorded
-    // narration later retimes this storyboard to the measured speech duration.
-    const readableSeconds = Math.max(seconds, Math.ceil(chapter.narration.split(/\s+/).length / 2.7));
-    const result = { ...chapter, startFrame, durationInFrames: readableSeconds * fps };
-    startFrame += result.durationInFrames;
+  const chapters = definitions.map(chapter => {
+    const narration = chapter.turns.map(item => item.text).join(' ');
+    const durationInFrames = Math.max(12, Math.ceil(narration.split(/\s+/).length / 2.5)) * fps;
+    const result = { ...chapter, narration, startFrame, durationInFrames };
+    startFrame += durationInFrames;
     return result;
   });
   const captions: SketchCaption[] = chapters.flatMap(chapter => {
-    const words = chapter.narration.split(/\s+/);
-    const chunks: string[] = [];
-    for (let index = 0; index < words.length; index += 11) chunks.push(words.slice(index, index + 11).join(' '));
+    const count = chapter.narration.split(/\s+/).length;
     const startMs = chapter.startFrame / fps * 1000;
     const span = chapter.durationInFrames / fps * 1000;
-    return chunks.map((text, index) => ({ text, startMs: startMs + span * index / chunks.length, endMs: startMs + span * (index + 1) / chunks.length, timestampMs: null, confidence: null }));
+    let wordIndex = 0;
+    return chapter.turns.flatMap(item => {
+      const words = item.text.split(/\s+/);
+      const chunks: SketchCaption[] = [];
+      for (let index = 0; index < words.length; index += 11) {
+        const chunk = words.slice(index, index + 11);
+        const from = wordIndex; wordIndex += chunk.length;
+        chunks.push({ ...item, text: chunk.join(' '), startMs: startMs + span * from / count, endMs: startMs + span * wordIndex / count, timestampMs: null, confidence: null });
+      }
+      return chunks;
+    });
   });
-  return { id: `${course.id}:${lesson.id}`, title: lesson.title, courseTitle: course.title, family, variant: variantFor(family, lesson), fps, durationInFrames: startFrame, chapters, captions, project: { title: clean(lesson.project.title), description: clean(lesson.project.description) }, labels, principle, workedExample, code };
+  return { id: course.id + ':' + lesson.id, title: lesson.title, courseTitle: course.title, family, variant: variantFor(family, lesson), fps, durationInFrames: startFrame, chapters, captions, project: { title: clean(lesson.project.title), description: clean(lesson.project.description) }, labels, principle, workedExample, demonstration, code };
 }
 
 /** Playback coverage is independent of the playhead: a seek adds zero credit. */

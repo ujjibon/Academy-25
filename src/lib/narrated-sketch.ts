@@ -82,7 +82,7 @@ export function applySketchNarration(base: SketchLessonStoryboard, manifest: Nar
     if (existing.some(caption => caption.endMs > oldEndMs + 0.001)) throw narrationError();
     // A storyboard without captions still keeps every narrated word. Existing
     // caption strings, punctuation, and metadata are otherwise preserved.
-    const source: SketchCaption[] = existing.length ? existing : chapter.narration.split(/(?<=[.!?])\s+/).map(text => ({ text, startMs: 0, endMs: 0, timestampMs: null, confidence: null }));
+    const source: SketchCaption[] = existing.length ? existing : chapter.turns.flatMap(turn => turn.text.split(/(?<=[.!?])\s+/).map(text => ({ ...turn, text, startMs: 0, endMs: 0, timestampMs: null, confidence: null })));
     if (normalize(source.map(caption => caption.text).join(' ')) !== normalize(chapter.narration)) throw narrationError();
     const count = source.reduce((sum, caption) => sum + words(caption.text).length, 0);
     const speechStartMs = startFrame / base.fps * 1000 + SKETCH_NARRATION_LEAD_MS;
@@ -101,6 +101,6 @@ export function applySketchNarration(base: SketchLessonStoryboard, manifest: Nar
   return {
     ...base, durationInFrames: startFrame, chapters, captions,
     project: { ...base.project }, labels: base.labels.map(label => ({ ...label })),
-    code: base.code ? { lines: [...base.code.lines], trace: base.code.trace.map(step => ({ ...step })) } : null,
+    code: base.code ? { ...base.code, lines: [...base.code.lines], trace: base.code.trace.map(step => ({ ...step })) } : null,
   };
 }
