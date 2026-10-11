@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { BookOpen, Check, CheckCircle2, ChevronLeft, ChevronRight, Compass, Download, Flag, Gamepad2, Hammer, Layers3, Loader2, RotateCcw, Sparkles, Trophy, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Check, CheckCircle2, ChevronLeft, ChevronRight, Compass, Download, Flag, Gamepad2, Hammer, Layers3, Loader2, Play, RotateCcw, Sparkles, Trophy, Zap } from 'lucide-react';
 import type { Course, Lesson } from '@/lib/data-provider';
 import { createLessonTrainingPack, TrainingPackSchema, type TrainingPack } from '@/lib/learning-experience';
 import { useQuestProgress } from '@/hooks/use-quest-progress';
@@ -18,10 +18,18 @@ const LearningWorld3D = dynamic(() => import('@/components/learning/LearningWorl
   ssr: false,
   loading: () => <div className="flex h-72 items-center justify-center rounded-3xl bg-teal-50"><Loader2 className="mr-2 h-5 w-5 animate-spin" />Preparing your island…</div>,
 });
+const SketchLessonFilm = dynamic(() => import('@/components/learning/SketchLessonFilm').then(m => m.default), {
+  ssr: false,
+  loading: () => <div className="flex aspect-video items-center justify-center rounded-3xl bg-[#fff8ed] text-slate-700"><Loader2 className="mr-2 h-5 w-5 animate-spin" />Opening your sketch lesson…</div>,
+});
+const PlayableLessonLab = dynamic(() => import('@/components/learning/PlayableLessonLab').then(m => m.PlayableLessonLab), {
+  ssr: false,
+  loading: () => <div className="flex min-h-80 items-center justify-center rounded-3xl bg-[#f3f1ff] text-slate-700"><Loader2 className="mr-2 h-5 w-5 animate-spin" />Setting up your workshop…</div>,
+});
 
 const stations = [
-  { id: 'learn', title: 'Discover', subtitle: 'Lessons + slide studio', icon: BookOpen, color: 'bg-teal-100 text-teal-800' },
-  { id: 'play', title: 'Play', subtitle: 'Six practice games', icon: Gamepad2, color: 'bg-orange-100 text-orange-800' },
+  { id: 'learn', title: 'Watch', subtitle: 'Animated sketch lesson', icon: Play, color: 'bg-orange-100 text-orange-800' },
+  { id: 'play', title: 'Experiment', subtitle: 'Your playable 3D studio', icon: Gamepad2, color: 'bg-lime-100 text-lime-800' },
   { id: 'build', title: 'Create', subtitle: 'Your training missions', icon: Hammer, color: 'bg-violet-100 text-violet-800' },
   { id: 'recall', title: 'Remember', subtitle: 'Flashcards + field guide', icon: Layers3, color: 'bg-sky-100 text-sky-800' },
   { id: 'boss', title: 'Master', subtitle: 'The final challenge', icon: Trophy, color: 'bg-amber-100 text-amber-800' },
@@ -39,7 +47,9 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
     setStationState(next);
     setVisitedStations(previous => previous.includes(next) ? previous : [...previous, next]);
   };
-  const [worldOpen, setWorldOpen] = useState(true);
+  const [worldOpen, setWorldOpen] = useState(false);
+  const [reviewMode, setReviewMode] = useState<'guided' | 'slides' | null>(null);
+  const [practiceOpen, setPracticeOpen] = useState(false);
   const [program, setProgram] = useState<Program>('sprint');
   const [goal, setGoal] = useState('');
   const [pack, setPack] = useState<TrainingPack>(() => createLessonTrainingPack(course, lesson, { program: 'sprint' }));
@@ -99,16 +109,16 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
 
   return (
     <section className="academy-experience space-y-5" aria-label="Lesson expedition">
-      <div className="relative overflow-hidden rounded-[28px] border border-teal-200/70 bg-gradient-to-br from-[#edf9f5] via-[#fffaf1] to-[#eeeaff] p-5 text-slate-900 sm:p-7">
-        <div className="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full border-[30px] border-white/40" />
+      <div className="relative overflow-hidden rounded-[28px] border border-[#d8d4c8] bg-[#fff9ee] p-5 text-[#22252b] sm:p-7">
+        <div className="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rotate-12 rounded-[64px] border-[30px] border-[#f5d26a]/30" />
         <div className="relative flex flex-wrap items-start justify-between gap-4">
-          <div className="max-w-2xl"><p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-teal-700"><Compass className="h-4 w-4" />Your learning expedition</p>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">One lesson. Five ways to level up.</h2>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">Discover the idea, play with it, build something real, then prove what you remember. Every station uses <span className="font-semibold text-slate-800">{lesson.title}</span>.</p>
+          <div className="max-w-2xl"><p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#b54730]"><Sparkles className="h-4 w-4" />Watch · Play · Make</p>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{lesson.title}</h2>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">See the idea take shape. Try it in your studio. Learn from what happens.</p>
           </div>
           <div className="flex items-center gap-3 rounded-2xl border border-white bg-white/75 px-4 py-3"><div className="rounded-full bg-amber-100 p-2"><Zap className="h-5 w-5 text-amber-600" /></div><div><p className="text-xl font-bold tabular-nums">{progress.xp} <span className="text-xs font-medium text-slate-500">expedition XP</span></p><p className="text-xs text-slate-500">{completedStations}/5 stations · saved on this device</p></div></div>
         </div>
-        <div className="relative mt-5 flex flex-wrap items-center gap-3"><Button variant="outline" onClick={() => setWorldOpen(v => !v)} className="rounded-full border-teal-200 bg-white text-teal-800"><Compass className="mr-2 h-4 w-4" />{worldOpen ? 'Hide quest map' : 'Show quest map'}</Button><span className="text-xs text-slate-500">Go at your pace. Retry every challenge.</span></div>
+        <div className="relative mt-5 flex flex-wrap items-center gap-3"><Button variant="outline" onClick={() => setWorldOpen(v => !v)} aria-expanded={worldOpen} className="rounded-full border-[#d8d4c8] bg-white text-slate-700"><Compass className="mr-2 h-4 w-4" />{worldOpen ? 'Close island map' : 'Explore the island'}</Button><span className="text-xs text-slate-500">Your studio, your pace. Experiment as often as you like.</span></div>
       </div>
 
       {worldOpen && <LearningWorld3D activeStation={station} completedStations={progress.completed} onSelectStation={setStation} />}
@@ -129,13 +139,16 @@ export function LessonExpedition({ course, lesson, autoStartAi = true, onLessonC
         ))}
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-6">
+      <div className="rounded-3xl border border-[#dedbd2] bg-white p-3 sm:p-5">
         {visitedStations.includes('learn') && <div hidden={station !== 'learn'} role="tabpanel" id={`expedition-${lesson.id}-learn`} aria-labelledby={`station-${lesson.id}-learn`} className="space-y-7">
-          <div><p className="text-xs font-bold uppercase tracking-widest text-teal-700">01 / Discover the idea</p><h3 className="mt-2 text-xl font-bold">Your lesson, brought to life</h3><p className="mt-1 text-sm text-muted-foreground">Follow the guided lesson or choose a fresh slide treatment below.</p></div>
-          <GuidedLessonFlow course={course} lesson={lesson} autoStartAi={autoStartAi} onLessonComplete={payload => { complete('learn', 20); onLessonComplete?.(payload); }} />
-          <AILearningClassroom course={course} lesson={lesson} active={station === 'learn'} onReviewComplete={() => complete('learn', 20)} />
+          <SketchLessonFilm course={course} lesson={lesson} active={station === 'learn'} onComplete={() => complete('learn', 20)} />
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#f4f2fc] p-4"><div><h3 className="text-sm font-semibold text-slate-900">Now make the idea yours.</h3><p className="mt-1 text-xs text-slate-600">Open your workshop and see what changes when you experiment.</p></div><Button onClick={() => setStation('play')} className="rounded-full bg-[#5649bd] hover:bg-[#45389e]">Enter the 3D studio<ArrowRight className="ml-2 h-4 w-4" /></Button></div>
+          <div className="space-y-4 border-t border-slate-100 pt-5"><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Keep exploring this lesson</p><div className="flex flex-wrap gap-2"><Button variant="outline" aria-pressed={reviewMode === 'guided'} onClick={() => setReviewMode(reviewMode === 'guided' ? null : 'guided')} className="rounded-full"><BookOpen className="mr-2 h-4 w-4" />Read step by step</Button><Button variant="outline" aria-pressed={reviewMode === 'slides'} onClick={() => setReviewMode(reviewMode === 'slides' ? null : 'slides')} className="rounded-full"><Layers3 className="mr-2 h-4 w-4" />Explore the slide deck</Button></div>
+            {reviewMode === 'guided' && <GuidedLessonFlow course={course} lesson={lesson} autoStartAi={autoStartAi && station === 'learn'} onLessonComplete={() => complete('learn', 20)} />}
+            {reviewMode === 'slides' && <AILearningClassroom course={course} lesson={lesson} active={station === 'learn'} onReviewComplete={() => complete('learn', 20)} />}
+          </div>
         </div>}
-        {visitedStations.includes('play') && <div hidden={station !== 'play'} role="tabpanel" id={`expedition-${lesson.id}-play`} aria-labelledby={`station-${lesson.id}-play`}><CourseGamifyPanel courseId={course.id} courseTitle={course.title} courseDescription={course.description} lessonTitles={course.lessons.map(l => l.title)} initialLessonId={lesson.id} /></div>}
+        {visitedStations.includes('play') && <div hidden={station !== 'play'} role="tabpanel" id={`expedition-${lesson.id}-play`} aria-labelledby={`station-${lesson.id}-play`} className="space-y-6"><PlayableLessonLab course={course} lesson={lesson} active={station === 'play'} onComplete={score => { if (score >= 80) complete('play', 30); }} /><div className="border-t border-slate-100 pt-5"><Button variant="outline" aria-expanded={practiceOpen} onClick={() => setPracticeOpen(v => !v)} className="rounded-full"><Gamepad2 className="mr-2 h-4 w-4" />{practiceOpen ? 'Close extra practice' : 'Extra practice challenges'}</Button>{practiceOpen && <div className="mt-5"><CourseGamifyPanel courseId={course.id} courseTitle={course.title} courseDescription={course.description} lessonTitles={course.lessons.map(l => l.title)} initialLessonId={lesson.id} /></div>}</div></div>}
         {visitedStations.includes('build') && <div hidden={station !== 'build'} role="tabpanel" id={`expedition-${lesson.id}-build`} aria-labelledby={`station-${lesson.id}-build`} className="space-y-5">
           <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-widest text-violet-700">03 / Create something real</p><h3 className="mt-2 text-xl font-bold">Creator quests</h3><p className="mt-1 text-sm text-muted-foreground">Turn this lesson into a practical skill, with a plan that fits your time.</p></div><Button variant="outline" onClick={downloadPack}><Download className="mr-2 h-4 w-4" />Save materials</Button></div>
           <div className="grid gap-3 sm:grid-cols-3">{([{ id: 'sprint', title: 'Skill sprint', copy: 'A focused practice session' }, { id: 'deep-dive', title: 'Deep expedition', copy: 'Explore, compare, explain' }, { id: 'project', title: 'Creator program', copy: 'Build a portfolio artifact' }] as const).map(p => <button key={p.id} aria-pressed={program === p.id} disabled={generating} onClick={() => selectProgram(p.id)} className={cn('rounded-2xl border p-4 text-left', program === p.id ? 'border-violet-400 bg-violet-50' : 'border-slate-200 hover:bg-slate-50')}><span className="block text-sm font-bold">{p.title}</span><span className="text-xs text-slate-500">{p.copy}</span></button>)}</div>

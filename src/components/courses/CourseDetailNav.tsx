@@ -10,7 +10,7 @@ const TABS = [
   { suffix: '/curriculum', label: 'Curriculum', icon: Layers },
   { suffix: '/materials', label: 'Materials', icon: ClipboardList },
   { suffix: '/resources', label: 'Resources', icon: BookMarked },
-  { suffix: '/gamify', label: 'Quest world', icon: Compass },
+  { suffix: '/gamify', label: 'Watch & play', icon: Compass },
 ] as const;
 
 export function CourseDetailNav({ courseId }: { courseId: string }) {
